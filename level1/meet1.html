@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Programming Course</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            box-sizing: border-box;
+            /* Using Inter font as per convention */
+            font-family: 'Inter', sans-serif; 
+        }
+        
+        .python-gradient {
+            /* Blue (#3776ab) to Yellow (#ffd43b) - Python official colors */
+            background: linear-gradient(135deg, #3776ab 0%, #ffd43b 100%);
+        }
+        
+        .slide-transition {
+            transition: all 0.3s ease-in-out;
+        }
+        
+        .meeting-tab {
+            transition: all 0.2s ease;
+        }
+        
+        .meeting-tab:hover {
+            transform: translateY(-2px);
+        }
+        
+        .code-font {
+            font-family: 'Courier New', monospace;
+        }
+        
+        .code-bg {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .code-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 212, 59, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(55, 118, 171, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        
+        .floating-code {
+            position: absolute;
+            font-family: 'Courier New', monospace;
+            color: rgba(34, 197, 94, 0.1);
+            font-size: 12px;
+            animation: float 20s infinite linear;
+            white-space: nowrap;
+        }
+        
+        @keyframes float {
+            0% { transform: translateX(-100px) translateY(0px); }
+            100% { transform: translateX(calc(100vw + 100px)) translateY(-20px); }
+        }
+        
+        .python-pattern {
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 2px,
+                rgba(55, 118, 171, 0.05) 2px,
+                rgba(55, 118, 171, 0.05) 4px
+            );
+        }
+
+        /* Responsive styling for image placeholders in the article content */
+        .article-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin: 1rem auto;
+            display: block;
+        }
+
+        /* Custom style for the list in the VSC Installation step */
+        .custom-list li {
+            margin-bottom: 0.75rem;
+            padding-left: 0.5rem;
+        }
+        .custom-list li::marker {
+            color: #4ade80; /* Tailwind green-400 */
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body class="h-full bg-gray-900 text-white">
+    <div class="h-full flex flex-col">
+        <!-- Header -->
+        <header class="python-gradient p-4 shadow-lg relative">
+            <div class="max-w-7xl mx-auto">
+                <div class="flex items-center justify-between">
+                    <!-- Hamburger Menu Button -->
+                    <button id="hamburgerBtn" class="text-gray-900 hover:text-gray-700 transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                    
+                    <!-- Logo and Title -->
+                    <div class="text-center flex-1">
+                        <img src="https://cdn-web-2.ruangguru.com/landing-pages/assets/hs/Kalananti%20by%20Ruangguru-04.png" alt="Kalananti Logo" class="h-10 mx-auto mb-2" onerror="this.src='https://placehold.co/100x40/3776ab/ffffff?text=Kalananti'; this.alt='Kalananti Logo';">
+                        <h1 class="text-xl font-bold text-gray-900">
+                            🐍 Python Programming Course
+                        </h1>
+                    </div>
+                    
+                    <!-- Spacer for balance -->
+                    <div class="w-6"></div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Sidebar Overlay -->
+        <div id="sidebarOverlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden"></div>
+
+        <!-- Sidebar -->
+        <aside id="sidebar" class="fixed left-0 top-0 h-full w-80 bg-gray-800 shadow-2xl transform -translate-x-full transition-transform duration-300 ease-in-out z-50 overflow-y-auto">
+            <div class="p-6">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-xl font-bold text-white">Course Meetings</h2>
+                    <button id="closeSidebarBtn" class="text-gray-400 hover:text-white transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+                
+                <!-- Meeting Navigation -->
+                <nav class="space-y-2">
+                    <!-- Meeting 1 Tab (Now handling 10 slides internally) -->
+                    <button class="meeting-tab w-full text-left p-4 bg-gray-600 hover:bg-gray-600 rounded-lg transition-colors active-meeting" data-meeting="1">
+                        <div class="flex items-center">
+                            <span class="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">1</span>
+                            <div>
+                                <div class="font-medium text-white">Meeting 1</div>
+                                <div class="text-sm text-gray-300">Introduction to Python (10 Slides)</div>
+                            </div>
+                        </div>
+                    </button>
+                    
+                    <!-- Locked Meetings (Stubs from original template) -->
+                    <div class="w-full text-left p-4 bg-gray-800 rounded-lg opacity-60 cursor-not-allowed">
+                        <div class="flex items-center">
+                            <span class="w-8 h-8 bg-gray-500 text-gray-400 rounded-full flex items-center justify-center text-sm font-bold mr-3">🔒</span>
+                            <div>
+                                <div class="font-medium text-gray-400">Meeting 2</div>
+                                <div class="text-xs text-gray-500">Variables & Data Types - Available Soon</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full text-left p-4 bg-gray-800 rounded-lg opacity-60 cursor-not-allowed">
+                        <div class="flex items-center">
+                            <span class="w-8 h-8 bg-gray-500 text-gray-400 rounded-full flex items-center justify-center text-sm font-bold mr-3">🔒</span>
+                            <div>
+                                <div class="font-medium text-gray-400">Meeting 3</div>
+                                <div class="text-xs text-gray-500">Control Structures - Available Soon</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full text-left p-4 bg-gray-800 rounded-lg opacity-60 cursor-not-allowed">
+                        <div class="flex items-center">
+                            <span class="w-8 h-8 bg-gray-500 text-gray-400 rounded-full flex items-center justify-center text-sm font-bold mr-3">🔒</span>
+                            <div>
+                                <div class="font-medium text-gray-400">Meeting 4</div>
+                                <div class="text-xs text-gray-500">Functions - Available Soon</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full text-left p-4 bg-gray-800 rounded-lg opacity-60 cursor-not-allowed">
+                        <div class="flex items-center">
+                            <span class="w-8 h-8 bg-gray-500 text-gray-400 rounded-full flex items-center justify-center text-sm font-bold mr-3">🔒</span>
+                            <div>
+                                <div class="font-medium text-gray-400">Meeting 5</div>
+                                <div class="text-xs text-gray-500">Lists & Tuples - Available Soon</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full text-left p-4 bg-gray-800 rounded-lg opacity-60 cursor-not-allowed">
+                        <div class="flex items-center">
+                            <span class="w-8 h-8 bg-gray-500 text-gray-400 rounded-full flex items-center justify-center text-sm font-bold mr-3">🔒</span>
+                            <div>
+                                <div class="font-medium text-gray-400">Meeting 6</div>
+                                <div class="text-xs text-gray-500">Dictionaries - Available Soon</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full text-left p-4 bg-gray-800 rounded-lg opacity-60 cursor-not-allowed">
+                        <div class="flex items-center">
+                            <span class="w-8 h-8 bg-gray-500 text-gray-400 rounded-full flex items-center justify-center text-sm font-bold mr-3">🔒</span>
+                            <div>
+                                <div class="font-medium text-gray-400">Meeting 7</div>
+                                <div class="text-xs text-gray-500">File Handling - Available Soon</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full text-left p-4 bg-gray-800 rounded-lg opacity-60 cursor-not-allowed">
+                        <div class="flex items-center">
+                            <span class="w-8 h-8 bg-gray-500 text-gray-400 rounded-full flex items-center justify-center text-sm font-bold mr-3">🔒</span>
+                            <div>
+                                <div class="font-medium text-gray-400">Meeting 8</div>
+                                <div class="text-xs text-gray-500">Error Handling - Available Soon</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full text-left p-4 bg-gray-800 rounded-lg opacity-60 cursor-not-allowed">
+                        <div class="flex items-center">
+                            <span class="w-8 h-8 bg-gray-500 text-gray-400 rounded-full flex items-center justify-center text-sm font-bold mr-3">🔒</span>
+                            <div>
+                                <div class="font-medium text-gray-400">Meeting 9</div>
+                                <div class="text-xs text-gray-500">Classes & Objects - Available Soon</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full text-left p-4 bg-gray-800 rounded-lg opacity-60 cursor-not-allowed">
+                        <div class="flex items-center">
+                            <span class="w-8 h-8 bg-gray-500 text-gray-400 rounded-full flex items-center justify-center text-sm font-bold mr-3">🔒</span>
+                            <div>
+                                <div class="font-medium text-gray-400">Meeting 10</div>
+                                <div class="text-xs text-gray-500">Modules & Packages - Available Soon</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full text-left p-4 bg-gray-800 rounded-lg opacity-60 cursor-not-allowed">
+                        <div class="flex items-center">
+                            <span class="w-8 h-8 bg-gray-500 text-gray-400 rounded-full flex items-center justify-center text-sm font-bold mr-3">🔒</span>
+                            <div>
+                                <div class="font-medium text-gray-400">Meeting 11</div>
+                                <div class="text-xs text-gray-500">Libraries & APIs - Available Soon</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full text-left p-4 bg-gray-800 rounded-lg opacity-60 cursor-not-allowed">
+                        <div class="flex items-center">
+                            <span class="w-8 h-8 bg-gray-500 text-gray-400 rounded-full flex items-center justify-center text-sm font-bold mr-3">🔒</span>
+                            <div>
+                                <div class="font-medium text-gray-400">Meeting 12</div>
+                                <div class="text-xs text-gray-500">Final Project - Available Soon</div>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="flex-1 flex items-center justify-center p-4 sm:p-8 python-pattern pb-32">
+            <!-- Floating Code Elements -->
+            <div class="floating-code" style="top: 10%; animation-delay: 0s;">def hello_world(): print("Hello Python!")</div>
+            <div class="floating-code" style="top: 30%; animation-delay: 5s;">import numpy as np</div>
+            <div class="floating-code" style="top: 50%; animation-delay: 10s;">for i in range(10): print(i)</div>
+            <div class="floating-code" style="top: 70%; animation-delay: 15s;">class PythonClass: pass</div>
+            <div class="floating-code" style="top: 90%; animation-delay: 3s;">if __name__ == "__main__":</div>
+            
+            <div class="max-w-4xl w-full relative z-10">
+                <!-- Slide Container -->
+                <div id="slideContainer" class="code-bg rounded-xl shadow-2xl p-6 sm:p-12 min-h-96 slide-transition border border-gray-700">
+                    <!-- Current Meeting Title -->
+                    <div class="text-center mb-8 relative">
+                        <div class="absolute -top-4 -left-4 text-6xl opacity-10">🐍</div>
+                        <div class="absolute -top-4 -right-4 text-6xl opacity-10">💻</div>
+                        <h2 id="meetingTitle" class="text-2xl sm:text-3xl font-bold text-yellow-400 mb-2 relative z-10">Meeting 1: Berkenalan dengan Python</h2>
+                        <div class="w-24 h-1 bg-gradient-to-r from-blue-500 to-yellow-400 mx-auto rounded"></div>
+                        <div id="meetingSubtitle" class="mt-2 text-sm text-gray-400 code-font"># Konten Slide</div>
+                    </div>
+                    
+                    <!-- Content Area -->
+                    <div id="slideContent" class="text-center space-y-6">
+                        <!-- Initial Content (Will be overwritten by JS) -->
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Navigation Controls -->
+        <footer class="fixed bottom-0 left-0 right-0 bg-gray-800 border-t border-gray-700 p-4 z-30">
+            <div class="max-w-4xl mx-auto">
+                <div class="flex justify-between items-center mb-3">
+                    <!-- Previous Button --> 
+                    <button id="prevBtn" class="flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"> 
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                        </svg>
+                        <span>Sebelumnya</span>
+                    </button>
+
+                    <!-- Slide Counter -->
+                    <div class="text-center">
+                        <span id="slideCounter" class="text-gray-400 text-sm font-semibold">Slide 1 dari 10</span>
+                    </div>
+
+                    <!-- Next Button -->
+                    <button id="nextBtn" class="flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm">
+                        <span>Selanjutnya</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </button>
+                </div>
+                
+                <!-- Copyright -->
+                <div class="text-center border-t border-gray-600 pt-2">
+                    <p class="text-gray-500 text-xs">© 2025 Kalananti. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        let currentMeeting = 1;
+        let currentSlide = 1;
+        const totalMeetings = 12;
+
+        // --- Meeting Content Structure (Updated to use Slides Array for Meeting 1) ---
+        const meetingContent = {
+            1: [
+                // Slide 1.1: Selamat Datang di Dunia Program! 🚀
+                { 
+                    title: "Selamat Datang di Kelas Koding! 🚀", 
+                    subtitle: "Berkenalan dengan Python si Penerjemah Hebat",
+                    emoji: "🚀", 
+                    content: `
+                        <div class="text-center space-y-4">
+                            <div class="text-6xl mb-4">${'🚀'}</div>
+                            <h3 class="text-2xl font-bold text-yellow-400">Halo, Teman-teman!</h3>
+                            <p class="text-lg text-gray-300 max-w-2xl mx-auto">
+                                Hari ini kita akan belajar cara "mengobrol" dengan komputer. Komputer itu hebat, tapi dia bodoh. Dia hanya bisa bekerja kalau diberi **instruksi yang sangat jelas**.
+                            </p>
+                            <div class="p-4 bg-blue-900/50 rounded-xl border border-blue-700 max-w-sm mx-auto">
+                                <p class="font-semibold text-blue-300">Analogi:</p>
+                                <p class="text-sm text-gray-300">Bayangkan komputer itu seperti <b class="text-white">robot</b>. Dia siap mengerjakan apa saja, asal kita berikan **perintah yang tepat**, satu per satu.</p>
+                            </div>
+                        </div>
+                    `
+                },
+                // Slide 1.2: Instruksi di Kehidupan Kita 🧑‍🍳
+                { 
+                    title: "Kita Sering Memberi Instruksi! 🧑‍🍳", 
+                    subtitle: "Koding adalah instruksi untuk komputer",
+                    emoji: "🧑‍🍳", 
+                    content: `
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-center">
+                            <div class="bg-gray-800/70 p-6 rounded-xl border border-gray-700">
+                                <h4 class="text-xl font-semibold text-green-400 mb-3">Contoh 1: Membuat Mi Instan 🍜</h4>
+                                <ul class="list-none text-left space-y-2 text-gray-300">
+                                    <li class="flex items-start"><span class="text-blue-400 font-bold mr-2">1.</span> Rebus air.</li>
+                                    <li class="flex items-start"><span class="text-blue-400 font-bold mr-2">2.</span> Buka bungkus mi.</li>
+                                    <li class="flex items-start"><span class="text-blue-400 font-bold mr-2">3.</span> Masukkan mi ke air mendidih.</li>
+                                    <li class="flex items-start"><span class="text-blue-400 font-bold mr-2">4.</span> Tiriskan.</li>
+                                </ul>
+                            </div>
+                            <div class="bg-gray-800/70 p-6 rounded-xl border border-gray-700">
+                                <h4 class="text-xl font-semibold text-yellow-400 mb-3">Contoh 2: Pergi ke Sekolah 🎒</h4>
+                                <ul class="list-none text-left space-y-2 text-gray-300">
+                                    <li class="flex items-start"><span class="text-blue-400 font-bold mr-2">1.</span> Bangun pagi.</li>
+                                    <li class="flex items-start"><span class="text-blue-400 font-bold mr-2">2.</span> Mandi.</li>
+                                    <li class="flex items-start"><span class="text-blue-400 font-bold mr-2">3.</span> Pakai seragam.</li>
+                                    <li class="flex items-start"><span class="text-blue-400 font-bold mr-2">4.</span> Sarapan.</li>
+                                </ul>
+                            </div>
+                            <p class="md:col-span-2 text-lg text-blue-300 font-medium mt-4">Koding adalah cara kita menulis instruksi seperti ini, tapi untuk komputer!</p>
+                        </div>
+                    `
+                },
+                // Slide 1.3: Apa itu Python? 🗣️
+                { 
+                    title: "Python: Bahasa Super Komputer 🐍", 
+                    subtitle: "Bahasa pemrograman yang mudah dibaca",
+                    emoji: "🗣️", 
+                    content: `
+                        <div class="text-center space-y-6">
+                            <div class="text-6xl mb-4 text-green-400">🐍</div>
+                            <p class="text-lg text-gray-300 max-w-2xl mx-auto">
+                                Python adalah bahasa yang kita gunakan untuk menulis instruksi detail langkah demi langkah itu untuk komputer kita.
+                                Python itu **mudah dibaca**, hampir seperti membaca kalimat biasa, jadi sangat cocok untuk pemula!
+                            </p>
+                            <div class="bg-gradient-to-r from-indigo-900 to-purple-900 rounded-xl p-4 border border-indigo-700 max-w-md mx-auto">
+                                <h4 class="text-yellow-400 font-bold mb-2">💡 Fun Fact!</h4>
+                                <p class="text-sm text-gray-300">
+                                    Python diciptakan oleh seorang Om bernama Guido van Rossum. Namanya diambil dari acara komedi TV yang lucu, bukan dari ular! 😆
+                                </p>
+                            </div>
+                        </div>
+                    `
+                },
+                // Slide 1.4: Python Bikin Apa Saja? ✨
+                { 
+                    title: "Python Ada di Mana-Mana! ✨", 
+                    subtitle: "Kegunaan Python di dunia nyata",
+                    emoji: "✨", 
+                    content: `
+                        <div class="space-y-4 max-w-2xl mx-auto">
+                            <h3 class="text-2xl font-bold text-blue-300 mb-4">Contoh-Contoh Keren:</h3>
+                            <div class="space-y-4 text-left">
+                                <div class="p-4 bg-gray-800 rounded-lg border border-gray-700 flex items-center">
+                                    <span class="text-3xl mr-4">🌐</span>
+                                    <div>
+                                        <h4 class="font-semibold text-white">YouTube dan Instagram</h4>
+                                        <p class="text-sm text-gray-400">Sebagian besar teknologi yang kamu pakai untuk menonton video dan melihat foto itu dibangun menggunakan Python!</p>
+                                    </div>
+                                </div>
+                                <div class="p-4 bg-gray-800 rounded-lg border border-gray-700 flex items-center">
+                                    <span class="text-3xl mr-4">🎮</span>
+                                    <div>
+                                        <h4 class="font-semibold text-white">Game</h4>
+                                        <p class="text-sm text-gray-400">Python dipakai untuk membuat logika dan aturan-aturan dalam game yang kamu mainkan.</p>
+                                    </div>
+                                </div>
+                                <div class="p-4 bg-gray-800 rounded-lg border border-gray-700 flex items-center">
+                                    <span class="text-3xl mr-4">🧪</span>
+                                    <div>
+                                        <h4 class="font-semibold text-white">Para Ilmuwan (Data Science)</h4>
+                                        <p class="text-sm text-gray-400">Dipakai untuk menganalisis data, misalnya saat menghitung bintang atau mencari obat baru.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `
+                },
+                // Slide 1.5: Ayo Siapkan Alat Kita! 💻
+                { 
+                    title: "Alat Koding Kita Hari Ini 🛠️", 
+                    subtitle: "Dua senjata utama programmer",
+                    emoji: "💻", 
+                    content: `
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-center max-w-3xl mx-auto">
+                            <div class="bg-gray-800 p-6 rounded-xl border-4 border-blue-500/50">
+                                <div class="text-5xl mb-3 text-red-500">❤️</div>
+                                <h4 class="text-xl font-semibold text-blue-300 mb-2">Python (Si Jantung Program)</h4>
+                                <p class="text-sm text-gray-400">
+                                    Ini adalah mesin **penerjemah** utama. Tanpa ini, komputer tidak akan mengerti instruksi kita.
+                                </p>
+                                <p class="text-xs text-yellow-400 mt-2">Instalasi dari: <a href="https://www.python.org/" target="_blank" class="hover:underline">python.org</a></p>
+                            </div>
+                            <div class="bg-gray-800 p-6 rounded-xl border-4 border-yellow-500/50">
+                                <div class="text-5xl mb-3 text-white">📝</div>
+                                <h4 class="text-xl font-semibold text-yellow-300 mb-2">Visual Studio Code (VS Code)</h4>
+                                <p class="text-sm text-gray-400">
+                                    Ini adalah **tempat kita menulis kode** (Buku Tulis Pintar). Memiliki banyak alat bantu canggih.
+                                </p>
+                                <p class="text-xs text-blue-400 mt-2">Instalasi dari: <a href="https://code.visualstudio.com/" target="_blank" class="hover:underline">code.visualstudio.com</a></p>
+                            </div>
+                        </div>
+                    `
+                },
+                // Slide 1.6: Langkah Kritis 1: Pasang Jantung Python (Instalasi)
+                { 
+                    title: "Pasang Python (Penting!)", 
+                    subtitle: "Jangan lupakan POIN KRITIS",
+                    emoji: "⚠️", 
+                    content: `
+                        <div class="space-y-6 max-w-2xl mx-auto text-left">
+                            <h3 class="text-2xl font-bold text-red-400 mb-4 text-center">⚠️ POIN KRITIS UNTUK DIINGAT! ⚠️</h3>
+                            <ol class="list-decimal list-inside space-y-4 text-lg text-gray-300">
+                                <li>Buka situs <a href="https://www.python.org/downloads/" target="_blank" class="text-blue-400 hover:underline">python.org</a> dan unduh versi terbaru.</li>
+                                <li>Saat muncul kotak instalasi, <b class="text-yellow-400">TUNGGU DULU</b>!</li>
+                                <li>Cari dan **WAJIB DICEKLIS** tulisan di bagian bawah kotak:</li>
+                            </ol>
+                            <div class="bg-red-900/50 p-4 rounded-lg border border-red-700 text-center">
+                                <code class="code-font text-xl text-white font-bold">✅ Add Python to PATH</code>
+                            </div>
+                            <p class="text-sm text-gray-400">
+                                **Kenapa?** Ini seperti "mendaftarkan" Python ke seluruh komputer. Kalau tidak dicentang, komputer akan bingung di mana mencari si penerjemah! Setelah dicentang, baru klik "Install Now".
+                            </p>
+                        </div>
+                    `
+                },
+                // Slide 1.7: Langkah Kritis 2: Siapkan Buku Tulis Pintar (VS Code)
+                { 
+                    title: "Siapkan Buku Tulis Pintar (VS Code) 🦸‍♂️", 
+                    subtitle: "Langkah dasar instalasi VS Code",
+                    emoji: "📝", 
+                    content: `
+                        <div class="space-y-6 max-w-2xl mx-auto text-left">
+                            <h3 class="text-2xl font-bold text-blue-300 mb-4 text-center">Instalasi VS Code (Sederhana)</h3>
+                            <p class="text-gray-300">
+                                VS Code adalah editor kode yang sangat populer. Ikuti langkah-langkah instalasi standar ini:
+                            </p>
+                            <ul class="custom-list list-decimal list-inside text-lg text-gray-300 bg-gray-900 p-6 rounded-lg border border-gray-700">
+                                <li><b class="text-yellow-400">Download</b>: Kunjungi <a href="https://code.visualstudio.com/" target="_blank" class="text-green-400 hover:underline">code.visualstudio.com</a> dan klik tombol "Download for Windows".</li>
+                                <li><b class="text-yellow-400">Jalankan Installer</b>: Klik file yang sudah diunduh.</li>
+                                <li><b class="text-yellow-400">Persetujuan & Lokasi</b>: Setujui persyaratan lalu pilih lokasi instalasi (gunakan default jika bingung).</li>
+                                <li><b class="text-yellow-400">Komponen Tambahan</b>: Pastikan Anda mencentang opsi untuk <b class="text-blue-400">"Add to PATH"</b> (ini biasanya otomatis) dan "Register Code as editor for supported files".</li>
+                                <li><b class="text-yellow-400">Selesai</b>: Klik "Install" dan tunggu sampai selesai.</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                // Slide 1.8: Pasang Kekuatan Super Python (Ekstensi VS Code)
+                { 
+                    title: "Pasang Kekuatan Super Python! (Extensions)", 
+                    subtitle: "Memberi VS Code kacamata ajaib",
+                    emoji: "🧱", 
+                    content: `
+                        <div class="space-y-6 max-w-2xl mx-auto text-left">
+                            <h3 class="text-2xl font-bold text-green-400 mb-4 text-center">Langkah 2: Pasang Ekstensi Python</h3>
+                            <p class="text-gray-300">
+                                Ekstensi ini membuat VS Code bisa membaca, memahami, dan membantu kita menulis bahasa Python dengan benar!
+                            </p>
+                            <div class="bg-gray-900 p-6 rounded-lg border border-gray-700 space-y-4">
+                                <div class="flex items-center text-lg">
+                                    <span class="text-yellow-400 font-bold mr-3">1.</span> Buka VS Code.
+                                </div>
+                                <div class="flex items-center text-lg">
+                                    <span class="text-yellow-400 font-bold mr-3">2.</span> Klik ikon <b class="text-blue-400">Extensions (Balok 🧱)</b> di sisi kiri.
+                                </div>
+                                <div class="flex items-center text-lg">
+                                    <span class="text-yellow-400 font-bold mr-3">3.</span> Di kolom pencarian, ketik "<b class="text-white">Python</b>".
+                                </div>
+                                <div class="flex items-center text-lg">
+                                    <span class="text-yellow-400 font-bold mr-3">4.</span> Cari hasil dari "<b class="text-white">Microsoft</b>" dan klik tombol <b class="text-red-400">Install</b>.
+                                </div>
+                            </div>
+                            <div class="text-sm text-gray-400 italic text-center">
+                                Ini penting agar fitur seperti *syntax highlighting* (kode berwarna) dan *linting* (cek error otomatis) bisa berfungsi.
+                            </div>
+                        </div>
+                    `
+                },
+                // Slide 1.9: Program Pertama Kita! "Halo, Dunia!" 👋
+                { 
+                    title: "Menulis Instruksi Pertama Kita! 👋", 
+                    subtitle: "Membuat file hello_world.py",
+                    emoji: "📝", 
+                    content: `
+                        <div class="space-y-6 max-w-2xl mx-auto text-left">
+                            <h3 class="text-2xl font-bold text-blue-300 mb-4 text-center">Langkah Praktik Dasar:</h3>
+                            <ol class="list-decimal list-inside space-y-4 text-lg text-gray-300">
+                                <li>Buat folder baru di komputer, namanya: <b class="text-white">Belajar Python</b>.</li>
+                                <li>Di VS Code, buat file baru (Ctrl+N).</li>
+                                <li>**SIMPAN FILE** (Ctrl+S) di dalam folder tadi.</li>
+                                <li>Beri nama file: <code class="code-font text-yellow-400">hello_world.py</code> (<b class="text-red-400">Ingat!</b> Akhirannya harus <code class="code-font text-yellow-400">.py</code>!)</li>
+                            </ol>
+                            
+                            <h4 class="text-xl font-semibold text-green-400 mt-6">Perintah Kunci: <code class="code-font text-white">print()</code></h4>
+                            <p class="text-gray-300">
+                                Fungsinya: Menyuruh komputer untuk "mengucapkan" atau "menampilkan" sesuatu di layar.
+                            </p>
+                        </div>
+                    `
+                },
+                // Slide 1.10: Rahasia Perintah print() & Jalankan Program
+                { 
+                    title: "Jalankan Program Pertama Kita! ⏯️", 
+                    subtitle: "Aturan Emas print() dan tombol ajaib Run",
+                    emoji: "⏯️", 
+                    content: `
+                        <div class="space-y-6 max-w-2xl mx-auto text-left">
+                            <h3 class="text-2xl font-bold text-yellow-400 mb-4 text-center">Aturan Emas print():</h3>
+                            <ul class="list-disc list-inside space-y-2 text-lg text-gray-300">
+                                <li>Perintahnya harus persis: <code class="code-font text-white">print</code></li>
+                                <li>Setelah print, harus ada tanda kurung: <code class="code-font text-white">()</code></li>
+                                <li>Teks harus diapit tanda kutip: <code class="code-font text-white">" "</code></li>
+                            </ul>
+                            
+                            <div class="bg-gray-900 rounded-lg p-6 border border-gray-700 text-left">
+                                <code class="code-font text-green-400 text-sm block">
+                                    # Ini adalah instruksi untuk komputer:<br>
+                                    print("Yey! Aku anak Indonesia yang jago koding!") 
+                                </code>
+                            </div>
+                            
+                            <h4 class="text-xl font-semibold text-blue-300 mt-6 text-center">Cara Menjalankan:</h4>
+                            <p class="text-lg text-gray-300 text-center">
+                                Di VS Code, cukup tekan tombol <b class="text-white">Run (ikon Play ▶️)</b> di pojok kanan atas, atau tekan tombol **F5** di keyboard!
+                            </p>
+                        </div>
+                    `
+                },
+            ],
+            // Meetings 2-12 are stubs, no changes needed for them as the original template already handled them
+        };
+
+        const totalSlides = meetingContent[1].length;
+
+        // Function to update the slide content and UI elements
+        function updateSlide() {
+            const currentData = meetingContent[currentMeeting][currentSlide - 1]; // Array is 0-indexed
+
+            const meetingTitle = document.getElementById('meetingTitle');
+            const meetingSubtitle = document.getElementById('meetingSubtitle');
+            const slideContent = document.getElementById('slideContent');
+            const slideCounter = document.getElementById('slideCounter');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const slideContainer = document.getElementById('slideContainer');
+
+            // Apply a fade-out effect
+            slideContainer.style.opacity = '0';
+            slideContainer.style.transform = 'scale(0.98)';
+
+            setTimeout(() => {
+                // Update content
+                meetingTitle.textContent = `Meeting ${currentMeeting}: ${currentData.title.split(':')[0]}`;
+                meetingSubtitle.innerHTML = `# ${currentData.subtitle || currentData.title}`;
+                slideContent.innerHTML = currentData.content;
+                
+                // Update slide counter
+                if (currentMeeting === 1) {
+                    slideCounter.textContent = `Slide ${currentSlide} dari ${totalSlides}`;
+                } else {
+                    slideCounter.textContent = `Meeting ${currentMeeting} of ${totalMeetings}`;
+                }
+
+                // Update navigation buttons
+                // Prev button disabled if on the very first slide of the entire course
+                prevBtn.disabled = (currentMeeting === 1 && currentSlide === 1);
+                
+                // Next button disabled if on the very last slide of the last available meeting
+                // Since only Meeting 1 is available, disable on the last slide of Meeting 1
+                nextBtn.disabled = (currentMeeting === 1 && currentSlide === totalSlides);
+
+
+                // Apply fade-in effect
+                slideContainer.style.opacity = '1';
+                slideContainer.style.transform = 'scale(1)';
+
+            }, 300); // Wait for transition duration
+            
+            // Note: Sidebar tabs logic is kept simple as only Meeting 1 is active
+        }
+
+        // --- Navigation Event Listeners ---
+        document.getElementById('prevBtn').addEventListener('click', () => {
+            if (currentSlide > 1) {
+                currentSlide--;
+                updateSlide();
+            }
+            // Logic to move to previous Meeting is not implemented as meetings 2-12 are locked
+        });
+
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            if (currentMeeting === 1 && currentSlide < totalSlides) {
+                currentSlide++;
+                updateSlide();
+            }
+            // Logic to move to next Meeting is not implemented as meetings 2-12 are locked
+        });
+
+        // Sidebar functionality (same as original template)
+        const sidebar = document.getElementById('sidebar');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const closeSidebarBtn = document.getElementById('closeSidebarBtn');
+
+        function openSidebar() {
+            sidebar.classList.remove('-translate-x-full');
+            sidebarOverlay.classList.remove('hidden');
+        }
+
+        function closeSidebar() {
+            sidebar.classList.add('-translate-x-full');
+            sidebarOverlay.classList.add('hidden');
+        }
+
+        hamburgerBtn.addEventListener('click', openSidebar);
+        closeSidebarBtn.addEventListener('click', closeSidebar);
+        sidebarOverlay.addEventListener('click', closeSidebar);
+
+        // Meeting tab event listeners (only for available meetings)
+        document.querySelectorAll('.meeting-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                const meetingNum = parseInt(tab.dataset.meeting);
+                if (meetingNum === 1) { // Only Meeting 1 is available
+                    currentMeeting = meetingNum;
+                    currentSlide = 1; // Reset slide to 1 when clicking the meeting tab
+                    updateSlide();
+                    closeSidebar(); // Close sidebar after selecting a meeting
+                }
+            });
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                document.getElementById('nextBtn').click();
+            } else if (e.key === 'ArrowLeft') {
+                document.getElementById('prevBtn').click();
+            }
+        });
+
+        // Initialize
+        updateSlide();
+    </script>
+</body>
+</html>
