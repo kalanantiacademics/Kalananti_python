@@ -192,15 +192,15 @@
                     </button>
 
                     <!-- Locked Meetings -->
-                    <div class="w-full text-left p-4 bg-slate-800/60 rounded-lg opacity-60 cursor-not-allowed">
+                    <button class="meeting-tab w-full text-left p-4 bg-lime-400 rounded-lg transition-colors active-meeting" data-meeting="3">
                         <div class="flex items-center">
-                            <span class="w-8 h-8 bg-slate-700 text-slate-500 rounded-full flex items-center justify-center text-sm font-bold mr-3">3</span>
+                            <span class="w-8 h-8 bg-lime-600 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">3</span>
                             <div>
-                                <div class="font-medium text-gray-400">Meeting 3 (WIP)</div>
-                                <div class="text-xs text-gray-500">Operators & Input</div>
+                                <div class="font-medium text-slate-900">Meeting 3</div>
+                                <div class="text-sm text-slate-800">Operators & Input</div>
                             </div>
                         </div>
-                    </div>
+                    </button>
                     <!-- (Stubs lainnya tidak diubah untuk keringkasan) -->
                      <div class="w-full text-left p-4 bg-slate-800/60 rounded-lg opacity-60 cursor-not-allowed">
                         <div class="flex items-center">
@@ -370,7 +370,7 @@
     </footer>
 
     <script>
-        let currentMeeting = 2;
+        let currentMeeting = 3;
         let currentSlide = 1;
         const totalMeetings = 12;
 
@@ -924,6 +924,332 @@
                         </div>
                     `
                 },
+            ],
+            3: [
+                {
+                    title: "Kotak Ingatan Kita Akan Mulai Berhitung!",
+                    subtitle: "Review Cepat & Kalkulator",
+                    emoji: "🧠",
+                    content: `
+                        <div class="text-left space-y-6 max-w-3xl mx-auto">
+                            <div>
+                                <h3 class="text-2xl font-bold text-lime-400 mb-3">Review Cepat (3 Menit) ⚡</h3>
+                                <ul class="list-disc list-inside space-y-2 text-lg text-gray-300">
+                                    <li><b class="text-white">Variabel</b> adalah kotak ingatan untuk menyimpan data (teks, angka, ya/tidak).</li>
+                                    <li>Contoh: <code class="code-font bg-slate-800 p-1 rounded">umur = 7</code> (Angka Integer)</li>
+                                    <li>Contoh: <code class="code-font bg-slate-800 p-1 rounded">nama = "Rina"</code> (Teks String)</li>
+                                </ul>
+                                <p class="text-lg text-gray-300 mt-4">
+                                    Hari ini, kita akan membuat kotak ingatan ini saling berinteraksi! Kita akan ajarkan komputer cara menghitung dengan cepat dan benar, seperti <b class="text-purple-400">kalkulator ajaib</b>!
+                                </p>
+                            </div>
+                            <div class="p-6 bg-purple-900/50 rounded-xl border border-purple-700">
+                                <h4 class="text-xl font-semibold text-purple-300 mb-2">Apersepsi (Ajak Berpikir)</h4>
+                                <p class="text-lg text-gray-300">Saat kita jajan, kita pasti menghitung total harga. Saat kita mendapat sisa uang kembalian, kita menghitungnya. Semua itu butuh <b class="text-lime-400">Operator Matematika</b>.</p>
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Alat Hitung Dasar (Aritmatika)",
+                    subtitle: "Operator Aritmatika: Alat Hitung Python",
+                    emoji: "➕",
+                    content: `
+                        <div class="text-left space-y-4 max-w-4xl mx-auto">
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-sm text-left text-gray-400">
+                                    <thead class="text-xs text-lime-300 uppercase bg-slate-800">
+                                        <tr>
+                                            <th scope="col" class="px-6 py-3">Operator</th>
+                                            <th scope="col" class="px-6 py-3">Nama</th>
+                                            <th scope="col" class="px-6 py-3">Contoh di Python</th>
+                                            <th scope="col" class="px-6 py-3">Analogi Sehari-hari</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="bg-slate-800/50 border-b border-slate-700">
+                                            <td class="px-6 py-4 font-bold text-xl text-center text-white">+</td>
+                                            <td class="px-6 py-4">Tambah</td>
+                                            <td class="px-6 py-4"><code class="code-font">total = 2 + 3</code></td>
+                                            <td class="px-6 py-4">Menjumlahkan uang jajan hari ini dan kemarin.</td>
+                                        </tr>
+                                        <tr class="bg-slate-800/50 border-b border-slate-700">
+                                            <td class="px-6 py-4 font-bold text-xl text-center text-white">-</td>
+                                            <td class="px-6 py-4">Kurang</td>
+                                            <td class="px-6 py-4"><code class="code-font">sisa = 5 - 2</code></td>
+                                            <td class="px-6 py-4">Menghitung sisa uang setelah membeli jajan.</td>
+                                        </tr>
+                                        <tr class="bg-slate-800/50 border-b border-slate-700">
+                                            <td class="px-6 py-4 font-bold text-xl text-center text-white">*</td>
+                                            <td class="px-6 py-4">Kali</td>
+                                            <td class="px-6 py-4"><code class="code-font">luas = 4 * 5</code></td>
+                                            <td class="px-6 py-4">Membeli 5 pensil dengan harga Rp 2.000 per buah.</td>
+                                        </tr>
+                                        <tr class="bg-slate-800/50">
+                                            <td class="px-6 py-4 font-bold text-xl text-center text-white">/</td>
+                                            <td class="px-6 py-4">Bagi</td>
+                                            <td class="px-6 py-4"><code class="code-font">bagi = 10 / 2</code></td>
+                                            <td class="px-6 py-4">Membagi kue 10 potong untuk 2 teman (hasilnya bisa ada koma).</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Operator Aritmatika yang Paling Keren!",
+                    subtitle: "Operator Aritmatika Khusus!",
+                    emoji: "🍕",
+                    content: `
+                        <div class="text-left space-y-4 max-w-4xl mx-auto">
+                             <div class="overflow-x-auto mb-4">
+                                <table class="w-full text-sm text-left text-gray-400">
+                                    <thead class="text-xs text-lime-300 uppercase bg-slate-800">
+                                        <tr>
+                                            <th scope="col" class="px-6 py-3">Operator</th>
+                                            <th scope="col" class="px-6 py-3">Nama</th>
+                                            <th scope="col" class="px-6 py-3">Analogi Sehari-hari</th>
+                                            <th scope="col" class="px-6 py-3">Contoh & Hasil</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="bg-slate-800/50 border-b border-slate-700">
+                                            <td class="px-6 py-4 font-bold text-xl text-center text-white">**</td>
+                                            <td class="px-6 py-4">Pangkat</td>
+                                            <td class="px-6 py-4">Menghitung luas ruangan berbentuk persegi.</td>
+                                            <td class="px-6 py-4"><code class="code-font">3 ** 2</code> hasilnya <code class="code-font">9</code></td>
+                                        </tr>
+                                        <tr class="bg-slate-800/50 border-b border-slate-700">
+                                            <td class="px-6 py-4 font-bold text-xl text-center text-white">//</td>
+                                            <td class="px-6 py-4">Bagi Bulat</td>
+                                            <td class="px-6 py-4">Punya 10 biskuit dibagi ke 3 teman. Berapa banyak biskuit <b class="text-white">UTUH</b> yang didapat masing-masing?</td>
+                                            <td class="px-6 py-4"><code class="code-font">10 // 3</code> hasilnya <code class="code-font">3</code></td>
+                                        </tr>
+                                        <tr class="bg-slate-800/50">
+                                            <td class="px-6 py-4 font-bold text-xl text-center text-white">%</td>
+                                            <td class="px-6 py-4">Modulo</td>
+                                            <td class="px-6 py-4">Punya 10 biskuit dibagi ke 3 teman. Berapa <b class="text-white">SISA</b> biskuitnya untuk kita?</td>
+                                            <td class="px-6 py-4"><code class="code-font">10 % 3</code> hasilnya <code class="code-font">1</code></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="bg-slate-900 rounded-lg p-4 border border-slate-700 text-left">
+                                <code class="code-font text-lime-300 text-sm block">
+                                    <span class="text-gray-500"># Variabel untuk contoh</span><br>
+                                    <span class="text-white">uang_jajan = </span><span class="text-cyan-400">10000</span><br>
+                                    <span class="text-white">harga_bakso = </span><span class="text-cyan-400">8000</span><br><br>
+                                    <span class="text-gray-500"># Pengurangan: Sisa uang</span><br>
+                                    <span class="text-white">sisa_uang = uang_jajan - harga_bakso</span><br>
+                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"1. Sisa uang setelah beli bakso:"</span>, sisa_uang)<br><br>
+                                    <span class="text-gray-500"># Perkalian: Total harga permen</span><br>
+                                    <span class="text-white">total_harga_permen = </span><span class="text-cyan-400">3</span> * <span class="text-cyan-400">500</span><br>
+                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"2. Total harga 3 permen:"</span>, total_harga_permen)<br><br>
+                                    <span class="text-gray-500"># Pembagian Bulat (//) dan Sisa Bagi (%)</span><br>
+                                    <span class="text-white">jumlah_siswa = </span><span class="text-cyan-400">25</span><br>
+                                    <span class="text-white">satu_baris = </span><span class="text-cyan-400">4</span><br>
+                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"3. Jumlah baris penuh (//):"</span>, jumlah_siswa // satu_baris)<br>
+                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"4. Siswa yang tersisa (%):"</span>, jumlah_siswa % satu_baris)
+                                </code>
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Komputer Bisa Bertanya dengan input()",
+                    subtitle: "input(): Komputer Berbicara dan Bertanya!",
+                    emoji: "🗣️",
+                    content: `
+                        <div class="text-left space-y-6 max-w-3xl mx-auto">
+                            <h3 class="text-2xl font-bold text-lime-400 mb-3">Fungsi input()</h3>
+                            <ul class="list-disc list-inside space-y-2 text-lg text-gray-300">
+                                <li>Perintah ini membuat program kita <b class="text-white">berhenti sebentar</b>.</li>
+                                <li>Menampilkan sebuah pertanyaan yang kita tulis.</li>
+                                <li>Menunggu kamu mengetik sesuatu di keyboard, lalu menekan <b class="text-white">Enter</b>.</li>
+                                <li>Apapun yang kamu ketik, akan <b class="text-purple-400">disimpan ke dalam variabel</b>.</li>
+                            </ul>
+                            <div class="bg-slate-900 rounded-lg p-6 border border-slate-700 text-left">
+                                <code class="code-font text-lime-300 text-sm block">
+                                    <span class="text-gray-500"># Komputer akan bertanya, lalu jawabanmu disimpan di kotak "nama_kita"</span><br>
+                                    <span class="text-white">nama_kita = </span><span class="text-purple-400">input</span>(<span class="text-orange-400">"Siapa nama kamu? "</span>)<br>
+                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"Halo, "</span> + nama_kita + <span class="text-orange-400">"! Senang bertemu denganmu."</span>)
+                                </code>
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Hati-Hati! input() Selalu Berkata Itu Teks!",
+                    subtitle: "Jebakan Terbesar! (String vs Integer)",
+                    emoji: "⚠️",
+                    content: `
+                        <div class="text-left space-y-6 max-w-3xl mx-auto">
+                            <div class="p-6 bg-red-900/50 rounded-xl border border-red-700">
+                                <h4 class="text-xl font-semibold text-red-300 mb-2">Jebakan Tipe Data!</h4>
+                                <p class="text-lg text-gray-200">Semua yang diambil oleh <code class="code-font">input()</code>, <b class="text-white">selalu</b> dianggap sebagai <b class="text-lime-400">Teks (String)</b>, walaupun yang kamu ketik adalah angka!</p>
+                            </div>
+                            <h3 class="text-2xl font-bold text-lime-400 mb-3">Apa yang terjadi jika kita menjumlahkan Teks Angka?</h3>
+                            <div class="bg-slate-900 rounded-lg p-6 border border-slate-700 text-left">
+                                <code class="code-font text-lime-300 text-sm block">
+                                    <span class="text-gray-500"># Pengguna mengetik 5 dan 10</span><br>
+                                    <span class="text-white">angka_1_str = </span><span class="text-purple-400">input</span>(<span class="text-orange-400">"Angka pertama: "</span>) <span class="text-gray-500"># Python anggap ini "5" (teks)</span><br>
+                                    <span class="text-white">angka_2_str = </span><span class="text-purple-400">input</span>(<span class="text-orange-400">"Angka kedua: "</span>)   <span class="text-gray-500"># Python anggap ini "10" (teks)</span><br><br>
+                                    <span class="text-white">hasil_salah = angka_1_str + angka_2_str</span><br>
+                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"Hasil yang SALAH:"</span>, hasil_salah)
+                                </code>
+                            </div>
+                            <div class="bg-purple-900/50 p-4 rounded-lg border border-purple-700 text-left">
+                                <p class="font-semibold text-purple-300">Hasilnya:</p>
+                                <code class="code-font text-white block">Hasil yang SALAH: 510 ❌</code>
+                                <p class="text-sm text-gray-300 mt-2">Ini seperti menggabungkan dua kertas bertuliskan angka, bukan menjumlahkan nilainya!</p>
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Type Casting: Mengubah Teks Menjadi Angka Murni!",
+                    subtitle: "Solusi: Type Casting (Konversi Tipe Data)",
+                    emoji: "🪄",
+                    content: `
+                        <div class="text-left space-y-6 max-w-3xl mx-auto">
+                            <h3 class="text-2xl font-bold text-lime-400 mb-3">Apa itu Type Casting?</h3>
+                            <p class="text-lg text-gray-300">Ini adalah sihir di Python untuk mengubah tipe data satu menjadi tipe data lain.</p>
+                            <div>
+                                <h4 class="text-xl font-semibold text-purple-300 mb-2">2 Mantra Penting:</h4>
+                                <p class="text-lg text-gray-300"><b class="text-white"><code class="code-font">int()</code></b>: Mengubah teks angka menjadi <b class="text-cyan-400">Bilangan Bulat</b> (Integer).</p>
+                                <p class="text-lg text-gray-300"><b class="text-white"><code class="code-font">float()</code></b>: Mengubah teks angka menjadi <b class="text-cyan-400">Bilangan Koma</b> (Float).</p>
+                            </div>
+                            <h3 class="text-2xl font-bold text-lime-400 mb-3">Kode yang BENAR:</h3>
+                            <div class="bg-slate-900 rounded-lg p-6 border border-slate-700 text-left">
+                                <code class="code-font text-lime-300 text-sm block">
+                                    <span class="text-gray-500"># Kita langsung ubah input menjadi angka murni!</span><br>
+                                    <span class="text-white">angka_1 = </span><span class="text-purple-400">int</span>(<span class="text-purple-400">input</span>(<span class="text-orange-400">"Angka pertama: "</span>)) <span class="text-gray-500"># Angka 5 sekarang murni Integer</span><br>
+                                    <span class="text-white">angka_2 = </span><span class="text-purple-400">int</span>(<span class="text-purple-400">input</span>(<span class="text-orange-400">"Angka kedua: "</span>))   <span class="text-gray-500"># Angka 10 sekarang murni Integer</span><br><br>
+                                    <span class="text-white">hasil_benar = angka_1 + angka_2</span><br>
+                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"Hasil yang BENAR:"</span>, hasil_benar)
+                                </code>
+                            </div>
+                             <div class="bg-purple-900/50 p-4 rounded-lg border border-purple-700 text-left">
+                                <p class="font-semibold text-purple-300">Hasilnya:</p>
+                                <code class="code-font text-white block">Hasil yang BENAR: 15 ✅</code>
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Operator Assignment: Perbarui Kotak dengan Cepat!",
+                    subtitle: "Cara Cepat Mengubah Nilai",
+                    emoji: "🔄",
+                    content: `
+                        <div class="text-left space-y-4 max-w-4xl mx-auto">
+                            <p class="text-lg text-gray-300 text-center">Tujuan: Untuk memperbarui nilai sebuah variabel berdasarkan nilai lamanya. (Contoh: Menambahkan skor, atau mengurangi uang).</p>
+                            <div class="overflow-x-auto mb-4">
+                                <table class="w-full text-sm text-left text-gray-400">
+                                    <thead class="text-xs text-lime-300 uppercase bg-slate-800">
+                                        <tr>
+                                            <th scope="col" class="px-6 py-3">Operator</th>
+                                            <th scope="col" class="px-6 py-3">Arti Panjang</th>
+                                            <th scope="col" class="px-6 py-3">Arti Pendek</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="bg-slate-800/50 border-b border-slate-700">
+                                            <td class="px-6 py-4 font-bold text-xl text-center text-white">=</td>
+                                            <td class="px-6 py-4"><code class="code-font">skor = 10</code></td>
+                                            <td class="px-6 py-4">Simpan nilai 10 ke dalam skor.</td>
+                                        </tr>
+                                        <tr class="bg-slate-800/50 border-b border-slate-700">
+                                            <td class="px-6 py-4 font-bold text-xl text-center text-white">+=</td>
+                                            <td class="px-6 py-4"><code class="code-font">skor = skor + 5</code></td>
+                                            <td class="px-6 py-4"><code class="code-font">skor += 5</code> (Tambah Cepat)</td>
+                                        </tr>
+                                        <tr class="bg-slate-800/50">
+                                            <td class="px-6 py-4 font-bold text-xl text-center text-white">-=</td>
+                                            <td class="px-6 py-4"><code class="code-font">uang = uang - 2000</code></td>
+                                            <td class="px-6 py-4"><code class="code-font">uang -= 2000</code> (Kurang Cepat)</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <h3 class="text-2xl font-bold text-lime-400 mb-3 pt-4 text-center">Latihan Uang Saku</h3>
+                             <div class="bg-slate-900 rounded-lg p-6 border border-slate-700 text-left">
+                                <code class="code-font text-lime-300 text-sm block">
+                                    <span class="text-white">uang_saku = </span><span class="text-cyan-400">20000</span><br>
+                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"Uang saku awal:"</span>, uang_saku)<br><br>
+                                    <span class="text-gray-500"># Beli es teh seharga 3000</span><br>
+                                    <span class="text-white">uang_saku -= </span><span class="text-cyan-400">3000</span><br>
+                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"Sisa uang setelah beli es teh:"</span>, uang_saku)<br><br>
+                                     <span class="text-gray-500"># Dapat tambahan uang dari Ibu 5000</span><br>
+                                    <span class="text-white">uang_saku += </span><span class="text-cyan-400">5000</span><br>
+                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"Uang saku sekarang:"</span>, uang_saku)
+                                </code>
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Tantangan Proyek: Kasir Kantin Python!",
+                    subtitle: "Proyek Akhir: Kasir Kantin Interaktif!",
+                    emoji: "🛒",
+                    content: `
+                        <div class="text-left space-y-6 max-w-3xl mx-auto">
+                            <p class="text-lg text-gray-300 text-center">Tujuan: Membuat program yang bisa menghitung total belanjaan dengan pajak!</p>
+                            <p class="text-lg text-gray-300 text-center">File: <code class="code-font bg-slate-800 p-1 rounded">kasir_kantin.py</code></p>
+                            <div>
+                                <h3 class="text-xl font-bold text-lime-400 mb-3">Langkah-Langkah:</h3>
+                                <ol class="list-decimal list-inside space-y-2 text-lg text-gray-300">
+                                    <li><b>Tanya Harga:</b> Gunakan <code class="code-font">input()</code> dan <code class="code-font">float()</code> untuk bertanya 3 harga barang.</li>
+                                    <li><b>Hitung Subtotal:</b> Jumlahkan 3 harga barang.</li>
+                                    <li><b>Hitung Pajak (PPN 11%):</b> <code class="code-font">pajak = subtotal * 11 / 100</code></li>
+                                    <li><b>Hitung Total Akhir:</b> <code class="code-font">total_bayar = subtotal + pajak</code></li>
+                                    <li><b>Cetak Rapi:</b> Tampilkan Subtotal, Pajak, dan Total Bayar!</li>
+                                </ol>
+                                <p class="text-sm text-gray-400 mt-2">Tips: Gunakan <code class="code-font">float()</code> karena harga bisa ada koma (misalnya, 2500.50).</p>
+                            </div>
+                            <div class="bg-slate-900 rounded-lg p-6 border border-slate-700 text-left">
+                                <code class="code-font text-lime-300 text-sm block">
+                                    <span class="text-gray-500"># --- Selamat Datang ---</span><br>
+                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"--- Kasir Kantin Kalananti ---"</span>)<br><br>
+                                    <span class="text-gray-500"># --- Input Harga ---</span><br>
+                                    <span class="text-white">harga1 = </span><span class="text-purple-400">float</span>(<span class="text-purple-400">input</span>(<span class="text-orange-400">"Harga barang 1: Rp "</span>))<br>
+                                    <span class="text-white">harga2 = </span><span class="text-purple-400">float</span>(<span class="text-purple-400">input</span>(<span class="text-orange-400">"Harga barang 2: Rp "</span>))<br>
+                                    <span class="text-white">harga3 = </span><span class="text-purple-400">float</span>(<span class="text-purple-400">input</span>(<span class="text-orange-400">"Harga barang 3: Rp "</span>))<br><br>
+                                    <span class="text-gray-500"># --- Proses Hitung ---</span><br>
+                                    <span class="text-white">subtotal = harga1 + harga2 + harga3</span><br>
+                                    <span class="text-white">pajak = subtotal * </span><span class="text-cyan-400">11</span> / <span class="text-cyan-400">100</span><br>
+                                    <span class="text-white">total_bayar = subtotal + pajak</span><br><br>
+                                    <span class="text-gray-500"># --- Cetak Struk ---</span><br>
+                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"-------------------------"</span>)<br>
+                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"Subtotal   : Rp"</span>, subtotal)<br>
+                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"Pajak 11%  : Rp"</span>, pajak)<br>
+                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"Total Bayar: Rp"</span>, total_bayar)<br>
+                                </code>
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Apa yang Sudah Kita Pelajari Hari Ini?",
+                    subtitle: "Rangkuman Akhir",
+                    emoji: "🏁",
+                    content: `
+                        <div class="text-left space-y-6 max-w-3xl mx-auto">
+                            <h3 class="text-2xl font-bold text-lime-400 mb-3">Rangkuman Hari Ini:</h3>
+                            <ul class="list-disc list-inside space-y-3 text-lg text-gray-300">
+                                <li><b class="text-white">Operator Aritmatika:</b> Kita punya alat hitung canggih (<code class="code-font bg-slate-800 p-1 rounded">+ - * / ** // %</code>).</li>
+                                <li><b class="text-white"><code class="code-font">input()</code>:</b> Perintah untuk membuat program kita bisa <b class="text-purple-400">bertanya</b> kepada pengguna.</li>
+                                <li><b class="text-white">Type Casting (<code class="code-font">int()</code>, <code class="code-font">float()</code>):</b> Sihir untuk mengubah input teks menjadi angka murni agar bisa dihitung.</li>
+                                <li><b class="text-white">Operator Assignment (<code class="code-font">+=</code>, <code class="code-font">-=</code>):</b> Cara super cepat untuk memperbarui nilai variabel.</li>
+                            </ul>
+                            <div class="bg-purple-900/50 p-6 rounded-xl border border-purple-700">
+                                <h4 class="text-xl font-semibold text-purple-300 mb-2">Preview Materi Selanjutnya:</h4>
+                                <p class="text-lg text-gray-300">Minggu depan, kita akan membuat program kita bisa <b class="text-lime-400">membuat keputusan</b>! Contoh: "Jika uangku cukup, maka aku beli bakso. Kalau tidak cukup, beli permen saja." (Ini adalah <b class="text-white">Logika IF-ELSE</b>!)</p>
+                                <p class="text-xl text-white font-bold mt-4">Sampai jumpa minggu depan! 👋</p>
+                            </div>
+                        </div>
+                    `
+                }
             ],
             3: [
                 {
