@@ -192,25 +192,25 @@
                     </button>
 
                     <!-- Locked Meetings -->
-                    <button class="meeting-tab w-full text-left p-4 bg-lime-400 rounded-lg transition-colors active-meeting" data-meeting="3">
+                    <button class="meeting-tab w-full text-left p-4 bg-slate-800/60 hover:bg-slate-700/80 rounded-lg transition-colors" data-meeting="3">
                         <div class="flex items-center">
-                            <span class="w-8 h-8 bg-lime-600 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">3</span>
+                            <span class="w-8 h-8 bg-slate-700 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">3</span>
                             <div>
-                                <div class="font-medium text-slate-900">Meeting 3</div>
-                                <div class="text-sm text-slate-800">Operators & Input</div>
+                                <div class="font-medium text-white">Meeting 3</div>
+                                <div class="text-sm text-gray-400">Operators & Input</div>
                             </div>
                         </div>
                     </button>
                     <!-- (Stubs lainnya tidak diubah untuk keringkasan) -->
-                     <div class="w-full text-left p-4 bg-slate-800/60 rounded-lg opacity-60 cursor-not-allowed">
+                    <button class="meeting-tab w-full text-left p-4 bg-lime-400 rounded-lg transition-colors active-meeting" data-meeting="4">
                         <div class="flex items-center">
-                            <span class="w-8 h-8 bg-slate-700 text-slate-500 rounded-full flex items-center justify-center text-sm font-bold mr-3">🔒</span>
+                            <span class="w-8 h-8 bg-lime-600 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">4</span>
                             <div>
-                                <div class="font-medium text-gray-400">Meeting 4</div>
-                                <div class="text-xs text-gray-500">Functions - Available Soon</div>
+                                <div class="font-medium text-slate-900">Meeting 4</div>
+                                <div class="text-sm text-slate-800">Pesan Pribadi (f-string)</div>
                             </div>
                         </div>
-                    </div>
+                    </button>
                     <div class="w-full text-left p-4 bg-slate-800/60 rounded-lg opacity-60 cursor-not-allowed">
                         <div class="flex items-center">
                             <span class="w-8 h-8 bg-slate-700 text-slate-500 rounded-full flex items-center justify-center text-sm font-bold mr-3">🔒</span>
@@ -370,7 +370,7 @@
     </footer>
 
     <script>
-        let currentMeeting = 3;
+        let currentMeeting = 1;
         let currentSlide = 1;
         const totalMeetings = 12;
 
@@ -1577,6 +1577,246 @@
                     `
                 }
             ],
+            4: [
+                {
+                    title: "Program Kita Bisa Menyapa Nama!",
+                    subtitle: "Review & Notifikasi Game",
+                    emoji: "🎮",
+                    content: `
+                        <div class="text-left space-y-6 max-w-3xl mx-auto">
+                            <div>
+                                <h3 class="text-2xl font-bold text-lime-400 mb-3">Review Cepat ⚡</h3>
+                                <p class="text-lg text-gray-300">
+                                    Di pertemuan lalu, kita belajar <code class="code-font bg-slate-800 p-1 rounded">input()</code>. Ingat? Apapun yang kita ketik, komputer selalu menganggapnya sebagai <b class="text-white">Teks (String)</b>.
+                                </p>
+                            </div>
+                            <div class="p-6 bg-purple-900/50 rounded-xl border border-purple-700">
+                                <h4 class="text-xl font-semibold text-purple-300 mb-2">Kenapa Ini Keren? 🤔</h4>
+                                <p class="text-lg text-gray-300">Kamu pasti sering lihat notifikasi di game atau aplikasi:</p>
+                                <ul class="list-disc list-inside mt-2 text-gray-300 space-y-1">
+                                    <li>"Selamat datang kembali, <b class="text-white">Budi</b>!"</li>
+                                    <li>"Hai <b class="text-white">Siti</b>, ada <b class="text-white">3</b> pesan baru untukmu!"</li>
+                                </ul>
+                                <p class="text-lg text-gray-300 mt-3">Hari ini, kita akan belajar cara paling modern dan rapi untuk membuat pesan-pesan keren seperti itu di Python!</p>
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Cara Lama: Menempel dengan Lem",
+                    subtitle: "Menggabungkan Teks dengan Tanda '+'",
+                    emoji: "😥",
+                    content: `
+                        <div class="text-left space-y-6 max-w-3xl mx-auto">
+                            <h3 class="text-2xl font-bold text-lime-400 mb-3">Dulu, Caranya Agak Repot...</h3>
+                            <p class="text-lg text-gray-300">
+                                Dulu, kalau mau gabungkan teks dan variabel, kita harus pakai banyak tanda tambah <code class="code-font bg-slate-800 p-1 rounded">+</code>.
+                            </p>
+                            <div class="p-4 bg-purple-900/50 rounded-xl border border-purple-700 max-w-md mx-auto">
+                                <p class="font-semibold text-purple-300">Analogi: Pakai Lem Kertas 📜</p>
+                                <p class="text-sm text-gray-300">Bayangkan tanda <code class="code-font">+</code> itu seperti <b class="text-white">lem</b>. Kamu harus menempel satu per satu potongan kertas: "Halo", lalu nama, lalu "umur saya", dan seterusnya.</p>
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Jebakan Cara Lama: Angka vs Teks",
+                    subtitle: "Kenapa Angka Tidak Bisa Langsung 'Dilem'?",
+                    emoji: "⚠️",
+                    content: `
+                        <div class="text-left space-y-6 max-w-3xl mx-auto">
+                            <h3 class="text-2xl font-bold text-red-400 mb-3">Masalah Terbesar Cara Lama</h3>
+                            <p class="text-lg text-gray-300">
+                                Kita tidak bisa "mengelem" <b class="text-cyan-400">angka (Integer)</b> langsung ke <b class="text-orange-400">teks (String)</b>.
+                            </p>
+                            <div class="p-4 bg-red-900/50 rounded-xl border border-red-700 max-w-lg mx-auto">
+                                <p class="font-semibold text-red-300">Analogi: Apel dan Kertas 🍎</p>
+                                <p class="text-sm text-gray-200">Kamu tidak bisa menempel buah apel asli (angka) ke selembar kertas (teks). Kamu harus <b class="text-white">memfoto apelnya dulu</b>, baru fotonya bisa ditempel. Sihir <code class="code-font">str()</code> itu seperti kamera yang mengubah angka menjadi 'foto angka' (teks).</p>
+                            </div>
+                            <div class="bg-slate-900 rounded-lg p-4 border border-slate-700 text-left">
+                                <code class="code-font text-lime-300 text-sm block">
+                                    <span class="text-white">nama = </span><span class="text-orange-400">"Citra"</span><br>
+                                    <span class="text-white">umur = </span><span class="text-cyan-400">15</span> <span class="text-gray-500"># Ini angka murni</span><br><br>
+                                    <span class="text-gray-500"># Lihat betapa repotnya ini! Harus pakai str() dan atur spasi manual.</span><br>
+                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"Halo, nama saya "</span> + nama + <span class="text-orange-400">" dan umur saya "</span> + <span class="text-purple-400">str</span>(umur) + <span class="text-orange-400">" tahun."</span>)
+                                </code>
+                            </div>
+                            <p class="text-center text-lg text-gray-400">Repot, kan? Gampang salah dan susah dibaca!</p>
+                        </div>
+                    `
+                },
+                {
+                    title: "Solusi Modern: f-string!",
+                    subtitle: "Cara Ajaib Menggabungkan Teks",
+                    emoji: "😎",
+                    content: `
+                        <div class="text-left space-y-6 max-w-3xl mx-auto">
+                            <h3 class="text-2xl font-bold text-lime-400 mb-3">Selamat Datang, f-string!</h3>
+                            <p class="text-lg text-gray-300">
+                                Ini adalah cara baru yang super gampang untuk memasukkan variabel ke dalam teks.
+                            </p>
+                            <div class="p-4 bg-purple-900/50 rounded-xl border border-purple-700 max-w-md mx-auto">
+                                <p class="font-semibold text-purple-300">Analogi: Mengisi Formulir 📝</p>
+                                <p class="text-sm text-gray-300">Bayangkan f-string itu seperti formulir yang sudah ada kalimatnya, dan kamu tinggal <b class="text-white">mengisi bagian yang kosong</b>. Bagian kosong itu adalah <code class="code-font">{nama_variabel}</code>.</p>
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Aturan Emas f-string",
+                    subtitle: "Sangat Sederhana!",
+                    emoji: "✨",
+                    content: `
+                        <div class="text-left space-y-6 max-w-3xl mx-auto">
+                            <h3 class="text-2xl font-bold text-lime-400 mb-3">Hanya 2 Aturan Main:</h3>
+                            <ol class="list-decimal list-inside space-y-4 text-lg text-gray-300">
+                                <li>Awali teksmu dengan huruf <b class="text-lime-400">f</b> sebelum tanda kutip. Contoh: <code class="code-font">f"..."</code></li>
+                                <li>Masukkan nama variabel langsung di dalam <b class="text-purple-400">kurung kurawal {}</b>.</li>
+                            </ol>
+                            <div class="bg-slate-900 rounded-lg p-6 border border-slate-700 text-left">
+                                <code class="code-font text-lime-300 text-sm block">
+                                    <span class="text-white">nama = </span><span class="text-orange-400">"Citra"</span><br>
+                                    <span class="text-white">umur = </span><span class="text-cyan-400">15</span><br><br>
+                                    <span class="text-gray-500"># Cara modern dengan f-string</span><br>
+                                    <span class="text-purple-400">print</span>(<span class="text-lime-400">f</span><span class="text-orange-400">"Halo, nama saya </span><span class="text-white">{nama}</span><span class="text-orange-400"> dan umur saya </span><span class="text-white">{umur}</span><span class="text-orange-400"> tahun."</span>)
+                                </code>
+                            </div>
+                            <p class="text-center text-xl text-lime-300 font-bold">LIHAT! Kita tidak perlu <code class="code-font">str()</code> lagi! Jauh lebih rapi!</p>
+                        </div>
+                    `
+                },
+                {
+                    title: "Latihan: Sapaan Pelajaran Favorit",
+                    subtitle: "Praktik Terbimbing",
+                    emoji: "💖",
+                    content: `
+                        <div class="text-left space-y-6 max-w-3xl mx-auto">
+                            <h3 class="text-2xl font-bold text-purple-300 mb-3">Ayo Coba!</h3>
+                            <p class="text-lg text-gray-300">
+                                Kita akan buat program yang bertanya nama dan pelajaran favorit, lalu menampilkan sapaan pribadi menggunakan f-string.
+                            </p>
+                            <p class="text-center text-gray-400">File: <code class="code-font bg-slate-800 p-1 rounded">sapaan_favorit.py</code></p>
+                            <div class="bg-slate-900 rounded-lg p-6 border border-slate-700 text-left">
+                                <code class="code-font text-lime-300 text-sm block">
+                                    <span class="text-gray-500"># 1. Meminta input dari pengguna</span><br>
+                                    <span class="text-white">nama_pengguna = </span><span class="text-purple-400">input</span>(<span class="text-orange-400">"Hai, boleh tahu namamu? "</span>)<br>
+                                    <span class="text-white">mapel_favorit = </span><span class="text-purple-400">input</span>(<span class="text-orange-400">"Apa mata pelajaran yang paling kamu suka? "</span>)<br><br>
+                                    
+                                    <span class="text-gray-500"># 2. Membuat pesan dengan f-string</span><br>
+                                    <span class="text-white">pesan = </span><span class="text-lime-400">f</span><span class="text-orange-400">"Halo, </span><span class="text-white">{nama_pengguna}</span><span class="text-orange-400">! Wah, ternyata kamu suka </span><span class="text-white">{mapel_favorit}</span><span class="text-orange-400">. Semangat terus belajarnya!"</span><br><br>
+
+                                    <span class="text-gray-500"># 3. Cetak pesannya!</span><br>
+                                    <span class="text-purple-400">print</span>(pesan)
+                                </code>
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Proyek: Jadwal Piket Kelas",
+                    subtitle: "Kekuatan Super Baru: .upper()",
+                    emoji: "🧹",
+                    content: `
+                        <div class="text-left space-y-6 max-w-3xl mx-auto">
+                            <h3 class="text-2xl font-bold text-lime-400 mb-3">Tantangan: Generator Jadwal Piket</h3>
+                            <p class="text-lg text-gray-300">
+                                Kita akan buat program yang mengonfirmasi jadwal piket siswa dan membuatnya jadi huruf besar semua!
+                            </p>
+                            <div class="p-4 bg-purple-900/50 rounded-xl border border-purple-700">
+                                <h4 class="text-xl font-semibold text-purple-300 mb-2">Kekuatan Super: <code class="code-font">.upper()</code></h4>
+                                <p class="text-gray-300">Kita bisa tambahkan <code class="code-font">.upper()</code> setelah variabel di dalam <code class="code-font">{}</code> untuk membuat teksnya jadi <b class="text-white">HURUF BESAR SEMUA</b>!</p>
+                                <p class="text-sm text-gray-400 mt-2">Analogi: Seperti tombol Caps Lock di keyboard!</p>
+                            </div>
+                            <div class="bg-slate-900 rounded-lg p-6 border border-slate-700 text-left">
+                                <code class="code-font text-lime-300 text-sm block">
+                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"--- Generator Jadwal Piket Kelas ---"</span>)<br><br>
+                                    <span class="text-white">nama_siswa = </span><span class="text-purple-400">input</span>(<span class="text-orange-400">"Masukkan nama siswa: "</span>)<br>
+                                    <span class="text-white">hari_piket = </span><span class="text-purple-400">input</span>(<span class="text-lime-400">f</span><span class="text-orange-400">"Masukkan hari piket untuk </span><span class="text-white">{nama_siswa}</span><span class="text-orange-400">: "</span>)<br><br>
+
+                                    <span class="text-gray-500"># Gunakan .upper() di dalam f-string!</span><br>
+                                    <span class="text-white">konfirmasi = </span><span class="text-lime-400">f</span><span class="text-orange-400">"✅ JADWAL: </span><span class="text-white">{nama_siswa.upper()}</span><span class="text-orange-400"> piket hari </span><span class="text-white">{hari_piket.upper()}</span><span class="text-orange-400">."</span><br><br>
+
+                                    <span class="text-purple-400">print</span>(konfirmasi)
+                                </code>
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "f-string di Mana Saja!",
+                    subtitle: "Contoh Keren: Struk Belanja",
+                    emoji: "🛒",
+                    content: `
+                        <div class="text-left space-y-6 max-w-3xl mx-auto">
+                            <h3 class="text-2xl font-bold text-lime-400 mb-3">Contoh 1: Struk Belanja Digital</h3>
+                            <p class="text-lg text-gray-300">
+                                Dengan f-string, kita bisa menggabungkan nama barang (teks) dan total harga (angka) dengan sangat mudah untuk membuat struk yang rapi.
+                            </p>
+                            <div class="bg-slate-900 rounded-lg p-6 border border-slate-700 text-left">
+                                <code class="code-font text-lime-300 text-sm block">
+                                    <span class="text-white">barang = </span><span class="text-orange-400">"Cokelat"</span><br>
+                                    <span class="text-white">jumlah = </span><span class="text-cyan-400">2</span><br>
+                                    <span class="text-white">harga_satuan = </span><span class="text-cyan-400">5000</span><br>
+                                    <span class="text-white">total = jumlah * harga_satuan</span><br><br>
+
+                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"--- Struk Digital ---"</span>)<br>
+                                    <span class="text-purple-400">print</span>(<span class="text-lime-400">f</span><span class="text-orange-400">"Barang: </span><span class="text-white">{barang}</span><span class="text-orange-400">"</span>)<br>
+                                    <span class="text-purple-400">print</span>(<span class="text-lime-400">f</span><span class="text-orange-400">"Jumlah: </span><span class="text-white">{jumlah}</span><span class="text-orange-400"> pcs"</span>)<br>
+                                    <span class="text-purple-400">print</span>(<span class="text-lime-400">f</span><span class="text-orange-400">"Total Harga: Rp </span><span class="text-white">{total}</span><span class="text-orange-400">"</span>)<br>
+                                </code>
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "f-string di Mana Saja!",
+                    subtitle: "Contoh Keren: Bio Instagram",
+                    emoji: "📱",
+                    content: `
+                        <div class="text-left space-y-6 max-w-3xl mx-auto">
+                            <h3 class="text-2xl font-bold text-lime-400 mb-3">Contoh 2: Membuat Bio Instagram</h3>
+                            <p class="text-lg text-gray-300">
+                                Kita bisa meminta beberapa info, lalu menyusunnya jadi bio keren pakai f-string!
+                            </p>
+                            <div class="bg-slate-900 rounded-lg p-6 border border-slate-700 text-left">
+                                <code class="code-font text-lime-300 text-sm block">
+                                    <span class="text-white">nama_panggilan = </span><span class="text-orange-400">"Budi"</span><br>
+                                    <span class="text-white">hobi = </span><span class="text-orange-400">"Main Bola"</span><br>
+                                    <span class="text-white">kota_asal = </span><span class="text-orange-400">"Jakarta"</span><br><br>
+
+                                    <span class="text-gray-500"># Lihat betapa rapinya f-string menyusun bio ini!</span><br>
+                                    <span class="text-white">bio = </span><span class="text-lime-400">f</span><span class="text-orange-400">"✨ </span><span class="text-white">{nama_panggilan}</span><span class="text-orange-400"> | 📍 Dari </span><span class="text-white">{kota_asal}</span><span class="text-orange-400"> | Hobi: </span><span class="text-white">{hobi}</span><span class="text-orange-400">"</span><br>
+                                    <span class="text-purple-400">print</span>(bio)
+                                </code>
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "f-string Bikin Hidup Gampang!",
+                    subtitle: "Rangkuman & Minggu Depan",
+                    emoji: "🏁",
+                    content: `
+                        <div class="text-left space-y-6 max-w-3xl mx-auto">
+                            <h3 class="text-2xl font-bold text-lime-400 mb-3">Rangkuman Hari Ini:</h3>
+                            <ul class="list-disc list-inside space-y-3 text-lg text-gray-300">
+                                <li><b>Cara Lama:</b> Pakai <code class="code-font bg-slate-800 p-1 rounded">+</code> (repot, harus pakai <code class="code-font bg-slate-800 p-1 rounded">str()</code>).</li>
+                                <li><b>Cara Baru (Modern): f-string!</b>
+                                    <ul class="list-['-'] list-inside ml-6 mt-2 space-y-2">
+                                        <li>Awali dengan huruf <b class="text-lime-400">f</b> di depan kutip.</li>
+                                        <li>Masukkan variabel pakai <b class="text-purple-400">kurung kurawal {}</b>.</li>
+                                        <li>Tidak perlu <code class="code-font bg-slate-800 p-1 rounded">str()</code> lagi! Jauh lebih rapi!</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <div class="bg-purple-900/50 p-6 rounded-xl border border-purple-700">
+                                <h4 class="text-xl font-semibold text-purple-300 mb-2">Materi Minggu Depan:</h4>
+                                <p class="text-lg text-gray-300">Program kita akan jadi <b class="text-lime-400">LEBIH PINTAR!</b> Kita akan ajarkan komputer cara <b class="text-white">membuat keputusan</b> sendiri. Contoh: "JIKA nilai ujian > 80, MAKA dapat bintang. JIKA TIDAK, ayo belajar lagi!" (Ini adalah Logika <b class="text-white">IF-ELSE</b>!)</p>
+                            </div>
+                        </div>
+                    `
+                }
+            ],
         };
 
         // Fungsi untuk memperbarui konten slide dan elemen UI
@@ -1610,6 +1850,8 @@
                     meetingTitle.textContent = `📦 Pertemuan 2: Kotak Ingatan Python (Variabel)`;
                 } else if (currentMeeting === 3) {
                     meetingTitle.textContent = `🧮 Pertemuan 3: Python si Kalkulator Hebat!`;
+                } else if (currentMeeting === 4) {
+                    meetingTitle.textContent = `💌 Pertemuan 4: Pesan Pribadi dengan f-string`;
                 } else {
                     meetingTitle.textContent = `Meeting ${currentMeeting}: ${currentData.title.split(':')[0]}`;
                 }
