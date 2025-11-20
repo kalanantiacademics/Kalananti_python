@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,35 +15,36 @@
             /* Menggunakan Inter font */
             font-family: 'Inter', sans-serif;
         }
-        
+
         /* Gradien header baru terinspirasi dari "Francore" (Ungu/Violet) */
         .header-gradient {
             background: linear-gradient(135deg, #581c87 0%, #6d28d9 100%);
         }
-        
+
         .slide-transition {
             transition: all 0.3s ease-in-out;
         }
-        
+
         .meeting-tab {
             transition: all 0.2s ease;
         }
-        
+
         .meeting-tab:hover {
             transform: translateY(-2px);
         }
-        
+
         .code-font {
             font-family: 'Courier New', monospace;
         }
-        
+
         /* Latar belakang slide utama dengan efek 'blob' gradien modern */
         .code-bg {
-            background: #0f172a; /* bg-slate-900 */
+            background: #0f172a;
+            /* bg-slate-900 */
             position: relative;
             overflow: hidden;
         }
-        
+
         .code-bg::before {
             content: '';
             position: absolute;
@@ -50,7 +52,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-image: 
+            background-image:
                 /* Blob Ungu */
                 radial-gradient(circle at 20% 80%, rgba(126, 34, 206, 0.15) 0%, transparent 50%),
                 /* Blob Hijau Limau */
@@ -60,25 +62,32 @@
             pointer-events: none;
             filter: blur(20px);
         }
-        
+
         /* Floating code sekarang menggunakan warna aksen baru */
         .floating-code {
             position: absolute;
             font-family: 'Courier New', monospace;
-            color: rgba(163, 230, 53, 0.1); /* Lime-400 opacity 10% */
+            color: rgba(163, 230, 53, 0.1);
+            /* Lime-400 opacity 10% */
             font-size: 12px;
             animation: float 20s infinite linear;
             white-space: nowrap;
         }
-        
+
         @keyframes float {
-            0% { transform: translateX(-100px) translateY(0px); }
-            100% { transform: translateX(calc(100vw + 100px)) translateY(-20px); }
+            0% {
+                transform: translateX(-100px) translateY(0px);
+            }
+
+            100% {
+                transform: translateX(calc(100vw + 100px)) translateY(-20px);
+            }
         }
 
         /* Pola latar belakang main, dibuat lebih halus */
         .main-pattern {
-            background-color: #020617; /* bg-slate-950 */
+            background-color: #020617;
+            /* bg-slate-950 */
             background-image: radial-gradient(#1e293b 1px, transparent 1px);
             background-size: 10px 10px;
         }
@@ -88,12 +97,15 @@
             margin-bottom: 0.75rem;
             padding-left: 0.5rem;
         }
+
         .custom-list li::marker {
-            color: #a3e635; /* Tailwind lime-400 */
+            color: #a3e635;
+            /* Tailwind lime-400 */
             font-weight: bold;
         }
     </style>
 </head>
+
 <body class="h-full bg-slate-950 text-white">
     <!-- 
       Struktur utama diubah menjadi h-screen (100vh)
@@ -104,25 +116,29 @@
           Header - Menggunakan gradien ungu baru
           PERUBAHAN: Menambahkan h-20 (5rem / 80px) untuk tinggi eksplisit
         -->
-        <header class="header-gradient px-4 py-4 shadow-lg fixed top-0 left-0 right-0 z-50 h-20"> <!-- Padding diubah menjadi px-4 py-4 -->
+        <header class="header-gradient px-4 py-4 shadow-lg fixed top-0 left-0 right-0 z-50 h-20">
+            <!-- Padding diubah menjadi px-4 py-4 -->
             <div class="flex items-center justify-between w-full h-full"> <!-- Tambahkan h-full di sini -->
                 <!-- Left Side: Logo & Hamburger -->
                 <div class="flex items-center gap-4">
                     <button id="hamburgerBtn" class="text-white/80 hover:text-white transition-colors lg:hidden">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16"></path>
                         </svg>
                     </button>
-                    <img src="https://cdn-web-2.ruangguru.com/landing-pages/assets/hs/Kalananti%20by%20Ruangguru-04.png" alt="Kalananti Logo" class="h-10" onerror="this.src='https://placehold.co/100x40/6d28d9/ffffff?text=Kalananti'; this.alt='Kalananti Logo';">
+                    <img src="https://cdn-web-2.ruangguru.com/landing-pages/assets/hs/Kalananti%20by%20Ruangguru-04.png"
+                        alt="Kalananti Logo" class="h-10"
+                        onerror="this.src='https://placehold.co/100x40/6d28d9/ffffff?text=Kalananti'; this.alt='Kalananti Logo';">
                 </div>
-                
+
                 <!-- Center: Title -->
                 <div class="flex-1 text-center">
                     <h1 class="text-xl font-bold text-white">
                         🐍 Python Programming Course
                     </h1>
                 </div>
-                
+
                 <!-- 
                   Right Side: Spacer for balance 
                   PERUBAHAN: Lebar disesuaikan agar konsisten dengan lebar logo/hamburger 
@@ -141,7 +157,8 @@
         -->
         <div class="flex-1 flex overflow-hidden pt-20">
             <!-- Sidebar Overlay -->
-            <div id="sidebarOverlay" class="fixed inset-0 bg-black bg-opacity-70 z-40 hidden backdrop-blur-sm lg:hidden"></div>
+            <div id="sidebarOverlay"
+                class="fixed inset-0 bg-black bg-opacity-70 z-40 hidden backdrop-blur-sm lg:hidden"></div>
 
             <!-- 
               Sidebar - Menggunakan warna slate gelap dan aksen hijau limau
@@ -151,18 +168,20 @@
               - Struktur internal (flex-col, flex-shrink-0, flex-grow) sudah benar
                 untuk membuat 'nav' bisa di-scroll secara internal.
             -->
-            <aside id="sidebar" class="fixed lg:relative left-0 top-0 h-full lg:h-full w-80 bg-slate-900 border-r border-slate-700/50 shadow-2xl transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out z-40 flex-shrink-0 flex flex-col">
-            <!-- Header Sidebar (Non-scrollable) -->
-            <div class="p-6 flex-shrink-0">
-                <div class="flex items-center justify-between mb-6">
-                    <h2 class="text-xl font-bold text-white">Course Meetings</h2>
-                    <button id="closeSidebarBtn" class="text-gray-400 hover:text-white transition-colors lg:hidden">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                        </svg>
-                    </button>
+            <aside id="sidebar"
+                class="fixed lg:relative left-0 top-0 h-full lg:h-full w-80 bg-slate-900 border-r border-slate-700/50 shadow-2xl transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out z-40 flex-shrink-0 flex flex-col">
+                <!-- Header Sidebar (Non-scrollable) -->
+                <div class="p-6 flex-shrink-0">
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="text-xl font-bold text-white">Course Meetings</h2>
+                        <button id="closeSidebarBtn" class="text-gray-400 hover:text-white transition-colors lg:hidden">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
                 </div>
-            </div>
                 <!-- 
                   Meeting Navigation (Scrollable) 
                   'flex-grow' membuatnya mengisi sisa ruang
@@ -170,219 +189,311 @@
                 -->
                 <nav class="space-y-2 overflow-y-auto px-6 pb-6 flex-grow">
                     <!-- Meeting 1 Tab -->
-                    <button class="meeting-tab w-full text-left p-4 bg-slate-800/60 hover:bg-slate-700/80 rounded-lg transition-colors" data-meeting="1">
+                    <button
+                        class="meeting-tab w-full text-left p-4 bg-slate-800/60 hover:bg-slate-700/80 rounded-lg transition-colors"
+                        data-meeting="1">
                         <div class="flex items-center">
-                            <span class="w-8 h-8 bg-slate-700 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">1</span>
+                            <span
+                                class="w-8 h-8 bg-slate-700 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">1</span>
                             <div>
                                 <div class="font-medium text-white">Meeting 1</div>
-                                <div class="text-sm text-gray-400">Introduction to Python</div>
+                                <div class="text-sm text-gray-400">Pengenalan & Persiapan</div>
                             </div>
                         </div>
                     </button>
-                    
-                    <!-- Meeting 2 Tab - Active -->
-                    <button class="meeting-tab w-full text-left p-4 bg-slate-800/60 hover:bg-slate-700/80 rounded-lg transition-colors" data-meeting="2">
+
+                    <!-- Meeting 2 Tab -->
+                    <button
+                        class="meeting-tab w-full text-left p-4 bg-slate-800/60 hover:bg-slate-700/80 rounded-lg transition-colors"
+                        data-meeting="2">
                         <div class="flex items-center">
-                            <span class="w-8 h-8 bg-slate-700 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">2</span>
+                            <span
+                                class="w-8 h-8 bg-slate-700 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">2</span>
                             <div>
                                 <div class="font-medium text-white">Meeting 2</div>
-                                <div class="text-sm text-gray-400">Variables & Data Types</div>
+                                <div class="text-sm text-gray-400">Tipe Data & Variabel</div>
                             </div>
                         </div>
                     </button>
 
-                    <!-- Locked Meetings -->
-                    <button class="meeting-tab w-full text-left p-4 bg-slate-800/60 hover:bg-slate-700/80 rounded-lg transition-colors" data-meeting="3">
+                    <!-- Meeting 3 Tab -->
+                    <button
+                        class="meeting-tab w-full text-left p-4 bg-slate-800/60 hover:bg-slate-700/80 rounded-lg transition-colors"
+                        data-meeting="3">
                         <div class="flex items-center">
-                            <span class="w-8 h-8 bg-slate-700 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">3</span>
+                            <span
+                                class="w-8 h-8 bg-slate-700 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">3</span>
                             <div>
                                 <div class="font-medium text-white">Meeting 3</div>
-                                <div class="text-sm text-gray-400">Operators & Input</div>
+                                <div class="text-sm text-gray-400">Mengenal Operators</div>
                             </div>
                         </div>
                     </button>
-                    <!-- (Stubs lainnya tidak diubah untuk keringkasan) -->
-                    <button class="meeting-tab w-full text-left p-4 bg-lime-400 rounded-lg transition-colors active-meeting" data-meeting="4">
-                        <div class="flex items-center">
-                            <span class="w-8 h-8 bg-lime-600 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">4</span>
-                            <div>
-                                <div class="font-medium text-slate-900">Meeting 4</div>
-                                <div class="text-sm text-slate-800">Pesan Pribadi (f-string)</div>
-                            </div>
-                        </div>
-                    </button>
-                    <div class="w-full text-left p-4 bg-slate-800/60 rounded-lg opacity-60 cursor-not-allowed">
-                        <div class="flex items-center">
-                            <span class="w-8 h-8 bg-slate-700 text-slate-500 rounded-full flex items-center justify-center text-sm font-bold mr-3">🔒</span>
-                            <div>
-                                <div class="font-medium text-gray-400">Meeting 5</div>
-                                <div class="text-xs text-gray-500">Lists & Tuples - Available Soon</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="w-full text-left p-4 bg-slate-800/60 rounded-lg opacity-60 cursor-not-allowed">
-                        <div class="flex items-center">
-                            <span class="w-8 h-8 bg-slate-700 text-slate-500 rounded-full flex items-center justify-center text-sm font-bold mr-3">🔒</span>
-                            <div>
-                                <div class="font-medium text-gray-400">Meeting 6</div>
-                                <div class="text-xs text-gray-500">Dictionaries - Available Soon</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="w-full text-left p-4 bg-slate-800/60 rounded-lg opacity-60 cursor-not-allowed">
-                        <div class="flex items-center">
-                            <span class="w-8 h-8 bg-slate-700 text-slate-500 rounded-full flex items-center justify-center text-sm font-bold mr-3">🔒</span>
-                            <div>
-                                <div class="font-medium text-gray-400">Meeting 7</div>
-                                <div class="text-xs text-gray-500">File Handling - Available Soon</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="w-full text-left p-4 bg-slate-800/60 rounded-lg opacity-60 cursor-not-allowed">
-                        <div class="flex items-center">
-                            <span class="w-8 h-8 bg-slate-700 text-slate-500 rounded-full flex items-center justify-center text-sm font-bold mr-3">🔒</span>
-                            <div>
-                                <div class="font-medium text-gray-400">Meeting 8</div>
-                                <div class="text-xs text-gray-500">Error Handling - Available Soon</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="w-full text-left p-4 bg-slate-800/60 rounded-lg opacity-60 cursor-not-allowed">
-                        <div class="flex items-center">
-                            <span class="w-8 h-8 bg-slate-700 text-slate-500 rounded-full flex items-center justify-center text-sm font-bold mr-3">🔒</span>
-                            <div>
-                                <div class="font-medium text-gray-400">Meeting 9</div>
-                                <div class="text-xs text-gray-500">Classes & Objects - Available Soon</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="w-full text-left p-4 bg-slate-800/60 rounded-lg opacity-60 cursor-not-allowed">
-                        <div class="flex items-center">
-                            <span class="w-8 h-8 bg-slate-700 text-slate-500 rounded-full flex items-center justify-center text-sm font-bold mr-3">🔒</span>
-                            <div>
-                                <div class="font-medium text-gray-400">Meeting 10</div>
-                                <div class="text-xs text-gray-500">Modules & Packages - Available Soon</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="w-full text-left p-4 bg-slate-800/60 rounded-lg opacity-60 cursor-not-allowed">
-                        <div class="flex items-center">
-                            <span class="w-8 h-8 bg-slate-700 text-slate-500 rounded-full flex items-center justify-center text-sm font-bold mr-3">🔒</span>
-                            <div>
-                                <div class="font-medium text-gray-400">Meeting 11</div>
-                                <div class="text-xs text-gray-500">Libraries & APIs - Available Soon</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="w-full text-left p-4 bg-slate-800/60 rounded-lg opacity-60 cursor-not-allowed">
-                        <div class="flex items-center">
-                            <span class="w-8 h-8 bg-slate-700 text-slate-500 rounded-full flex items-center justify-center text-sm font-bold mr-3">🔒</span>
-                            <div>
-                                <div class="font-medium text-gray-400">Meeting 12</div>
-                                <div class="text-xs text-gray-500">Final Project - Available Soon</div>
-                            </div>
-                        </div>
-                    </div>
-                </nav>
-        </aside>
 
-        <!-- 
+                    <!-- Meeting 4 Tab -->
+                    <button
+                        class="meeting-tab w-full text-left p-4 bg-slate-800/60 hover:bg-slate-700/80 rounded-lg transition-colors"
+                        data-meeting="4">
+                        <div class="flex items-center">
+                            <span
+                                class="w-8 h-8 bg-slate-700 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">4</span>
+                            <div>
+                                <div class="font-medium text-white">Meeting 4</div>
+                                <div class="text-sm text-gray-400">Input & Formatting String</div>
+                            </div>
+                        </div>
+                    </button>
+
+                    <!-- Meeting 5 Tab -->
+                    <button
+                        class="meeting-tab w-full text-left p-4 bg-slate-800/60 hover:bg-slate-700/80 rounded-lg transition-colors"
+                        data-meeting="5">
+                        <div class="flex items-center">
+                            <span
+                                class="w-8 h-8 bg-slate-700 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">5</span>
+                            <div>
+                                <div class="font-medium text-white">Meeting 5</div>
+                                <div class="text-sm text-gray-400">Logika If-Else</div>
+                            </div>
+                        </div>
+                    </button>
+
+                    <!-- Meeting 6 Tab -->
+                    <button
+                        class="meeting-tab w-full text-left p-4 bg-slate-800/60 hover:bg-slate-700/80 rounded-lg transition-colors"
+                        data-meeting="6">
+                        <div class="flex items-center">
+                            <span
+                                class="w-8 h-8 bg-slate-700 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">6</span>
+                            <div>
+                                <div class="font-medium text-white">Meeting 6</div>
+                                <div class="text-sm text-gray-400">Logika Lanjutan (Elif)</div>
+                            </div>
+                        </div>
+                    </button>
+
+                    <!-- Meeting 7 Tab -->
+                    <button
+                        class="meeting-tab w-full text-left p-4 bg-slate-800/60 hover:bg-slate-700/80 rounded-lg transition-colors"
+                        data-meeting="7">
+                        <div class="flex items-center">
+                            <span
+                                class="w-8 h-8 bg-slate-700 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">7</span>
+                            <div>
+                                <div class="font-medium text-white">Meeting 7</div>
+                                <div class="text-sm text-gray-400">Perulangan For Loop</div>
+                            </div>
+                        </div>
+                    </button>
+
+                    <!-- Meeting 8 Tab -->
+                    <button
+                        class="meeting-tab w-full text-left p-4 bg-slate-800/60 hover:bg-slate-700/80 rounded-lg transition-colors"
+                        data-meeting="8">
+                        <div class="flex items-center">
+                            <span
+                                class="w-8 h-8 bg-slate-700 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">8</span>
+                            <div>
+                                <div class="font-medium text-white">Meeting 8</div>
+                                <div class="text-sm text-gray-400">Perulangan While Loop</div>
+                            </div>
+                        </div>
+                    </button>
+
+                    <!-- Meeting 9 Tab -->
+                    <button
+                        class="meeting-tab w-full text-left p-4 bg-slate-800/60 hover:bg-slate-700/80 rounded-lg transition-colors"
+                        data-meeting="9">
+                        <div class="flex items-center">
+                            <span
+                                class="w-8 h-8 bg-slate-700 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">9</span>
+                            <div>
+                                <div class="font-medium text-white">Meeting 9</div>
+                                <div class="text-sm text-gray-400">Flashback & Proyek Akhir</div>
+                            </div>
+                        </div>
+                    </button>
+
+                    <!-- Meeting 10 Tab -->
+                    <button
+                        class="meeting-tab w-full text-left p-4 bg-slate-800/60 hover:bg-slate-700/80 rounded-lg transition-colors"
+                        data-meeting="10">
+                        <div class="flex items-center">
+                            <span
+                                class="w-8 h-8 bg-slate-700 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">10</span>
+                            <div>
+                                <div class="font-medium text-white">Meeting 10</div>
+                                <div class="text-sm text-gray-400">Pengerjaan Proyek 1</div>
+                            </div>
+                        </div>
+                    </button>
+
+                    <!-- Meeting 11 Tab -->
+                    <button
+                        class="meeting-tab w-full text-left p-4 bg-slate-800/60 hover:bg-slate-700/80 rounded-lg transition-colors"
+                        data-meeting="11">
+                        <div class="flex items-center">
+                            <span
+                                class="w-8 h-8 bg-slate-700 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">11</span>
+                            <div>
+                                <div class="font-medium text-white">Meeting 11</div>
+                                <div class="text-sm text-gray-400">Pengerjaan Proyek 2</div>
+                            </div>
+                        </div>
+                    </button>
+
+                    <!-- Meeting 12 Tab -->
+                    <button
+                        class="meeting-tab w-full text-left p-4 bg-slate-800/60 hover:bg-slate-700/80 rounded-lg transition-colors"
+                        data-meeting="12">
+                        <div class="flex items-center">
+                            <span
+                                class="w-8 h-8 bg-slate-700 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">12</span>
+                            <div>
+                                <div class="font-medium text-white">Meeting 12</div>
+                                <div class="text-sm text-gray-400">Showcase & Presentasi</div>
+                            </div>
+                        </div>
+                    </button>
+                </nav>
+            </aside>
+
+            <!-- 
           Main Content Area - Latar belakang pola baru
           'flex-1' membuatnya mengisi sisa lebar
           'overflow-y-auto' membuat area ini bisa di-scroll secara independen
         -->
-        <main class="flex-1 flex flex-col p-4 sm:p-8 main-pattern relative overflow-y-auto">
-            <!-- Floating Code Elements -->
-            <div class="floating-code" style="top: 10%; animation-delay: 0s;">def hello_world(): print("Hello Python!")</div>
-            <div class="floating-code" style="top: 30%; animation-delay: 5s;">import numpy as np</div>
-            <div class="floating-code" style="top: 50%; animation-delay: 10s;">for i in range(10): print(i)</div>
-            <div class="floating-code" style="top: 70%; animation-delay: 15s;">class PythonClass: pass</div>
-            <div class="floating-code" style="top: 90%; animation-delay: 3s;">if __name__ == "__main__":</div>
-            
-            <!-- 
+            <main class="flex-1 flex flex-col p-4 sm:p-8 main-pattern relative overflow-y-auto">
+                <!-- Floating Code Elements -->
+                <div class="floating-code" style="top: 10%; animation-delay: 0s;">def hello_world(): print("Hello
+                    Python!")</div>
+                <div class="floating-code" style="top: 30%; animation-delay: 5s;">import numpy as np</div>
+                <div class="floating-code" style="top: 50%; animation-delay: 10s;">for i in range(10): print(i)</div>
+                <div class="floating-code" style="top: 70%; animation-delay: 15s;">class PythonClass: pass</div>
+                <div class="floating-code" style="top: 90%; animation-delay: 3s;">if __name__ == "__main__":</div>
+
+                <!-- 
               Slide Box Wrapper
               PERUBAHAN:
               - 'my-auto' untuk centering vertikal
               - 'pb-28' untuk memberi ruang dari footer
             -->
-            <div class="w-full max-w-4xl mx-auto my-auto pb-28 relative z-10">
-                <!-- 
+                <div class="w-full max-w-4xl mx-auto my-auto pb-28 relative z-10">
+                    <!-- 
                   Slide Container - Warna baru untuk judul dan border
                   PERUBAHAN: 'overflow-y-auto' dihapus, karena parent-nya (<main>) yang akan scroll.
                   'min-h-[70vh]' untuk memastikan kartu tidak terlalu kecil.
                 -->
-                <div id="slideContainer" class="code-bg rounded-xl shadow-2xl p-6 sm:p-12 slide-transition border border-purple-800/50 min-h-[70vh]">
-                    <!-- Current Meeting Title -->
-                    <div class="text-center mb-8 relative">
-                        <div class="absolute -top-4 -left-4 text-6xl opacity-10 text-lime-400">🐍</div>
-                        <div class="absolute -top-4 -right-4 text-6xl opacity-10 text-purple-400">📦</div>
-                        <h2 id="meetingTitle" class="text-2xl sm:text-3xl font-bold text-lime-400 mb-2 relative z-10">Meeting 1: Berkenalan dengan Python</h2>
-                        <!-- Garis bawah gradien baru -->
-                        <div class="w-24 h-1 bg-gradient-to-r from-purple-500 to-lime-400 mx-auto rounded"></div>
-                        <div id="meetingSubtitle" class="mt-2 text-sm text-gray-400 code-font"># Konten Slide</div>
-                    </div>
-                    
-                    <!-- Content Area (Scrollable) -->
-                    <div id="slideContent" class="text-center space-y-6 relative z-10">
-                        <!-- Initial Content (Will be overwritten by JS) -->
+                    <div id="slideContainer"
+                        class="code-bg rounded-xl shadow-2xl p-6 sm:p-12 slide-transition border border-purple-800/50 min-h-[70vh]">
+                        <!-- Current Meeting Title -->
+                        <div class="text-center mb-8 relative">
+                            <div class="absolute -top-4 -left-4 text-6xl opacity-10 text-lime-400">🐍</div>
+                            <div class="absolute -top-4 -right-4 text-6xl opacity-10 text-purple-400">📦</div>
+                            <h2 id="meetingTitle"
+                                class="text-2xl sm:text-3xl font-bold text-lime-400 mb-2 relative z-10">Meeting 1:
+                                Berkenalan dengan Python</h2>
+                            <!-- Garis bawah gradien baru -->
+                            <div class="w-24 h-1 bg-gradient-to-r from-purple-500 to-lime-400 mx-auto rounded"></div>
+                            <div id="meetingSubtitle" class="mt-2 text-sm text-gray-400 code-font"># Konten Slide</div>
+                        </div>
+
+                        <!-- Content Area (Scrollable) -->
+                        <div id="slideContent" class="text-center space-y-6 relative z-10">
+                            <!-- Initial Content (Will be overwritten by JS) -->
+                        </div>
                     </div>
                 </div>
-            </div>
-        </main>
-    </div> <!-- Akhir dari container utama (flex-1) -->
+            </main>
+        </div> <!-- Akhir dari container utama (flex-1) -->
 
-    <!-- 
+        <!-- 
       Navigation Controls - Tombol dengan warna ungu baru
       PERUBAHAN: 
       - Menambahkan h-28 (7rem / 112px) untuk tinggi eksplisit
       - Menambahkan lg:left-80 untuk memberi ruang bagi sidebar di desktop
     -->
-    <footer class="fixed bottom-0 left-0 lg:left-80 right-0 bg-slate-900/80 backdrop-blur-sm border-t border-slate-700/50 p-4 z-50 h-28">
-        <div class="w-full max-w-7xl mx-auto px-4 h-full flex flex-col justify-center">
-            <div class="flex justify-between items-center mb-3">
-                <!-- Previous Button --> 
-                <button id="prevBtn" class="flex items-center space-x-2 bg-purple-700 hover:bg-purple-800 px-4 py-2 rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"> 
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-                    </svg>
-                    <span>Sebelumnya</span>
-                </button>
+        <footer
+            class="fixed bottom-0 left-0 lg:left-80 right-0 bg-slate-900/80 backdrop-blur-sm border-t border-slate-700/50 p-4 z-50 h-28">
+            <div class="w-full max-w-7xl mx-auto px-4 h-full flex flex-col justify-center">
+                <div class="flex justify-between items-center mb-3">
+                    <!-- Previous Button -->
+                    <button id="prevBtn"
+                        class="flex items-center space-x-2 bg-purple-700 hover:bg-purple-800 px-4 py-2 rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7">
+                            </path>
+                        </svg>
+                        <span>Sebelumnya</span>
+                    </button>
 
-                <!-- Slide Counter -->
-                <div class="text-center">
-                    <span id="slideCounter" class="text-gray-400 text-sm font-semibold">Slide 1 dari 10</span>
+                    <!-- Slide Counter -->
+                    <div class="text-center">
+                        <span id="slideCounter" class="text-gray-400 text-sm font-semibold">Slide 1 dari 10</span>
+                    </div>
+
+                    <!-- Next Button -->
+                    <button id="nextBtn"
+                        class="flex items-center space-x-2 bg-purple-700 hover:bg-purple-800 px-4 py-2 rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm">
+                        <span>Selanjutnya</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7">
+                            </path>
+                        </svg>
+                    </button>
                 </div>
 
-                <!-- Next Button -->
-                <button id="nextBtn" class="flex items-center space-x-2 bg-purple-700 hover:bg-purple-800 px-4 py-2 rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm">
-                    <span>Selanjutnya</span>
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                    </svg>
-                </button>
+                <!-- Copyright -->
+                <div class="text-center border-t border-slate-700 pt-2">
+                    <p class="text-gray-500 text-xs">© 2025 Kalananti. All rights reserved.</p>
+                </div>
             </div>
-            
-            <!-- Copyright -->
-            <div class="text-center border-t border-slate-700 pt-2">
-                <p class="text-gray-500 text-xs">© 2025 Kalananti. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
+        </footer>
 
-    <script>
-        let currentMeeting = 1;
-        let currentSlide = 1;
-        const totalMeetings = 12;
+        <script>
+            let currentMeeting = 4;
+            let currentSlide = 1;
+            const totalMeetings = 12;
 
-        // --- Meeting Content Structure (Updated with new color classes) ---
-        const meetingContent = {
-            1: [
-                // Slide 1.1: Selamat Datang di Dunia Program! 🚀
-                { 
-                    title: "Selamat Datang di Kelas Koding! 🚀", 
-                    subtitle: "Berkenalan dengan Python si Penerjemah Hebat",
-                    emoji: "🚀", 
-                    content: `
+            // --- Meeting Content Structure (Updated with new color classes) ---
+            const meetingContent = {
+                1: [
+                    // Slide 1.0: Class Check ✅
+                    {
+                        title: "Cek Kesiapan Kelas! 🎒",
+                        subtitle: "Sebelum mulai, ayo pastikan semua siap!",
+                        emoji: "✅",
+                        content: `
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-center max-w-4xl mx-auto">
+                            <div class="bg-slate-800 p-6 rounded-xl border border-slate-700">
+                                <div class="text-5xl mb-4">🥤</div>
+                                <h4 class="text-xl font-semibold text-lime-400 mb-2">Minum & Toilet</h4>
+                                <p class="text-gray-300">Sudah minum? Sudah ke toilet? Kita akan fokus selama 1 jam!</p>
+                            </div>
+                            <div class="bg-slate-800 p-6 rounded-xl border border-slate-700">
+                                <div class="text-5xl mb-4">💻</div>
+                                <h4 class="text-xl font-semibold text-lime-400 mb-2">Laptop & Charger</h4>
+                                <p class="text-gray-300">Pastikan laptop menyala dan baterai aman.</p>
+                            </div>
+                            <div class="bg-slate-800 p-6 rounded-xl border border-slate-700">
+                                <div class="text-5xl mb-4">🎧</div>
+                                <h4 class="text-xl font-semibold text-lime-400 mb-2">Audio Jelas?</h4>
+                                <p class="text-gray-300">Bisa dengar suara Kakak dengan jelas?</p>
+                            </div>
+                            <div class="bg-slate-800 p-6 rounded-xl border border-slate-700">
+                                <div class="text-5xl mb-4">😃</div>
+                                <h4 class="text-xl font-semibold text-lime-400 mb-2">Semangat!</h4>
+                                <p class="text-gray-300">Siapkan senyum terbaikmu!</p>
+                            </div>
+                        </div>
+                        `
+                    },
+                    // Slide 1.1: Selamat Datang di Dunia Program! 🚀
+                    {
+                        title: "Selamat Datang di Kelas Koding! 🚀",
+                        subtitle: "Berkenalan dengan Python si Penerjemah Hebat",
+                        emoji: "🚀",
+                        content: `
                         <div class="text-center space-y-4">
                             <div class="text-6xl mb-4">${'🚀'}</div>
                             <h3 class="text-2xl font-bold text-lime-400">Halo, Teman-teman!</h3>
@@ -396,13 +507,13 @@
                             </div>
                         </div>
                     `
-                },
-                // Slide 1.2: Instruksi di Kehidupan Kita 🧑‍🍳
-                { 
-                    title: "Kita Sering Memberi Instruksi! 🧑‍🍳", 
-                    subtitle: "Koding adalah instruksi untuk komputer",
-                    emoji: "🧑‍🍳", 
-                    content: `
+                    },
+                    // Slide 1.2: Instruksi di Kehidupan Kita 🧑‍🍳
+                    {
+                        title: "Kita Sering Memberi Instruksi! 🧑‍🍳",
+                        subtitle: "Koding adalah instruksi untuk komputer",
+                        emoji: "🧑‍🍳",
+                        content: `
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-center">
                             <!-- Kartu dengan latar belakang slate baru -->
                             <div class="bg-slate-800/70 p-6 rounded-xl border border-slate-700">
@@ -426,13 +537,13 @@
                             <p class="md:col-span-2 text-lg text-purple-300 font-medium mt-4">Koding adalah cara kita menulis instruksi seperti ini, tapi untuk komputer!</p>
                         </div>
                     `
-                },
-                // Slide 1.3: Apa itu Python? 🗣️
-                { 
-                    title: "Python: Bahasa Super Komputer 🐍", 
-                    subtitle: "Bahasa pemrograman yang mudah dibaca",
-                    emoji: "🗣️", 
-                    content: `
+                    },
+                    // Slide 1.3: Apa itu Python? 🗣️
+                    {
+                        title: "Python: Bahasa Super Komputer 🐍",
+                        subtitle: "Bahasa pemrograman yang mudah dibaca",
+                        emoji: "🗣️",
+                        content: `
                         <div class="text-center space-y-6">
                             <div class="text-6xl mb-4 text-lime-400">🐍</div>
                             <p class="text-lg text-gray-300 max-w-2xl mx-auto">
@@ -448,13 +559,13 @@
                             </div>
                         </div>
                     `
-                },
-                // Slide 1.4: Python Bikin Apa Saja? ✨
-                { 
-                    title: "Python Ada di Mana-Mana! ✨", 
-                    subtitle: "Kegunaan Python di dunia nyata",
-                    emoji: "✨", 
-                    content: `
+                    },
+                    // Slide 1.4: Python Bikin Apa Saja? ✨
+                    {
+                        title: "Python Ada di Mana-Mana! ✨",
+                        subtitle: "Kegunaan Python di dunia nyata",
+                        emoji: "✨",
+                        content: `
                         <div class="space-y-4 max-w-2xl mx-auto">
                             <h3 class="text-2xl font-bold text-purple-300 mb-4">Contoh-Contoh Keren:</h3>
                             <div class="space-y-4 text-left">
@@ -482,13 +593,13 @@
                             </div>
                         </div>
                     `
-                },
-                // Slide 1.5: Ayo Siapkan Alat Kita! 💻
-                { 
-                    title: "Alat Koding Kita Hari Ini 🛠️", 
-                    subtitle: "Dua senjata utama programmer",
-                    emoji: "💻", 
-                    content: `
+                    },
+                    // Slide 1.5: Ayo Siapkan Alat Kita! 💻
+                    {
+                        title: "Alat Koding Kita Hari Ini 🛠️",
+                        subtitle: "Dua senjata utama programmer",
+                        emoji: "💻",
+                        content: `
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-center max-w-3xl mx-auto">
                             <!-- Kartu dengan border ungu -->
                             <div class="bg-slate-800 p-6 rounded-xl border-4 border-purple-600/50">
@@ -510,13 +621,13 @@
                             </div>
                         </div>
                     `
-                },
-                // Slide 1.6: Langkah Kritis 1: Pasang Jantung Python (Instalasi)
-                { 
-                    title: "Pasang Python (Penting!)", 
-                    subtitle: "Jangan lupakan POIN KRITIS",
-                    emoji: "⚠️", 
-                    content: `
+                    },
+                    // Slide 1.6: Langkah Kritis 1: Pasang Jantung Python (Instalasi)
+                    {
+                        title: "Pasang Python (Penting!)",
+                        subtitle: "Jangan lupakan POIN KRITIS",
+                        emoji: "⚠️",
+                        content: `
                         <div class="space-y-6 max-w-2xl mx-auto text-left">
                             <h3 class="text-2xl font-bold text-red-400 mb-4 text-center">⚠️ POIN KRITIS UNTUK DIINGAT! ⚠️</h3>
                             <ol class="list-decimal list-inside space-y-4 text-lg text-gray-300">
@@ -532,13 +643,13 @@
                             </p>
                         </div>
                     `
-                },
-                // Slide 1.7: Langkah Kritis 2: Siapkan Buku Tulis Pintar (VS Code)
-                { 
-                    title: "Siapkan Buku Tulis Pintar (VS Code) 🦸‍♂️", 
-                    subtitle: "Langkah dasar instalasi VS Code",
-                    emoji: "📝", 
-                    content: `
+                    },
+                    // Slide 1.7: Langkah Kritis 2: Siapkan Buku Tulis Pintar (VS Code)
+                    {
+                        title: "Siapkan Buku Tulis Pintar (VS Code) 🦸‍♂️",
+                        subtitle: "Langkah dasar instalasi VS Code",
+                        emoji: "📝",
+                        content: `
                         <div class="space-y-8 max-w-3xl mx-auto text-left">
                             <div class="bg-slate-800/70 p-6 rounded-xl border border-slate-700">
                                 <h4 class="text-xl font-semibold text-lime-400 mb-3">1. Kunjungi Rumah VS Code</h4>
@@ -574,13 +685,13 @@
                             </div>
                         </div>
                     `
-                },
-                // Slide 1.8: Pasang Kekuatan Super Python (Ekstensi VS Code)
-                { 
-                    title: "Pasang Kekuatan Super Python! (Extensions)", 
-                    subtitle: "Memberi VS Code kacamata ajaib",
-                    emoji: "🧱", 
-                    content: `
+                    },
+                    // Slide 1.8: Pasang Kekuatan Super Python (Ekstensi VS Code)
+                    {
+                        title: "Pasang Kekuatan Super Python! (Extensions)",
+                        subtitle: "Memberi VS Code kacamata ajaib",
+                        emoji: "🧱",
+                        content: `
                         <div class="space-y-6 max-w-2xl mx-auto text-left">
                             <h3 class="text-2xl font-bold text-lime-400 mb-4 text-center">Langkah 2: Pasang Ekstensi Python</h3>
                             <p class="text-gray-300">
@@ -605,13 +716,13 @@
                             </div>
                         </div>
                     `
-                },
-                // Slide 1.9: Program Pertama Kita! "Halo, Dunia!" 👋
-                { 
-                    title: "Menulis Instruksi Pertama Kita! 👋", 
-                    subtitle: "Membuat file hello_world.py",
-                    emoji: "📝", 
-                    content: `
+                    },
+                    // Slide 1.9: Program Pertama Kita! "Halo, Dunia!" 👋
+                    {
+                        title: "Menulis Instruksi Pertama Kita! 👋",
+                        subtitle: "Membuat file hello_world.py",
+                        emoji: "📝",
+                        content: `
                         <div class="space-y-6 max-w-2xl mx-auto text-left">
                             <h3 class="text-2xl font-bold text-purple-300 mb-4 text-center">Langkah Praktik Dasar:</h3>
                             <ol class="list-decimal list-inside space-y-4 text-lg text-gray-300">
@@ -627,13 +738,13 @@
                             </p>
                         </div>
                     `
-                },
-                // Slide 1.9: Rahasia Perintah print() 🗣️
-                {
-                    title: "Cara Memanggil Perintah print()",
-                    subtitle: "Aturan Emas print()",
-                    emoji: "🗣️",
-                    content: `
+                    },
+                    // Slide 1.9: Rahasia Perintah print() 🗣️
+                    {
+                        title: "Cara Memanggil Perintah print()",
+                        subtitle: "Aturan Emas print()",
+                        emoji: "🗣️",
+                        content: `
                         <div class="space-y-6 max-w-2xl mx-auto text-left">
                             <h3 class="text-2xl font-bold text-lime-400 mb-4 text-center">Aturan Emas:</h3>
                             <ul class="list-disc list-inside space-y-2 text-lg text-gray-300">
@@ -650,13 +761,13 @@
                             </div>
                         </div>
                     `
-                },
-                // Slide 1.10: Jalankan Program! ⏯️
-                {
-                    title: "Tekan Tombol Ajaib!",
-                    subtitle: "Menjalankan program pertama kita",
-                    emoji: "⏯️", 
-                    content: `
+                    },
+                    // Slide 1.10: Jalankan Program! ⏯️
+                    {
+                        title: "Tekan Tombol Ajaib!",
+                        subtitle: "Menjalankan program pertama kita",
+                        emoji: "⏯️",
+                        content: `
                         <div class="space-y-6 max-w-2xl mx-auto text-left">
                             <h3 class="text-2xl font-bold text-purple-300 mb-4 text-center">Langkah-Langkah:</h3>
                             <p class="text-lg text-gray-300 text-center">Ketik kode ini di file <code class="code-font text-lime-400">hello_world.py</code>:</p>
@@ -671,15 +782,241 @@
                             </p>
                         </div>
                     `
-                },
-            ],
-            // Meetings 2-12 adalah stubs
-            2: [
-                {
-                    title: "Ingat print()? Sekarang Kita Ajarkan Komputer Mengingat!",
-                    subtitle: "Review Cepat & Kotak Ingatan",
-                    emoji: "🧠",
-                    content: `
+                    },
+                ],
+                5: [
+                    {
+                        title: "Komputer Bisa Mengambil Keputusan? 🤔",
+                        subtitle: "Review & Pengenalan Logika",
+                        emoji: "🚦",
+                        content: `
+                        <div class="text-left space-y-6 max-w-3xl mx-auto">
+                            <div>
+                                <h3 class="text-2xl font-bold text-lime-400 mb-3">Review Cepat ⚡</h3>
+                                <p class="text-lg text-gray-300">
+                                    Kemarin kita sudah belajar <b class="text-white">Input</b> (bertanya) dan <b class="text-white">Variabel</b> (mengingat).
+                                </p>
+                                <p class="text-lg text-gray-300 mt-2">
+                                    Tapi, program kita masih "lurus-lurus saja". Dia melakukan A, lalu B, lalu C. Tidak bisa memilih!
+                                </p>
+                            </div>
+                            <div class="p-6 bg-purple-900/50 rounded-xl border border-purple-700">
+                                <h4 class="text-xl font-semibold text-purple-300 mb-2">Analogi: Lampu Lalu Lintas 🚦</h4>
+                                <p class="text-lg text-gray-300">Bayangkan kamu sedang menyetir mobil.</p>
+                                <ul class="list-disc list-inside text-gray-300 mt-2">
+                                    <li><b class="text-green-400">JIKA</b> lampu hijau, <b class="text-white">MAKA</b> jalan.</li>
+                                    <li><b class="text-red-400">JIKA</b> lampu merah, <b class="text-white">MAKA</b> berhenti.</li>
+                                </ul>
+                                <p class="text-lg text-gray-300 mt-4">Hari ini kita akan memberi komputer "otak" untuk memilih seperti itu!</p>
+                            </div>
+                        </div>
+                    `
+                    },
+                    {
+                        title: "Alat Pembanding (Si Hakim) ⚖️",
+                        subtitle: "Comparison Operators",
+                        emoji: "⚖️",
+                        content: `
+                        <div class="text-left space-y-4 max-w-4xl mx-auto">
+                            <p class="text-lg text-gray-300 text-center">Sebelum memilih, komputer harus bisa <b class="text-lime-400">MEMBANDINGKAN</b> dua hal.</p>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-sm text-left text-gray-400">
+                                    <thead class="text-xs text-lime-300 uppercase bg-slate-800">
+                                        <tr>
+                                            <th scope="col" class="px-6 py-3">Simbol</th>
+                                            <th scope="col" class="px-6 py-3">Arti</th>
+                                            <th scope="col" class="px-6 py-3">Contoh</th>
+                                            <th scope="col" class="px-6 py-3">Hasil (True/False)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="bg-slate-800/50 border-b border-slate-700">
+                                            <td class="px-6 py-4 font-bold text-xl text-center text-white">==</td>
+                                            <td class="px-6 py-4">Sama dengan?</td>
+                                            <td class="px-6 py-4"><code class="code-font">5 == 5</code></td>
+                                            <td class="px-6 py-4 text-green-400">True (Benar)</td>
+                                        </tr>
+                                        <tr class="bg-slate-800/50 border-b border-slate-700">
+                                            <td class="px-6 py-4 font-bold text-xl text-center text-white">!=</td>
+                                            <td class="px-6 py-4">TIDAK sama dengan?</td>
+                                            <td class="px-6 py-4"><code class="code-font">5 != 3</code></td>
+                                            <td class="px-6 py-4 text-green-400">True (Benar)</td>
+                                        </tr>
+                                        <tr class="bg-slate-800/50 border-b border-slate-700">
+                                            <td class="px-6 py-4 font-bold text-xl text-center text-white">></td>
+                                            <td class="px-6 py-4">Lebih Besar?</td>
+                                            <td class="px-6 py-4"><code class="code-font">10 > 5</code></td>
+                                            <td class="px-6 py-4 text-green-400">True (Benar)</td>
+                                        </tr>
+                                        <tr class="bg-slate-800/50">
+                                            <td class="px-6 py-4 font-bold text-xl text-center text-white"><</td>
+                                            <td class="px-6 py-4">Lebih Kecil?</td>
+                                            <td class="px-6 py-4"><code class="code-font">2 < 1</code></td>
+                                            <td class="px-6 py-4 text-red-400">False (Salah)</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="bg-red-900/50 p-4 rounded-lg border border-red-700 text-center mt-4">
+                                <p class="font-bold text-red-300">Hati-hati!</p>
+                                <p class="text-white"><code class="code-font">=</code> itu untuk MEMASUKKAN nilai (Assignment).</p>
+                                <p class="text-white"><code class="code-font">==</code> itu untuk MEMBANDINGKAN nilai (Pertanyaan).</p>
+                            </div>
+                        </div>
+                    `
+                    },
+                    {
+                        title: "Logika IF: Jika Benar, Lakukan! ✅",
+                        subtitle: "Pintu Gerbang Pertama (IF)",
+                        emoji: "🚪",
+                        content: `
+                        <div class="text-left space-y-6 max-w-3xl mx-auto">
+                            <h3 class="text-2xl font-bold text-lime-400 mb-3">Struktur IF</h3>
+                            <p class="text-lg text-gray-300">
+                                <code class="code-font text-purple-400">if</code> itu seperti penjaga gerbang. Dia hanya akan membuka gerbang jika syaratnya <b class="text-green-400">True (Benar)</b>.
+                            </p>
+                            <div class="bg-slate-900 rounded-lg p-6 border border-slate-700 text-left">
+                                <code class="code-font text-lime-300 text-sm block">
+                                    <span class="text-white">nilai = </span><span class="text-cyan-400">90</span><br><br>
+                                    <span class="text-gray-500"># Gerbang IF</span><br>
+                                    <span class="text-purple-400">if</span> <span class="text-white">nilai > </span><span class="text-cyan-400">75</span><span class="text-white">:</span><br>
+                                    <span class="text-gray-500">    # Bagian ini hanya jalan kalau nilai > 75</span><br>
+                                    <span class="text-purple-400">    print</span>(<span class="text-orange-400">"Selamat! Kamu Lulus!"</span>)<br><br>
+                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"Selesai."</span>)
+                                </code>
+                            </div>
+                            <div class="p-4 bg-slate-800 rounded-lg border border-slate-600">
+                                <h4 class="font-bold text-white mb-2">Pertanyaan Diskusi:</h4>
+                                <p class="text-gray-300">Apa yang terjadi jika <code class="code-font">nilai = 50</code>? Apakah tulisan "Selamat! Kamu Lulus!" akan muncul?</p>
+                            </div>
+                        </div>
+                    `
+                    },
+                    {
+                        title: "Rahasia Python: Indentasi (Spasi Masuk) 📏",
+                        subtitle: "Aturan Paling Penting di Python!",
+                        emoji: "📏",
+                        content: `
+                        <div class="text-left space-y-6 max-w-3xl mx-auto">
+                            <h3 class="text-2xl font-bold text-red-400 mb-3">⚠️ ATURAN WAJIB: Indentasi</h3>
+                            <p class="text-lg text-gray-300">
+                                Python sangat peduli dengan kerapian! Kode yang ada <b>di dalam</b> <code class="code-font">if</code> harus <b class="text-lime-400">menjorok ke dalam</b> (biasanya 4 spasi atau 1 Tab).
+                            </p>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="bg-green-900/30 p-4 rounded-lg border border-green-700">
+                                    <h4 class="text-green-400 font-bold mb-2">✅ Benar</h4>
+                                    <code class="code-font text-sm text-gray-300 block">
+                                        if nilai > 70:<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;print("Lulus")
+                                    </code>
+                                    <p class="text-xs text-gray-400 mt-2">Ada spasi di depan print.</p>
+                                </div>
+                                <div class="bg-red-900/30 p-4 rounded-lg border border-red-700">
+                                    <h4 class="text-red-400 font-bold mb-2">❌ Salah (Error!)</h4>
+                                    <code class="code-font text-sm text-gray-300 block">
+                                        if nilai > 70:<br>
+                                        print("Lulus")
+                                    </code>
+                                    <p class="text-xs text-gray-400 mt-2">Tidak ada spasi. Python bingung!</p>
+                                </div>
+                            </div>
+                        </div>
+                    `
+                    },
+                    {
+                        title: "Logika IF-ELSE: Jika Tidak? 🤔",
+                        subtitle: "Cabang Dua (IF-ELSE)",
+                        emoji: "🔀",
+                        content: `
+                        <div class="text-left space-y-6 max-w-3xl mx-auto">
+                            <h3 class="text-2xl font-bold text-lime-400 mb-3">Bagaimana kalau syaratnya SALAH?</h3>
+                            <p class="text-lg text-gray-300">
+                                Kita gunakan <code class="code-font text-purple-400">else</code> (artinya: "jika tidak"). Ini seperti jalan alternatif.
+                            </p>
+                            <div class="bg-slate-900 rounded-lg p-6 border border-slate-700 text-left">
+                                <code class="code-font text-lime-300 text-sm block">
+                                    <span class="text-white">umur = </span><span class="text-cyan-400">10</span><br><br>
+                                    <span class="text-purple-400">if</span> <span class="text-white">umur >= </span><span class="text-cyan-400">17</span><span class="text-white">:</span><br>
+                                    <span class="text-purple-400">    print</span>(<span class="text-orange-400">"Boleh bikin SIM"</span>)<br>
+                                    <span class="text-purple-400">else</span><span class="text-white">:</span><br>
+                                    <span class="text-purple-400">    print</span>(<span class="text-orange-400">"Belum boleh bikin SIM"</span>)<br>
+                                    <span class="text-purple-400">    print</span>(<span class="text-orange-400">"Tunggu besar ya!"</span>)
+                                </code>
+                            </div>
+                            <div class="p-4 bg-purple-900/50 rounded-lg border border-purple-700">
+                                <p class="text-gray-300">Perhatikan: <code class="code-font">else</code> juga punya titik dua <code class="code-font">:</code> dan kodenya juga harus menjorok ke dalam!</p>
+                            </div>
+                        </div>
+                    `
+                    },
+                    {
+                        title: "Latihan 1: Cek Password Rahasia 🔐",
+                        subtitle: "Mini Game: Penjaga Pintu",
+                        emoji: "🔐",
+                        content: `
+                        <div class="text-left space-y-6 max-w-3xl mx-auto">
+                            <h3 class="text-2xl font-bold text-lime-400 mb-3">Misi: Buat Sistem Keamanan!</h3>
+                            <p class="text-lg text-gray-300">Buatlah program yang meminta password. Password yang benar adalah <b class="text-white">"kalananti"</b>.</p>
+                            <div class="bg-slate-900 rounded-lg p-6 border border-slate-700 text-left">
+                                <code class="code-font text-lime-300 text-sm block">
+                                    <span class="text-gray-500"># 1. Minta input password</span><br>
+                                    <span class="text-white">kunci = </span><span class="text-purple-400">input</span>(<span class="text-orange-400">"Masukkan password: "</span>)<br><br>
+                                    <span class="text-gray-500"># 2. Cek apakah password benar</span><br>
+                                    <span class="text-purple-400">if</span> <span class="text-white">kunci == </span><span class="text-orange-400">"kalananti"</span><span class="text-white">:</span><br>
+                                    <span class="text-purple-400">    print</span>(<span class="text-orange-400">"Akses DITERIMA! Silakan masuk."</span>)<br>
+                                    <span class="text-purple-400">else</span><span class="text-white">:</span><br>
+                                    <span class="text-purple-400">    print</span>(<span class="text-orange-400">"Akses DITOLAK! Pergi sana!"</span>)
+                                </code>
+                            </div>
+                        </div>
+                    `
+                    },
+                    {
+                        title: "Tantangan: Cek Kelulusan (Nilai Ujian) 🎓",
+                        subtitle: "Proyek Showcase: Grade Checker",
+                        emoji: "🎓",
+                        content: `
+                        <div class="text-left space-y-6 max-w-3xl mx-auto">
+                            <h3 class="text-2xl font-bold text-lime-400 mb-3">Tantangan Mandiri!</h3>
+                            <p class="text-lg text-gray-300">Buatlah program untuk mengecek kelulusan siswa.</p>
+                            <ul class="list-decimal list-inside space-y-2 text-gray-300">
+                                <li>Minta input <b class="text-white">Nilai Ujian</b> (jangan lupa <code class="code-font">int()</code>!).</li>
+                                <li>Jika nilai <b class="text-green-400">lebih besar atau sama dengan 75</b>, cetak "Selamat, Anda Lulus!".</li>
+                                <li>Jika tidak, cetak "Tetap semangat, belajar lagi ya!".</li>
+                            </ul>
+                            <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 mt-4">
+                                <p class="text-sm text-gray-400 italic">Cobalah tulis kodenya sendiri dulu di VS Code sebelum bertanya pada Kakak Pengajar!</p>
+                            </div>
+                        </div>
+                    `
+                    },
+                    {
+                        title: "Rangkuman: Kita Punya Kekuatan Memilih! 💪",
+                        subtitle: "Wrap Up Meeting 5",
+                        emoji: "🏁",
+                        content: `
+                        <div class="text-left space-y-6 max-w-3xl mx-auto">
+                            <h3 class="text-2xl font-bold text-lime-400 mb-3">Apa yang Kita Pelajari?</h3>
+                            <ul class="list-disc list-inside space-y-3 text-lg text-gray-300">
+                                <li><b class="text-white">Comparison Operators</b> (<code class="code-font">==, !=, >, <</code>): Alat untuk membandingkan dua hal.</li>
+                                <li><b class="text-white">IF</b>: Melakukan sesuatu HANYA JIKA syaratnya Benar.</li>
+                                <li><b class="text-white">ELSE</b>: Melakukan hal lain JIKA syaratnya Salah.</li>
+                                <li><b class="text-white">Indentasi</b>: Spasi di awal baris yang SANGAT PENTING di Python.</li>
+                            </ul>
+                            <div class="bg-purple-900/50 p-6 rounded-xl border border-purple-700 mt-4">
+                                <h4 class="text-xl font-semibold text-purple-300 mb-2">Minggu Depan:</h4>
+                                <p class="text-lg text-gray-300">Bagaimana kalau pilihannya ada BANYAK? Tidak cuma dua? (Misalnya: Nilai A, B, C, D). Kita akan belajar <b class="text-lime-400">ELIF</b>!</p>
+                            </div>
+                        </div>
+                    `
+                    }
+                ],
+                2: [
+                    {
+                        title: "Ingat print()? Sekarang Kita Ajarkan Komputer Mengingat!",
+                        subtitle: "Review Cepat & Kotak Ingatan",
+                        emoji: "🧠",
+                        content: `
                         <div class="text-left space-y-6 max-w-3xl mx-auto">
                             <div>
                                 <h3 class="text-2xl font-bold text-lime-400 mb-3">Review Cepat ⚡</h3>
@@ -697,12 +1034,12 @@
                             </div>
                         </div>
                     `
-                },
-                { 
-                    title: "Variabel: Kotak Penyimpanan Data!", 
-                    subtitle: "Apa itu Variabel?",
-                    emoji: "🏷️", 
-                    content: `
+                    },
+                    {
+                        title: "Variabel: Kotak Penyimpanan Data!",
+                        subtitle: "Apa itu Variabel?",
+                        emoji: "🏷️",
+                        content: `
                         <div class="text-left space-y-6 max-w-3xl mx-auto">
                             <h3 class="text-2xl font-bold text-lime-400 mb-3">Analogi (Kotak Berlabel)</h3>
                             <p class="text-lg text-gray-300">
@@ -724,12 +1061,12 @@
                             </div>
                         </div>
                     `
-                },
-                { 
-                    title: "Aturan Penamaan Variabel (Harus Rapi!)", 
-                    subtitle: "Aturan Membuat Nama Kotak (Variabel)",
-                    emoji: "📐", 
-                    content: `
+                    },
+                    {
+                        title: "Aturan Penamaan Variabel (Harus Rapi!)",
+                        subtitle: "Aturan Membuat Nama Kotak (Variabel)",
+                        emoji: "📐",
+                        content: `
                         <div class="text-left space-y-6 max-w-3xl mx-auto">
                             <h3 class="text-2xl font-bold text-lime-400 mb-4">3 Aturan Penting Agar Python Tidak Bingung:</h3>
                             <div class="bg-slate-800 p-6 rounded-xl border border-slate-700">
@@ -748,12 +1085,12 @@
                             </div>
                         </div>
                     `
-                },
-                { 
-                    title: "Komentar: Catatan untuk Diri Kita Sendiri", 
-                    subtitle: "Catatan Kecil untuk Manusia (# Komentar)",
-                    emoji: "📝", 
-                    content: `
+                    },
+                    {
+                        title: "Komentar: Catatan untuk Diri Kita Sendiri",
+                        subtitle: "Catatan Kecil untuk Manusia (# Komentar)",
+                        emoji: "📝",
+                        content: `
                         <div class="text-left space-y-6 max-w-3xl mx-auto">
                             <h3 class="text-2xl font-bold text-lime-400 mb-3">Kapan kita butuh Komentar?</h3>
                             <p class="text-lg text-gray-300">
@@ -773,12 +1110,12 @@
                             </div>
                         </div>
                     `
-                },
-                { 
-                    title: "Tipe Data: Isi dari Kotak Ingatan", 
-                    subtitle: "Tipe Data: Isi Kotak Itu Berbeda-beda!",
-                    emoji: "🌈", 
-                    content: `
+                    },
+                    {
+                        title: "Tipe Data: Isi dari Kotak Ingatan",
+                        subtitle: "Tipe Data: Isi Kotak Itu Berbeda-beda!",
+                        emoji: "🌈",
+                        content: `
                         <div class="text-left space-y-4 max-w-4xl mx-auto">
                             <p class="text-lg text-gray-300 text-center">Isi kotak ingatan (variabel) kita ada 4 jenis dasar:</p>
                             <div class="overflow-x-auto">
@@ -816,12 +1153,12 @@
                             </div>
                         </div>
                     `
-                },
-                { 
-                    title: "Latihan type(): Mengecek Isi Kotak", 
-                    subtitle: "Praktek Tipe Data & Cek Tipe (type())",
-                    emoji: "🧐", 
-                    content: `
+                    },
+                    {
+                        title: "Latihan type(): Mengecek Isi Kotak",
+                        subtitle: "Praktek Tipe Data & Cek Tipe (type())",
+                        emoji: "🧐",
+                        content: `
                         <div class="text-left space-y-6 max-w-3xl mx-auto">
                             <h3 class="text-2xl font-bold text-lime-400 mb-3">Fungsi <code class="code-font">type()</code></h3>
                             <p class="text-lg text-gray-300">
@@ -844,12 +1181,12 @@
                             </div>
                         </div>
                     `
-                },
-                { 
-                    title: "Ayo Buat Biodata Komputer Kita!", 
-                    subtitle: "Praktik Terbimbing: Biodata Kita!",
-                    emoji: "🙋‍♀️", 
-                    content: `
+                    },
+                    {
+                        title: "Ayo Buat Biodata Komputer Kita!",
+                        subtitle: "Praktik Terbimbing: Biodata Kita!",
+                        emoji: "🙋‍♀️",
+                        content: `
                         <div class="text-left space-y-6 max-w-3xl mx-auto">
                             <p class="text-lg text-gray-300 text-center">File: <code class="code-font bg-slate-800 p-1 rounded">biodata.py</code></p>
                             <div class="bg-slate-900 rounded-lg p-6 border border-slate-700 text-left">
@@ -872,12 +1209,12 @@
                             </div>
                         </div>
                     `
-                },
-                { 
-                    title: "Kartu Pelajar Digital (ASCII Art)", 
-                    subtitle: "Proyek Mini: Kartu Pelajar Keren!",
-                    emoji: "🏆", 
-                    content: `
+                    },
+                    {
+                        title: "Kartu Pelajar Digital (ASCII Art)",
+                        subtitle: "Proyek Mini: Kartu Pelajar Keren!",
+                        emoji: "🏆",
+                        content: `
                         <div class="text-left space-y-4 max-w-3xl mx-auto">
                              <p class="text-lg text-gray-300 text-center">Tujuan: Menggabungkan <code class="code-font">print()</code>, Variabel, dan String untuk membuat kartu informasi yang rapi.</p>
                              <p class="text-lg text-gray-300 text-center">File: <code class="code-font bg-slate-800 p-1 rounded">kartu_pelajar.py</code></p>
@@ -902,12 +1239,12 @@
                             </div>
                         </div>
                     `
-                },
-                { 
-                    title: "Kita Sudah Jago Menyimpan Ingatan!", 
-                    subtitle: "Rangkuman dan Sampai Jumpa!",
-                    emoji: "👋", 
-                    content: `
+                    },
+                    {
+                        title: "Kita Sudah Jago Menyimpan Ingatan!",
+                        subtitle: "Rangkuman dan Sampai Jumpa!",
+                        emoji: "👋",
+                        content: `
                         <div class="text-left space-y-6 max-w-3xl mx-auto">
                             <h3 class="text-2xl font-bold text-lime-400 mb-3">Rangkuman Hari Ini:</h3>
                             <ul class="list-disc list-inside space-y-3 text-lg text-gray-300">
@@ -923,14 +1260,14 @@
                             </div>
                         </div>
                     `
-                },
-            ],
-            3: [
-                {
-                    title: "Kotak Ingatan Kita Akan Mulai Berhitung!",
-                    subtitle: "Review Cepat & Kalkulator",
-                    emoji: "🧠",
-                    content: `
+                    },
+                ],
+                3: [
+                    {
+                        title: "Kotak Ingatan Kita Akan Mulai Berhitung!",
+                        subtitle: "Review Cepat & Kalkulator",
+                        emoji: "🧠",
+                        content: `
                         <div class="text-left space-y-6 max-w-3xl mx-auto">
                             <div>
                                 <h3 class="text-2xl font-bold text-lime-400 mb-3">Review Cepat (3 Menit) ⚡</h3>
@@ -949,12 +1286,12 @@
                             </div>
                         </div>
                     `
-                },
-                {
-                    title: "Alat Hitung Dasar (Aritmatika)",
-                    subtitle: "Operator Aritmatika: Alat Hitung Python",
-                    emoji: "➕",
-                    content: `
+                    },
+                    {
+                        title: "Alat Hitung Dasar (Aritmatika)",
+                        subtitle: "Operator Aritmatika: Alat Hitung Python",
+                        emoji: "➕",
+                        content: `
                         <div class="text-left space-y-4 max-w-4xl mx-auto">
                             <div class="overflow-x-auto">
                                 <table class="w-full text-sm text-left text-gray-400">
@@ -996,12 +1333,12 @@
                             </div>
                         </div>
                     `
-                },
-                {
-                    title: "Operator Aritmatika yang Paling Keren!",
-                    subtitle: "Operator Aritmatika Khusus!",
-                    emoji: "🍕",
-                    content: `
+                    },
+                    {
+                        title: "Operator Aritmatika yang Paling Keren!",
+                        subtitle: "Operator Aritmatika Khusus!",
+                        emoji: "🍕",
+                        content: `
                         <div class="text-left space-y-4 max-w-4xl mx-auto">
                              <div class="overflow-x-auto mb-4">
                                 <table class="w-full text-sm text-left text-gray-400">
@@ -1055,12 +1392,12 @@
                             </div>
                         </div>
                     `
-                },
-                {
-                    title: "Komputer Bisa Bertanya dengan input()",
-                    subtitle: "input(): Komputer Berbicara dan Bertanya!",
-                    emoji: "🗣️",
-                    content: `
+                    },
+                    {
+                        title: "Komputer Bisa Bertanya dengan input()",
+                        subtitle: "input(): Komputer Berbicara dan Bertanya!",
+                        emoji: "🗣️",
+                        content: `
                         <div class="text-left space-y-6 max-w-3xl mx-auto">
                             <h3 class="text-2xl font-bold text-lime-400 mb-3">Fungsi input()</h3>
                             <ul class="list-disc list-inside space-y-2 text-lg text-gray-300">
@@ -1078,12 +1415,12 @@
                             </div>
                         </div>
                     `
-                },
-                {
-                    title: "Hati-Hati! input() Selalu Berkata Itu Teks!",
-                    subtitle: "Jebakan Terbesar! (String vs Integer)",
-                    emoji: "⚠️",
-                    content: `
+                    },
+                    {
+                        title: "Hati-Hati! input() Selalu Berkata Itu Teks!",
+                        subtitle: "Jebakan Terbesar! (String vs Integer)",
+                        emoji: "⚠️",
+                        content: `
                         <div class="text-left space-y-6 max-w-3xl mx-auto">
                             <div class="p-6 bg-red-900/50 rounded-xl border border-red-700">
                                 <h4 class="text-xl font-semibold text-red-300 mb-2">Jebakan Tipe Data!</h4>
@@ -1106,12 +1443,12 @@
                             </div>
                         </div>
                     `
-                },
-                {
-                    title: "Type Casting: Mengubah Teks Menjadi Angka Murni!",
-                    subtitle: "Solusi: Type Casting (Konversi Tipe Data)",
-                    emoji: "🪄",
-                    content: `
+                    },
+                    {
+                        title: "Type Casting: Mengubah Teks Menjadi Angka Murni!",
+                        subtitle: "Solusi: Type Casting (Konversi Tipe Data)",
+                        emoji: "🪄",
+                        content: `
                         <div class="text-left space-y-6 max-w-3xl mx-auto">
                             <h3 class="text-2xl font-bold text-lime-400 mb-3">Apa itu Type Casting?</h3>
                             <p class="text-lg text-gray-300">Ini adalah sihir di Python untuk mengubah tipe data satu menjadi tipe data lain.</p>
@@ -1136,12 +1473,12 @@
                             </div>
                         </div>
                     `
-                },
-                {
-                    title: "Operator Assignment: Perbarui Kotak dengan Cepat!",
-                    subtitle: "Cara Cepat Mengubah Nilai",
-                    emoji: "🔄",
-                    content: `
+                    },
+                    {
+                        title: "Operator Assignment: Perbarui Kotak dengan Cepat!",
+                        subtitle: "Cara Cepat Mengubah Nilai",
+                        emoji: "🔄",
+                        content: `
                         <div class="text-left space-y-4 max-w-4xl mx-auto">
                             <p class="text-lg text-gray-300 text-center">Tujuan: Untuk memperbarui nilai sebuah variabel berdasarkan nilai lamanya. (Contoh: Menambahkan skor, atau mengurangi uang).</p>
                             <div class="overflow-x-auto mb-4">
@@ -1187,12 +1524,12 @@
                             </div>
                         </div>
                     `
-                },
-                {
-                    title: "Tantangan Proyek: Kasir Kantin Python!",
-                    subtitle: "Proyek Akhir: Kasir Kantin Interaktif!",
-                    emoji: "🛒",
-                    content: `
+                    },
+                    {
+                        title: "Tantangan Proyek: Kasir Kantin Python!",
+                        subtitle: "Proyek Akhir: Kasir Kantin Interaktif!",
+                        emoji: "🛒",
+                        content: `
                         <div class="text-left space-y-6 max-w-3xl mx-auto">
                             <p class="text-lg text-gray-300 text-center">Tujuan: Membuat program yang bisa menghitung total belanjaan dengan pajak!</p>
                             <p class="text-lg text-gray-300 text-center">File: <code class="code-font bg-slate-800 p-1 rounded">kasir_kantin.py</code></p>
@@ -1228,12 +1565,12 @@
                             </div>
                         </div>
                     `
-                },
-                {
-                    title: "Apa yang Sudah Kita Pelajari Hari Ini?",
-                    subtitle: "Rangkuman Akhir",
-                    emoji: "🏁",
-                    content: `
+                    },
+                    {
+                        title: "Apa yang Sudah Kita Pelajari Hari Ini?",
+                        subtitle: "Rangkuman Akhir",
+                        emoji: "🏁",
+                        content: `
                         <div class="text-left space-y-6 max-w-3xl mx-auto">
                             <h3 class="text-2xl font-bold text-lime-400 mb-3">Rangkuman Hari Ini:</h3>
                             <ul class="list-disc list-inside space-y-3 text-lg text-gray-300">
@@ -1249,340 +1586,15 @@
                             </div>
                         </div>
                     `
-                }
-            ],
-            3: [
-                {
-                    title: "Kotak Ingatan Kita Akan Mulai Berhitung!",
-                    subtitle: "Review Cepat & Kalkulator",
-                    emoji: "🧠",
-                    content: `
-                        <div class="text-left space-y-6 max-w-3xl mx-auto">
-                            <div>
-                                <h3 class="text-2xl font-bold text-lime-400 mb-3">Review Cepat (3 Menit) ⚡</h3>
-                                <ul class="list-disc list-inside space-y-2 text-lg text-gray-300">
-                                    <li><b class="text-white">Variabel</b> adalah kotak ingatan untuk menyimpan data (teks, angka, ya/tidak).</li>
-                                    <li>Contoh: <code class="code-font bg-slate-800 p-1 rounded">umur = 7</code> (Angka Integer)</li>
-                                    <li>Contoh: <code class="code-font bg-slate-800 p-1 rounded">nama = "Rina"</code> (Teks String)</li>
-                                </ul>
-                                <p class="text-lg text-gray-300 mt-4">
-                                    Hari ini, kita akan membuat kotak ingatan ini saling berinteraksi! Kita akan ajarkan komputer cara menghitung dengan cepat dan benar, seperti <b class="text-purple-400">kalkulator ajaib</b>!
-                                </p>
-                            </div>
-                            <div class="p-6 bg-purple-900/50 rounded-xl border border-purple-700">
-                                <h4 class="text-xl font-semibold text-purple-300 mb-2">Apersepsi (Ajak Berpikir)</h4>
-                                <p class="text-lg text-gray-300">Saat kita jajan, kita pasti menghitung total harga. Saat kita mendapat sisa uang kembalian, kita menghitungnya. Semua itu butuh <b class="text-lime-400">Operator Matematika</b>.</p>
-                            </div>
-                        </div>
-                    `
-                },
-                {
-                    title: "Alat Hitung Dasar (Aritmatika)",
-                    subtitle: "Operator Aritmatika: Alat Hitung Python",
-                    emoji: "➕",
-                    content: `
-                        <div class="text-left space-y-4 max-w-4xl mx-auto">
-                            <div class="overflow-x-auto">
-                                <table class="w-full text-sm text-left text-gray-400">
-                                    <thead class="text-xs text-lime-300 uppercase bg-slate-800">
-                                        <tr>
-                                            <th scope="col" class="px-6 py-3">Operator</th>
-                                            <th scope="col" class="px-6 py-3">Nama</th>
-                                            <th scope="col" class="px-6 py-3">Contoh di Python</th>
-                                            <th scope="col" class="px-6 py-3">Analogi Sehari-hari</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr class="bg-slate-800/50 border-b border-slate-700">
-                                            <td class="px-6 py-4 font-bold text-xl text-center text-white">+</td>
-                                            <td class="px-6 py-4">Tambah</td>
-                                            <td class="px-6 py-4"><code class="code-font">total = 2 + 3</code></td>
-                                            <td class="px-6 py-4">Menjumlahkan uang jajan hari ini dan kemarin.</td>
-                                        </tr>
-                                        <tr class="bg-slate-800/50 border-b border-slate-700">
-                                            <td class="px-6 py-4 font-bold text-xl text-center text-white">-</td>
-                                            <td class="px-6 py-4">Kurang</td>
-                                            <td class="px-6 py-4"><code class="code-font">sisa = 5 - 2</code></td>
-                                            <td class="px-6 py-4">Menghitung sisa uang setelah membeli jajan.</td>
-                                        </tr>
-                                        <tr class="bg-slate-800/50 border-b border-slate-700">
-                                            <td class="px-6 py-4 font-bold text-xl text-center text-white">*</td>
-                                            <td class="px-6 py-4">Kali</td>
-                                            <td class="px-6 py-4"><code class="code-font">luas = 4 * 5</code></td>
-                                            <td class="px-6 py-4">Membeli 5 pensil dengan harga Rp 2.000 per buah.</td>
-                                        </tr>
-                                        <tr class="bg-slate-800/50">
-                                            <td class="px-6 py-4 font-bold text-xl text-center text-white">/</td>
-                                            <td class="px-6 py-4">Bagi</td>
-                                            <td class="px-6 py-4"><code class="code-font">bagi = 10 / 2</code></td>
-                                            <td class="px-6 py-4">Membagi kue 10 potong untuk 2 teman (hasilnya bisa ada koma).</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    `
-                },
-                {
-                    title: "Operator Aritmatika yang Paling Keren!",
-                    subtitle: "Operator Aritmatika Khusus!",
-                    emoji: "🍕",
-                    content: `
-                        <div class="text-left space-y-4 max-w-4xl mx-auto">
-                             <div class="overflow-x-auto mb-4">
-                                <table class="w-full text-sm text-left text-gray-400">
-                                    <thead class="text-xs text-lime-300 uppercase bg-slate-800">
-                                        <tr>
-                                            <th scope="col" class="px-6 py-3">Operator</th>
-                                            <th scope="col" class="px-6 py-3">Nama</th>
-                                            <th scope="col" class="px-6 py-3">Analogi Sehari-hari</th>
-                                            <th scope="col" class="px-6 py-3">Contoh & Hasil</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr class="bg-slate-800/50 border-b border-slate-700">
-                                            <td class="px-6 py-4 font-bold text-xl text-center text-white">**</td>
-                                            <td class="px-6 py-4">Pangkat</td>
-                                            <td class="px-6 py-4">Menghitung luas ruangan berbentuk persegi.</td>
-                                            <td class="px-6 py-4"><code class="code-font">3 ** 2</code> hasilnya <code class="code-font">9</code></td>
-                                        </tr>
-                                        <tr class="bg-slate-800/50 border-b border-slate-700">
-                                            <td class="px-6 py-4 font-bold text-xl text-center text-white">//</td>
-                                            <td class="px-6 py-4">Bagi Bulat</td>
-                                            <td class="px-6 py-4">Punya 10 biskuit dibagi ke 3 teman. Berapa banyak biskuit <b class="text-white">UTUH</b> yang didapat masing-masing?</td>
-                                            <td class="px-6 py-4"><code class="code-font">10 // 3</code> hasilnya <code class="code-font">3</code></td>
-                                        </tr>
-                                        <tr class="bg-slate-800/50">
-                                            <td class="px-6 py-4 font-bold text-xl text-center text-white">%</td>
-                                            <td class="px-6 py-4">Modulo</td>
-                                            <td class="px-6 py-4">Punya 10 biskuit dibagi ke 3 teman. Berapa <b class="text-white">SISA</b> biskuitnya untuk kita?</td>
-                                            <td class="px-6 py-4"><code class="code-font">10 % 3</code> hasilnya <code class="code-font">1</code></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="bg-slate-900 rounded-lg p-4 border border-slate-700 text-left">
-                                <code class="code-font text-lime-300 text-sm block">
-                                    <span class="text-gray-500"># Variabel untuk contoh</span><br>
-                                    <span class="text-white">uang_jajan = </span><span class="text-cyan-400">10000</span><br>
-                                    <span class="text-white">harga_bakso = </span><span class="text-cyan-400">8000</span><br><br>
-                                    <span class="text-gray-500"># Pengurangan: Sisa uang</span><br>
-                                    <span class="text-white">sisa_uang = uang_jajan - harga_bakso</span><br>
-                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"1. Sisa uang setelah beli bakso:"</span>, sisa_uang)<br><br>
-                                    <span class="text-gray-500"># Perkalian: Total harga permen</span><br>
-                                    <span class="text-white">total_harga_permen = </span><span class="text-cyan-400">3</span> * <span class="text-cyan-400">500</span><br>
-                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"2. Total harga 3 permen:"</span>, total_harga_permen)<br><br>
-                                    <span class="text-gray-500"># Pembagian Bulat (//) dan Sisa Bagi (%)</span><br>
-                                    <span class="text-white">jumlah_siswa = </span><span class="text-cyan-400">25</span><br>
-                                    <span class="text-white">satu_baris = </span><span class="text-cyan-400">4</span><br>
-                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"3. Jumlah baris penuh (//):"</span>, jumlah_siswa // satu_baris)<br>
-                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"4. Siswa yang tersisa (%):"</span>, jumlah_siswa % satu_baris)
-                                </code>
-                            </div>
-                        </div>
-                    `
-                },
-                {
-                    title: "Komputer Bisa Bertanya dengan input()",
-                    subtitle: "input(): Komputer Berbicara dan Bertanya!",
-                    emoji: "🗣️",
-                    content: `
-                        <div class="text-left space-y-6 max-w-3xl mx-auto">
-                            <h3 class="text-2xl font-bold text-lime-400 mb-3">Fungsi input()</h3>
-                            <ul class="list-disc list-inside space-y-2 text-lg text-gray-300">
-                                <li>Perintah ini membuat program kita <b class="text-white">berhenti sebentar</b>.</li>
-                                <li>Menampilkan sebuah pertanyaan yang kita tulis.</li>
-                                <li>Menunggu kamu mengetik sesuatu di keyboard, lalu menekan <b class="text-white">Enter</b>.</li>
-                                <li>Apapun yang kamu ketik, akan <b class="text-purple-400">disimpan ke dalam variabel</b>.</li>
-                            </ul>
-                            <div class="bg-slate-900 rounded-lg p-6 border border-slate-700 text-left">
-                                <code class="code-font text-lime-300 text-sm block">
-                                    <span class="text-gray-500"># Komputer akan bertanya, lalu jawabanmu disimpan di kotak "nama_kita"</span><br>
-                                    <span class="text-white">nama_kita = </span><span class="text-purple-400">input</span>(<span class="text-orange-400">"Siapa nama kamu? "</span>)<br>
-                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"Halo, "</span> + nama_kita + <span class="text-orange-400">"! Senang bertemu denganmu."</span>)
-                                </code>
-                            </div>
-                        </div>
-                    `
-                },
-                {
-                    title: "Hati-Hati! input() Selalu Berkata Itu Teks!",
-                    subtitle: "Jebakan Terbesar! (String vs Integer)",
-                    emoji: "⚠️",
-                    content: `
-                        <div class="text-left space-y-6 max-w-3xl mx-auto">
-                            <div class="p-6 bg-red-900/50 rounded-xl border border-red-700">
-                                <h4 class="text-xl font-semibold text-red-300 mb-2">Jebakan Tipe Data!</h4>
-                                <p class="text-lg text-gray-200">Semua yang diambil oleh <code class="code-font">input()</code>, <b class="text-white">selalu</b> dianggap sebagai <b class="text-lime-400">Teks (String)</b>, walaupun yang kamu ketik adalah angka!</p>
-                            </div>
-                            <h3 class="text-2xl font-bold text-lime-400 mb-3">Apa yang terjadi jika kita menjumlahkan Teks Angka?</h3>
-                            <div class="bg-slate-900 rounded-lg p-6 border border-slate-700 text-left">
-                                <code class="code-font text-lime-300 text-sm block">
-                                    <span class="text-gray-500"># Pengguna mengetik 5 dan 10</span><br>
-                                    <span class="text-white">angka_1_str = </span><span class="text-purple-400">input</span>(<span class="text-orange-400">"Angka pertama: "</span>) <span class="text-gray-500"># Python anggap ini "5" (teks)</span><br>
-                                    <span class="text-white">angka_2_str = </span><span class="text-purple-400">input</span>(<span class="text-orange-400">"Angka kedua: "</span>)   <span class="text-gray-500"># Python anggap ini "10" (teks)</span><br><br>
-                                    <span class="text-white">hasil_salah = angka_1_str + angka_2_str</span><br>
-                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"Hasil yang SALAH:"</span>, hasil_salah)
-                                </code>
-                            </div>
-                            <div class="bg-purple-900/50 p-4 rounded-lg border border-purple-700 text-left">
-                                <p class="font-semibold text-purple-300">Hasilnya:</p>
-                                <code class="code-font text-white block">Hasil yang SALAH: 510 ❌</code>
-                                <p class="text-sm text-gray-300 mt-2">Ini seperti menggabungkan dua kertas bertuliskan angka, bukan menjumlahkan nilainya!</p>
-                            </div>
-                        </div>
-                    `
-                },
-                {
-                    title: "Type Casting: Mengubah Teks Menjadi Angka Murni!",
-                    subtitle: "Solusi: Type Casting (Konversi Tipe Data)",
-                    emoji: "🪄",
-                    content: `
-                        <div class="text-left space-y-6 max-w-3xl mx-auto">
-                            <h3 class="text-2xl font-bold text-lime-400 mb-3">Apa itu Type Casting?</h3>
-                            <p class="text-lg text-gray-300">Ini adalah sihir di Python untuk mengubah tipe data satu menjadi tipe data lain.</p>
-                            <div>
-                                <h4 class="text-xl font-semibold text-purple-300 mb-2">2 Mantra Penting:</h4>
-                                <p class="text-lg text-gray-300"><b class="text-white"><code class="code-font">int()</code></b>: Mengubah teks angka menjadi <b class="text-cyan-400">Bilangan Bulat</b> (Integer).</p>
-                                <p class="text-lg text-gray-300"><b class="text-white"><code class="code-font">float()</code></b>: Mengubah teks angka menjadi <b class="text-cyan-400">Bilangan Koma</b> (Float).</p>
-                            </div>
-                            <h3 class="text-2xl font-bold text-lime-400 mb-3">Kode yang BENAR:</h3>
-                            <div class="bg-slate-900 rounded-lg p-6 border border-slate-700 text-left">
-                                <code class="code-font text-lime-300 text-sm block">
-                                    <span class="text-gray-500"># Kita langsung ubah input menjadi angka murni!</span><br>
-                                    <span class="text-white">angka_1 = </span><span class="text-purple-400">int</span>(<span class="text-purple-400">input</span>(<span class="text-orange-400">"Angka pertama: "</span>)) <span class="text-gray-500"># Angka 5 sekarang murni Integer</span><br>
-                                    <span class="text-white">angka_2 = </span><span class="text-purple-400">int</span>(<span class="text-purple-400">input</span>(<span class="text-orange-400">"Angka kedua: "</span>))   <span class="text-gray-500"># Angka 10 sekarang murni Integer</span><br><br>
-                                    <span class="text-white">hasil_benar = angka_1 + angka_2</span><br>
-                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"Hasil yang BENAR:"</span>, hasil_benar)
-                                </code>
-                            </div>
-                             <div class="bg-purple-900/50 p-4 rounded-lg border border-purple-700 text-left">
-                                <p class="font-semibold text-purple-300">Hasilnya:</p>
-                                <code class="code-font text-white block">Hasil yang BENAR: 15 ✅</code>
-                            </div>
-                        </div>
-                    `
-                },
-                {
-                    title: "Operator Assignment: Perbarui Kotak dengan Cepat!",
-                    subtitle: "Cara Cepat Mengubah Nilai",
-                    emoji: "🔄",
-                    content: `
-                        <div class="text-left space-y-4 max-w-4xl mx-auto">
-                            <p class="text-lg text-gray-300 text-center">Tujuan: Untuk memperbarui nilai sebuah variabel berdasarkan nilai lamanya. (Contoh: Menambahkan skor, atau mengurangi uang).</p>
-                            <div class="overflow-x-auto mb-4">
-                                <table class="w-full text-sm text-left text-gray-400">
-                                    <thead class="text-xs text-lime-300 uppercase bg-slate-800">
-                                        <tr>
-                                            <th scope="col" class="px-6 py-3">Operator</th>
-                                            <th scope="col" class="px-6 py-3">Arti Panjang</th>
-                                            <th scope="col" class="px-6 py-3">Arti Pendek</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr class="bg-slate-800/50 border-b border-slate-700">
-                                            <td class="px-6 py-4 font-bold text-xl text-center text-white">=</td>
-                                            <td class="px-6 py-4"><code class="code-font">skor = 10</code></td>
-                                            <td class="px-6 py-4">Simpan nilai 10 ke dalam skor.</td>
-                                        </tr>
-                                        <tr class="bg-slate-800/50 border-b border-slate-700">
-                                            <td class="px-6 py-4 font-bold text-xl text-center text-white">+=</td>
-                                            <td class="px-6 py-4"><code class="code-font">skor = skor + 5</code></td>
-                                            <td class="px-6 py-4"><code class="code-font">skor += 5</code> (Tambah Cepat)</td>
-                                        </tr>
-                                        <tr class="bg-slate-800/50">
-                                            <td class="px-6 py-4 font-bold text-xl text-center text-white">-=</td>
-                                            <td class="px-6 py-4"><code class="code-font">uang = uang - 2000</code></td>
-                                            <td class="px-6 py-4"><code class="code-font">uang -= 2000</code> (Kurang Cepat)</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <h3 class="text-2xl font-bold text-lime-400 mb-3 pt-4 text-center">Latihan Uang Saku</h3>
-                             <div class="bg-slate-900 rounded-lg p-6 border border-slate-700 text-left">
-                                <code class="code-font text-lime-300 text-sm block">
-                                    <span class="text-white">uang_saku = </span><span class="text-cyan-400">20000</span><br>
-                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"Uang saku awal:"</span>, uang_saku)<br><br>
-                                    <span class="text-gray-500"># Beli es teh seharga 3000</span><br>
-                                    <span class="text-white">uang_saku -= </span><span class="text-cyan-400">3000</span><br>
-                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"Sisa uang setelah beli es teh:"</span>, uang_saku)<br><br>
-                                     <span class="text-gray-500"># Dapat tambahan uang dari Ibu 5000</span><br>
-                                    <span class="text-white">uang_saku += </span><span class="text-cyan-400">5000</span><br>
-                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"Uang saku sekarang:"</span>, uang_saku)
-                                </code>
-                            </div>
-                        </div>
-                    `
-                },
-                {
-                    title: "Tantangan Proyek: Kasir Kantin Python!",
-                    subtitle: "Proyek Akhir: Kasir Kantin Interaktif!",
-                    emoji: "🛒",
-                    content: `
-                        <div class="text-left space-y-6 max-w-3xl mx-auto">
-                            <p class="text-lg text-gray-300 text-center">Tujuan: Membuat program yang bisa menghitung total belanjaan dengan pajak!</p>
-                            <p class="text-lg text-gray-300 text-center">File: <code class="code-font bg-slate-800 p-1 rounded">kasir_kantin.py</code></p>
-                            <div>
-                                <h3 class="text-xl font-bold text-lime-400 mb-3">Langkah-Langkah:</h3>
-                                <ol class="list-decimal list-inside space-y-2 text-lg text-gray-300">
-                                    <li><b>Tanya Harga:</b> Gunakan <code class="code-font">input()</code> dan <code class="code-font">float()</code> untuk bertanya 3 harga barang.</li>
-                                    <li><b>Hitung Subtotal:</b> Jumlahkan 3 harga barang.</li>
-                                    <li><b>Hitung Pajak (PPN 11%):</b> <code class="code-font">pajak = subtotal * 11 / 100</code></li>
-                                    <li><b>Hitung Total Akhir:</b> <code class="code-font">total_bayar = subtotal + pajak</code></li>
-                                    <li><b>Cetak Rapi:</b> Tampilkan Subtotal, Pajak, dan Total Bayar!</li>
-                                </ol>
-                                <p class="text-sm text-gray-400 mt-2">Tips: Gunakan <code class="code-font">float()</code> karena harga bisa ada koma (misalnya, 2500.50).</p>
-                            </div>
-                            <div class="bg-slate-900 rounded-lg p-6 border border-slate-700 text-left">
-                                <code class="code-font text-lime-300 text-sm block">
-                                    <span class="text-gray-500"># --- Selamat Datang ---</span><br>
-                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"--- Kasir Kantin Kalananti ---"</span>)<br><br>
-                                    <span class="text-gray-500"># --- Input Harga ---</span><br>
-                                    <span class="text-white">harga1 = </span><span class="text-purple-400">float</span>(<span class="text-purple-400">input</span>(<span class="text-orange-400">"Harga barang 1: Rp "</span>))<br>
-                                    <span class="text-white">harga2 = </span><span class="text-purple-400">float</span>(<span class="text-purple-400">input</span>(<span class="text-orange-400">"Harga barang 2: Rp "</span>))<br>
-                                    <span class="text-white">harga3 = </span><span class="text-purple-400">float</span>(<span class="text-purple-400">input</span>(<span class="text-orange-400">"Harga barang 3: Rp "</span>))<br><br>
-                                    <span class="text-gray-500"># --- Proses Hitung ---</span><br>
-                                    <span class="text-white">subtotal = harga1 + harga2 + harga3</span><br>
-                                    <span class="text-white">pajak = subtotal * </span><span class="text-cyan-400">11</span> / <span class="text-cyan-400">100</span><br>
-                                    <span class="text-white">total_bayar = subtotal + pajak</span><br><br>
-                                    <span class="text-gray-500"># --- Cetak Struk ---</span><br>
-                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"-------------------------"</span>)<br>
-                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"Subtotal   : Rp"</span>, subtotal)<br>
-                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"Pajak 11%  : Rp"</span>, pajak)<br>
-                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"Total Bayar: Rp"</span>, total_bayar)<br>
-                                </code>
-                            </div>
-                        </div>
-                    `
-                },
-                {
-                    title: "Apa yang Sudah Kita Pelajari Hari Ini?",
-                    subtitle: "Rangkuman Akhir",
-                    emoji: "🏁",
-                    content: `
-                        <div class="text-left space-y-6 max-w-3xl mx-auto">
-                            <h3 class="text-2xl font-bold text-lime-400 mb-3">Rangkuman Hari Ini:</h3>
-                            <ul class="list-disc list-inside space-y-3 text-lg text-gray-300">
-                                <li><b class="text-white">Operator Aritmatika:</b> Kita punya alat hitung canggih (<code class="code-font bg-slate-800 p-1 rounded">+ - * / ** // %</code>).</li>
-                                <li><b class="text-white"><code class="code-font">input()</code>:</b> Perintah untuk membuat program kita bisa <b class="text-purple-400">bertanya</b> kepada pengguna.</li>
-                                <li><b class="text-white">Type Casting (<code class="code-font">int()</code>, <code class="code-font">float()</code>):</b> Sihir untuk mengubah input teks menjadi angka murni agar bisa dihitung.</li>
-                                <li><b class="text-white">Operator Assignment (<code class="code-font">+=</code>, <code class="code-font">-=</code>):</b> Cara super cepat untuk memperbarui nilai variabel.</li>
-                            </ul>
-                            <div class="bg-purple-900/50 p-6 rounded-xl border border-purple-700">
-                                <h4 class="text-xl font-semibold text-purple-300 mb-2">Preview Materi Selanjutnya:</h4>
-                                <p class="text-lg text-gray-300">Minggu depan, kita akan membuat program kita bisa <b class="text-lime-400">membuat keputusan</b>! Contoh: "Jika uangku cukup, maka aku beli bakso. Kalau tidak cukup, beli permen saja." (Ini adalah <b class="text-white">Logika IF-ELSE</b>!)</p>
-                                <p class="text-xl text-white font-bold mt-4">Sampai jumpa minggu depan! 👋</p>
-                            </div>
-                        </div>
-                    `
-                }
-            ],
-            4: [
-                {
-                    title: "Program Kita Bisa Menyapa Nama!",
-                    subtitle: "Review & Notifikasi Game",
-                    emoji: "🎮",
-                    content: `
+                    }
+                ],
+
+                4: [
+                    {
+                        title: "Program Kita Bisa Menyapa Nama!",
+                        subtitle: "Review & Notifikasi Game",
+                        emoji: "🎮",
+                        content: `
                         <div class="text-left space-y-6 max-w-3xl mx-auto">
                             <div>
                                 <h3 class="text-2xl font-bold text-lime-400 mb-3">Review Cepat ⚡</h3>
@@ -1601,12 +1613,12 @@
                             </div>
                         </div>
                     `
-                },
-                {
-                    title: "Cara Lama: Menempel dengan Lem",
-                    subtitle: "Menggabungkan Teks dengan Tanda '+'",
-                    emoji: "😥",
-                    content: `
+                    },
+                    {
+                        title: "Cara Lama: Menempel dengan Lem",
+                        subtitle: "Menggabungkan Teks dengan Tanda '+'",
+                        emoji: "😥",
+                        content: `
                         <div class="text-left space-y-6 max-w-3xl mx-auto">
                             <h3 class="text-2xl font-bold text-lime-400 mb-3">Dulu, Caranya Agak Repot...</h3>
                             <p class="text-lg text-gray-300">
@@ -1618,12 +1630,12 @@
                             </div>
                         </div>
                     `
-                },
-                {
-                    title: "Jebakan Cara Lama: Angka vs Teks",
-                    subtitle: "Kenapa Angka Tidak Bisa Langsung 'Dilem'?",
-                    emoji: "⚠️",
-                    content: `
+                    },
+                    {
+                        title: "Jebakan Cara Lama: Angka vs Teks",
+                        subtitle: "Kenapa Angka Tidak Bisa Langsung 'Dilem'?",
+                        emoji: "⚠️",
+                        content: `
                         <div class="text-left space-y-6 max-w-3xl mx-auto">
                             <h3 class="text-2xl font-bold text-red-400 mb-3">Masalah Terbesar Cara Lama</h3>
                             <p class="text-lg text-gray-300">
@@ -1644,12 +1656,12 @@
                             <p class="text-center text-lg text-gray-400">Repot, kan? Gampang salah dan susah dibaca!</p>
                         </div>
                     `
-                },
-                {
-                    title: "Solusi Modern: f-string!",
-                    subtitle: "Cara Ajaib Menggabungkan Teks",
-                    emoji: "😎",
-                    content: `
+                    },
+                    {
+                        title: "Solusi Modern: f-string!",
+                        subtitle: "Cara Ajaib Menggabungkan Teks",
+                        emoji: "😎",
+                        content: `
                         <div class="text-left space-y-6 max-w-3xl mx-auto">
                             <h3 class="text-2xl font-bold text-lime-400 mb-3">Selamat Datang, f-string!</h3>
                             <p class="text-lg text-gray-300">
@@ -1661,12 +1673,12 @@
                             </div>
                         </div>
                     `
-                },
-                {
-                    title: "Aturan Emas f-string",
-                    subtitle: "Sangat Sederhana!",
-                    emoji: "✨",
-                    content: `
+                    },
+                    {
+                        title: "Aturan Emas f-string",
+                        subtitle: "Sangat Sederhana!",
+                        emoji: "✨",
+                        content: `
                         <div class="text-left space-y-6 max-w-3xl mx-auto">
                             <h3 class="text-2xl font-bold text-lime-400 mb-3">Hanya 2 Aturan Main:</h3>
                             <ol class="list-decimal list-inside space-y-4 text-lg text-gray-300">
@@ -1684,12 +1696,12 @@
                             <p class="text-center text-xl text-lime-300 font-bold">LIHAT! Kita tidak perlu <code class="code-font">str()</code> lagi! Jauh lebih rapi!</p>
                         </div>
                     `
-                },
-                {
-                    title: "Latihan: Sapaan Pelajaran Favorit",
-                    subtitle: "Praktik Terbimbing",
-                    emoji: "💖",
-                    content: `
+                    },
+                    {
+                        title: "Latihan: Sapaan Pelajaran Favorit",
+                        subtitle: "Praktik Terbimbing",
+                        emoji: "💖",
+                        content: `
                         <div class="text-left space-y-6 max-w-3xl mx-auto">
                             <h3 class="text-2xl font-bold text-purple-300 mb-3">Ayo Coba!</h3>
                             <p class="text-lg text-gray-300">
@@ -1711,12 +1723,12 @@
                             </div>
                         </div>
                     `
-                },
-                {
-                    title: "Proyek: Jadwal Piket Kelas",
-                    subtitle: "Kekuatan Super Baru: .upper()",
-                    emoji: "🧹",
-                    content: `
+                    },
+                    {
+                        title: "Proyek: Jadwal Piket Kelas",
+                        subtitle: "Kekuatan Super Baru: .upper()",
+                        emoji: "🧹",
+                        content: `
                         <div class="text-left space-y-6 max-w-3xl mx-auto">
                             <h3 class="text-2xl font-bold text-lime-400 mb-3">Tantangan: Generator Jadwal Piket</h3>
                             <p class="text-lg text-gray-300">
@@ -1741,12 +1753,12 @@
                             </div>
                         </div>
                     `
-                },
-                {
-                    title: "f-string di Mana Saja!",
-                    subtitle: "Contoh Keren: Struk Belanja",
-                    emoji: "🛒",
-                    content: `
+                    },
+                    {
+                        title: "f-string di Mana Saja!",
+                        subtitle: "Contoh Keren: Struk Belanja",
+                        emoji: "🛒",
+                        content: `
                         <div class="text-left space-y-6 max-w-3xl mx-auto">
                             <h3 class="text-2xl font-bold text-lime-400 mb-3">Contoh 1: Struk Belanja Digital</h3>
                             <p class="text-lg text-gray-300">
@@ -1767,12 +1779,12 @@
                             </div>
                         </div>
                     `
-                },
-                {
-                    title: "f-string di Mana Saja!",
-                    subtitle: "Contoh Keren: Bio Instagram",
-                    emoji: "📱",
-                    content: `
+                    },
+                    {
+                        title: "f-string di Mana Saja!",
+                        subtitle: "Contoh Keren: Bio Instagram",
+                        emoji: "📱",
+                        content: `
                         <div class="text-left space-y-6 max-w-3xl mx-auto">
                             <h3 class="text-2xl font-bold text-lime-400 mb-3">Contoh 2: Membuat Bio Instagram</h3>
                             <p class="text-lg text-gray-300">
@@ -1791,12 +1803,12 @@
                             </div>
                         </div>
                     `
-                },
-                {
-                    title: "f-string Bikin Hidup Gampang!",
-                    subtitle: "Rangkuman & Minggu Depan",
-                    emoji: "🏁",
-                    content: `
+                    },
+                    {
+                        title: "f-string Bikin Hidup Gampang!",
+                        subtitle: "Rangkuman & Minggu Depan",
+                        emoji: "🏁",
+                        content: `
                         <div class="text-left space-y-6 max-w-3xl mx-auto">
                             <h3 class="text-2xl font-bold text-lime-400 mb-3">Rangkuman Hari Ini:</h3>
                             <ul class="list-disc list-inside space-y-3 text-lg text-gray-300">
@@ -1815,157 +1827,158 @@
                             </div>
                         </div>
                     `
-                }
-            ],
-        };
+                    }
+                ],
+            };
 
-        // Fungsi untuk memperbarui konten slide dan elemen UI
-        function updateSlide() {
-            const currentMeetingContent = meetingContent[currentMeeting] || [];
-            const totalSlidesInMeeting = currentMeetingContent.length;
-            const currentData = currentMeetingContent[currentSlide - 1]; // Array 0-indexed
+            // Fungsi untuk memperbarui konten slide dan elemen UI
+            function updateSlide() {
+                const currentMeetingContent = meetingContent[currentMeeting] || [];
+                const totalSlidesInMeeting = currentMeetingContent.length;
+                const currentData = currentMeetingContent[currentSlide - 1]; // Array 0-indexed
 
-            if (!currentData) {
-                console.error(`Konten tidak ditemukan untuk Meeting ${currentMeeting}, Slide ${currentSlide}`);
-                return;
-            }
-
-            const meetingTitle = document.getElementById('meetingTitle');
-            const meetingSubtitle = document.getElementById('meetingSubtitle');
-            const slideContent = document.getElementById('slideContent');
-            const slideCounter = document.getElementById('slideCounter');
-            const prevBtn = document.getElementById('prevBtn');
-            const nextBtn = document.getElementById('nextBtn');
-            const slideContainer = document.getElementById('slideContainer');
-
-            // Terapkan efek fade-out
-            slideContainer.style.opacity = '0';
-            slideContainer.style.transform = 'scale(0.98)';
-
-            setTimeout(() => {
-                // Perbarui konten
-                if (currentMeeting === 1) {
-                    meetingTitle.textContent = `🚀 Meeting 1: Berkenalan dengan Python`;
-                } else if (currentMeeting === 2) {
-                    meetingTitle.textContent = `📦 Pertemuan 2: Kotak Ingatan Python (Variabel)`;
-                } else if (currentMeeting === 3) {
-                    meetingTitle.textContent = `🧮 Pertemuan 3: Python si Kalkulator Hebat!`;
-                } else if (currentMeeting === 4) {
-                    meetingTitle.textContent = `💌 Pertemuan 4: Pesan Pribadi dengan f-string`;
-                } else {
-                    meetingTitle.textContent = `Meeting ${currentMeeting}: ${currentData.title.split(':')[0]}`;
+                if (!currentData) {
+                    console.error(`Konten tidak ditemukan untuk Meeting ${currentMeeting}, Slide ${currentSlide}`);
+                    return;
                 }
 
-                meetingSubtitle.innerHTML = `# ${currentData.subtitle || currentData.title}`;
-                slideContent.innerHTML = currentData.content;
-                
-                // Perbarui penghitung slide
-                slideCounter.textContent = `Slide ${currentSlide} dari ${totalSlidesInMeeting}`;
+                const meetingTitle = document.getElementById('meetingTitle');
+                const meetingSubtitle = document.getElementById('meetingSubtitle');
+                const slideContent = document.getElementById('slideContent');
+                const slideCounter = document.getElementById('slideCounter');
+                const prevBtn = document.getElementById('prevBtn');
+                const nextBtn = document.getElementById('nextBtn');
+                const slideContainer = document.getElementById('slideContainer');
 
-                // Perbarui tombol navigasi
-                prevBtn.disabled = (currentSlide === 1);
-                nextBtn.disabled = (currentSlide === totalSlidesInMeeting);
+                // Terapkan efek fade-out
+                slideContainer.style.opacity = '0';
+                slideContainer.style.transform = 'scale(0.98)';
 
-                // Terapkan efek fade-in
-                slideContainer.style.opacity = '1';
-                slideContainer.style.transform = 'scale(1)';
-                
-            }, 300); // Tunggu durasi transisi
-            
-            // Perbarui tab sidebar yang aktif
-            document.querySelectorAll('.meeting-tab').forEach(tab => {
-                const meetingNum = parseInt(tab.dataset.meeting);
-                const isActive = meetingNum === currentMeeting;
-                const isClickable = meetingContent.hasOwnProperty(meetingNum);
+                setTimeout(() => {
+                    // Perbarui konten
+                    if (currentMeeting === 1) {
+                        meetingTitle.textContent = `🚀 Meeting 1: Berkenalan dengan Python`;
+                    } else if (currentMeeting === 2) {
+                        meetingTitle.textContent = `📦 Pertemuan 2: Kotak Ingatan Python (Variabel)`;
+                    } else if (currentMeeting === 3) {
+                        meetingTitle.textContent = `🧮 Pertemuan 3: Python si Kalkulator Hebat!`;
+                    } else if (currentMeeting === 4) {
+                        meetingTitle.textContent = `💌 Pertemuan 4: Pesan Pribadi dengan f-string`;
+                    } else {
+                        meetingTitle.textContent = `Meeting ${currentMeeting}: ${currentData.title.split(':')[0]}`;
+                    }
 
-                tab.classList.toggle('active-meeting', isActive);
-                tab.classList.toggle('bg-lime-400', isActive);
-                tab.classList.toggle('bg-slate-800/60', !isActive && isClickable);
-                tab.classList.toggle('hover:bg-slate-700/80', !isActive && isClickable);
-                
-                const titleDiv = tab.querySelector('div > div:first-child');
-                const subtitleDiv = tab.querySelector('div > div:last-child');
+                    meetingSubtitle.innerHTML = `# ${currentData.subtitle || currentData.title}`;
+                    slideContent.innerHTML = currentData.content;
 
-                titleDiv.classList.toggle('text-slate-900', isActive);
-                titleDiv.classList.toggle('text-white', !isActive && isClickable);
-                subtitleDiv.classList.toggle('text-slate-800', isActive);
-                subtitleDiv.classList.toggle('text-gray-400', !isActive && isClickable);
+                    // Perbarui penghitung slide
+                    slideCounter.textContent = `Slide ${currentSlide} dari ${totalSlidesInMeeting}`;
 
-                // Hapus kelas yang mungkin bertentangan
-                if (isActive) {
-                    titleDiv.classList.remove('text-slate-900');
-                    titleDiv.classList.add('text-slate-900');
-                    subtitleDiv.classList.remove('text-slate-800');
-                    subtitleDiv.classList.add('text-slate-800');
-                }
-            });
-        }
+                    // Perbarui tombol navigasi
+                    prevBtn.disabled = (currentSlide === 1);
+                    nextBtn.disabled = (currentSlide === totalSlidesInMeeting);
 
-        // --- Event Listener Navigasi ---
-        document.getElementById('prevBtn').addEventListener('click', () => {
-            if (currentSlide > 1) {
-                currentSlide--;
-                updateSlide();
+                    // Terapkan efek fade-in
+                    slideContainer.style.opacity = '1';
+                    slideContainer.style.transform = 'scale(1)';
+
+                }, 300); // Tunggu durasi transisi
+
+                // Perbarui tab sidebar yang aktif
+                document.querySelectorAll('.meeting-tab').forEach(tab => {
+                    const meetingNum = parseInt(tab.dataset.meeting);
+                    const isActive = meetingNum === currentMeeting;
+                    const isClickable = meetingContent.hasOwnProperty(meetingNum);
+
+                    tab.classList.toggle('active-meeting', isActive);
+                    tab.classList.toggle('bg-lime-400', isActive);
+                    tab.classList.toggle('bg-slate-800/60', !isActive && isClickable);
+                    tab.classList.toggle('hover:bg-slate-700/80', !isActive && isClickable);
+
+                    const titleDiv = tab.querySelector('div > div:first-child');
+                    const subtitleDiv = tab.querySelector('div > div:last-child');
+
+                    titleDiv.classList.toggle('text-slate-900', isActive);
+                    titleDiv.classList.toggle('text-white', !isActive && isClickable);
+                    subtitleDiv.classList.toggle('text-slate-800', isActive);
+                    subtitleDiv.classList.toggle('text-gray-400', !isActive && isClickable);
+
+                    // Hapus kelas yang mungkin bertentangan
+                    if (isActive) {
+                        titleDiv.classList.remove('text-slate-900');
+                        titleDiv.classList.add('text-slate-900');
+                        subtitleDiv.classList.remove('text-slate-800');
+                        subtitleDiv.classList.add('text-slate-800');
+                    }
+                });
             }
-        });
 
-        document.getElementById('nextBtn').addEventListener('click', () => {
-            const totalSlidesInMeeting = (meetingContent[currentMeeting] || []).length;
-            if (currentSlide < totalSlidesInMeeting) {
-                currentSlide++;
-                updateSlide();
-            }
-        });
-
-        // Fungsionalitas Sidebar
-        const sidebar = document.getElementById('sidebar');
-        const sidebarOverlay = document.getElementById('sidebarOverlay');
-        const hamburgerBtn = document.getElementById('hamburgerBtn');
-        const closeSidebarBtn = document.getElementById('closeSidebarBtn');
-
-        function openSidebar() {
-            sidebar.classList.remove('-translate-x-full'); // Ini akan berlaku di mobile
-            sidebarOverlay.classList.remove('hidden');
-        }
-
-        function closeSidebar() {
-            sidebar.classList.add('-translate-x-full'); // Ini akan berlaku di mobile
-            sidebarOverlay.classList.add('hidden');
-        }
-
-        hamburgerBtn.addEventListener('click', openSidebar);
-        closeSidebarBtn.addEventListener('click', closeSidebar);
-        sidebarOverlay.addEventListener('click', closeSidebar);
-
-        // Event listener tab meeting
-        document.querySelectorAll('.meeting-tab').forEach(tab => {
-            tab.addEventListener('click', () => {
-                const meetingNum = parseInt(tab.dataset.meeting);
-                if (meetingContent.hasOwnProperty(meetingNum)) { // Cek apakah meeting tersedia
-                    currentMeeting = meetingNum;
-                    currentSlide = 1; // Reset slide ke 1
+            // --- Event Listener Navigasi ---
+            document.getElementById('prevBtn').addEventListener('click', () => {
+                if (currentSlide > 1) {
+                    currentSlide--;
                     updateSlide();
-                    closeSidebar(); // Tutup sidebar setelah memilih
                 }
             });
-        });
 
-        // Navigasi keyboard
-        document.addEventListener('keydown', (e) => {
-            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
-                return; // Jangan navigasi jika sedang mengetik
-            }
-            if (e.key === 'ArrowRight' || e.key === ' ') {
-                e.preventDefault(); // Mencegah spasi scrolling halaman
-                document.getElementById('nextBtn').click();
-            } else if (e.key === 'ArrowLeft') {
-                e.preventDefault();
-                document.getElementById('prevBtn').click();
-            }
-        });
+            document.getElementById('nextBtn').addEventListener('click', () => {
+                const totalSlidesInMeeting = (meetingContent[currentMeeting] || []).length;
+                if (currentSlide < totalSlidesInMeeting) {
+                    currentSlide++;
+                    updateSlide();
+                }
+            });
 
-        // Inisialisasi
-        updateSlide();
-    </script>
+            // Fungsionalitas Sidebar
+            const sidebar = document.getElementById('sidebar');
+            const sidebarOverlay = document.getElementById('sidebarOverlay');
+            const hamburgerBtn = document.getElementById('hamburgerBtn');
+            const closeSidebarBtn = document.getElementById('closeSidebarBtn');
+
+            function openSidebar() {
+                sidebar.classList.remove('-translate-x-full'); // Ini akan berlaku di mobile
+                sidebarOverlay.classList.remove('hidden');
+            }
+
+            function closeSidebar() {
+                sidebar.classList.add('-translate-x-full'); // Ini akan berlaku di mobile
+                sidebarOverlay.classList.add('hidden');
+            }
+
+            hamburgerBtn.addEventListener('click', openSidebar);
+            closeSidebarBtn.addEventListener('click', closeSidebar);
+            sidebarOverlay.addEventListener('click', closeSidebar);
+
+            // Event listener tab meeting
+            document.querySelectorAll('.meeting-tab').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const meetingNum = parseInt(tab.dataset.meeting);
+                    if (meetingContent.hasOwnProperty(meetingNum)) { // Cek apakah meeting tersedia
+                        currentMeeting = meetingNum;
+                        currentSlide = 1; // Reset slide ke 1
+                        updateSlide();
+                        closeSidebar(); // Tutup sidebar setelah memilih
+                    }
+                });
+            });
+
+            // Navigasi keyboard
+            document.addEventListener('keydown', (e) => {
+                if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+                    return; // Jangan navigasi jika sedang mengetik
+                }
+                if (e.key === 'ArrowRight' || e.key === ' ') {
+                    e.preventDefault(); // Mencegah spasi scrolling halaman
+                    document.getElementById('nextBtn').click();
+                } else if (e.key === 'ArrowLeft') {
+                    e.preventDefault();
+                    document.getElementById('prevBtn').click();
+                }
+            });
+
+            // Inisialisasi
+            updateSlide();
+        </script>
 </body>
+
 </html>
