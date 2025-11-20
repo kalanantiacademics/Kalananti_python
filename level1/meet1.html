@@ -103,15 +103,104 @@
             /* Tailwind lime-400 */
             font-weight: bold;
         }
+
+        /* Welcome Overlay Styles */
+        #welcomeOverlay {
+            position: fixed;
+            inset: 0;
+            background-color: #020617;
+            /* slate-950 */
+            z-index: 100;
+            /* Highest priority */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .logo-spin {
+            animation: spin-slow 10s linear infinite;
+        }
+
+        @keyframes spin-slow {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 1s ease-in forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
     </style>
 </head>
 
-<body class="h-full bg-slate-950 text-white">
+<body class="h-full bg-slate-950 text-white overflow-hidden"> <!-- Prevent scrolling on body initially -->
+    <!-- Welcome Overlay -->
+    <div id="welcomeOverlay">
+        <div class="text-center space-y-8 p-8">
+            <!-- Logo with Spin Animation -->
+            <div class="relative w-48 h-48 mx-auto mb-8">
+                <div class="absolute inset-0 bg-purple-600/20 rounded-full blur-xl animate-pulse"></div>
+                <img src="https://tr.rbxcdn.com/180DAY-c146a168b0fe86c96d1ad316649dcba8/420/420/Image/Webp/noFilter"
+                    alt="Kalananti Logo" class="w-full h-full object-contain logo-spin drop-shadow-2xl relative z-10">
+            </div>
+
+            <!-- Initial Loading / Welcome Text -->
+            <div id="welcomeMessage" class="space-y-4 fade-in" style="animation-delay: 0.5s;">
+                <h1
+                    class="text-4xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-lime-400">
+                    Selamat Datang!
+                </h1>
+                <p class="text-xl text-gray-400">di Kelas Python Level 1</p>
+            </div>
+
+            <!-- Teacher Input Section -->
+            <div id="teacherInputSection"
+                class="hidden fade-in max-w-md mx-auto w-full bg-slate-900/50 p-8 rounded-2xl border border-slate-800 backdrop-blur-sm mt-8">
+                <label for="teacherName" class="block text-sm font-medium text-lime-400 mb-2 text-left">Nama Kakak
+                    Pengajar</label>
+                <input type="text" id="teacherName"
+                    class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-white placeholder-gray-500 transition-all mb-6"
+                    placeholder="Masukkan nama kakak...">
+                <button onclick="startClass()"
+                    class="w-full bg-gradient-to-r from-purple-600 to-purple-800 hover:from-purple-500 hover:to-purple-700 text-white font-bold py-3 px-6 rounded-lg transform hover:scale-105 transition-all shadow-lg hover:shadow-purple-500/25">
+                    Mulai Kelas 🚀
+                </button>
+            </div>
+
+            <!-- Welcome Back Section (if cookie exists) -->
+            <div id="welcomeBackSection" class="hidden fade-in mt-8">
+                <p class="text-2xl text-white mb-6">Halo, Kak <span id="displayTeacherName"
+                        class="text-lime-400 font-bold"></span>! 👋</p>
+                <button onclick="enterClass()"
+                    class="bg-gradient-to-r from-lime-500 to-lime-700 hover:from-lime-400 hover:to-lime-600 text-slate-900 font-bold py-3 px-8 rounded-full transform hover:scale-105 transition-all shadow-lg hover:shadow-lime-500/25">
+                    Lanjutkan Kelas ➡️
+                </button>
+                <button onclick="resetTeacher()"
+                    class="block mx-auto mt-4 text-sm text-gray-500 hover:text-gray-300 underline">
+                    Bukan saya? Ganti nama
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- 
       Struktur utama diubah menjadi h-screen (100vh)
       agar child-nya bisa menggunakan flex-1 untuk mengisi ruang 
     -->
-    <div class="h-screen flex flex-col">
+    <div id="mainContent" class="h-screen flex flex-col opacity-0 transition-opacity duration-1000">
         <!-- 
           Header - Menggunakan gradien ungu baru
           PERUBAHAN: Menambahkan h-20 (5rem / 80px) untuk tinggi eksplisit
@@ -451,9 +540,66 @@
         </footer>
 
         <script>
-            let currentMeeting = 4;
+            let currentMeeting = 1;
             let currentSlide = 1;
             const totalMeetings = 12;
+
+            // --- Welcome Overlay & LocalStorage Logic ---
+            function checkTeacherName() {
+                let teacher = localStorage.getItem("teacherName");
+                const teacherInputSection = document.getElementById('teacherInputSection');
+                const welcomeBackSection = document.getElementById('welcomeBackSection');
+                const displayTeacherName = document.getElementById('displayTeacherName');
+
+                if (teacher && teacher !== "") {
+                    // Teacher name exists
+                    teacherInputSection.classList.add('hidden');
+                    welcomeBackSection.classList.remove('hidden');
+                    displayTeacherName.innerText = teacher;
+                } else {
+                    // No teacher name, show input
+                    teacherInputSection.classList.remove('hidden');
+                    welcomeBackSection.classList.add('hidden');
+                }
+            }
+
+            function startClass() {
+                const nameInput = document.getElementById('teacherName').value;
+                if (nameInput.trim() !== "") {
+                    localStorage.setItem("teacherName", nameInput);
+                    enterClass();
+                } else {
+                    alert("Silakan masukkan nama kakak pengajar dulu ya! 😊");
+                }
+            }
+
+            function resetTeacher() {
+                localStorage.removeItem("teacherName");
+                checkTeacherName(); // Re-check (will show input)
+            }
+
+            function enterClass() {
+                const welcomeOverlay = document.getElementById('welcomeOverlay');
+                const mainContent = document.getElementById('mainContent');
+                const body = document.body;
+
+                // Fade out overlay
+                welcomeOverlay.style.opacity = '0';
+
+                // Fade in main content
+                mainContent.classList.remove('opacity-0');
+
+                // Allow scrolling again
+                body.classList.remove('overflow-hidden');
+
+                // Remove overlay from DOM after transition
+                setTimeout(() => {
+                    welcomeOverlay.style.display = 'none';
+                }, 1000);
+            }
+
+            // Initialize Cookie Check on Load
+            window.addEventListener('load', checkTeacherName);
 
             // --- Meeting Content Structure (Updated with new color classes) ---
             const meetingContent = {
@@ -928,6 +1074,26 @@
                         </div>
                     `
                     },
+                    // Slide 1.13: See You Next Meeting! 👋
+                    {
+                        title: "See You Next Meeting! 👋",
+                        subtitle: "Tetap Semangat!",
+                        emoji: "👋",
+                        content: `
+                        <div class="text-center space-y-8 max-w-3xl mx-auto flex flex-col justify-center h-full">
+                            <div class="text-8xl animate-bounce">🐍</div>
+                            <h3 class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-lime-400">
+                                Sampai Jumpa di Pertemuan Berikutnya!
+                            </h3>
+                            <div class="bg-slate-800/50 p-8 rounded-2xl border border-slate-700 backdrop-blur-sm transform hover:scale-105 transition-transform duration-300">
+                                <p class="text-2xl text-white italic font-serif">
+                                    "Orang yang hebat tidak dihasilkan dari kemudahan, kesenangan, dan kenyamanan. Mereka dibentuk melalui kesukaran, tantangan, dan air mata."
+                                </p>
+                                <p class="text-lime-400 font-bold mt-4 text-lg">- Dahlan Iskan</p>
+                            </div>
+                        </div>
+                        `
+                    }
                 ],
                 5: [
                     // Slide 5.0: Class Check ✅
@@ -1233,6 +1399,26 @@
                             </div>
                         </div>
                     `
+                    },
+                    // Slide 4.10: See You Next Meeting! 👋
+                    {
+                        title: "See You Next Meeting! 👋",
+                        subtitle: "Tetap Semangat!",
+                        emoji: "👋",
+                        content: `
+                        <div class="text-center space-y-8 max-w-3xl mx-auto flex flex-col justify-center h-full">
+                            <div class="text-8xl animate-bounce">🚦</div>
+                            <h3 class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-lime-400">
+                                Sampai Jumpa di Pertemuan Berikutnya!
+                            </h3>
+                            <div class="bg-slate-800/50 p-8 rounded-2xl border border-slate-700 backdrop-blur-sm transform hover:scale-105 transition-transform duration-300">
+                                <p class="text-2xl text-white italic font-serif">
+                                    "Logika akan membawamu dari A ke B. Imajinasi akan membawamu ke mana saja."
+                                </p>
+                                <p class="text-lime-400 font-bold mt-4 text-lg">- Albert Einstein</p>
+                            </div>
+                        </div>
+                        `
                     }
                 ],
                 2: [
@@ -1569,6 +1755,26 @@
                         </div>
                     `
                     },
+                    // Slide 2.14: See You Next Meeting! 👋
+                    {
+                        title: "See You Next Meeting! 👋",
+                        subtitle: "Tetap Semangat!",
+                        emoji: "👋",
+                        content: `
+                        <div class="text-center space-y-8 max-w-3xl mx-auto flex flex-col justify-center h-full">
+                            <div class="text-8xl animate-bounce">🧠</div>
+                            <h3 class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-lime-400">
+                                Sampai Jumpa di Pertemuan Berikutnya!
+                            </h3>
+                            <div class="bg-slate-800/50 p-8 rounded-2xl border border-slate-700 backdrop-blur-sm transform hover:scale-105 transition-transform duration-300">
+                                <p class="text-2xl text-white italic font-serif">
+                                    "Pendidikan adalah senjata paling ampuh yang bisa kamu gunakan untuk mengubah dunia."
+                                </p>
+                                <p class="text-lime-400 font-bold mt-4 text-lg">- Nelson Mandela</p>
+                            </div>
+                        </div>
+                        `
+                    }
                 ],
                 3: [
                     // Slide 3.0: Class Check ✅
@@ -1982,6 +2188,26 @@
                             </div>
                         </div>
                     `
+                    },
+                    // Slide 3.15: See You Next Meeting! 👋
+                    {
+                        title: "See You Next Meeting! 👋",
+                        subtitle: "Tetap Semangat!",
+                        emoji: "👋",
+                        content: `
+                        <div class="text-center space-y-8 max-w-3xl mx-auto flex flex-col justify-center h-full">
+                            <div class="text-8xl animate-bounce">🧮</div>
+                            <h3 class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-lime-400">
+                                Sampai Jumpa di Pertemuan Berikutnya!
+                            </h3>
+                            <div class="bg-slate-800/50 p-8 rounded-2xl border border-slate-700 backdrop-blur-sm transform hover:scale-105 transition-transform duration-300">
+                                <p class="text-2xl text-white italic font-serif">
+                                    "Matematika bukan tentang angka, persamaan, perhitungan, atau algoritma: ini tentang pemahaman."
+                                </p>
+                                <p class="text-lime-400 font-bold mt-4 text-lg">- William Paul Thurston</p>
+                            </div>
+                        </div>
+                        `
                     }
                 ],
 
@@ -2304,6 +2530,26 @@
                             </div>
                         </div>
                     `
+                    },
+                    // Slide 4.12: See You Next Meeting! 👋
+                    {
+                        title: "See You Next Meeting! 👋",
+                        subtitle: "Tetap Semangat!",
+                        emoji: "👋",
+                        content: `
+                        <div class="text-center space-y-8 max-w-3xl mx-auto flex flex-col justify-center h-full">
+                            <div class="text-8xl animate-bounce">🎤</div>
+                            <h3 class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-lime-400">
+                                Sampai Jumpa di Pertemuan Berikutnya!
+                            </h3>
+                            <div class="bg-slate-800/50 p-8 rounded-2xl border border-slate-700 backdrop-blur-sm transform hover:scale-105 transition-transform duration-300">
+                                <p class="text-2xl text-white italic font-serif">
+                                    "Satu-satunya cara untuk melakukan pekerjaan hebat adalah dengan mencintai apa yang kamu lakukan."
+                                </p>
+                                <p class="text-lime-400 font-bold mt-4 text-lg">- Steve Jobs</p>
+                            </div>
+                        </div>
+                        `
                     }
                 ],
             };
