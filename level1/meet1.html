@@ -640,8 +640,8 @@
                     const isAvailable = meetingContent.hasOwnProperty(i);
 
                     btn.className = `p-4 rounded-xl border transition-all duration-300 flex flex-col items-center justify-center gap-2 ${isAvailable
-                            ? 'bg-slate-800 border-slate-700 hover:bg-slate-700 hover:border-lime-400 hover:scale-105 cursor-pointer'
-                            : 'bg-slate-900/50 border-slate-800 opacity-50 cursor-not-allowed'
+                        ? 'bg-slate-800 border-slate-700 hover:bg-slate-700 hover:border-lime-400 hover:scale-105 cursor-pointer'
+                        : 'bg-slate-900/50 border-slate-800 opacity-50 cursor-not-allowed'
                         }`;
 
                     btn.innerHTML = `
@@ -3418,6 +3418,746 @@
                         `
                     }
                 ],
+                7: [
+                    // Slide 7.0: Cek Kesiapan ✅
+                    {
+                        title: "Cek Kesiapan Kelas! 🎒",
+                        subtitle: "Siap Looping?",
+                        emoji: "✅",
+                        content: `
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-center max-w-4xl mx-auto">
+                        <div class="bg-slate-800 p-6 rounded-xl border border-slate-700">
+                            <div class="text-5xl mb-4">🥤</div>
+                            <h4 class="text-xl font-semibold text-lime-400 mb-2">Minum Dulu!</h4>
+                            <p class="text-gray-300">Looping butuh konsentrasi tinggi!</p>
+                        </div>
+                        <div class="bg-slate-800 p-6 rounded-xl border border-slate-700">
+                            <div class="text-5xl mb-4">💻</div>
+                            <h4 class="text-xl font-semibold text-lime-400 mb-2">VS Code Ready?</h4>
+                            <p class="text-gray-300">Kita akan banyak mengetik kode.</p>
+                        </div>
+                        <div class="bg-slate-800 p-6 rounded-xl border border-slate-700">
+                            <div class="text-5xl mb-4">🔄</div>
+                            <h4 class="text-xl font-semibold text-lime-400 mb-2">Siap Berputar?</h4>
+                            <p class="text-gray-300">Jangan pusing ya kalau berulang-ulang!</p>
+                        </div>
+                        <div class="bg-slate-800 p-6 rounded-xl border border-slate-700">
+                            <div class="text-5xl mb-4">😃</div>
+                            <h4 class="text-xl font-semibold text-lime-400 mb-2">Semangat!</h4>
+                            <p class="text-gray-300">Ayo kita mulai!</p>
+                        </div>
+                    </div>
+                    `
+                    },
+                    // Slide 7.1: Intro to Loops 🔄
+                    {
+                        title: "Kenapa Harus Mengulang? 😫",
+                        subtitle: "Masalah: Capek Ngetik!",
+                        emoji: "😫",
+                        content: `
+                    <div class="text-left space-y-6 max-w-3xl mx-auto">
+                        <h3 class="text-2xl font-bold text-lime-400 mb-3">Bayangkan...</h3>
+                        <p class="text-lg text-gray-300">
+                            Kamu dihukum guru untuk menulis "Saya tidak akan terlambat lagi" sebanyak <b class="text-red-400">100 kali</b> di papan tulis.
+                        </p>
+                        <div class="bg-slate-900 rounded-lg p-6 border border-slate-700 text-left">
+                            <code class="code-font text-lime-300 text-sm block">
+                                <span class="text-purple-400">print</span>(<span class="text-orange-400">"Saya tidak akan terlambat lagi"</span>)<br>
+                                <span class="text-purple-400">print</span>(<span class="text-orange-400">"Saya tidak akan terlambat lagi"</span>)<br>
+                                <span class="text-purple-400">print</span>(<span class="text-orange-400">"Saya tidak akan terlambat lagi"</span>)<br>
+                                <span class="text-gray-500"># ... ketik terus sampai 100x ... CAPEK! 🥵</span>
+                            </code>
+                        </div>
+                        <p class="text-lg text-gray-300 mt-4">
+                            Komputer itu jago melakukan hal yang sama berulang-ulang tanpa bosan. Kita sebut ini <b class="text-lime-400">LOOPING (Perulangan)</b>.
+                        </p>
+                    </div>
+                    `
+                    },
+                    // Slide 7.2: The Solution 💡
+                    {
+                        title: "Solusinya: Loop! 💡",
+                        subtitle: "Cara Pintar",
+                        emoji: "💡",
+                        content: `
+                    <div class="text-left space-y-6 max-w-3xl mx-auto">
+                        <p class="text-lg text-gray-300">
+                            Daripada menulis 100 baris, kita cukup tulis 2 baris saja!
+                        </p>
+                        <div class="bg-slate-900 rounded-lg p-6 border border-slate-700 text-left">
+                            <code class="code-font text-lime-300 text-lg block">
+                                <span class="text-purple-400">for</span> <span class="text-white">i</span> <span class="text-purple-400">in</span> <span class="text-yellow-400">range</span>(<span class="text-cyan-400">100</span>):<br>
+                                <span class="text-purple-400">    print</span>(<span class="text-orange-400">"Saya tidak akan terlambat lagi"</span>)
+                            </code>
+                        </div>
+                        <p class="text-lg text-gray-300">
+                            Komputer akan otomatis mengulang perintah di dalam Loop sebanyak 100 kali.
+                        </p>
+                    </div>
+                    `
+                    },
+                    // Slide 7.3: Real World Loops 🌍
+                    {
+                        title: "Loop di Dunia Nyata 🌍",
+                        subtitle: "Contoh Sehari-hari",
+                        emoji: "🌍",
+                        content: `
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center max-w-5xl mx-auto">
+                        <div class="bg-slate-800 p-4 rounded-xl border border-slate-700">
+                            <div class="text-4xl mb-2">☀️</div>
+                            <h4 class="font-bold text-white">Matahari</h4>
+                            <p class="text-sm text-gray-400">Terbit dan terbenam setiap hari (Berulang terus).</p>
+                        </div>
+                        <div class="bg-slate-800 p-4 rounded-xl border border-slate-700">
+                            <div class="text-4xl mb-2">🍽️</div>
+                            <h4 class="font-bold text-white">Makan</h4>
+                            <p class="text-sm text-gray-400">Suap nasi -> Kunyah -> Telan (Diulang sampai habis).</p>
+                        </div>
+                        <div class="bg-slate-800 p-4 rounded-xl border border-slate-700">
+                            <div class="text-4xl mb-2">🚶</div>
+                            <h4 class="font-bold text-white">Berjalan</h4>
+                            <p class="text-sm text-gray-400">Kaki kiri -> Kaki kanan (Diulang sampai tujuan).</p>
+                        </div>
+                    </div>
+                    `
+                    },
+                    // Slide 7.4: For Loop Concept 🤖
+                    {
+                        title: "Perulangan FOR: Si Rajin 🤖",
+                        subtitle: "Konsep For Loop",
+                        emoji: "🤖",
+                        content: `
+                    <div class="text-left space-y-6 max-w-3xl mx-auto">
+                        <h3 class="text-2xl font-bold text-lime-400 mb-3">Apa itu For Loop?</h3>
+                        <p class="text-lg text-gray-300">
+                            Digunakan saat kita <b class="text-white">SUDAH TAHU</b> berapa kali kita ingin mengulang.
+                        </p>
+                        <div class="bg-slate-900 rounded-lg p-6 border border-slate-700 text-left">
+                            <p class="text-gray-400 mb-2">Bahasa Manusia:</p>
+                            <p class="text-xl text-white italic">"Ulangi sebanyak 5 kali"</p>
+                            <br>
+                            <p class="text-gray-400 mb-2">Bahasa Python:</p>
+                            <code class="code-font text-lime-300 text-lg block">
+                                <span class="text-purple-400">for</span> <span class="text-white">i</span> <span class="text-purple-400">in</span> <span class="text-yellow-400">range</span>(<span class="text-cyan-400">5</span>):
+                            </code>
+                        </div>
+                    </div>
+                    `
+                    },
+                    // Slide 7.5: Syntax Part 1 (for)
+                    {
+                        title: "Bedah Kode: Kata Kunci 'for' 🔑",
+                        subtitle: "Syntax Breakdown",
+                        emoji: "1️⃣",
+                        content: `
+                    <div class="text-center space-y-6 max-w-3xl mx-auto">
+                        <div class="bg-slate-900 rounded-lg p-8 border border-slate-700 inline-block">
+                            <code class="code-font text-4xl">
+                                <span class="text-purple-400 border-b-4 border-purple-500">for</span> <span class="text-gray-600">...</span>
+                            </code>
+                        </div>
+                        <p class="text-xl text-gray-300">
+                            <code class="code-font text-purple-400">for</code> artinya "Untuk".<br>
+                            Ini memberi tahu Python bahwa kita mau memulai perulangan.
+                        </p>
+                    </div>
+                    `
+                    },
+                    // Slide 7.6: Syntax Part 2 (range)
+                    {
+                        title: "Bedah Kode: Fungsi 'range()' 📏",
+                        subtitle: "Syntax Breakdown",
+                        emoji: "2️⃣",
+                        content: `
+                    <div class="text-center space-y-6 max-w-3xl mx-auto">
+                        <div class="bg-slate-900 rounded-lg p-8 border border-slate-700 inline-block">
+                            <code class="code-font text-4xl">
+                                <span class="text-gray-600">...</span> <span class="text-yellow-400 border-b-4 border-yellow-500">range</span>(<span class="text-cyan-400">5</span>)<span class="text-gray-600">:</span>
+                            </code>
+                        </div>
+                        <p class="text-xl text-gray-300">
+                            <code class="code-font text-yellow-400">range(5)</code> artinya "Buat barisan angka sebanyak 5".<br>
+                            (0, 1, 2, 3, 4)
+                        </p>
+                    </div>
+                    `
+                    },
+                    // Slide 7.7: Syntax Part 3 (i)
+                    {
+                        title: "Bedah Kode: Variabel 'i' 📦",
+                        subtitle: "Syntax Breakdown",
+                        emoji: "3️⃣",
+                        content: `
+                    <div class="text-center space-y-6 max-w-3xl mx-auto">
+                        <div class="bg-slate-900 rounded-lg p-8 border border-slate-700 inline-block">
+                            <code class="code-font text-4xl">
+                                <span class="text-purple-400">for</span> <span class="text-white border-b-4 border-white">i</span> <span class="text-purple-400">in</span> <span class="text-yellow-400">range</span>...
+                            </code>
+                        </div>
+                        <p class="text-xl text-gray-300">
+                            <code class="code-font text-white">i</code> adalah <b>Variabel</b>.<br>
+                            Dia bertugas memegang angka yang sedang aktif.<br>
+                            (Pertama dia pegang 0, lalu 1, lalu 2, dst).
+                        </p>
+                        <p class="text-sm text-gray-400">Boleh diganti nama lain lho, misal: <code class="code-font">nomor</code>, <code class="code-font">x</code>, atau <code class="code-font">ayam</code>.</p>
+                    </div>
+                    `
+                    },
+                    // Slide 7.8: Indentation is Key 🔑
+                    {
+                        title: "Rahasia Python: Spasi! 🔑",
+                        subtitle: "Indentation (Identasi)",
+                        emoji: "🔑",
+                        content: `
+                    <div class="text-left space-y-6 max-w-3xl mx-auto">
+                        <h3 class="text-2xl font-bold text-lime-400 mb-3">Penting Banget!</h3>
+                        <p class="text-lg text-gray-300">
+                            Python membaca kode berdasarkan <b>Jarak dari kiri (Spasi)</b>.
+                            Kode yang "menjorok ke dalam" artinya adalah <b>bagian dari Loop</b>.
+                        </p>
+                        <div class="bg-slate-900 rounded-lg p-6 border border-slate-700 text-left relative overflow-hidden">
+                            <div class="absolute top-0 left-0 w-8 h-full bg-red-500/20 border-r border-red-500/50 flex items-center justify-center">
+                                <span class="text-xs text-red-300 -rotate-90">JANGAN LUPA</span>
+                            </div>
+                            <code class="code-font text-lime-300 text-lg block pl-4">
+                                <span class="text-purple-400">for</span> <span class="text-white">i</span> <span class="text-purple-400">in</span> <span class="text-yellow-400">range</span>(<span class="text-cyan-400">5</span>):<br>
+                                <span class="text-white bg-red-500/30 px-1 rounded">    </span><span class="text-purple-400">print</span>(<span class="text-orange-400">"Ini diulang"</span>) <span class="text-green-400">✅ Benar!</span><br>
+                                <br>
+                                <span class="text-purple-400">for</span> <span class="text-white">i</span> <span class="text-purple-400">in</span> <span class="text-yellow-400">range</span>(<span class="text-cyan-400">5</span>):<br>
+                                <span class="text-purple-400">print</span>(<span class="text-orange-400">"Ini Error"</span>) <span class="text-red-400">❌ Salah!</span>
+                            </code>
+                        </div>
+                        <p class="text-sm text-yellow-300 italic">Tips: Tekan tombol <b>TAB</b> di keyboardmu untuk membuat spasi ini!</p>
+                    </div>
+                    `
+                    },
+                    // Slide 7.9: Quiz Indentation ❓
+                    {
+                        title: "Kuis Cepat! ⚡",
+                        subtitle: "Mana yang Benar?",
+                        emoji: "❓",
+                        content: `
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-center max-w-4xl mx-auto">
+                        <div class="bg-slate-800 p-6 rounded-xl border-2 border-transparent hover:border-lime-400 cursor-pointer transition-all">
+                            <h4 class="font-bold text-white mb-4">Pilihan A</h4>
+                            <div class="bg-slate-900 p-4 rounded text-left">
+                                <code class="code-font text-xs">
+                                    for i in range(3):<br>
+                                    print("Halo")
+                                </code>
+                            </div>
+                        </div>
+                        <div class="bg-slate-800 p-6 rounded-xl border-2 border-transparent hover:border-lime-400 cursor-pointer transition-all">
+                            <h4 class="font-bold text-white mb-4">Pilihan B</h4>
+                            <div class="bg-slate-900 p-4 rounded text-left">
+                                <code class="code-font text-xs">
+                                    for i in range(3):<br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;print("Halo")
+                                </code>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mt-6">Tunjuk mana yang benar!</p>
+                    <div class="mt-4 p-4 bg-lime-900/30 rounded-lg border border-lime-500/50 hidden" id="quiz-answer-1">
+                        <p class="text-lime-400 font-bold">Jawaban: B! Karena ada spasinya (Indentation).</p>
+                    </div>
+                    <button onclick="document.getElementById('quiz-answer-1').classList.remove('hidden')" class="mt-4 px-6 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-full font-bold">Cek Jawaban</button>
+                    `
+                    },
+                    // Slide 7.10: For Loop Example 1 (Simple Count)
+                    {
+                        title: "Contoh 1: Menghitung 0 sampai 4",
+                        subtitle: "Basic Range",
+                        emoji: "1️⃣",
+                        content: `
+                    <div class="text-left space-y-6 max-w-3xl mx-auto">
+                        <div class="bg-slate-900 rounded-lg p-6 border border-slate-700 text-left">
+                            <code class="code-font text-lime-300 text-sm block">
+                                <span class="text-purple-400">for</span> <span class="text-white">i</span> <span class="text-purple-400">in</span> <span class="text-yellow-400">range</span>(<span class="text-cyan-400">5</span>):<br>
+                                <span class="text-gray-500">    # Jangan lupa TAB!</span><br>
+                                <span class="text-purple-400">    print</span>(<span class="text-white">i</span>)
+                            </code>
+                        </div>
+                        <div class="p-4 bg-slate-800 rounded-lg border border-slate-600">
+                            <h4 class="font-bold text-white mb-2">Hasilnya:</h4>
+                            <p class="code-font text-gray-300">0<br>1<br>2<br>3<br>4</p>
+                        </div>
+                        <p class="text-sm text-red-400 italic">Ingat! Komputer mulai menghitung dari 0, bukan 1.</p>
+                    </div>
+                    `
+                    },
+                    // Slide 7.11: Breakdown Ex 1 🔍
+                    {
+                        title: "Apa yang terjadi? 🔍",
+                        subtitle: "Analisis Contoh 1",
+                        emoji: "🔍",
+                        content: `
+                    <div class="text-left space-y-4 max-w-3xl mx-auto text-lg text-gray-300">
+                        <p>1. <b>Putaran 1</b>: <code class="code-font text-white">i</code> jadi 0. Print 0.</p>
+                        <p>2. <b>Putaran 2</b>: <code class="code-font text-white">i</code> jadi 1. Print 1.</p>
+                        <p>3. <b>Putaran 3</b>: <code class="code-font text-white">i</code> jadi 2. Print 2.</p>
+                        <p>4. <b>Putaran 4</b>: <code class="code-font text-white">i</code> jadi 3. Print 3.</p>
+                        <p>5. <b>Putaran 5</b>: <code class="code-font text-white">i</code> jadi 4. Print 4.</p>
+                        <p class="text-yellow-400 font-bold mt-4">Selesai! Karena range(5) cuma sampai 4.</p>
+                    </div>
+                    `
+                    },
+                    // Slide 7.12: For Loop Example 2 (Repeat Text)
+                    {
+                        title: "Contoh 2: Hukuman Tulis ✍️",
+                        subtitle: "Mengulang Teks",
+                        emoji: "✍️",
+                        content: `
+                    <div class="text-left space-y-6 max-w-3xl mx-auto">
+                        <p class="text-lg text-gray-300">Mari kita selesaikan hukuman tadi dengan cepat!</p>
+                        <div class="bg-slate-900 rounded-lg p-6 border border-slate-700 text-left">
+                            <code class="code-font text-lime-300 text-sm block">
+                                <span class="text-purple-400">for</span> <span class="text-white">nomor</span> <span class="text-purple-400">in</span> <span class="text-yellow-400">range</span>(<span class="text-cyan-400">3</span>):<br>
+                                <span class="text-purple-400">    print</span>(<span class="text-orange-400">"Saya tidak akan terlambat lagi"</span>)
+                            </code>
+                        </div>
+                        <div class="p-4 bg-slate-800 rounded-lg border border-slate-600">
+                            <h4 class="font-bold text-white mb-2">Hasilnya:</h4>
+                            <p class="code-font text-gray-300">
+                                Saya tidak akan terlambat lagi<br>
+                                Saya tidak akan terlambat lagi<br>
+                                Saya tidak akan terlambat lagi
+                            </p>
+                        </div>
+                    </div>
+                    `
+                    },
+                    // Slide 7.13: For Loop Example 3 (Multiplication)
+                    {
+                        title: "Contoh 3: Tabel Perkalian ✖️",
+                        subtitle: "Matematika jadi Mudah",
+                        emoji: "✖️",
+                        content: `
+                    <div class="text-left space-y-6 max-w-3xl mx-auto">
+                        <p class="text-lg text-gray-300">Membuat tabel perkalian 2.</p>
+                        <div class="bg-slate-900 rounded-lg p-6 border border-slate-700 text-left">
+                            <code class="code-font text-lime-300 text-sm block">
+                                <span class="text-purple-400">print</span>(<span class="text-orange-400">"Perkalian 2:"</span>)<br>
+                                <span class="text-purple-400">for</span> <span class="text-white">angka</span> <span class="text-purple-400">in</span> <span class="text-yellow-400">range</span>(<span class="text-cyan-400">1</span>, <span class="text-cyan-400">6</span>): <span class="text-gray-500"># 1 sampai 5</span><br>
+                                <span class="text-white">    hasil = angka * </span><span class="text-cyan-400">2</span><br>
+                                <span class="text-purple-400">    print</span>(<span class="text-lime-400">f</span><span class="text-orange-400">"2 dikali </span><span class="text-white">{angka}</span><span class="text-orange-400"> sama dengan </span><span class="text-white">{hasil}</span><span class="text-orange-400">"</span>)
+                            </code>
+                        </div>
+                        <div class="p-4 bg-slate-800 rounded-lg border border-slate-600">
+                            <p class="code-font text-gray-300 text-sm">
+                                2 dikali 1 sama dengan 2<br>
+                                2 dikali 2 sama dengan 4<br>
+                                ... dan seterusnya
+                            </p>
+                        </div>
+                    </div>
+                    `
+                    },
+                    // Slide 7.14: For Loop Example 4 (Sum)
+                    {
+                        title: "Contoh 4: Menghitung Total 💰",
+                        subtitle: "Akumulasi Nilai",
+                        emoji: "💰",
+                        content: `
+                    <div class="text-left space-y-6 max-w-3xl mx-auto">
+                        <p class="text-lg text-gray-300">Menjumlahkan angka dari 1 sampai 5.</p>
+                        <div class="bg-slate-900 rounded-lg p-6 border border-slate-700 text-left">
+                            <code class="code-font text-lime-300 text-sm block">
+                                <span class="text-white">total = </span><span class="text-cyan-400">0</span><br>
+                                <span class="text-purple-400">for</span> <span class="text-white">angka</span> <span class="text-purple-400">in</span> <span class="text-yellow-400">range</span>(<span class="text-cyan-400">1</span>, <span class="text-cyan-400">6</span>): <span class="text-gray-500"># 1 sampai 5</span><br>
+                                <span class="text-white">    total = total + angka</span><br>
+                                <span class="text-purple-400">print</span>(<span class="text-lime-400">f</span><span class="text-orange-400">"Total semuanya: </span><span class="text-white">{total}</span><span class="text-orange-400">"</span>)
+                            </code>
+                        </div>
+                        <p class="text-sm text-gray-400">Logika: 0 + 1 + 2 + 3 + 4 + 5 = 15</p>
+                    </div>
+                    `
+                    },
+                    // Slide 7.15: Mini Quiz For Loop 🧠
+                    {
+                        title: "Kuis For Loop 🧠",
+                        subtitle: "Tes Pemahaman",
+                        emoji: "🧠",
+                        content: `
+                    <div class="text-center space-y-6 max-w-3xl mx-auto">
+                        <p class="text-xl text-white">Jika kita tulis <code class="code-font text-yellow-400">range(3)</code>, angka apa saja yang keluar?</p>
+                        <div class="grid grid-cols-1 gap-4">
+                            <button onclick="alert('Salah! Komputer mulai dari 0.')" class="bg-slate-800 p-4 rounded-lg hover:bg-red-900/50 transition-colors text-white">1, 2, 3</button>
+                            <button onclick="alert('Benar! 0, 1, 2 (Total 3 angka)')" class="bg-slate-800 p-4 rounded-lg hover:bg-green-900/50 transition-colors text-white">0, 1, 2</button>
+                            <button onclick="alert('Salah! Itu kebanyakan.')" class="bg-slate-800 p-4 rounded-lg hover:bg-red-900/50 transition-colors text-white">0, 1, 2, 3</button>
+                        </div>
+                    </div>
+                    `
+                    },
+                    // Slide 7.16: The while Loop 🔄
+                    {
+                        title: "Perulangan WHILE: Si Keras Kepala 😤",
+                        subtitle: "Konsep While Loop",
+                        emoji: "😤",
+                        content: `
+                    <div class="text-left space-y-6 max-w-3xl mx-auto">
+                        <h3 class="text-2xl font-bold text-lime-400 mb-3">Apa itu While Loop?</h3>
+                        <p class="text-lg text-gray-300">
+                            Dia akan <b class="text-white">TERUS MENGULANG</b> selama syaratnya masih <b class="text-green-400">True (Benar)</b>. Dia baru berhenti kalau syaratnya jadi False.
+                        </p>
+                        <div class="bg-slate-900 rounded-lg p-6 border border-slate-700 text-left">
+                            <p class="text-gray-400 mb-2">Bahasa Manusia:</p>
+                            <p class="text-xl text-white italic">"Makan terus SELAMA perut masih lapar"</p>
+                        </div>
+                    </div>
+                    `
+                    },
+                    // Slide 7.17: Syntax Part 1 (while)
+                    {
+                        title: "Bedah Kode: Kata Kunci 'while' 🔑",
+                        subtitle: "Syntax Breakdown",
+                        emoji: "1️⃣",
+                        content: `
+                    <div class="text-center space-y-6 max-w-3xl mx-auto">
+                        <div class="bg-slate-900 rounded-lg p-8 border border-slate-700 inline-block">
+                            <code class="code-font text-4xl">
+                                <span class="text-purple-400 border-b-4 border-purple-500">while</span> <span class="text-gray-600">...</span>
+                            </code>
+                        </div>
+                        <p class="text-xl text-gray-300">
+                            <code class="code-font text-purple-400">while</code> artinya "Selama" atau "Ketika".<br>
+                            Ini memberi tahu Python untuk mengecek kondisi sebelum mengulang.
+                        </p>
+                    </div>
+                    `
+                    },
+                    // Slide 7.18: Syntax Part 2 (Condition)
+                    {
+                        title: "Bedah Kode: Kondisi (Syarat) 🚦",
+                        subtitle: "Syntax Breakdown",
+                        emoji: "2️⃣",
+                        content: `
+                    <div class="text-center space-y-6 max-w-3xl mx-auto">
+                        <div class="bg-slate-900 rounded-lg p-8 border border-slate-700 inline-block">
+                            <code class="code-font text-4xl">
+                                <span class="text-purple-400">while</span> <span class="text-white border-b-4 border-white">lapar == True</span><span class="text-gray-600">:</span>
+                            </code>
+                        </div>
+                        <p class="text-xl text-gray-300">
+                            Ini adalah <b>Syarat</b>.<br>
+                            Jika syaratnya <b class="text-green-400">True</b>, loop jalan.<br>
+                            Jika syaratnya <b class="text-red-400">False</b>, loop berhenti.
+                        </p>
+                    </div>
+                    `
+                    },
+                    // Slide 7.19: The Increment ➕
+                    {
+                        title: "Penting: Jangan Lupa Tambah! ➕",
+                        subtitle: "Increment (Penambahan)",
+                        emoji: "➕",
+                        content: `
+                    <div class="text-left space-y-6 max-w-3xl mx-auto">
+                        <p class="text-lg text-gray-300">
+                            Di While Loop, kita harus mengubah kondisi secara manual agar loop bisa berhenti.
+                        </p>
+                        <div class="bg-slate-900 rounded-lg p-6 border border-slate-700 text-left">
+                            <code class="code-font text-lime-300 text-lg block">
+                                <span class="text-white">angka = </span><span class="text-cyan-400">1</span><br>
+                                <span class="text-purple-400">while</span> <span class="text-white">angka < </span><span class="text-cyan-400">5</span>:<br>
+                                <span class="text-purple-400">    print</span>(<span class="text-white">angka</span>)<br>
+                                <span class="text-white bg-green-500/30 px-1 rounded">    angka = angka + </span><span class="text-cyan-400 bg-green-500/30 px-1 rounded">1</span> <span class="text-green-400">⬅️ INI PENTING!</span>
+                            </code>
+                        </div>
+                        <p class="text-sm text-gray-400 mt-4">
+                            Kita menyebutnya <b>Increment</b> (Menambah nilai variabel).
+                        </p>
+                    </div>
+                    `
+                    },
+                    // Slide 7.20: Infinite Loop Warning ♾️
+                    {
+                        title: "Bahaya: Infinite Loop! ♾️",
+                        subtitle: "Jebakan Batman",
+                        emoji: "♾️",
+                        content: `
+                    <div class="text-center space-y-6 max-w-3xl mx-auto">
+                        <div class="text-8xl animate-spin">🌀</div>
+                        <h3 class="text-3xl font-bold text-red-500">Loop Tak Terbatas</h3>
+                        <p class="text-lg text-gray-300">
+                            Kalau kita lupa menambahkan Increment, syaratnya akan selalu Benar selamanya.<br>
+                            Komputer akan pusing dan macet!
+                        </p>
+                        <div class="bg-red-900/30 p-4 rounded-lg border border-red-500/50">
+                            <code class="code-font text-red-300">
+                                while True:<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;print("Aku tidak bisa berhenti!")
+                            </code>
+                        </div>
+                    </div>
+                    `
+                    },
+                    // Slide 7.21: While Loop Example 1 (Countdown)
+                    {
+                        title: "Contoh 1: Hitung Mundur 🚀",
+                        subtitle: "Basic While",
+                        emoji: "🚀",
+                        content: `
+                    <div class="text-left space-y-6 max-w-3xl mx-auto">
+                        <div class="bg-slate-900 rounded-lg p-6 border border-slate-700 text-left">
+                            <code class="code-font text-lime-300 text-sm block">
+                                <span class="text-white">detik = </span><span class="text-cyan-400">3</span><br><br>
+                                <span class="text-purple-400">while</span> <span class="text-white">detik > </span><span class="text-cyan-400">0</span>:<br>
+                                <span class="text-purple-400">    print</span>(<span class="text-white">detik</span>)<br>
+                                <span class="text-white">    detik = detik - </span><span class="text-cyan-400">1</span> <span class="text-gray-500"># Kurangi 1 setiap putaran</span><br><br>
+                                <span class="text-purple-400">print</span>(<span class="text-orange-400">"Meluncur! 🚀"</span>)
+                            </code>
+                        </div>
+                        <div class="p-4 bg-slate-800 rounded-lg border border-slate-600">
+                            <h4 class="font-bold text-white mb-2">Hasilnya:</h4>
+                            <p class="code-font text-gray-300">3<br>2<br>1<br>Meluncur! 🚀</p>
+                        </div>
+                    </div>
+                    `
+                    },
+                    // Slide 7.22: Breakdown Ex 1 🔍
+                    {
+                        title: "Kenapa Berhenti? 🔍",
+                        subtitle: "Analisis Countdown",
+                        emoji: "🔍",
+                        content: `
+                    <div class="text-left space-y-4 max-w-3xl mx-auto text-lg text-gray-300">
+                        <p>1. Detik 3. (3 > 0? Ya). Print 3. Detik jadi 2.</p>
+                        <p>2. Detik 2. (2 > 0? Ya). Print 2. Detik jadi 1.</p>
+                        <p>3. Detik 1. (1 > 0? Ya). Print 1. Detik jadi 0.</p>
+                        <p class="text-red-400 font-bold">4. Detik 0. (0 > 0? TIDAK!). Loop Berhenti.</p>
+                    </div>
+                    `
+                    },
+                    // Slide 7.23: While Loop Example 2 (Input Loop)
+                    {
+                        title: "Contoh 2: Tanya Terus! 🗣️",
+                        subtitle: "Interaktif While",
+                        emoji: "🗣️",
+                        content: `
+                    <div class="text-left space-y-6 max-w-3xl mx-auto">
+                        <p class="text-lg text-gray-300">Program ini akan terus bertanya sampai kamu jawab "ya".</p>
+                        <div class="bg-slate-900 rounded-lg p-6 border border-slate-700 text-left">
+                            <code class="code-font text-lime-300 text-sm block">
+                                <span class="text-white">jawab = </span><span class="text-orange-400">""</span><br><br>
+                                <span class="text-purple-400">while</span> <span class="text-white">jawab != </span><span class="text-orange-400">"ya"</span>:<br>
+                                <span class="text-white">    jawab = </span><span class="text-purple-400">input</span>(<span class="text-orange-400">"Apakah kamu sudah mandi? (ya/tidak): "</span>)<br><br>
+                                <span class="text-purple-400">print</span>(<span class="text-orange-400">"Bagus, wangi sekali!"</span>)
+                            </code>
+                        </div>
+                    </div>
+                    `
+                    },
+                    // Slide 7.24: While Loop Example 3 (Accumulator)
+                    {
+                        title: "Contoh 3: Menabung 🐖",
+                        subtitle: "Sampai Target Tercapai",
+                        emoji: "🐖",
+                        content: `
+                    <div class="text-left space-y-6 max-w-3xl mx-auto">
+                        <p class="text-lg text-gray-300">Menabung sampai terkumpul 1000.</p>
+                        <div class="bg-slate-900 rounded-lg p-6 border border-slate-700 text-left">
+                            <code class="code-font text-lime-300 text-sm block">
+                                <span class="text-white">tabungan = </span><span class="text-cyan-400">0</span><br>
+                                <span class="text-purple-400">while</span> <span class="text-white">tabungan < </span><span class="text-cyan-400">1000</span>:<br>
+                                <span class="text-white">    uang = </span><span class="text-purple-400">int</span>(<span class="text-purple-400">input</span>(<span class="text-orange-400">"Masukkan uang: "</span>))<br>
+                                <span class="text-white">    tabungan = tabungan + uang</span><br>
+                                <span class="text-purple-400">    print</span>(<span class="text-lime-400">f</span><span class="text-orange-400">"Total: </span><span class="text-white">{tabungan}</span><span class="text-orange-400">"</span>)<br><br>
+                                <span class="text-purple-400">print</span>(<span class="text-green-400">"Hore! Bisa beli jajan!"</span>)
+                            </code>
+                        </div>
+                    </div>
+                    `
+                    },
+                    // Slide 7.25: Mini Quiz While Loop 🧠
+                    {
+                        title: "Kuis While Loop 🧠",
+                        subtitle: "Tes Pemahaman",
+                        emoji: "🧠",
+                        content: `
+                    <div class="text-center space-y-6 max-w-3xl mx-auto">
+                        <p class="text-xl text-white">Apa yang terjadi jika kita lupa menulis <code class="code-font">i = i + 1</code>?</p>
+                        <div class="grid grid-cols-1 gap-4">
+                            <button onclick="alert('Salah. Justru dia tidak akan berhenti.')" class="bg-slate-800 p-4 rounded-lg hover:bg-red-900/50 transition-colors text-white">Loop berhenti otomatis</button>
+                            <button onclick="alert('Benar! Infinite Loop namanya.')" class="bg-slate-800 p-4 rounded-lg hover:bg-green-900/50 transition-colors text-white">Loop berjalan selamanya (Error)</button>
+                        </div>
+                    </div>
+                    `
+                    },
+                    // Slide 7.26: Hard Challenge Intro 🔥
+                    {
+                        title: "Tantangan Level Hard! 🔥",
+                        subtitle: "Siap untuk yang lebih susah?",
+                        emoji: "🔥",
+                        content: `
+                    <div class="text-center space-y-6 max-w-3xl mx-auto">
+                        <div class="text-8xl animate-pulse">😈</div>
+                        <h3 class="text-3xl font-bold text-red-500">Tantangan Logika!</h3>
+                        <p class="text-lg text-gray-300">
+                            Sekarang kita akan menggabungkan Loop dengan If (Keputusan).
+                            Fokuskan pikiranmu!
+                        </p>
+                    </div>
+                    `
+                    },
+                    // Slide 7.27: Hard Challenge 1 (For + If)
+                    {
+                        title: "Tantangan 1: Mencari Angka Genap 🔢",
+                        subtitle: "For Loop + If",
+                        emoji: "🔢",
+                        content: `
+                    <div class="text-left space-y-6 max-w-3xl mx-auto">
+                        <p class="text-gray-300">Cetak angka genap saja dari 0 sampai 9.</p>
+                        <div class="bg-slate-900 rounded-lg p-6 border border-slate-700 text-left">
+                            <code class="code-font text-lime-300 text-sm block">
+                                <span class="text-purple-400">print</span>(<span class="text-orange-400">"Angka Genap:"</span>)<br>
+                                <span class="text-purple-400">for</span> <span class="text-white">angka</span> <span class="text-purple-400">in</span> <span class="text-yellow-400">range</span>(<span class="text-cyan-400">10</span>):<br>
+                                <span class="text-purple-400">    if</span> <span class="text-white">angka % </span><span class="text-cyan-400">2</span> <span class="text-white">== </span><span class="text-cyan-400">0</span>:<br>
+                                <span class="text-purple-400">        print</span>(<span class="text-white">angka</span>)
+                            </code>
+                        </div>
+                    </div>
+                    `
+                    },
+                    // Slide 7.28: Explanation Modulo ➗
+                    {
+                        title: "Apa itu % (Persen)? ➗",
+                        subtitle: "Modulo (Sisa Bagi)",
+                        emoji: "➗",
+                        content: `
+                    <div class="text-left space-y-6 max-w-3xl mx-auto">
+                        <p class="text-lg text-gray-300">
+                            <code class="code-font">%</code> bukan persen diskon ya! Ini adalah <b>Sisa Pembagian</b>.
+                        </p>
+                        <ul class="list-disc list-inside text-gray-300 space-y-2">
+                            <li>4 dibagi 2 sisanya 0 (Genap)</li>
+                            <li>5 dibagi 2 sisanya 1 (Ganjil)</li>
+                        </ul>
+                        <p class="text-yellow-400 mt-4">Jadi, <code class="code-font">angka % 2 == 0</code> artinya "Jika angka habis dibagi 2".</p>
+                    </div>
+                    `
+                    },
+                    // Slide 7.29: Hard Challenge 2 (While + If)
+                    {
+                        title: "Tantangan 2: Password Salah? Ulang! 🔐",
+                        subtitle: "Sistem Login Sederhana",
+                        emoji: "🔐",
+                        content: `
+                    <div class="text-left space-y-6 max-w-3xl mx-auto">
+                        <p class="text-gray-300">Terus minta password sampai benar.</p>
+                        <div class="bg-slate-900 rounded-lg p-6 border border-slate-700 text-left">
+                            <code class="code-font text-lime-300 text-sm block">
+                                <span class="text-white">password_benar = </span><span class="text-orange-400">"rahasia"</span><br>
+                                <span class="text-white">input_user = </span><span class="text-orange-400">""</span><br><br>
+                                <span class="text-gray-500"># Loop berjalan selama input BUKAN password benar</span><br>
+                                <span class="text-purple-400">while</span> <span class="text-white">input_user != password_benar:</span><br>
+                                <span class="text-white">    input_user = </span><span class="text-purple-400">input</span>(<span class="text-orange-400">"Masukkan Password: "</span>)<br>
+                                <span class="text-purple-400">    if</span> <span class="text-white">input_user != password_benar:</span><br>
+                                <span class="text-purple-400">        print</span>(<span class="text-red-400">"Salah! Coba lagi."</span>)<br><br>
+                                <span class="text-purple-400">print</span>(<span class="text-green-400">"Akses Diterima!"</span>)
+                            </code>
+                        </div>
+                    </div>
+                    `
+                    },
+                    // Slide 7.30: Explanation String Check 📝
+                    {
+                        title: "Cek Tulisan 📝",
+                        subtitle: "Membandingkan Teks",
+                        emoji: "📝",
+                        content: `
+                    <div class="text-left space-y-6 max-w-3xl mx-auto">
+                        <p class="text-lg text-gray-300">
+                            Kita bisa membandingkan tulisan dengan tanda <code class="code-font">!=</code> (Tidak Sama Dengan).
+                        </p>
+                        <p class="text-gray-300">
+                            Selama password yang diketik <b>TIDAK SAMA</b> dengan "rahasia", program akan terus bertanya.
+                        </p>
+                    </div>
+                    `
+                    },
+                    // Slide 7.31: Hard Challenge 3 (Stop Button)
+                    {
+                        title: "Tantangan 3: Tombol Stop 🛑",
+                        subtitle: "Berhenti jika user bilang 'stop'",
+                        emoji: "🛑",
+                        content: `
+                    <div class="text-left space-y-6 max-w-3xl mx-auto">
+                        <div class="bg-slate-900 rounded-lg p-6 border border-slate-700 text-left">
+                            <code class="code-font text-lime-300 text-sm block">
+                                <span class="text-white">pesan = </span><span class="text-orange-400">""</span><br>
+                                <span class="text-purple-400">while</span> <span class="text-white">pesan != </span><span class="text-orange-400">"stop"</span>:<br>
+                                <span class="text-white">    pesan = </span><span class="text-purple-400">input</span>(<span class="text-orange-400">"Ketik sesuatu (ketik 'stop' untuk berhenti): "</span>)<br>
+                                <span class="text-purple-400">    print</span>(<span class="text-lime-400">f</span><span class="text-orange-400">"Kamu mengetik: </span><span class="text-white">{pesan}</span><span class="text-orange-400">"</span>)<br><br>
+                                <span class="text-purple-400">print</span>(<span class="text-green-400">"Program Berhenti."</span>)
+                            </code>
+                        </div>
+                    </div>
+                    `
+                    },
+                    // Slide 7.32: Explanation Break 🛑
+                    {
+                        title: "Cara Kerja Stop 🛑",
+                        subtitle: "Keluar dari Loop",
+                        emoji: "🛑",
+                        content: `
+                    <div class="text-left space-y-6 max-w-3xl mx-auto">
+                        <p class="text-lg text-gray-300">
+                            Saat kamu mengetik "stop", syarat <code class="code-font">pesan != "stop"</code> menjadi <b>False</b> (Salah).
+                        </p>
+                        <p class="text-gray-300">
+                            Karena syaratnya Salah, Loop berhenti dan program lanjut ke baris berikutnya (Print Program Berhenti).
+                        </p>
+                    </div>
+                    `
+                    },
+                    // Slide 7.33: Summary 📝
+                    {
+                        title: "Ringkasan Hari Ini 📝",
+                        subtitle: "Apa yang sudah kita pelajari?",
+                        emoji: "📝",
+                        content: `
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left max-w-4xl mx-auto">
+                        <div class="bg-slate-800 p-6 rounded-xl border border-slate-700">
+                            <h4 class="font-bold text-lime-400 mb-2">For Loop</h4>
+                            <ul class="list-disc list-inside text-gray-300 text-sm space-y-1">
+                                <li>Untuk jumlah yang <b>PASTI</b>.</li>
+                                <li>Pakai <code class="code-font">range()</code>.</li>
+                                <li>Contoh: Ulangi 5 kali.</li>
+                            </ul>
+                        </div>
+                        <div class="bg-slate-800 p-6 rounded-xl border border-slate-700">
+                            <h4 class="font-bold text-yellow-400 mb-2">While Loop</h4>
+                            <ul class="list-disc list-inside text-gray-300 text-sm space-y-1">
+                                <li>Untuk jumlah yang <b>BELUM PASTI</b>.</li>
+                                <li>Pakai <b>Syarat</b> (Condition).</li>
+                                <li>Contoh: Ulangi sampai kenyang.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    `
+                    },
+                    // Slide 7.34: Closing 👋
+                    {
+                        title: "See You Next Meeting! 👋",
+                        subtitle: "Tetap Semangat!",
+                        emoji: "👋",
+                        content: `
+                    <div class="text-center space-y-8 max-w-3xl mx-auto flex flex-col justify-center h-full">
+                        <div class="text-8xl animate-bounce">🔄</div>
+                        <h3 class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-lime-400">
+                            Sampai Jumpa di Pertemuan Berikutnya!
+                        </h3>
+                        <div class="bg-slate-800/50 p-8 rounded-2xl border border-slate-700 backdrop-blur-sm transform hover:scale-105 transition-transform duration-300">
+                            <p class="text-2xl text-white italic font-serif">
+                                "Repetition is the mother of learning."
+                            </p>
+                            <p class="text-lime-400 font-bold mt-4 text-lg">(Pengulangan adalah induk dari pembelajaran)</p>
+                        </div>
+                    </div>
+                    `
+                    }
+                ],
             };
 
             // Fungsi untuk memperbarui konten slide dan elemen UI
@@ -3455,6 +4195,8 @@
                         meetingTitle.textContent = `💌 Pertemuan 4: Pesan Pribadi dengan f-string`;
                     } else if (currentMeeting === 6) {
                         meetingTitle.textContent = `🎲 Pertemuan 6: Membuat Keputusan & Mantra Ajaib`;
+                    } else if (currentMeeting === 7) {
+                        meetingTitle.textContent = `🔄 Pertemuan 7: Perulangan (Loops)`;
                     } else {
                         meetingTitle.textContent = `Meeting ${currentMeeting}: ${currentData.title.split(':')[0]}`;
                     }
