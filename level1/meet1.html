@@ -5503,6 +5503,451 @@
                         </div>
                         `
                     }
+                ],
+                10: [
+                    // Slide 10.0: Intro Project 1 🚀
+                    {
+                        title: "Meeting 10: Mulai Petualangan Proyekmu! 🚀",
+                        subtitle: "Pengerjaan Proyek 1: Perencanaan & Setup",
+                        emoji: "🚀",
+                        content: `
+                        <div class="text-center space-y-6 max-w-3xl mx-auto">
+                            <div class="text-8xl animate-bounce">🏗️</div>
+                            <h3 class="text-3xl font-bold text-white">Waktunya Membangun!</h3>
+                            <p class="text-xl text-gray-300">
+                                Hari ini kita tidak belajar teori baru. Hari ini kita akan menjadi <b>Arsitek Software</b>!
+                                Kita akan membangun pondasi untuk aplikasi buatanmu sendiri.
+                            </p>
+                        </div>
+                        `
+                    },
+                    // Slide 10.1: Checklist
+                    {
+                        title: "Checklist Kesiapan ✅",
+                        subtitle: "Sebelum Menulis Kode",
+                        emoji: "✅",
+                        content: `
+                        <div class="text-left space-y-6 max-w-3xl mx-auto">
+                            <p class="text-lg text-gray-300">Pastikan kamu sudah punya ini:</p>
+                            <div class="bg-slate-900 p-6 rounded-xl border border-slate-700 space-y-4">
+                                <div class="flex items-center">
+                                    <input type="checkbox" class="w-6 h-6 text-lime-400 rounded focus:ring-lime-500 bg-slate-800 border-gray-600" checked onclick="return false;">
+                                    <label class="ml-3 text-lg text-gray-300"><b>Tema & Judul:</b> Mau bikin apa?</label>
+                                </div>
+                                <div class="flex items-center">
+                                    <input type="checkbox" class="w-6 h-6 text-lime-400 rounded focus:ring-lime-500 bg-slate-800 border-gray-600">
+                                    <label class="ml-3 text-lg text-gray-300"><b>Sketsa Alur:</b> Gambaran kasar di kertas.</label>
+                                </div>
+                                <div class="flex items-center">
+                                    <input type="checkbox" class="w-6 h-6 text-lime-400 rounded focus:ring-lime-500 bg-slate-800 border-gray-600">
+                                    <label class="ml-3 text-lg text-gray-300"><b>List Fitur:</b> Apa saja yang bisa dilakukan user?</label>
+                                </div>
+                                <div class="flex items-center">
+                                    <input type="checkbox" class="w-6 h-6 text-lime-400 rounded focus:ring-lime-500 bg-slate-800 border-gray-600">
+                                    <label class="ml-3 text-lg text-gray-300"><b>Folder Proyek:</b> Buat folder baru khusus!</label>
+                                </div>
+                            </div>
+                        </div>
+                        `
+                    },
+                    // Slide 10.2: Setup Project
+                    {
+                        title: "Langkah 1: Setup Proyek 📁",
+                        subtitle: "Rumah yang Rapi",
+                        emoji: "📁",
+                        content: `
+                        <div class="text-left space-y-6 max-w-3xl mx-auto">
+                            <h3 class="text-2xl font-bold text-lime-400 mb-3">Buat Struktur Folder</h3>
+                            <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 font-mono text-sm leading-relaxed">
+                                <p class="text-yellow-400">📂 Proyek_Python_NamaKamu</p>
+                                <p class="text-gray-300 ml-4">📄 main.py <span class="text-gray-500">(File kode utama)</span></p>
+                                <p class="text-gray-300 ml-4">📄 README.txt <span class="text-gray-500">(Penjelasan cara main)</span></p>
+                            </div>
+                            <div class="bg-purple-900/50 p-4 rounded-lg border border-purple-700 mt-4 text-center">
+                                <p class="text-white">
+                                    Selalu simpan kodemu di file <b class="text-lime-400">main.py</b> agar mudah ditemukan!
+                                </p>
+                            </div>
+                        </div>
+                        `
+                    },
+                    // Slide 10.3: First Code
+                    {
+                        title: "Langkah 2: Kode Pertama ✍️",
+                        subtitle: "Header & Import",
+                        emoji: "✍️",
+                        content: `
+                        <div class="text-left space-y-6 max-w-3xl mx-auto">
+                            <p class="text-lg text-gray-300">Buka <code class="code-font">main.py</code> dan tulis identitas programmu:</p>
+                            <div class="bg-slate-900 rounded-lg p-6 border border-slate-700 text-left">
+                                <code class="code-font text-lime-300 text-sm block">
+                                    <span class="text-gray-500"># ==========================================</span><br>
+                                    <span class="text-gray-500"># Nama Project: Kuis Matematika Seru</span><br>
+                                    <span class="text-gray-500"># Dibuat oleh : Budi Santoso (Kelas 7)</span><br>
+                                    <span class="text-gray-500"># ==========================================</span><br><br>
+                                    <span class="text-purple-400">import</span> <span class="text-white">random</span><br>
+                                    <span class="text-purple-400">import</span> <span class="text-white">time</span><br><br>
+                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"Selamat Datang di Kuis Matematika!"</span>)<br>
+                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"----------------------------------"</span>)
+                                </code>
+                            </div>
+                        </div>
+                        `
+                    },
+                    // Slide 10.4: Menu Loop
+                    {
+                        title: "Langkah 3: Menu Utama (Jantung Aplikasi) ❤️",
+                        subtitle: "Infinite Loop Menu",
+                        emoji: "❤️",
+                        content: `
+                        <div class="text-left space-y-6 max-w-3xl mx-auto">
+                            <p class="text-lg text-gray-300">Agar aplikasi tidak langsung mati setelah dijalankan, gunakan <code class="code-font">while True</code>.</p>
+                            <div class="bg-slate-900 rounded-lg p-6 border border-slate-700 text-left">
+                                <code class="code-font text-lime-300 text-sm block">
+                                    <span class="text-purple-400">while</span> <span class="text-purple-400">True</span>:<br>
+                                    <span class="text-purple-400">&nbsp;&nbsp;&nbsp;&nbsp;print</span>(<span class="text-orange-400">"\\nMenu:"</span>)<br>
+                                    <span class="text-purple-400">&nbsp;&nbsp;&nbsp;&nbsp;print</span>(<span class="text-orange-400">"1. Mulai Main"</span>)<br>
+                                    <span class="text-purple-400">&nbsp;&nbsp;&nbsp;&nbsp;print</span>(<span class="text-orange-400">"2. Keluar"</span>)<br><br>
+                                    <span class="text-white">&nbsp;&nbsp;&nbsp;&nbsp;pilihan = </span><span class="text-purple-400">input</span>(<span class="text-orange-400">"Pilih (1/2): "</span>)<br><br>
+                                    <span class="text-purple-400">&nbsp;&nbsp;&nbsp;&nbsp;if</span> <span class="text-white">pilihan == </span><span class="text-orange-400">"2"</span>:<br>
+                                    <span class="text-purple-400">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print</span>(<span class="text-orange-400">"Dadah! 👋"</span>)<br>
+                                    <span class="text-purple-400">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break</span> <span class="text-gray-500"># Stop Loop</span>
+                                </code>
+                            </div>
+                        </div>
+                        `
+                    },
+                    // Slide 10.5: Consultation
+                    {
+                        title: "Saatnya Konsultasi & Coding! 👨‍💻",
+                        subtitle: "Jangan Ragu Bertanya",
+                        emoji: "👨‍💻",
+                        content: `
+                        <div class="text-center space-y-8 max-w-3xl mx-auto flex flex-col justify-center h-full">
+                            <div class="p-6 bg-slate-800 rounded-xl border-2 border-dashed border-lime-400">
+                                <h3 class="text-2xl font-bold text-white mb-4">Target Hari Ini:</h3>
+                                <ul class="list-disc list-inside text-left text-gray-300 space-y-2 text-lg">
+                                    <li>✅ Buat file <code class="code-font">main.py</code>.</li>
+                                    <li>✅ Tulis Header & Import.</li>
+                                    <li>✅ Buat Menu Utama yang bisa dipilih.</li>
+                                    <li>✅ (Bonus) Fitur pertama sudah jalan!</li>
+                                </ul>
+                            </div>
+                            <p class="text-xl text-purple-400 font-bold animate-pulse">
+                                "Perjalanan seribu mil dimulai dengan satu langkah."
+                            </p>
+                        </div>
+                        `
+                    }
+                ],
+                11: [
+                    // Slide 11.0: Intro Finishing
+                    {
+                        title: "Meeting 11: Finishing Touch! ✨",
+                        subtitle: "Pengerjaan Proyek 2: Debugging & Polishing",
+                        emoji: "✨",
+                        content: `
+                        <div class="text-center space-y-6 max-w-3xl mx-auto">
+                            <div class="text-8xl animate-bounce">🐛</div>
+                            <h3 class="text-3xl font-bold text-white">Memburu Hama (Bugs) 🕷️</h3>
+                            <p class="text-xl text-gray-300">
+                                Programmu mungkin sudah jalan, tapi apakah sudah <b>sempurna</b>?
+                                Hari ini kita akan memperbaiki error, mempercantik tampilan, dan memastikan semuanya lancar!
+                            </p>
+                        </div>
+                        `
+                    },
+                    // Slide 11.1: Debugging Mindset
+                    {
+                        title: "Jangan Panik Karena Error! 🛑",
+                        subtitle: "Error itu Sahabat Programmer",
+                        emoji: "🛑",
+                        content: `
+                        <div class="text-left space-y-6 max-w-3xl mx-auto">
+                            <p class="text-lg text-gray-300">
+                                Kalau ada tulisan merah (Error) di terminal, jangan sedih! Itu artinya komputermu sedang memberitahu letak kesalahannya.
+                            </p>
+                            <div class="bg-red-900/30 p-6 rounded-xl border border-red-500">
+                                <h4 class="text-red-400 font-bold mb-2">Cara Membaca Error:</h4>
+                                <ol class="list-decimal list-inside text-gray-300 space-y-2">
+                                    <li>Lihat <b>Line Number</b> (Baris berapa?).</li>
+                                    <li>Baca <b>Jenis Error</b> (SyntaxError? NameError?).</li>
+                                    <li>Cek ejaan dan tanda baca (titik dua, kurung, kutip).</li>
+                                </ol>
+                            </div>
+                            <div class="text-center font-bold text-white mt-4">
+                                "Coding itu 90% nebak kenapa error, 10% coding beneran." 🤣
+                            </div>
+                        </div>
+                        `
+                    },
+                    // Slide 11.2: Bug Hunting
+                    {
+                        title: "Masalah Umum (Common Bugs) 🦟",
+                        subtitle: "Cek kode kamu, ada ini nggak?",
+                        emoji: "🦟",
+                        content: `
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-left max-w-4xl mx-auto">
+                            <div class="bg-slate-800 p-4 rounded-xl border border-slate-700">
+                                <h4 class="font-bold text-yellow-400">IndentationError</h4>
+                                <p class="text-sm text-gray-400">Spasi masuknya nggak rata (di dalam if/loop).</p>
+                            </div>
+                            <div class="bg-slate-800 p-4 rounded-xl border border-slate-700">
+                                <h4 class="font-bold text-yellow-400">NameError</h4>
+                                <p class="text-sm text-gray-400">Salah ketik nama variabel (misal: <code class="code-font">usro</code> harusnya <code class="code-font">user</code>).</p>
+                            </div>
+                            <div class="bg-slate-800 p-4 rounded-xl border border-slate-700">
+                                <h4 class="font-bold text-yellow-400">SyntaxError</h4>
+                                <p class="text-sm text-gray-400">Kurang titik dua <code class="code-font">:</code> atau kurung tutup <code class="code-font">)</code>.</p>
+                            </div>
+                            <div class="bg-slate-800 p-4 rounded-xl border border-slate-700">
+                                <h4 class="font-bold text-yellow-400">TypeError</h4>
+                                <p class="text-sm text-gray-400">Lupa <code class="code-font">int()</code> saat input angka.</p>
+                            </div>
+                        </div>
+                        `
+                    },
+                    // Slide 11.3: Polishing (UI)
+                    {
+                        title: "Mempercantik Tampilan (Polishing) 💅",
+                        subtitle: "Biar User Senang",
+                        emoji: "💅",
+                        content: `
+                        <div class="text-left space-y-6 max-w-3xl mx-auto">
+                            <p class="text-lg text-gray-300">Program yang bagus itu enak dilihat!</p>
+                            <div class="space-y-4">
+                                <div class="bg-slate-900 p-4 rounded-lg border border-slate-700">
+                                    <h4 class="font-bold text-lime-400">1. Tambahkan Spasi Antar Baris</h4>
+                                    <code class="code-font text-white block">print("\\n") <span class="text-gray-500"># Enter kosong</span></code>
+                                </div>
+                                <div class="bg-slate-900 p-4 rounded-lg border border-slate-700">
+                                    <h4 class="font-bold text-lime-400">2. Gunakan Garis Pembatas</h4>
+                                    <code class="code-font text-white block">print("="*30) <span class="text-gray-500"># ==============</span></code>
+                                </div>
+                                <div class="bg-slate-900 p-4 rounded-lg border border-slate-700">
+                                    <h4 class="font-bold text-lime-400">3. Beri Delay (Jeda)</h4>
+                                    <code class="code-font text-white block">import time<br>time.sleep(2) <span class="text-gray-500"># Jeda 2 detik sebelum lanjut</span></code>
+                                </div>
+                            </div>
+                        </div>
+                        `
+                    },
+                    // Slide 11.4: Playtesting
+                    {
+                        title: "Uji Nyali (Playtesting) 🧪",
+                        subtitle: "Coba Jebol Program Sendiri",
+                        emoji: "🧪",
+                        content: `
+                        <div class="text-left space-y-6 max-w-3xl mx-auto">
+                            <h3 class="text-2xl font-bold text-white mb-4">Minta temanmu mencoba!</h3>
+                            <ul class="list-disc list-inside text-lg text-gray-300 space-y-2">
+                                <li>Apa yang terjadi kalau diminta angka, tapi diisi huruf?</li>
+                                <li>Apa yang terjadi kalau pilih menu yang tidak ada?</li>
+                                <li>Apakah program berhenti di waktu yang tepat?</li>
+                            </ul>
+                            <div class="bg-purple-900/50 p-6 rounded-xl border border-purple-700 mt-4 text-center">
+                                <p class="text-lg font-bold text-white">
+                                    "Jika programmu tidak error saat diisengi, berarti programmu KUAT!" 💪
+                                </p>
+                            </div>
+                        </div>
+                        `
+                    },
+                    // Slide 11.5: Final Checklist
+                    {
+                        title: "Checklist Terakhir! ✅",
+                        subtitle: "Siap Showcase?",
+                        emoji: "🏆",
+                        content: `
+                        <div class="bg-slate-800 p-8 rounded-xl border-2 border-lime-400 max-w-3xl mx-auto space-y-4">
+                            <h3 class="text-2xl font-bold text-center text-white mb-6">Siap Presentasi?</h3>
+                            <div class="space-y-2 text-lg text-gray-300">
+                                <p>✅ Tidak ada Error merah.</p>
+                                <p>✅ Loop berjalan lancar (bisa main berkali-kali).</p>
+                                <p>✅ Ada instruksi yang jelas untuk user.</p>
+                                <p>✅ Menggunakan Variabel, If-Else, dan Input dengan benar.</p>
+                            </div>
+                            <div class="text-center mt-8">
+                                <button class="px-8 py-4 bg-gradient-to-r from-lime-500 to-green-600 text-white font-bold rounded-full text-xl animate-bounce shadow-lg">
+                                    SAYA SIAP! 🚀
+                                </button>
+                            </div>
+                        </div>
+                        `
+                    }
+                ],
+                12: [
+                    // Slide 12.0: Welcome & Intro
+                    {
+                        title: "Meeting 12: Showcase Time! 🌟",
+                        subtitle: "Momen Kebanggaan",
+                        emoji: "🌟",
+                        content: `
+                        <div class="text-center space-y-6 max-w-3xl mx-auto">
+                            <div class="text-8xl animate-bounce">🎬</div>
+                            <h3 class="text-3xl font-bold text-white">Selamat Datang di Final Showcase!</h3>
+                            <p class="text-xl text-gray-300">
+                                Ini adalah hari yang kita tunggu-tunggu!
+                                Saatnya memamerkan hasil kerjamu kepada teman-teman.
+                            </p>
+                        </div>
+                        `
+                    },
+                    // Slide 12.1: Presentation Structure
+                    {
+                        title: "Panduan Presentasi 🎤",
+                        subtitle: "Apa yang harus diucapkan?",
+                        emoji: "🎤",
+                        content: `
+                        <div class="text-left space-y-6 max-w-3xl mx-auto">
+                            <p class="text-lg text-gray-300">Jangan gugup! Ikuti langkah-langkah ini:</p>
+                            <div class="bg-slate-900 p-6 rounded-xl border border-slate-700 space-y-4">
+                                <div class="p-4 bg-slate-800 rounded-lg">
+                                    <h4 class="font-bold text-lime-400">1. Perkenalan Diri 👋</h4>
+                                    <p class="text-sm text-gray-300">"Halo, nama saya [Nama], kelas [Kelas], dari sekolah [Sekolah]."</p>
+                                </div>
+                                <div class="p-4 bg-slate-800 rounded-lg">
+                                    <h4 class="font-bold text-lime-400">2. Judul & Inspirasi 💡</h4>
+                                    <p class="text-sm text-gray-300">"Nama proyek saya adalah [Nama Project]. Saya terinspirasi dari [misal: game kesukaan/masalah sehari-hari]."</p>
+                                </div>
+                                <div class="p-4 bg-slate-800 rounded-lg">
+                                    <h4 class="font-bold text-lime-400">3. Keunikan ✨</h4>
+                                    <p class="text-sm text-gray-300">"Yang menarik dari proyek ini adalah [jelaskan fitur uniknya]."</p>
+                                </div>
+                            </div>
+                        </div>
+                        `
+                    },
+                    // Slide 12.2: Demo Time
+                    {
+                        title: "Waktunya Demo! 📺",
+                        subtitle: "Tunjukkan Aksinya",
+                        emoji: "📺",
+                        content: `
+                        <div class="text-center space-y-6 max-w-3xl mx-auto flex flex-col justify-center h-full">
+                            <h3 class="text-4xl font-bold text-white animate-pulse">RUN YOUR CODE NOW!</h3>
+                            <div class="text-9xl">▶️</div>
+                            <p class="text-xl text-gray-300">
+                                Jalankan <b class="text-lime-400">main.py</b> dan biarkan teman-temanmu melihat keajaibannya!
+                            </p>
+                            <p class="text-sm text-gray-500 italic">
+                                Jangan lupa ucapkan "Terima kasih" setelah selesai demo.
+                            </p>
+                        </div>
+                        `
+                    },
+                    // Slide 12.3: Friends Feedback
+                    {
+                        title: "Feedback Time 💬",
+                        subtitle: "Komentar Teman",
+                        emoji: "💬",
+                        content: `
+                        <div class="text-left space-y-6 max-w-3xl mx-auto">
+                            <p class="text-lg text-gray-300">Teman-teman, ayo berikan pendapatmu!</p>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="bg-slate-800 p-4 rounded-xl border-l-4 border-lime-400 hover:bg-slate-700 transition-colors">
+                                    <h4 class="font-bold text-white">👍 Apa yang paling keren?</h4>
+                                    <p class="text-sm text-gray-400">Fitur mana yang bikin kamu kagum?</p>
+                                </div>
+                                <div class="bg-slate-800 p-4 rounded-xl border-l-4 border-yellow-400 hover:bg-slate-700 transition-colors">
+                                    <h4 class="font-bold text-white">🤔 Apa yang bisa ditambah?</h4>
+                                    <p class="text-sm text-gray-400">Ide fitur baru untuk versi berikutnya?</p>
+                                </div>
+                                <div class="bg-slate-800 p-4 rounded-xl border-l-4 border-purple-400 hover:bg-slate-700 transition-colors">
+                                    <h4 class="font-bold text-white">🐛 Ada bug yang terlihat?</h4>
+                                    <p class="text-sm text-gray-400">Bantu temukan error kalau ada.</p>
+                                </div>
+                                <div class="bg-slate-800 p-4 rounded-xl border-l-4 border-blue-400 hover:bg-slate-700 transition-colors">
+                                    <h4 class="font-bold text-white">❤️ Komentar Spesial</h4>
+                                    <p class="text-sm text-gray-400">Berikan semangat!</p>
+                                </div>
+                            </div>
+                        </div>
+                        `
+                    },
+                    // Slide 12.4: Reflection Challenges
+                    {
+                        title: "Refleksi: Tantangan 🧗",
+                        subtitle: "Jujur-jujuran yuk!",
+                        emoji: "🧗",
+                        content: `
+                        <div class="text-left space-y-6 max-w-3xl mx-auto">
+                            <h3 class="text-2xl font-bold text-red-400 mb-4">Bagian tersulitnya apa?</h3>
+                            <div class="bg-slate-900 p-6 rounded-xl border border-slate-700 space-y-6">
+                                <div>
+                                    <p class="text-white text-lg font-semibold">🕰️ Apa yang paling lama dikerjakan?</p>
+                                    <p class="text-gray-400 italic text-sm">Contoh: "Bikin logika menangnya susah banget!"</p>
+                                </div>
+                                <div>
+                                    <p class="text-white text-lg font-semibold">🕷️ Bug apa yang paling bandel?</p>
+                                    <p class="text-gray-400 italic text-sm">Contoh: "Loop-nya nggak mau berhenti tadi."</p>
+                                </div>
+                            </div>
+                        </div>
+                        `
+                    },
+                    // Slide 12.5: Reflection Success
+                    {
+                        title: "Refleksi: Kemenangan 🏆",
+                        subtitle: "Celebrate your wins!",
+                        emoji: "🏆",
+                        content: `
+                        <div class="text-left space-y-6 max-w-3xl mx-auto">
+                             <h3 class="text-2xl font-bold text-lime-400 mb-4">Bagian terbaiknya?</h3>
+                             <div class="bg-slate-900 p-6 rounded-xl border border-slate-700 space-y-6">
+                                <div>
+                                    <p class="text-white text-lg font-semibold">⚡ Apa yang paling mudah?</p>
+                                    <p class="text-gray-400 italic text-sm">Contoh: "Bikin variabel ternyata gampang."</p>
+                                </div>
+                                <div>
+                                    <p class="text-white text-lg font-semibold">🎁 Apa yang paling memuaskan (Rewarding)?</p>
+                                    <p class="text-gray-400 italic text-sm">Contoh: "Pas programnya jalan tanpa error, rasanya lega banget!"</p>
+                                </div>
+                             </div>
+                        </div>
+                        `
+                    },
+                    // Slide 12.6: Future Plans
+                    {
+                        title: "Masa Depan 🔮",
+                        subtitle: "Next Level?",
+                        emoji: "🔮",
+                        content: `
+                        <div class="text-center space-y-6 max-w-3xl mx-auto">
+                            <h3 class="text-3xl font-bold text-purple-400">Mau tambah fitur apa lagi?</h3>
+                            <p class="text-xl text-gray-300">
+                                Kalau kamu punya waktu satu minggu lagi, apa yang akan kamu tambahkan ke proyek ini?
+                            </p>
+                            <div class="grid grid-cols-3 gap-4 mt-6">
+                                <div class="p-4 bg-slate-800 rounded-lg text-sm text-gray-300 border border-slate-600">Grafik Keren?</div>
+                                <div class="p-4 bg-slate-800 rounded-lg text-sm text-gray-300 border border-slate-600">Suara/Musik?</div>
+                                <div class="p-4 bg-slate-800 rounded-lg text-sm text-gray-300 border border-slate-600">Multiplayer?</div>
+                            </div>
+                        </div>
+                        `
+                    },
+                    // Slide 12.7: Closing
+                    {
+                        title: "Graduation Time! 🎓",
+                        subtitle: "See You Next Level",
+                        emoji: "🎓",
+                        content: `
+                        <div class="text-center space-y-8 max-w-3xl mx-auto flex flex-col justify-center h-full">
+                            <div class="text-8xl animate-bounce">📸</div>
+                            <h3 class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-red-500">
+                                Selamat! Level 1 Selesai!
+                            </h3>
+                            <p class="text-2xl text-white">
+                                Terima kasih sudah berjuang belajar Python.
+                                Kalian hebat!
+                            </p>
+                            <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 animate-pulse">
+                                <h4 class="text-xl font-bold text-lime-400">📸 FOTO BERSAMA DULU YUK! 📸</h4>
+                            </div>
+                            <p class="text-gray-400 italic">Sampai jumpa di Level 2!</p>
+                        </div>
+                        `
+                    }
                 ]
             };
 
