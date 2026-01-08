@@ -1,0 +1,2108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Level 2 - Limitless Learning</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* slate-50 */
+            color: #1e293b; /* slate-800 */
+        }
+        
+        /* Limitless Learning Theme Gradients */
+        .header-gradient {
+            background: linear-gradient(135deg, #16a34a 0%, #2563eb 100%); /* green-600 to blue-600 */
+        }
+        
+        .slide-transition {
+            transition: all 0.3s ease-in-out;
+        }
+        
+        .meeting-tab {
+            transition: all 0.2s ease;
+        }
+        
+        .meeting-tab:hover {
+            transform: translateY(-2px);
+        }
+        
+        .code-font {
+            font-family: 'Courier New', monospace;
+        }
+        
+        /* Latar belakang slide utama dengan visual bersih & modern */
+        .code-bg {
+            background: #ffffff;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #e2e8f0; /* slate-200 */
+        }
+        
+        /* Dekorasi background slide */
+        .code-bg::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(37,99,235,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: 0;
+        }
+
+        .code-bg::after {
+            content: '';
+            position: absolute;
+            bottom: -50px;
+            left: -50px;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(22,163,74,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: 0;
+        }
+        
+        /* Background Pattern untuk area utama */
+        .main-pattern {
+            background-color: #f1f5f9; /* slate-100 */
+            background-image: 
+                linear-gradient(#e2e8f0 1px, transparent 1px),
+                linear-gradient(90deg, #e2e8f0 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        /* Marker list kustom */
+        .custom-list li {
+            margin-bottom: 0.75rem;
+            padding-left: 0.5rem;
+        }
+        .custom-list li::marker {
+            color: #16a34a; /* green-600 */
+            font-weight: bold;
+        }
+
+        /* Floating Elements Animation */
+        .floating-element {
+            position: absolute;
+            animation: float 6s ease-in-out infinite;
+            opacity: 0.6;
+            z-index: 0;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* Custom Scrollbar for Sidebar */
+        .sidebar-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+        .sidebar-scroll::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        .sidebar-scroll::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body class="h-full overflow-hidden">
+    <div class="h-screen flex flex-col">
+        <!-- Header -->
+        <!-- Header -->
+        <header class="header-gradient px-4 py-2 shadow-lg fixed top-0 left-0 right-0 z-50 h-14 flex items-center justify-between">
+            <!-- Left: Logo & Hamburger -->
+            <div class="flex items-center gap-3">
+                <button id="hamburgerBtn" class="text-white hover:text-green-100 transition-colors lg:hidden">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+                <div class="bg-white/90 p-1 rounded-md backdrop-blur-sm">
+                    <img src="https://cdn-web-2.ruangguru.com/landing-pages/assets/hs/Kalananti%20by%20Ruangguru-04.png" alt="Kalananti Logo" class="h-8" onerror="this.src='https://placehold.co/100x40/2563eb/ffffff?text=Kalananti';">
+                </div>
+            </div>
+            
+            <!-- Center: Title -->
+            <div class="flex-1 text-center hidden sm:block">
+                <h1 class="text-2xl font-bold text-white tracking-wide drop-shadow-md">
+                    🐍 Python Level 2
+                </h1>
+                <p class="text-green-100 text-xs font-medium tracking-wider uppercase">Limitless Learning</p>
+            </div>
+            
+            <!-- Right: Spacer (can hold profile/extra info) -->
+            <div class="w-auto" style="min-width: 120px;"></div>
+        </header>
+
+        <!-- Main Container -->
+        <div class="flex-1 flex pt-14 h-screen">
+            <!-- Sidebar Overlay (Mobile) -->
+            <div id="sidebarOverlay" class="fixed inset-0 bg-slate-900/50 z-40 hidden backdrop-blur-sm lg:hidden transition-opacity"></div>
+
+            <!-- Sidebar -->
+            <aside id="sidebar" class="fixed lg:relative left-0 top-14 h-[calc(100vh-3.5rem)] w-80 bg-white border-r border-slate-200 shadow-xl transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out z-40 flex flex-col">
+                <!-- Sidebar Header -->
+                <div class="px-3 py-1 border-b border-slate-100 bg-slate-50 shrink-0">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h2 class="text-sm font-bold text-slate-800">Learning Path</h2>
+                            <p class="text-[10px] text-slate-500 uppercase tracking-widest">12 Meetings Journey</p>
+                        </div>
+                        <button id="closeSidebarBtn" class="text-slate-400 hover:text-red-500 transition-colors lg:hidden">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Navigation List -->
+                <nav class="flex-1 overflow-y-auto p-3 space-y-2 sidebar-scroll min-h-0 pb-24" id="meetingNav">
+                    <!-- Tabs will be injected by JS -->
+                </nav>
+            </aside>
+
+            <!-- Main Content Area -->
+            <main class="flex-1 flex flex-col relative main-pattern w-full overflow-hidden">
+                <!-- Floating Decorations -->
+                <div class="floating-element text-9xl text-blue-500/5 top-14 left-10 delay-0">🐍</div>
+                <div class="floating-element text-9xl text-green-500/5 bottom-40 right-20 delay-[2s]">{ }</div>
+                <div class="floating-element text-8xl text-yellow-500/5 top-40 right-1/4 delay-[4s]">#</div>
+
+                <!-- Slide Visibility Container -->
+                <div class="flex-1 overflow-y-auto p-4 sm:p-8" id="mainScrollArea">
+                    <div class="min-h-full flex flex-col justify-center pb-32">
+                        <div class="w-full max-w-5xl mx-auto relative z-10 transition-all duration-300" id="slideWrapper">
+                            <!-- Slide Card -->
+                            <div id="slideContainer" class="code-bg rounded-2xl shadow-2xl p-8 sm:p-12 min-h-[60vh] flex flex-col slide-transition bg-white/80 backdrop-blur-sm">
+                                
+                                <!-- Meeting Header -->
+                            <div class="text-center mb-10 border-b border-slate-100 pb-6 relative">
+                                <div class="inline-block bg-blue-100 text-blue-700 text-xs font-bold px-3 py-1 rounded-full mb-3 uppercase tracking-wide" id="meetingTag">Meeting 1</div>
+                                <h2 id="slideTitle" class="text-3xl sm:text-4xl font-extrabold text-slate-800 mb-2"></h2>
+                                <p id="slideSubtitle" class="text-lg text-slate-500 font-medium"></p>
+                            </div>
+                            
+                            <!-- Content -->
+                            <div id="slideContent" class="flex-1 text-slate-700 space-y-6 text-lg leading-relaxed">
+                                <!-- Content injected here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer Navigation -->
+                <footer class="absolute bottom-0 left-0 right-0 bg-white/90 backdrop-blur-md border-t border-slate-200 p-4 z-30 h-24 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
+                    <div class="max-w-5xl mx-auto flex justify-between items-center h-full px-2">
+                        <!-- Prev -->
+                        <button id="prevBtn" class="flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-slate-600 hover:bg-slate-100 disabled:opacity-40 disabled:hover:bg-transparent transition-all border border-slate-200 hover:border-slate-300 group">
+                            <svg class="w-5 h-5 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                            <span class="hidden sm:inline">Previous</span>
+                        </button>
+
+                        <!-- Progress -->
+                        <div class="flex flex-col items-center">
+                            <div class="bg-slate-100 rounded-full h-2 w-32 sm:w-48 mb-2 overflow-hidden">
+                                <div id="progressBar" class="h-full bg-gradient-to-r from-green-500 to-blue-500 w-0 transition-all duration-300"></div>
+                            </div>
+                            <span id="slideCounter" class="text-xs font-bold text-slate-500 uppercase tracking-widest">Slide 1 / 10</span>
+                        </div>
+
+                        <!-- Next -->
+                        <button id="nextBtn" class="flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-white bg-blue-600 hover:bg-blue-700 disabled:opacity-50 disabled:hover:bg-blue-600 shadow-lg shadow-blue-500/30 transition-all hover:shadow-blue-500/50 group">
+                            <span class="hidden sm:inline">Next</span>
+                            <svg class="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                        </button>
+                    </div>
+                </footer>
+            </main>
+        </div>
+    </div>
+
+    <!-- Data & Script -->
+    <script>
+        // --- Configuration ---
+        const totalMeetings = 12;
+        let currentMeeting = 1;
+        let currentSlide = 1;
+
+        // --- Data Structure ---
+        // Placeholder data logic, content to be filled later
+        const meetingData = {
+            1: [
+                {
+                    title: "Kenalan Dulu Yuk! 👋",
+                    subtitle: "Tak Kenal Maka Tak Sayang",
+                    content: `
+                        <div class="text-center space-y-6">
+                            <div class="text-6xl mb-4">👨‍💻</div>
+                            <h3 class="text-2xl font-bold text-slate-800">Halo, saya [Nama Kakak]!</h3>
+                            <p class="text-lg text-slate-600">
+                                Selamat datang di Python Level 2.
+                                Di sini kita akan belajar membuat program yang lebih canggih,
+                                mulai dari menggambar dengan kode sampai membuat aplikasi sungguhan!
+                            </p>
+                        </div>
+                    `
+                },
+                {
+                    title: "Flashback Level 1 ⏪",
+                    subtitle: "Masih Ingat Kah?",
+                    content: `
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
+                            <div class="p-4 bg-white border border-slate-200 rounded-xl">
+                                <h4 class="font-bold text-blue-600">Data Types</h4>
+                                <p class="text-sm text-slate-600">String ("Teks"), Integer (123), Float (3.14), Boolean (True/False).</p>
+                            </div>
+                            <div class="p-4 bg-white border border-slate-200 rounded-xl">
+                                <h4 class="font-bold text-green-600">Variables</h4>
+                                <p class="text-sm text-slate-600">Tempat menyimpan data. <br><code>nama = "Budi"</code></p>
+                            </div>
+                            <div class="p-4 bg-white border border-slate-200 rounded-xl">
+                                <h4 class="font-bold text-purple-600">Logic (If/Else)</h4>
+                                <p class="text-sm text-slate-600">Membuat keputusan. <br><code>if lapar: makan()</code></p>
+                            </div>
+                             <div class="p-4 bg-white border border-slate-200 rounded-xl">
+                                <h4 class="font-bold text-orange-600">List (Dasar)</h4>
+                                <p class="text-sm text-slate-600">Menyimpan banyak benda. <br><code>hobi = ['Main', 'Tidur']</code></p>
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Meeting 1: Advanced Lists 📋",
+                    subtitle: "Membedah List Lebih Dalam",
+                    content: `
+                        <div class="text-center space-y-6">
+                            <div class="text-6xl mb-4">🍕</div>
+                            <h3 class="text-2xl font-bold text-slate-800">Slicing & Dicing!</h3>
+                            <p class="text-lg text-slate-600">
+                                Di Level 1, kita belajar membuat List. Di sini, kita akan belajar cara "memotong" list (slicing) dan mengaturnya dengan lebih canggih.
+                            </p>
+                            <div class="p-4 bg-sky-50 border border-sky-200 rounded-xl max-w-lg mx-auto">
+                                <code class="text-sky-700 font-bold block mb-2">my_pizza = ['chili', 'cheese', 'mushroom', 'beef']</code>
+                                <p class="text-sm text-slate-500">Bagaimana kalau kita cuma mau 2 topping pertama?</p>
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Review List: Kotak Ajaib 📦",
+                    subtitle: "Mengingat kembali tentang List",
+                    content: `
+                        <div class="space-y-4 max-w-2xl mx-auto">
+                            <ul class="text-left custom-list space-y-3 text-lg text-slate-700">
+                                <li><b>Index mulai dari 0:</b> Item pertama ada di kotak nomor 0.</li>
+                                <li><b>Bisa diubah (Mutable):</b> Kita bisa ganti isinya kapan saja.</li>
+                                <li><b>Bisa campur:</b> Angka, Teks, bahkan List lain bisa masuk!</li>
+                            </ul>
+                            <div class="bg-slate-900 text-green-400 p-4 rounded-lg font-mono text-left mt-4 text-sm">
+fruits = ['apel', 'jeruk', 'mangga']
+print(fruits[0])  # Output: apel
+fruits[1] = 'anggur'
+print(fruits)     # Output: ['apel', 'anggur', 'mangga']
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "List Slicing: Potongan Data 🔪",
+                    subtitle: "Mengambil sebagian isi List",
+                    content: `
+                        <div class="text-center space-y-6">
+                            <p class="text-lg text-slate-700">
+                                <b>Slicing</b> adalah teknik mengambil beberapa item sekaligus dari list.
+                                Gunakan tanda titik dua <b>:</b>
+                            </p>
+                            <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 max-w-lg mx-auto text-left">
+                                <p class="font-bold text-yellow-700">Rumus:</p>
+                                <code class="text-xl font-bold text-slate-800">list[start : stop]</code>
+                                <p class="text-sm text-slate-500 mt-2">
+                                    * Ambil dari index <b>start</b>, berhenti SEBELUM index <b>stop</b>.
+                                </p>
+                            </div>
+                            <div class="bg-slate-900 text-green-400 p-4 rounded-lg font-mono text-left max-w-lg mx-auto text-sm">
+angka = [0, 1, 2, 3, 4, 5]
+print(angka[1:4]) 
+# Output: [1, 2, 3] (Indeks 4 TIDAK ikut!)
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Methods: Menambah Data ➕",
+                    subtitle: ".append(), .insert(), .extend()",
+                    content: `
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
+                            <div class="p-4 bg-white shadow-sm border border-slate-200 rounded-xl">
+                                <h4 class="font-bold text-blue-600 mb-2">.append(item)</h4>
+                                <p class="text-sm text-slate-600 mb-2">Menambah item di <b>paling belakang</b>.</p>
+                                <code class="bg-slate-100 p-1 rounded text-xs block">tas.append('buku')</code>
+                            </div>
+                            <div class="p-4 bg-white shadow-sm border border-slate-200 rounded-xl">
+                                <h4 class="font-bold text-green-600 mb-2">.insert(index, item)</h4>
+                                <p class="text-sm text-slate-600 mb-2">Menyelipkan item di <b>posisi tertentu</b>.</p>
+                                <code class="bg-slate-100 p-1 rounded text-xs block">tas.insert(0, 'pensil')</code>
+                            </div>
+                             <div class="col-span-1 md:col-span-2 p-4 bg-purple-50 border border-purple-200 rounded-xl text-center">
+                                <p class="text-purple-800 font-semibold">Bayangkan antrian kantin! Append masuk belakang, Insert nyerobot. 😆</p>
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Methods: Menghapus Data 🗑️",
+                    subtitle: ".pop(), .remove(), .clear()",
+                    content: `
+                        <div class="space-y-4 max-w-2xl mx-auto">
+                            <div class="flex items-center gap-4 bg-red-50 p-4 rounded-xl border border-red-200">
+                                <div class="font-bold text-red-600 text-xl w-24">.pop()</div>
+                                <div class="text-slate-700 text-sm">Menghapus & mengambil item <b>terakhir</b> (atau index tertentu).</div>
+                            </div>
+                            <div class="flex items-center gap-4 bg-orange-50 p-4 rounded-xl border border-orange-200">
+                                <div class="font-bold text-orange-600 text-xl w-24">.remove()</div>
+                                <div class="text-slate-700 text-sm">Menghapus item dengan <b>nama tertentu</b> (hanya yang pertama ketemu).</div>
+                            </div>
+                             <div class="bg-slate-900 text-green-400 p-4 rounded-lg font-mono text-left mt-2 text-sm">
+data = ['A', 'B', 'C', 'B']
+data.pop()      # Hapus yang terakhir ('B')
+data.remove('B') # Hapus huruf 'B' yang pertama
+print(data)     # Output: ['A', 'C']
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Sorting: Mengurutkan Data 🔢",
+                    subtitle: "Biar rapi, kita urutkan yuk!",
+                    content: `
+                        <div class="text-center space-y-6">
+                            <p class="text-lg text-slate-700">
+                                Python bisa mengurutkan list angka atau abjad secara otomatis dengan <code>.sort()</code>.
+                            </p>
+                            <div class="grid grid-cols-2 gap-4 max-w-lg mx-auto">
+                                <div class="p-4 bg-slate-100 rounded-lg">
+                                    <h4 class="font-bold text-slate-700">Ascending (A-Z)</h4>
+                                    <code class="block mt-2 text-blue-600">data.sort()</code>
+                                </div>
+                                <div class="p-4 bg-slate-100 rounded-lg">
+                                    <h4 class="font-bold text-slate-700">Descending (Z-A)</h4>
+                                    <code class="block mt-2 text-blue-600">data.sort(reverse=True)</code>
+                                </div>
+                            </div>
+                            <div class="p-2 text-sm text-slate-500 italic">
+                                *Hati-hati: .sort() mengubah list aslinya langsung!
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Latihan Bareng: Inventaris RPG 🛡️",
+                    subtitle: "Lets Code Together!",
+                    content: `
+                        <div class="text-left space-y-4 max-w-2xl mx-auto">
+                            <p class="text-slate-700">Kita buat sistem tas untuk game RPG sederhana.</p>
+                            <div class="bg-slate-900 text-green-400 p-4 rounded-lg font-mono text-xs sm:text-sm overflow-x-auto">
+# 1. Tas awal kosong
+tas = []
+
+# 2. Hero dapat item (append)
+tas.append('Pedang Kayu')
+tas.append('Potion')
+tas.append('Peta')
+
+# 3. Hero pakai Potion (remove)
+tas.remove('Potion')
+
+# 4. Hero dapat item langka di depan (insert)
+tas.insert(0, 'Pedang Emas')
+
+# 5. Cek isi tas & urutkan
+print("Isi tas sebelum rapi:", tas)
+tas.sort()
+print("Isi tas rapi:", tas)
+                            </div>
+                            <p class="text-center font-bold text-blue-600 mt-2">Coba jalankan di IDLE/VS Code!</p>
+                        </div>
+                    `
+                },
+                {
+                    title: "Exercise Mandiri (1-5) 💪",
+                    subtitle: "Tantangan 10 Soal (Part 1)",
+                    content: `
+                        <div class="space-y-4 text-left h-full overflow-y-auto pr-2">
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-blue-600">1. Buat List:</span> Buat list <code>hewan</code> dengan isi: 'Kucing', 'Anjing', 'Burung'. Print listnya.
+                            </div>
+                            <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-blue-600">2. Append:</span> Tambahkan 'Ikan' ke dalam list <code>hewan</code>.
+                            </div>
+                            <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-blue-600">3. Insert:</span> Masukkan 'Gajah' di urutan kedua (index 1).
+                            </div>
+                            <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-blue-600">4. Pop:</span> Hapus hewan yang paling terakhir dimasukkan.
+                            </div>
+                            <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-blue-600">5. Slicing:</span> Print hanya hewan dari index 1 sampai 3.
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Exercise Mandiri (6-10) 🧠",
+                    subtitle: "Tantangan 10 Soal (Part 2)",
+                    content: `
+                        <div class="space-y-4 text-left h-full overflow-y-auto pr-2">
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-purple-600">6. List Angka:</span> Buat list <code>nilai = [90, 80, 70, 60, 100]</code>.
+                            </div>
+                            <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-purple-600">7. Sort A-Z:</span> Urutkan list <code>nilai</code> dari kecil ke besar.
+                            </div>
+                            <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-purple-600">8. Sort Z-A:</span> Urutkan list <code>nilai</code> dari besar ke kecil.
+                            </div>
+                            <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-purple-600">9. Gabung:</span> Buat list baru <code>bonus = [50, 40]</code>, lalu gabungkan ke <code>nilai</code> (hint: pake + atau extend).
+                            </div>
+                            <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-purple-600">10. Hapus Spesifik:</span> Hapus angka 70 dari list.
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Quote of the Day 🌟",
+                    subtitle: "Kata-kata Mutiara Koder",
+                    content: `
+                        <div class="flex flex-col items-center justify-center h-full text-center p-8">
+                            <blockquote class="text-2xl font-serif italic text-slate-700 mb-6">
+                                "Programs must be written for people to read, and only incidentally for machines to execute."
+                            </blockquote>
+                            <cite class="text-slate-500 font-bold not-italic">— Harold Abelson</cite>
+                            <div class="mt-8 text-4xl">📚</div>
+                            <p class="mt-2 text-sm text-slate-400">Sampai jumpa di Meeting 2: Dictionary!</p>
+                        </div>
+                    `
+                }
+            ],
+            2: [
+                 {
+                    title: "Meeting 2: Dictionary 📖",
+                    subtitle: "Buku Kamus Pintar Python",
+                    content: `
+                        <div class="text-center space-y-6">
+                            <div class="text-6xl mb-4">📖</div>
+                            <h3 class="text-2xl font-bold text-slate-800">Kenapa butuh Dictionary?</h3>
+                            <p class="text-lg text-slate-600 max-w-2xl mx-auto">
+                                Bayangkan kamu punya buku telepon. Kalau kamu mau cari nomor telepon "Budi", apakah kamu cari berdasarkan <b>halaman (index)</b> atau <b>Namanya (Key)</b>?
+                            </p>
+                            <div class="p-4 bg-yellow-50 border border-yellow-200 rounded-xl inline-block mx-auto">
+                                <span class="font-bold text-yellow-800">List:</span> Pakai angka (0, 1, 2) <br>
+                                <span class="font-bold text-green-800">Dictionary:</span> Pakai kata kunci ('Nama', 'Umur')
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Struktur Key-Value 🔑",
+                    subtitle: "Kunci dan Isi",
+                    content: `
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                            <div class="text-left space-y-4">
+                                <p class="text-slate-700">Dictionary menggunakan kurung kurawal <code>{}</code>.</p>
+                                <p class="text-slate-700">Setiap data punya pasangan:</p>
+                                <ul class="list-disc pl-5 text-slate-600">
+                                    <li><b>Key:</b> Labelnya (unik).</li>
+                                    <li><b>Value:</b> Datanya.</li>
+                                </ul>
+                            </div>
+                            <div class="bg-slate-900 text-green-400 p-6 rounded-lg font-mono text-sm shadow-xl">
+siswa = {
+    "nama": "Anto",
+    "umur": 12,
+    "hobi": "Coding",
+    "lulus": True
+}
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Akses Data 🔍",
+                    subtitle: "Memanggil data dengan Key",
+                    content: `
+                        <div class="text-center space-y-6">
+                            <p class="text-lg text-slate-700">
+                                Kalau di List kita pakai <code>list[0]</code>, di Dictionary kita pakai <code>dict['key']</code>.
+                            </p>
+                            <div class="bg-slate-900 text-green-400 p-4 rounded-lg font-mono text-left max-w-md mx-auto text-sm">
+print(siswa["nama"])  # Output: Anto
+print(siswa["umur"])  # Output: 12
+                            </div>
+                            <div class="p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm max-w-md mx-auto">
+                                ⚠️ Hati-hati! Kalau Key tidak ada, akan Error!
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Menambah & Mengubah ✏️",
+                    subtitle: "Update data dictionary",
+                    content: `
+                        <div class="space-y-6 max-w-2xl mx-auto text-left">
+                            <div class="p-4 bg-white shadow-sm border border-slate-200 rounded-xl">
+                                <h4 class="font-bold text-blue-600 mb-2">Mengubah Nilai</h4>
+                                <code class="bg-slate-100 p-2 rounded block">siswa["umur"] = 13</code>
+                                <p class="text-xs text-slate-500 mt-1">Umur Anto berubah jadi 13.</p>
+                            </div>
+                            <div class="p-4 bg-white shadow-sm border border-slate-200 rounded-xl">
+                                <h4 class="font-bold text-green-600 mb-2">Menambah Key Baru</h4>
+                                <code class="bg-slate-100 p-2 rounded block">siswa["sekolah"] = "SMP 1"</code>
+                                <p class="text-xs text-slate-500 mt-1">Data sekolah otomatis ditambahkan.</p>
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Latihan Bareng: Biodata Hero 🦸",
+                    subtitle: "Lets Code Together!",
+                    content: `
+                        <div class="text-left space-y-4 max-w-2xl mx-auto">
+                             <div class="bg-slate-900 text-green-400 p-4 rounded-lg font-mono text-xs sm:text-sm overflow-x-auto">
+# 1. Buat Dictionary Hero
+hero = {
+    "name": "Layla",
+    "role": "Marksman",
+    "hp": 2500,
+    "damage": 300
+}
+
+# 2. Hero naik level (Update data)
+print("Naik level!")
+hero["hp"] = 3000
+hero["damage"] = 450
+
+# 3. Hero beli item sepatu (Tambah data)
+hero["item"] = "Swift Boots"
+
+# 4. Tampilkan status
+print(hero)
+print("Hero:", hero["name"], "| HP:", hero["hp"])
+                            </div>
+                        </div>
+                    `
+                },
+                 {
+                    title: "Exercise Mandiri (1-5) 💪",
+                    subtitle: "Tantangan 10 Soal (Part 1)",
+                    content: `
+                        <div class="space-y-4 text-left h-full overflow-y-auto pr-2">
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-green-600">1. Biodata:</span> Buat dictionary <code>saya</code> dengan key 'nama', 'umur', 'kota'.
+                            </div>
+                            <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-green-600">2. Akses:</span> Print nama dan kota asalmu dari dictionary itu.
+                            </div>
+                            <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-green-600">3. Update:</span> Ubah 'umur' kamu menjadi umur tahun depan.
+                            </div>
+                            <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-green-600">4. Tambah:</span> Tambahkan key 'makanan_fav' dengan makanan kesukaanmu.
+                            </div>
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-green-600">5. Delete:</span> Hapus key 'kota' (hint: pakai <code>del saya['kota']</code> atau <code>.pop()</code>).
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Exercise Mandiri (6-10) 🧠",
+                    subtitle: "Tantangan 10 Soal (Part 2)",
+                    content: `
+                        <div class="space-y-4 text-left h-full overflow-y-auto pr-2">
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-orange-600">6. Nilai Mapel:</span> Buat dict <code>rapor = {'mtk': 80, 'ipa': 75}</code>.
+                            </div>
+                            <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-orange-600">7. Rata-rata:</span> Hitung rata-rata nilai dari dict <code>rapor</code> manual.
+                            </div>
+                            <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-orange-600">8. Cek Key:</span> Cek apakah mapel 'ips' ada di rapor? (Hint: <code>if 'ips' in rapor: ...</code>).
+                            </div>
+                            <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-orange-600">9. Nested:</span> Buat dict di dalam dict. Contoh: <code>kelas = {'ketua': {'nama': 'Budi'}}</code>.
+                            </div>
+                            <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-orange-600">10. Akses Nested:</span> Print nama ketua kelas dari soal no 9.
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Quote of the Day 🌟",
+                    subtitle: "Kata-kata Mutiara Koder",
+                    content: `
+                        <div class="flex flex-col items-center justify-center h-full text-center p-8">
+                            <blockquote class="text-2xl font-serif italic text-slate-700 mb-6">
+                                "Talk is cheap. Show me the code."
+                            </blockquote>
+                            <cite class="text-slate-500 font-bold not-italic">— Linus Torvalds</cite>
+                            <div class="mt-8 text-4xl">🐢</div>
+                            <p class="mt-2 text-sm text-slate-400">Next: Kita akan menggambar dengan Turtle!</p>
+                        </div>
+                    `
+                }
+            ],
+            3: [
+                 {
+                    title: "Meeting 3: Intro to Turtle 🐢",
+                    subtitle: "Koding Visual yang Seru!",
+                    content: `
+                        <div class="text-center space-y-6">
+                            <div class="text-6xl mb-4">🐢</div>
+                            <h3 class="text-2xl font-bold text-slate-800">Bertemu Si Penyu</h3>
+                            <p class="text-lg text-slate-600 max-w-2xl mx-auto">
+                                Python punya "peliharaan" namanya Turtle. Dia bisa menggambar apa saja sesuai perintah kita.
+                                Ini adalah awal dari <b>Visual Programming</b>.
+                            </p>
+                            <div class="p-4 bg-green-50 border border-green-200 rounded-xl inline-block mx-auto">
+                                <code class="font-bold text-green-800">import turtle</code>
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Gerakan Dasar 🕹️",
+                    subtitle: "Mengendalikan Penyu",
+                    content: `
+                        <div class="grid grid-cols-2 gap-4 text-center">
+                            <div class="p-4 bg-white shadow-sm border border-slate-200 rounded-xl">
+                                <div class="text-2xl">⬆️</div>
+                                <code class="block font-bold mt-2">turtle.forward(100)</code>
+                                <p class="text-xs text-slate-500">Maju 100 langkah</p>
+                            </div>
+                             <div class="p-4 bg-white shadow-sm border border-slate-200 rounded-xl">
+                                <div class="text-2xl">⬇️</div>
+                                <code class="block font-bold mt-2">turtle.backward(100)</code>
+                                <p class="text-xs text-slate-500">Mundur 100 langkah</p>
+                            </div>
+                             <div class="p-4 bg-white shadow-sm border border-slate-200 rounded-xl">
+                                <div class="text-2xl">↩️</div>
+                                <code class="block font-bold mt-2">turtle.left(90)</code>
+                                <p class="text-xs text-slate-500">Belok kiri 90 derajat</p>
+                            </div>
+                             <div class="p-4 bg-white shadow-sm border border-slate-200 rounded-xl">
+                                <div class="text-2xl">↪️</div>
+                                <code class="block font-bold mt-2">turtle.right(90)</code>
+                                <p class="text-xs text-slate-500">Belok kanan 90 derajat</p>
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Koordinat Kartesius 🗺️",
+                    subtitle: "Penyu hidup di dunia X dan Y",
+                    content: `
+                        <div class="flex flex-col items-center gap-4">
+                            <div class="relative w-64 h-64 bg-slate-100 border-2 border-slate-300 rounded-lg flex items-center justify-center">
+                                <div class="absolute w-full h-0.5 bg-slate-400"></div> <!-- X axis -->
+                                <div class="absolute h-full w-0.5 bg-slate-400"></div> <!-- Y axis -->
+                                <div class="absolute w-4 h-4 bg-green-500 rounded-full animate-bounce"></div> <!-- Turtle -->
+                                <div class="absolute top-2 right-2 text-xs text-slate-500 font-mono">(X, Y)</div>
+                            </div>
+                             <p class="text-slate-600 text-center max-w-lg">
+                                Posisi awal (Home) ada di tengah <b>(0, 0)</b>.
+                                <br>X positif ke Kanan, Y positif ke Atas.
+                            </p>
+                        </div>
+                    `
+                },
+                {
+                    title: "Latihan Bareng: Persegi ⏹️",
+                    subtitle: "Lets Code Together!",
+                    content: `
+                        <div class="text-left space-y-4 max-w-2xl mx-auto">
+                            <p class="text-slate-700">Ayo buat bentuk persegi sederhana!</p>
+                            <div class="bg-slate-900 text-green-400 p-4 rounded-lg font-mono text-xs sm:text-sm overflow-x-auto">
+import turtle
+
+t = turtle.Turtle()
+t.shape("turtle") # Biar bentuknya penyu
+
+# Sisi 1
+t.forward(100)
+t.left(90)
+
+# Sisi 2
+t.forward(100)
+t.left(90)
+
+# Sisi 3
+t.forward(100)
+t.left(90)
+
+# Sisi 4
+t.forward(100)
+t.left(90)
+
+turtle.done()
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Latihan Bareng: Segitiga 🔺",
+                    subtitle: "Sudut Luar vs Sudut Dalam",
+                    content: `
+                        <div class="text-left space-y-4 max-w-2xl mx-auto">
+                            <div class="p-3 bg-yellow-50 border border-yellow-200 rounded-lg text-sm text-yellow-800 mb-2">
+                                💡 Tip: Untuk segitiga sama sisi, sudut beloknya bukan 60, tapi <b>120</b>! (180 - 60).
+                            </div>
+                            <div class="bg-slate-900 text-green-400 p-4 rounded-lg font-mono text-xs sm:text-sm overflow-x-auto">
+# Segitiga Sama Sisi
+t.forward(100)
+t.left(120)
+
+t.forward(100)
+t.left(120)
+
+t.forward(100)
+t.left(120)
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Exercise Mandiri (Shapes) 🏗️",
+                    subtitle: "Tantangan 10 Soal",
+                    content: `
+                        <div class="space-y-4 text-left h-full overflow-y-auto pr-2">
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-blue-600">1. Setup:</span> Import turtle dan buat object turtle.
+                            </div>
+                            <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-blue-600">2. Garis Lurus:</span> Gambar garis panjang 200px.
+                            </div>
+                            <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-blue-600">3. Persegi Panjang:</span> Gambar kotak 200x100.
+                            </div>
+                            <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-blue-600">4. Huruf 'L':</span> Gambar huruf L kapital.
+                            </div>
+                            <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-blue-600">5. Huruf 'T':</span> Gambar huruf T kapital.
+                            </div>
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-blue-600">6. Tangga:</span> Gambar anak tangga (gerigi).
+                            </div>
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-blue-600">7. Tanda Tambah:</span> Gambar tanda plus (+).
+                            </div>
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-blue-600">8. Speed:</span> Coba atur <code>t.speed(1)</code> (lambat) dan <code>t.speed(10)</code> (cepat).
+                            </div>
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-blue-600">9. Reset:</span> Coba perintah <code>t.reset()</code>. Apa yang terjadi?
+                            </div>
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-blue-600">10. Rumah Sederhana:</span> Gabungkan Persegi dan Segitiga jadi rumah!
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Quote of the Day 🌟",
+                    subtitle: "Kata-kata Mutiara Koder",
+                    content: `
+                        <div class="flex flex-col items-center justify-center h-full text-center p-8">
+                            <blockquote class="text-2xl font-serif italic text-slate-700 mb-6">
+                                "The only way to learn a new programming language is by writing programs in it."
+                            </blockquote>
+                            <cite class="text-slate-500 font-bold not-italic">— Dennis Ritchie</cite>
+                            <div class="mt-8 text-4xl">🎨</div>
+                            <p class="mt-2 text-sm text-slate-400">Next: Mari warnai gambar kita!</p>
+                        </div>
+                    `
+                }
+            ],
+            4: [
+                {
+                    title: "Meeting 4: Colors & Pen 🎨",
+                    subtitle: "Mewarnai Dunia Penyu",
+                    content: `
+                        <div class="text-center space-y-6">
+                            <div class="text-6xl mb-4">🎨</div>
+                            <h3 class="text-2xl font-bold text-slate-800">Menjadi Seniman Koding</h3>
+                            <p class="text-lg text-slate-600 max-w-2xl mx-auto">
+                                Gambar hitam putih itu membosankan. Hari ini kita akan belajar memberi warna dan mengatur pena si penyu.
+                            </p>
+                        </div>
+                    `
+                },
+                {
+                    title: "Warna Garis & Isi 🖌️",
+                    subtitle: "Pencolor vs Fillcolor",
+                    content: `
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
+                            <div class="p-4 bg-white shadow-sm border border-slate-200 rounded-xl">
+                                <h4 class="font-bold text-purple-600 mb-2">t.pencolor("red")</h4>
+                                <p class="text-sm text-slate-600 mb-2">Mengubah warna <b>garis luar</b>.</p>
+                                <div class="h-2 w-full bg-red-500 rounded"></div>
+                            </div>
+                            <div class="p-4 bg-white shadow-sm border border-slate-200 rounded-xl">
+                                <h4 class="font-bold text-pink-600 mb-2">t.fillcolor("yellow")</h4>
+                                <p class="text-sm text-slate-600 mb-2">Mengubah warna <b>isi</b> bentuk.</p>
+                                <div class="h-8 w-8 bg-yellow-400 border-2 border-red-500 mx-auto rounded-full"></div>
+                            </div>
+                             <div class="col-span-1 md:col-span-2 p-4 bg-slate-100 rounded-xl text-center">
+                                <code class="font-bold text-slate-800">t.color("red", "yellow")</code>
+                                <p class="text-xs text-slate-500 mt-1">Shortcut: (warna garis, warna isi)</p>
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Cara Mewarnai (Block) 🪣",
+                    subtitle: "Begin Fill & End Fill",
+                    content: `
+                        <div class="space-y-4 max-w-lg mx-auto text-left">
+                            <p class="text-slate-700">Untuk mengisi warna, kita harus memberi tahu kapan mulai dan kapan selesai.</p>
+                            <div class="bg-slate-900 text-green-400 p-4 rounded-lg font-mono text-sm leading-loose">
+t.fillcolor("orange")
+
+t.begin_fill()  # <--- Buka ember cat
+# ... gambar bentuk (misal lingkaran) ...
+t.circle(100)
+t.end_fill()    # <--- Tutup ember (Warna tumpah)
+                            </div>
+                            <p class="text-xs text-red-500 italic">*Jangan lupa end_fill(), atau warnanya tidak keluar!</p>
+                        </div>
+                    `
+                },
+                 {
+                    title: "Mengangkat Pena ✍️",
+                    subtitle: "Teleportasi tanpa mencoret",
+                    content: `
+                        <div class="grid grid-cols-2 gap-4 text-center">
+                            <div class="p-4 bg-blue-50 border border-blue-200 rounded-xl">
+                                <h4 class="font-bold text-blue-700">t.penup()</h4>
+                                <p class="text-sm text-slate-600">Angkat pena. Gerakan tidak akan meninggalkan jejak.</p>
+                            </div>
+                            <div class="p-4 bg-blue-50 border border-blue-200 rounded-xl">
+                                <h4 class="font-bold text-blue-700">t.pendown()</h4>
+                                <p class="text-sm text-slate-600">Turunkan pena. Mulai menggambar lagi.</p>
+                            </div>
+                            <div class="col-span-2 p-4 bg-white border border-slate-200 rounded-xl">
+                                <h4 class="font-bold text-slate-700 mb-2">t.pensize(5)</h4>
+                                <div class="h-1 bg-slate-800 w-full mb-2"></div>
+                                <div class="h-4 bg-slate-800 w-full"></div>
+                                <p class="text-xs text-slate-500 mt-1">Mengatur ketebalan garis.</p>
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Latihan Bareng: Lampu Lalu Lintas 🚦",
+                    subtitle: "Lingkaran Merah Kuning Hijau",
+                    content: `
+                        <div class="text-left space-y-4 max-w-2xl mx-auto h-64 overflow-y-auto bg-slate-50 p-4 rounded-xl border border-slate-200">
+                             <div class="bg-slate-900 text-green-400 p-4 rounded-lg font-mono text-xs">
+# Gambar Box Hitam
+t.color("black", "black")
+t.begin_fill()
+# ... bikin persegi panjang ...
+t.end_fill()
+
+# Lampu Merah
+t.penup()
+t.goto(0, 50) # Pindah posisi
+t.pendown()
+t.color("gray", "red")
+t.begin_fill()
+t.circle(20)
+t.end_fill()
+
+# ... Lanjut Kuning & Hijau ...
+                            </div>
+                             <p class="text-slate-600 text-sm">Gunakan <code>t.goto(x, y)</code> untuk pindah posisi dengan akurat!</p>
+                        </div>
+                    `
+                },
+                 {
+                    title: "Exercise Mandiri (1-10) 🌈",
+                    subtitle: "Color Master Challenge",
+                    content: `
+                        <div class="space-y-4 text-left h-full overflow-y-auto pr-2">
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-pink-600">1. Warna-warni:</span> Gambar 4 garis dengan 4 warna berbeda.
+                            </div>
+                            <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-pink-600">2. Tebal Tipis:</span> Gambar garis tebal (size 10) dan garis tipis (size 1).
+                            </div>
+                            <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-pink-600">3. Persegi Merah:</span> Gambar persegi dengan garis merah, isi kuning.
+                            </div>
+                            <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-pink-600">4. Lingkaran Biru:</span> Gambar lingkaran (<code>t.circle(50)</code>) warna biru penuh.
+                            </div>
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-pink-600">5. Teleport:</span> Gambar dua titik yang berjauhan tanpa ada garis penghubung (pakai penup).
+                            </div>
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-pink-600">6. Background:</span> Coba ubah warna latar belakang layar: <code>turtle.bgcolor("black")</code>.
+                            </div>
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-pink-600">7. Bendera Indonesia:</span> Gambar bendera Merah Putih.
+                            </div>
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-pink-600">8. Bendera Jepang:</span> Gambar bendera Jepang (Putih dengan lingkaran Merah).
+                            </div>
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-pink-600">9. Hantu Pacman:</span> Gambar bentuk hantu Pacman sederhana warna warni.
+                            </div>
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-pink-600">10. Nama Kamu:</span> Tulis inisial namamu dengan Turtle.
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Quote of the Day 🌟",
+                    subtitle: "Kata-kata Mutiara Koder",
+                    content: `
+                        <div class="flex flex-col items-center justify-center h-full text-center p-8">
+                            <blockquote class="text-2xl font-serif italic text-slate-700 mb-6">
+                                "Creativity is intelligence having fun."
+                            </blockquote>
+                            <cite class="text-slate-500 font-bold not-italic">— Albert Einstein</cite>
+                            <div class="mt-8 text-4xl">🔄</div>
+                            <p class="mt-2 text-sm text-slate-400">Next: Membuat Turtle bekerja otomatis dengan Looping!</p>
+                        </div>
+                    `
+                }
+            ],
+            5: [
+                {
+                    title: "Meeting 5: Turtle & Loops 🔄",
+                    subtitle: "Mengulang Tanpa Capek",
+                    content: `
+                        <div class="text-center space-y-6">
+                            <div class="text-6xl mb-4">🔄</div>
+                            <h3 class="text-2xl font-bold text-slate-800">Don't Repeat Yourself (DRY)</h3>
+                            <p class="text-lg text-slate-600 max-w-2xl mx-auto">
+                                Bayangkan kalau kamu mau gambar persegi. Kamu harus tulis "Maju", "Belok" sebanyak 4 kali. Capek kan?
+                                Ayo suruh komputer yang mengulang buat kita!
+                            </p>
+                        </div>
+                    `
+                },
+                {
+                    title: "The For Loop ➿",
+                    subtitle: "Perintah Pengulangan Ajaib",
+                    content: `
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                            <div class="space-y-4">
+                                <div class="bg-red-50 p-4 rounded-xl border border-red-200 opacity-50">
+                                    <h4 class="font-bold text-red-800">Cara Lama (Manual)</h4>
+                                    <code class="text-xs text-red-700 block whitespace-pre">
+t.forward(100)
+t.left(90)
+t.forward(100)
+t.left(90)
+t.forward(100)
+t.left(90)
+t.forward(100)
+t.left(90)
+                                    </code>
+                                </div>
+                            </div>
+                            <div class="space-y-4">
+                                <div class="bg-green-50 p-4 rounded-xl border border-green-200 shadow-lg scale-105">
+                                    <h4 class="font-bold text-green-800">Cara Baru (Loop)</h4>
+                                    <code class="text-sm text-green-700 block whitespace-pre">
+for i in range(4):
+    t.forward(100)
+    t.left(90)
+                                    </code>
+                                    <p class="text-xs text-green-600 mt-2">Cuma 3 baris! 😍</p>
+                                </div>
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Range & Variable 🔢",
+                    subtitle: "Menggunakan Variabel 'i'",
+                    content: `
+                        <div class="text-center space-y-6">
+                            <p class="text-lg text-slate-700">
+                                Variabel <code>i</code> di dalam loop itu berubah setiap putaran lho!
+                                <br>0, 1, 2, 3....
+                            </p>
+                            <div class="bg-slate-900 text-cyan-400 p-4 rounded-lg font-mono text-left max-w-md mx-auto text-sm">
+for i in range(5):
+    print(i)
+    t.circle(i * 10) # Lingkaran makin besar!
+                            </div>
+                             <p class="text-slate-600 text-sm italic">
+                                Coba bayangkan lingkaran pertama ukurannya 0, kedua 10, ketiga 20... jadi seperti obat nyamuk!
+                            </p>
+                        </div>
+                    `
+                },
+                {
+                    title: "Latihan Bareng: Segi Banyak 🛑",
+                    subtitle: "Pentagon, Hexagon, Octagon...",
+                    content: `
+                        <div class="text-left space-y-4 max-w-2xl mx-auto">
+                            <div class="p-3 bg-blue-50 border border-blue-200 rounded-lg text-sm text-blue-800 mb-2">
+                                💡 Rumus Sudut: <b>360 / Jumlah Sisi</b>
+                            </div>
+                            <div class="bg-slate-900 text-green-400 p-4 rounded-lg font-mono text-xs sm:text-sm overflow-x-auto">
+sisi = 8  # Octagon (Segi 8)
+panjang = 50
+
+for i in range(sisi):
+    t.forward(panjang)
+    t.left(360 / sisi) # 360 / 8 = 45 derajat
+                            </div>
+                            <p class="text-center font-bold text-slate-600 mt-2">Coba ganti <code>sisi = 12</code>!</p>
+                        </div>
+                    `
+                },
+                {
+                    title: "Latihan Bareng: Spiral Art 🌀",
+                    subtitle: "Seni Matematika",
+                    content: `
+                        <div class="text-left space-y-4 max-w-2xl mx-auto">
+                            <p class="text-slate-700">Kita buat garis yang makin lama makin panjang dan sedikit berputar.</p>
+                            <div class="bg-slate-900 text-green-400 p-4 rounded-lg font-mono text-xs sm:text-sm overflow-x-auto">
+t.speed(10) # Biar ngebut
+
+for i in range(50):
+    t.forward(i * 5) # Makin panjang (0, 5, 10, 15...)
+    t.left(90)
+                            </div>
+                             <div class="p-2 bg-yellow-50 text-yellow-800 text-xs rounded text-center">
+                                Coba ganti sudutnya jadi 91 derajat. Apa yang terjadi?
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Exercise Mandiri (1-10) 🧠",
+                    subtitle: "Master of Loops",
+                    content: `
+                        <div class="space-y-4 text-left h-full overflow-y-auto pr-2">
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-indigo-600">1. Persegi Loop:</span> Buat persegi pakai loop.
+                            </div>
+                            <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-indigo-600">2. Segitiga Loop:</span> Buat segitiga sama sisi pakai loop.
+                            </div>
+                            <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-indigo-600">3. Hexagon:</span> Buat Segi Enam (sudut 60) pakai loop.
+                            </div>
+                            <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-indigo-600">4. Lingkaran Berbaris:</span> Gambar 5 lingkaran berjejer ke samping. (Loop: Gambar circle, angkat pen, geser kanan, turun pen).
+                            </div>
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-indigo-600">5. Tangga Panjang:</span> Buat tangga dengan 10 anak tangga pakai loop.
+                            </div>
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-indigo-600">6. Bintang 5:</span> Buat bintang (Star) dengan sudut 144 derajat.
+                            </div>
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-indigo-600">7. Spiral Kotak:</span> Buat spiral kotak (seperti contoh Latihan Bareng).
+                            </div>
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-indigo-600">8. Spiral Segitiga:</span> Sama seperti no 7, tapi sudutnya 120.
+                            </div>
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-indigo-600">9. Dash Line:</span> Gambar garis putus-putus panjang (Strip - Spasi - Strip - Spasi).
+                            </div>
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-indigo-600">10. Pagar:</span> Gambar pagar sederhana (garis vertikal berjejer).
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Quote of the Day 🌟",
+                    subtitle: "Kata-kata Mutiara Koder",
+                    content: `
+                        <div class="flex flex-col items-center justify-center h-full text-center p-8">
+                            <blockquote class="text-2xl font-serif italic text-slate-700 mb-6">
+                                "First, solve the problem. Then, write the code."
+                            </blockquote>
+                            <cite class="text-slate-500 font-bold not-italic">— John Johnson</cite>
+                            <div class="mt-8 text-4xl">⚙️</div>
+                        </div>
+                    `
+                }
+            ],
+            6: [
+                 {
+                    title: "Meeting 6: Nested Loops ⚙️⚙️",
+                    subtitle: "Loop di dalam Loop",
+                    content: `
+                        <div class="text-center space-y-6">
+                            <div class="text-6xl mb-4">🍩</div>
+                            <h3 class="text-2xl font-bold text-slate-800">Inception!</h3>
+                            <p class="text-lg text-slate-600 max-w-2xl mx-auto">
+                                Nested Loop itu seperti jam dinding.
+                                Jarum menit harus berputar penuh 60 kali (Loop Dalam), baru jarum jam bergeser sekali (Loop Luar).
+                            </p>
+                            <div class="p-4 bg-purple-50 border border-purple-200 rounded-xl inline-block mx-auto">
+                                <code class="font-bold text-purple-800">for i in range(3): <br>&nbsp;&nbsp;for j in range(5): ...</code>
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Konsep Dasar 🧠",
+                    subtitle: "Perkalian Proses",
+                    content: `
+                        <div class="grid grid-cols-1 gap-6 text-center">
+                             <div class="bg-slate-900 text-pink-400 p-4 rounded-lg font-mono text-left max-w-md mx-auto text-sm">
+for luar in range(3):
+    print("Loop Luar:", luar)
+    for dalam in range(2):
+        print("  --> Loop Dalam:", dalam)
+                            </div>
+                             <div class="p-4 bg-white border border-slate-200 rounded-xl max-w-md mx-auto">
+                                <p class="text-slate-700 font-bold">Total putaran = 3 x 2 = 6 kali.</p>
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Mandala Art 🌸",
+                    subtitle: "Membuat Bunga Geometri",
+                    content: `
+                        <div class="text-left space-y-4 max-w-2xl mx-auto">
+                            <p class="text-slate-700">Trik membuat bunga: Gambar persegi, lalu putar sedikit, gambar lagi, putar lagi...</p>
+                            <div class="bg-slate-900 text-green-400 p-4 rounded-lg font-mono text-xs sm:text-sm overflow-x-auto">
+import turtle
+t = turtle.Turtle()
+t.speed(0) # Super cepat
+
+for i in range(36):     # Loop Luar (Memutar posisi)
+    for j in range(4):  # Loop Dalam (Gambar Persegi)
+        t.forward(100)
+        t.left(90)
+    
+    t.left(10)          # Putar 10 derajat setelah gambar persegi
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Latihan Bareng: Spirograph 🕸️",
+                    subtitle: "Jaring Laba-laba Indah",
+                    content: `
+                        <div class="text-left space-y-4 max-w-2xl mx-auto">
+                             <div class="bg-slate-900 text-green-400 p-4 rounded-lg font-mono text-xs sm:text-sm overflow-x-auto">
+t.color("red")
+t.speed(0)
+
+for i in range(50):
+    t.circle(100) # Gambar lingkaran
+    t.left(10)    # Putar sedikit
+                            </div>
+                            <p class="text-slate-600 text-center">Coba ubah warnanya jadi acak setiap putaran!</p>
+                        </div>
+                    `
+                },
+                 {
+                    title: "Exercise Mandiri (1-10) 🏵️",
+                    subtitle: "Mandala Master",
+                    content: `
+                        <div class="space-y-4 text-left h-full overflow-y-auto pr-2">
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-pink-600">1. Analisis:</span> Tulis di kertas output dari loop <code>range(2)</code> didalam <code>range(3)</code>.
+                            </div>
+                            <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-pink-600">2. Bunga Segitiga:</span> Buat pola bunga dari tumpukan segitiga (Loop luar putar, loop dalam segitiga).
+                            </div>
+                            <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-pink-600">3. Bunga Hexagon:</span> Buat pola bunga dari tumpukan hexagon.
+                            </div>
+                            <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-pink-600">4. Matahari:</span> Gambar garis lurus keluar dari tengah ke segala arah (seperti sinar matahari).
+                            </div>
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-pink-600">5. Grid Titik:</span> Gambar titik-titik (dot) tersusun rapi 5x5 baris dan kolom. (Hint: Nested Loop X dan Y).
+                            </div>
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-pink-600">6. Desa:</span> Gambar 3 rumah berjejer. (Loop luar 3x, Loop dalam gambar rumah).
+                            </div>
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-pink-600">7. Roda Warna:</span> Buat mandala dengan warna berbeda tiap putaran (pakai list warna).
+                            </div>
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-pink-600">8. Bintang Berputar:</span> Buat mandala dari bentuk Bintang.
+                            </div>
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-pink-600">9. Lingkaran Mengecil:</span> Loop luar 5x, Loop dalam gambar lingkaran. Setiap loop luar, radius lingkaran berkurang.
+                            </div>
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-pink-600">10. Random Art:</span> Buat seni abstrak dengan loop random (posisi random, warna random, ukuran random).
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                     title: "Quote of the Day 🌟",
+                    subtitle: "Kata-kata Mutiara Koder",
+                    content: `
+                        <div class="flex flex-col items-center justify-center h-full text-center p-8">
+                            <blockquote class="text-2xl font-serif italic text-slate-700 mb-6">
+                                "The complexity of software is an essential property, not an accidental one."
+                            </blockquote>
+                            <cite class="text-slate-500 font-bold not-italic">— Fred Brooks</cite>
+                            <div class="mt-8 text-4xl">🔤</div>
+                            <p class="mt-2 text-sm text-slate-400">Next: Kita mainan Teks/String!</p>
+                        </div>
+                    `
+                }
+            ],
+            7: [
+                 {
+                    title: "Meeting 7: String Manipulation 🔤",
+                    subtitle: "Mengolah Kata-kata",
+                    content: `
+                        <div class="text-center space-y-6">
+                            <div class="text-6xl mb-4">💬</div>
+                            <h3 class="text-2xl font-bold text-slate-800">Text processing</h3>
+                            <p class="text-lg text-slate-600 max-w-2xl mx-auto">
+                                Komputer sering menerima input teks yang berantakan (Typo, huruf besar kecil campur).
+                                Kita perlu membersihkannya!
+                            </p>
+                        </div>
+                    `
+                },
+                {
+                    title: "Huruf Besar & Kecil 🔠",
+                    subtitle: ".upper(), .lower(), .title()",
+                    content: `
+                        <div class="grid grid-cols-1 gap-4 text-left max-w-lg mx-auto">
+                            <div class="p-4 bg-white border border-slate-200 rounded-xl">
+                                <code class="text-blue-600 font-bold">"halo".upper()</code>
+                                <p class="text-right text-slate-500">→ "HALO"</p>
+                            </div>
+                             <div class="p-4 bg-white border border-slate-200 rounded-xl">
+                                <code class="text-blue-600 font-bold">"HALO".lower()</code>
+                                <p class="text-right text-slate-500">→ "halo"</p>
+                            </div>
+                             <div class="p-4 bg-white border border-slate-200 rounded-xl">
+                                <code class="text-blue-600 font-bold">"halo dunia".title()</code>
+                                <p class="text-right text-slate-500">→ "Halo Dunia"</p>
+                            </div>
+                             <div class="p-4 bg-yellow-50 text-yellow-800 text-sm text-center rounded-xl">
+                                Berguna untuk membandingkan jawaban kuis! (jawaban.lower() == kunci.lower())
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Ganti & Pecah 🔨",
+                    subtitle: ".replace() & .split()",
+                    content: `
+                        <div class="space-y-6 max-w-2xl mx-auto">
+                             <div class="bg-slate-900 text-green-400 p-4 rounded-lg font-mono text-sm">
+text = "Kucing suka makan ikan"
+
+# Replace: Ganti kata
+baru = text.replace("Kucing", "Aku")
+print(baru) 
+# Output: "Aku suka makan ikan"
+
+# Split: Pecah jadi List
+kata_kata = text.split(" ")
+print(kata_kata)
+# Output: ['Kucing', 'suka', 'makan', 'ikan']
+                            </div>
+                             <p class="text-slate-600 text-center text-sm"><code>.split()</code> sangat berguna untuk memproses kalimat panjang per kata.</p>
+                        </div>
+                    `
+                },
+                {
+                    title: "Latihan Bareng: Chatbot Alay 🤪",
+                    subtitle: "Generator Teks Gaul",
+                    content: `
+                        <div class="text-left space-y-4 max-w-2xl mx-auto">
+                            <p class="text-slate-700">Kita buat program yang mengubah huruf 'a' jadi '4', 'g' jadi '9', dll.</p>
+                            <div class="bg-slate-900 text-green-400 p-4 rounded-lg font-mono text-xs sm:text-sm overflow-x-auto">
+kalimat = input("Tulis sesuatu: ")
+
+# Ubah jadi alay
+alay = kalimat.replace("a", "4")
+alay = alay.replace("i", "1")
+alay = alay.replace("g", "9")
+alay = alay.replace("o", "0")
+alay = alay.upper()
+
+print("Mode Alay:", alay)
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Exercise Mandiri (1-10) 🔡",
+                    subtitle: "Text Master",
+                    content: `
+                        <div class="space-y-4 text-left h-full overflow-y-auto pr-2">
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-teal-600">1. Upper:</span> Minta user input nama, print dengan HURUF BESAR SEMUA.
+                            </div>
+                            <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-teal-600">2. Lower:</span> Ada variabel <code>kode = "XyZ123"</code>. Ubah jadi huruf kecil semua.
+                            </div>
+                            <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-teal-600">3. Replace:</span> Ubah kalimat "Saya benci coding" jadi "Saya suka coding".
+                            </div>
+                            <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-teal-600">4. Sensor Kata:</span> Minta input kalimat. Kalau ada kata "bodoh", ganti jadi "*****".
+                            </div>
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-teal-600">5. Hitung Kata:</span> Ada kalimat "Python itu seru sekali". Gunakan split dan len untuk menghitung jumlah katanya (3).
+                            </div>
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-teal-600">6. Ambil Nama Depan:</span> Input "Budi Santoso". Gunakan split untuk mengambil cuma "Budi".
+                            </div>
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-teal-600">7. Join List:</span> Ada list <code>['Aku', 'Lapar']</code>. Gabungkan jadi string "Aku spasi Lapar". (Cari tahu cara pakai <code>.join()</code>).
+                            </div>
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-teal-600">8. Cek Awalan:</span> Cek apakah input user dimulai dengan kata "Halo"? (Hint: <code>.startswith()</code>).
+                            </div>
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-teal-600">9. Palindrom:</span> (Tantangan) Cek apakah sebuah kata dibaca terbalik sama saja? (Contoh: "KATAK").
+                            </div>
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-teal-600">10. Vokal Remover:</span> Hapus semua huruf vokal (a, i, u, e, o) dari nama user.
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                     title: "Quote of the Day 🌟",
+                    subtitle: "Kata-kata Mutiara Koder",
+                    content: `
+                        <div class="flex flex-col items-center justify-center h-full text-center p-8">
+                            <blockquote class="text-2xl font-serif italic text-slate-700 mb-6">
+                                "Code is like humor. When you have to explain it, it’s bad."
+                            </blockquote>
+                            <cite class="text-slate-500 font-bold not-italic">— Cory House</cite>
+                            <div class="mt-8 text-4xl">💾</div>
+                            <p class="mt-2 text-sm text-slate-400">Next: Menyimpan data ke File!</p>
+                        </div>
+                    `
+                }
+            ],
+            8: [
+                 {
+                    title: "Meeting 8: File Handling 💾",
+                    subtitle: "Menyimpan Jejak Digital",
+                    content: `
+                        <div class="text-center space-y-6">
+                            <div class="text-6xl mb-4">📂</div>
+                            <h3 class="text-2xl font-bold text-slate-800">Memory vs Storage</h3>
+                            <p class="text-lg text-slate-600 max-w-2xl mx-auto">
+                                Variabel itu seperti ingatan jangka pendek. Kalau komputer mati, hilang semua.
+                                File (.txt) itu seperti buku catatan. Datanya tersimpan selamanya.
+                            </p>
+                        </div>
+                    `
+                },
+                {
+                    title: "Membaca & Menulis 📝",
+                    subtitle: "Mode: Read (r), Write (w), Append (a)",
+                    content: `
+                        <div class="grid grid-cols-3 gap-4 text-center">
+                            <div class="p-4 bg-green-50 rounded-xl border border-green-200">
+                                <h4 class="font-bold text-green-700">'r' (Read)</h4>
+                                <p class="text-xs text-slate-500">Hanya membaca isi file.</p>
+                            </div>
+                             <div class="p-4 bg-red-50 rounded-xl border border-red-200">
+                                <h4 class="font-bold text-red-700">'w' (Write)</h4>
+                                <p class="text-xs text-slate-500">Menulis baru (Isi lama DIHAPUS!).</p>
+                            </div>
+                             <div class="p-4 bg-blue-50 rounded-xl border border-blue-200">
+                                <h4 class="font-bold text-blue-700">'a' (Append)</h4>
+                                <p class="text-xs text-slate-500">Menambah tulisan di bawahnya.</p>
+                            </div>
+                        </div>
+                        <div class="mt-6 bg-slate-900 text-green-400 p-4 rounded-lg font-mono text-sm max-w-lg mx-auto text-left">
+# Cara Modern (With Open)
+# Otomatis tutup file (Save)
+
+with open("catatanku.txt", "w") as f:
+    f.write("Halo, ini file pertamaku!")
+                        </div>
+                    `
+                },
+                {
+                    title: "Latihan Bareng: Diary App 📔",
+                    subtitle: "Menulis Curhat ke File",
+                    content: `
+                        <div class="text-left space-y-4 max-w-2xl mx-auto">
+                             <div class="bg-slate-900 text-green-400 p-4 rounded-lg font-mono text-xs sm:text-sm overflow-x-auto">
+print("--- My Diary ---")
+isi = input("Tulis kegiatanmu hari ini: ")
+
+# Pakai mode 'a' biar curhat kemarin gak hilang
+with open("diary.txt", "a") as f:
+    f.write(isi + "\\n") # \\n itu Enter/Baris baru
+
+print("Tersimpan!")
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Latihan Bareng: Baca Diary 📖",
+                    subtitle: "Membaca isi File",
+                    content: `
+                        <div class="text-left space-y-4 max-w-2xl mx-auto">
+                             <div class="bg-slate-900 text-green-400 p-4 rounded-lg font-mono text-xs sm:text-sm overflow-x-auto">
+print("--- Isi Diary ---")
+
+try:
+    with open("diary.txt", "r") as f:
+        print(f.read())
+except:
+    print("File belum ada!")
+                            </div>
+                            <p class="text-slate-600 text-sm italic mt-2">Kita pakai <code>try-except</code> biar tidak error kalau filenya belum dibuat.</p>
+                        </div>
+                    `
+                },
+                {
+                    title: "Exercise Mandiri (1-10) 📼",
+                    subtitle: "Data Keeper",
+                    content: `
+                        <div class="space-y-4 text-left h-full overflow-y-auto pr-2">
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-gray-700">1. Tulis Nama:</span> Buat file <code>nama.txt</code> dan tulis namamu di sana.
+                            </div>
+                            <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-gray-700">2. Baca Nama:</span> Baca file <code>nama.txt</code> dan print isinya.
+                            </div>
+                            <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-gray-700">3. Tambah Hobi:</span> Gunakan mode append ('a') untuk menambah hobimu di baris baru file <code>nama.txt</code>.
+                            </div>
+                            <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-gray-700">4. High Score:</span> Buat program input skor game, simpan ke file <code>skor.txt</code>.
+                            </div>
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-gray-700">5. List Belanja:</span> Buat file <code>belanja.txt</code> yang isinya: 1. Telur, 2. Roti (Tulis manual di kode).
+                            </div>
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-gray-700">6. Baca Per Baris:</span> Baca file belanja tadi, tapi print baris per baris pakai Loop. (Hint: <code>for line in f:</code>).
+                            </div>
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-gray-700">7. Overwrite Warning:</span> Coba tulis ulang file dengan mode 'w'. Lihat apa yang terjadi dengan data lama.
+                            </div>
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-gray-700">8. Pesan Rahasia:</span> Tulis pesan rahasia ke file.
+                            </div>
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-gray-700">9. (Challenge) Login Sederhana:</span> Simpan password di file. Minta user input password, cek apakah sama dengan isi file?
+                            </div>
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-gray-700">10. Hapus File:</span> Cari tahu cara menghapus file pakai python (Hint: <code>import os</code> lalu <code>os.remove()</code>).
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                     title: "Quote of the Day 🌟",
+                    subtitle: "Kata-kata Mutiara Koder",
+                    content: `
+                        <div class="flex flex-col items-center justify-center h-full text-center p-8">
+                            <blockquote class="text-2xl font-serif italic text-slate-700 mb-6">
+                                "Experience is the name everyone gives to their mistakes."
+                            </blockquote>
+                            <cite class="text-slate-500 font-bold not-italic">— Oscar Wilde</cite>
+                            <div class="mt-8 text-4xl">🏆</div>
+                            <p class="mt-2 text-sm text-slate-400">Next: Final Project Time!</p>
+                        </div>
+                    `
+                }
+            ],
+            9: [
+                 {
+                    title: "Meeting 9: Flashback & Brainstorming 🧠",
+                    subtitle: "Review & Perencanaan",
+                    content: `
+                        <div class="text-center space-y-6">
+                            <div class="text-6xl mb-4">🤔</div>
+                            <h3 class="text-2xl font-bold text-slate-800">Saatnya Unjuk Gigi!</h3>
+                            <p class="text-lg text-slate-600 max-w-2xl mx-auto">
+                                Kita sudah belajar List, Dictionary, Turtle, Loop, String, dan File.
+                                Sekarang saatnya menggabungkan semuanya menjadi satu aplikasi keren!
+                            </p>
+                        </div>
+                    `
+                },
+                {
+                    title: "Pilihan Proyek 🎭",
+                    subtitle: "Pilih salah satu tantangan ini",
+                    content: `
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div class="bg-purple-50 p-6 rounded-xl border border-purple-200">
+                                <h4 class="text-xl font-bold text-purple-800 mb-2">1. Turtle Art Gallery 🎨</h4>
+                                <p class="text-sm text-slate-600 mb-4">Aplikasi yang bisa menggambar berbagai pola unik pilihan user (Mandala, Spiral, Bintang) secara otomatis.</p>
+                                <ul class="text-left text-xs list-disc list-inside space-y-1 text-slate-500">
+                                    <li>Pakai Turtle Graphics</li>
+                                    <li>Pakai Nested Loops</li>
+                                    <li>Pakai Function (opsional)</li>
+                                </ul>
+                            </div>
+                            <div class="bg-blue-50 p-6 rounded-xl border border-blue-200">
+                                <h4 class="text-xl font-bold text-blue-800 mb-2">2. Smart Data Keeper 🗂️</h4>
+                                <p class="text-sm text-slate-600 mb-4">Aplikasi pendataan (Nilai Siswa, Inventaris Barang, atau Buku Telepon) yang disimpan ke File.</p>
+                                <ul class="text-left text-xs list-disc list-inside space-y-1 text-slate-500">
+                                    <li>Pakai Dictionary/List</li>
+                                    <li>Pakai File Handling (Read/Write)</li>
+                                    <li>Pakai String Manipulation (Search)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Langkah 1: Flowchart 🗺️",
+                    subtitle: "Gambaran Alur Program",
+                    content: `
+                        <div class="text-center space-y-6">
+                            <p class="text-lg text-slate-700">Sebelum koding, kita gambar dulu alurnya!</p>
+                            <div class="p-6 bg-white border border-slate-200 rounded-xl max-w-lg mx-auto shadow-lg">
+                                <p class="font-mono text-sm text-slate-500">
+                                    Start <br>⬇️<br>
+                                    Input Menu (1. Buat Baru, 2. Lihat Data)<br>⬇️<br>
+                                    Jika 1: Input Data → Simpan ke File<br>⬇️<br>
+                                    Jika 2: Baca File → Tampilkan<br>⬇️<br>
+                                    End
+                                </p>
+                            </div>
+                        </div>
+                    `
+                },
+                 {
+                    title: "Exercise Mandiri (1-10) 📝",
+                    subtitle: "Project Planning Phase",
+                    content: `
+                        <div class="space-y-4 text-left h-full overflow-y-auto pr-2">
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-purple-600">1. Tentukan Judul:</span> Apa nama keren untuk aplikasimu?
+                            </div>
+                            <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-purple-600">2. Target User:</span> Siapa yang akan pakai aplikasimu? (Guru, Teman, Diri sendiri?).
+                            </div>
+                            <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-purple-600">3. Fitur Utama:</span> Sebutkan 3 hal utama yang bisa dilakukan aplikasimu.
+                            </div>
+                            <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-purple-600">4. Desain Menu:</span> Tulis rancangan menu utama (pilihan 1, 2, 3, exit).
+                            </div>
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-purple-600">5. Variabel List:</span> Tulis nama-nama variabel yang mungkin kamu butuhkan.
+                            </div>
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-purple-600">6. File Name:</span> Kalau pakai file, apa nama file .txt yang akan dipakai?
+                            </div>
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-purple-600">7. Error Handling:</span> Kira-kira di bagian mana user mungkin salah input? Bagaimana cara menjaganya?
+                            </div>
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-purple-600">8. Pseudocode:</span> Tulis alur program dalam bahasa manusia (bukan koding).
+                            </div>
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-purple-600">9. Setup Project:</span> Buat folder baru di laptopmu, dan buat file \`main.py\`.
+                            </div>
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-purple-600">10. Hello Project:</span> Tulis kode pertama: Print judul aplikasimu dengan hiasan bintang.
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                     title: "Quote of the Day 🌟",
+                    subtitle: "Kata-kata Mutiara Koder",
+                    content: `
+                        <div class="flex flex-col items-center justify-center h-full text-center p-8">
+                            <blockquote class="text-2xl font-serif italic text-slate-700 mb-6">
+                                "Plan your work, then work your plan."
+                            </blockquote>
+                            <cite class="text-slate-500 font-bold not-italic">— Napoleon Hill</cite>
+                            <div class="mt-8 text-4xl">🏗️</div>
+                        </div>
+                    `
+                }
+            ],
+            10: [
+                 {
+                    title: "Meeting 10: Project Development 1 🛠️",
+                    subtitle: "Membangun Pondasi",
+                    content: `
+                        <div class="text-center space-y-6">
+                            <div class="text-6xl mb-4">🧱</div>
+                            <h3 class="text-2xl font-bold text-slate-800">Coding Mode: ON</h3>
+                            <p class="text-lg text-slate-600 max-w-2xl mx-auto">
+                                Hari ini kita fokus membuat fitur utama berjalan.
+                                Jangan pikirkan keindahan dulu, yang penting jalan! (Functional First).
+                            </p>
+                        </div>
+                    `
+                },
+                {
+                    title: "Checklist Hari Ini ✅",
+                    subtitle: "Target Meeting 10",
+                    content: `
+                        <div class="space-y-4 max-w-lg mx-auto">
+                            <div class="flex items-center space-x-4 p-4 bg-green-50 rounded-lg">
+                                <span class="text-2xl">🟢</span>
+                                <span class="text-green-800 font-bold">Input User Berhasil</span>
+                            </div>
+                             <div class="flex items-center space-x-4 p-4 bg-green-50 rounded-lg">
+                                <span class="text-2xl">🟢</span>
+                                <span class="text-green-800 font-bold">Logika Utama (Loop/If) Jalan</span>
+                            </div>
+                             <div class="flex items-center space-x-4 p-4 bg-green-50 rounded-lg">
+                                <span class="text-2xl">🟢</span>
+                                <span class="text-green-800 font-bold">Data Tersimpan/Gambar Muncul</span>
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Troubleshooting Tips 🚑",
+                    subtitle: "Kalau Error, Jangan Panik",
+                    content: `
+                        <div class="grid grid-cols-1 gap-4 text-left">
+                            <div class="p-4 bg-red-50 border border-red-200 rounded-xl">
+                                <h4 class="font-bold text-red-800">1. Baca Pesan Error</h4>
+                                <p class="text-sm text-slate-600">Biasanya python kasih tau baris ke berapa yang salah. Cek baris itu!</p>
+                            </div>
+                             <div class="p-4 bg-yellow-50 border border-yellow-200 rounded-xl">
+                                <h4 class="font-bold text-yellow-800">2. Cek Indentasi</h4>
+                                <p class="text-sm text-slate-600">Apakah spasinya sudah pas? Python sangat sensitif sama spasi.</p>
+                            </div>
+                             <div class="p-4 bg-blue-50 border border-blue-200 rounded-xl">
+                                <h4 class="font-bold text-blue-800">3. Print Debugging</h4>
+                                <p class="text-sm text-slate-600">Tambahkan <code>print("Sampai sini aman")</code> di tengah kode untuk cek alurnya.</p>
+                            </div>
+                        </div>
+                    `
+                },
+                 {
+                    title: "Exercise Mandiri (1-10) 💻",
+                    subtitle: "Coding Drills",
+                    content: `
+                        <div class="space-y-4 text-left h-full overflow-y-auto pr-2">
+                            <p class="text-slate-500 text-sm mb-4">Sambil mengerjakan proyek, pastikan kamu bisa menjawab tantangan micro ini:</p>
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-indigo-600">1. Looping Menu:</span> Pastikan menumu diulang terus (while True) sampai user pilih 'Exit'.
+                            </div>
+                            <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-indigo-600">2. Input Validation:</span> Kalau menu cuma 1-3, tapi user isi 5, program jangan error. (Pakai if/else).
+                            </div>
+                            <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-indigo-600">3. Clear Screen:</span> Cari kode <code>os.system('cls')</code> atau print <code>\\n</code> 50 kali biar layar bersih.
+                            </div>
+                            <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-indigo-600">4. Variable Naming:</span> Cek apakah nama variabelmu mudah dimengerti (misal: <code>luas_persegi</code> bukan <code>x</code>).
+                            </div>
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-indigo-600">5. Commenting:</span> Beri komentar di setiap blok kode penting.
+                            </div>
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-indigo-600">6. Test Kecil:</span> Coba jalankan bagian kecil kodenya secara terpisah, pastikan jalan.
+                            </div>
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-indigo-600">7. Backup:</span> Copy file kodemu menjadi <code>main_v1.py</code> sebagai cadangan.
+                            </div>
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-indigo-600">8. Teman Diskusi:</span> Tanya teman sebelah/kakak pengajar kalau mentok lebih dari 5 menit.
+                            </div>
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-indigo-600">9. Rehat Sejenak:</span> Coding butuh fokus, minum air putih dulu!
+                            </div>
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-indigo-600">10. Progress Report:</span> Tunjukkan fitur utamamu ke pengajar.
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                     title: "Quote of the Day 🌟",
+                    subtitle: "Kata-kata Mutiara Koder",
+                    content: `
+                        <div class="flex flex-col items-center justify-center h-full text-center p-8">
+                            <blockquote class="text-2xl font-serif italic text-slate-700 mb-6">
+                                "It works on my machine."
+                            </blockquote>
+                            <cite class="text-slate-500 font-bold not-italic">— Famous Programmer Excuse</cite>
+                            <div class="mt-8 text-4xl">😅</div>
+                        </div>
+                    `
+                }
+            ],
+            11: [
+                 {
+                    title: "Meeting 11: Project Development 2 💅",
+                    subtitle: "Polishing & Finishing",
+                    content: `
+                        <div class="text-center space-y-6">
+                            <div class="text-6xl mb-4">✨</div>
+                            <h3 class="text-2xl font-bold text-slate-800">Make it Shine!</h3>
+                            <p class="text-lg text-slate-600 max-w-2xl mx-auto">
+                                Program sudah jalan, tapi apakah sudah enak dipakai? Apakah tampilannya rapi?
+                                Saatnya mempercantik program (UI/UX) dan berburu kutu (Bug Fixing).
+                            </p>
+                        </div>
+                    `
+                },
+                {
+                    title: "User Experience (UX) 👌",
+                    subtitle: "Kenyamanan Pengguna",
+                    content: `
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
+                            <div class="p-5 bg-white shadow-lg rounded-xl border-l-4 border-indigo-500">
+                                <h4 class="font-bold text-indigo-700 mb-2">Pesan yang Jelas</h4>
+                                <p class="text-sm text-slate-600">Jangan cuma "Error". <br>Tapi "Maaf, umur harus berupa angka".</p>
+                            </div>
+                             <div class="p-5 bg-white shadow-lg rounded-xl border-l-4 border-pink-500">
+                                <h4 class="font-bold text-pink-700 mb-2">Tampilan Rapi</h4>
+                                <p class="text-sm text-slate-600">Gunakan garis pemisah (---) dan spasi antar menu biar enak dibaca.</p>
+                            </div>
+                        </div>
+                    `
+                },
+                 {
+                    title: "Exercise Mandiri (1-10) 🔎",
+                    subtitle: "Quality Assurance",
+                    content: `
+                        <div class="space-y-4 text-left h-full overflow-y-auto pr-2">
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-teal-600">1. Uji Coba Teman:</span> Minta temanmu pakai aplikasimu tanpa kamu ajari. Bingung nggak dia?
+                            </div>
+                            <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-teal-600">2. Input Aneh:</span> Coba isikan huruf di kolom angka. Error nggak? Kalau error, perbaiki (Try/Except).
+                            </div>
+                            <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-teal-600">3. Hiasan ASCII:</span> Tambahkan seni teks (ASCII Art) di judul utama.
+                            </div>
+                            <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-teal-600">4. Warna-warni:</span> (Advanced) Cari library <code>colorama</code> atau ANSI code buat warnain teks di terminal.
+                            </div>
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-teal-600">5. Loading Effect:</span> Buat efek loading bohongan (pakai <code>time.sleep</code>).
+                            </div>
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-teal-600">6. Exit Message:</span> Beri salam perpisahan yang ramah saat program ditutup.
+                            </div>
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-teal-600">7. Cek Ejaan:</span> Pastikan tidak ada typo di teks yang muncul di layar.
+                            </div>
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-teal-600">8. Final Backup:</span> Simpan kode finalmu dengan nama <code>project_final.py</code>.
+                            </div>
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-teal-600">9. Persiapan Demo:</span> Siapkan skenario apa yang mau didemokan besok.
+                            </div>
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-teal-600">10. Istirahat Puas:</span> Kamu sudah bekerja keras. Berikan tepuk tangan buat dirimu sendiri! 👏
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                     title: "Quote of the Day 🌟",
+                    subtitle: "Kata-kata Mutiara Koder",
+                    content: `
+                        <div class="flex flex-col items-center justify-center h-full text-center p-8">
+                            <blockquote class="text-2xl font-serif italic text-slate-700 mb-6">
+                                "Testing leads to failure, and failure leads to understanding."
+                            </blockquote>
+                            <cite class="text-slate-500 font-bold not-italic">— Burt Rutan</cite>
+                            <div class="mt-8 text-4xl">🧪</div>
+                        </div>
+                    `
+                }
+            ],
+            12: [
+                 {
+                    title: "Meeting 12: Showcase & Celebration 🏆",
+                    subtitle: "Hari Rayanya Programmer",
+                    content: `
+                        <div class="text-center space-y-6">
+                            <div class="text-6xl mb-4">🎉</div>
+                            <h3 class="text-2xl font-bold text-slate-800">Demo Day!</h3>
+                            <p class="text-lg text-slate-600 max-w-2xl mx-auto">
+                                Selamat! Kamu sudah menyelesaikan Python Level 2.
+                                Hari ini kita akan melihat hasil karya teman-teman dan merayakannya!
+                            </p>
+                        </div>
+                    `
+                },
+                {
+                    title: "Tips Presentasi 🎤",
+                    subtitle: "Bicara seperti Pro",
+                    content: `
+                        <div class="space-y-4 max-w-lg mx-auto text-left">
+                            <div class="p-4 bg-white border border-slate-200 rounded-xl shadow-sm">
+                                <span class="font-bold text-purple-700">1. Pembukaan:</span> "Halo, nama saya [Nama]. Proyek saya bernama [Nama App]."
+                            </div>
+                             <div class="p-4 bg-white border border-slate-200 rounded-xl shadow-sm">
+                                <span class="font-bold text-purple-700">2. Masalah & Solusi:</span> "Aplikasi ini berguna untuk [Kegunaan]."
+                            </div>
+                             <div class="p-4 bg-white border border-slate-200 rounded-xl shadow-sm">
+                                <span class="font-bold text-purple-700">3. Demo:</span> Tunjukkan fitur utamanya langsung (Live Demo).
+                            </div>
+                             <div class="p-4 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-purple-700">4. Penutup:</span> "Terima kasih. Ada pertanyaan?"
+                            </div>
+                        </div>
+                    `
+                },
+                 {
+                    title: "Exercise Mandiri (Refleksi) 🧘",
+                    subtitle: "Looking Back",
+                    content: `
+                        <div class="space-y-4 text-left h-full overflow-y-auto pr-2">
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-yellow-600">1. Bagian Tersulit:</span> Apa yang paling bikin pusing selama Level 2?
+                            </div>
+                            <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-yellow-600">2. Bagian Terfavorit:</span> Materi apa yang paling seru? (Turtle? List? File?).
+                            </div>
+                            <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-yellow-600">3. Ide Level 3:</span> Kalau lanjut, kamu pengen bikin apa? (Game? Website? AI?).
+                            </div>
+                            <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-yellow-600">4. Terima Kasih:</span> Ucapkan terima kasih ke teman/kakak pengajar yang sudah bantu.
+                            </div>
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-yellow-600">5. Share Project:</span> Kalau bisa, kirim file kodemu ke temanmu.
+                            </div>
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-yellow-600">6. Bersih-bersih:</span> Rapikan file-file latihanmu dalam satu folder "Python Level 2".
+                            </div>
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-yellow-600">7. Hapus Sampah:</span> Hapus file-file percobaan yang gagal/tidak terpakai.
+                            </div>
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-yellow-600">8. Update CV:</span> (Canda) Tambahkan "Python Level 2 Certified" di bio sosmedmu! 😜
+                            </div>
+                              <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-yellow-600">9. Foto Bareng:</span> Screenshot hasil karyamu untuk kenang-kenangan.
+                            </div>
+                             <div class="p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                                <span class="font-bold text-yellow-600">10. Selesai:</span> Log off and celebrate! 🥳
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                     title: "See You in Level 3! 🚀",
+                    subtitle: "Perjalanan Terus Berlanjut",
+                    content: `
+                        <div class="flex flex-col items-center justify-center h-full text-center p-8">
+                            <div class="text-6xl mb-6">🎓</div>
+                            <h2 class="text-3xl font-bold text-slate-800 mb-4">CONGRATULATIONS!</h2>
+                            <p class="text-lg text-slate-600">
+                                Kamu sudah naik level. Tantangan berikutnya menanti.
+                                <br>Tetaplah Penasaran, Tetaplah Berkarya.
+                            </p>
+                            <div class="mt-8">
+                                <span class="px-6 py-3 bg-yellow-400 text-yellow-900 font-bold rounded-full shadow-lg">Level 2 Completed ✅</span>
+                            </div>
+                        </div>
+                    `
+                }
+            ]
+        };
+
+        // --- DOM Elements ---
+        const els = {
+            meetingNav: document.getElementById('meetingNav'),
+            slideContainer: document.getElementById('slideContainer'),
+            slideTitle: document.getElementById('slideTitle'),
+            slideSubtitle: document.getElementById('slideSubtitle'),
+            slideContent: document.getElementById('slideContent'),
+            meetingTag: document.getElementById('meetingTag'),
+            slideCounter: document.getElementById('slideCounter'),
+            progressBar: document.getElementById('progressBar'),
+            prevBtn: document.getElementById('prevBtn'),
+            nextBtn: document.getElementById('nextBtn'),
+            hamburgerBtn: document.getElementById('hamburgerBtn'),
+            closeSidebarBtn: document.getElementById('closeSidebarBtn'),
+            sidebar: document.getElementById('sidebar'),
+            sidebarOverlay: document.getElementById('sidebarOverlay'),
+            mainScrollArea: document.getElementById('mainScrollArea')
+        };
+
+        // --- Initialization ---
+        function init() {
+            renderSidebar();
+            renderSlide();
+        }
+
+        // --- Core Functions ---
+
+        function renderSidebar() {
+            els.meetingNav.innerHTML = '';
+            for (let i = 1; i <= totalMeetings; i++) {
+                const btn = document.createElement('button');
+                const isActive = (i === currentMeeting);
+                
+                // Styling classes
+                const baseClasses = "w-full text-left p-3 rounded-xl transition-all duration-200 flex items-center gap-3";
+                const activeClasses = "bg-gradient-to-r from-blue-50 to-green-50 border border-blue-100 shadow-sm";
+                const inactiveClasses = "hover:bg-slate-50 border border-transparent hover:border-slate-100 text-slate-500";
+                
+                btn.className = `${baseClasses} ${isActive ? activeClasses : inactiveClasses}`;
+                btn.onclick = () => switchMeeting(i);
+                
+                // Colors for the number circle
+                const circleClass = isActive 
+                    ? "bg-blue-600 text-white shadow-md shadow-blue-200" 
+                    : "bg-slate-200 text-slate-500 group-hover:bg-slate-300";
+
+                // Find the slide that acts as the "Main Title" (starts with "Meeting X:")
+                // If not found, fall back to the first slide
+                const mainSlide = meetingData[i].find(s => s.title.startsWith(`Meeting ${i}:`)) || meetingData[i][0];
+                
+                let topic = "Python Level 2";
+                if (mainSlide) {
+                    const titleParts = mainSlide.title.split(': ');
+                    if (titleParts.length > 1) {
+                         topic = titleParts[1].replace(/[\u{1F300}-\u{1F9FF}]/gu, ''); 
+                         topic = titleParts[1]; 
+                    } else {
+                        topic = mainSlide.subtitle;
+                    }
+                }
+
+                btn.innerHTML = `
+                    <span class="w-8 h-8 rounded-full flex-shrink-0 flex items-center justify-center text-sm font-bold transition-colors ${circleClass}">
+                        ${i}
+                    </span>
+                    <div class="flex-1 min-w-0">
+                        <div class="text-sm font-bold truncate ${isActive ? 'text-slate-800' : 'text-slate-600'}">Meeting ${i}</div>
+                        <div class="text-xs truncate ${isActive ? 'text-blue-600' : 'text-slate-400'}">${topic}</div>
+                    </div>
+                    ${isActive ? '<span class="text-green-500 font-bold">●</span>' : ''}
+                `;
+                
+                els.meetingNav.appendChild(btn);
+            }
+        }
+
+        function switchMeeting(meetNum) {
+            currentMeeting = meetNum;
+            currentSlide = 1;
+            renderSidebar();
+            renderSlide();
+            closeSidebar(); // On mobile
+        }
+
+        function renderSlide() {
+             // Animate Out
+            els.slideContainer.style.opacity = '0';
+            els.slideContainer.style.transform = 'translateY(10px) scale(0.98)';
+
+            setTimeout(() => {
+                // Update Content
+                const slides = meetingData[currentMeeting];
+                const slide = slides[currentSlide - 1];
+
+                els.meetingTag.textContent = `Meeting ${currentMeeting}`; // Update tag
+                els.slideTitle.textContent = slide.title;
+                els.slideSubtitle.textContent = slide.subtitle;
+                els.slideContent.innerHTML = slide.content;
+
+                // Update Footer
+                els.slideCounter.textContent = `Slide ${currentSlide} / ${slides.length}`;
+                
+                // Update Progress Bar
+                const progressPercent = (currentSlide / slides.length) * 100;
+                els.progressBar.style.width = `${progressPercent}%`;
+
+                // Update Buttons
+                els.prevBtn.disabled = (currentSlide === 1);
+                els.nextBtn.disabled = (currentSlide === slides.length);
+
+                // Animate In
+                els.slideContainer.style.opacity = '1';
+                els.slideContainer.style.transform = 'translateY(0) scale(1)';
+                
+                // Reset Scroll
+                els.mainScrollArea.scrollTop = 0;
+
+            }, 300);
+        }
+
+        function nextSlide() {
+            const slides = meetingData[currentMeeting];
+            if (currentSlide < slides.length) {
+                currentSlide++;
+                renderSlide();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 1) {
+                currentSlide--;
+                renderSlide();
+            }
+        }
+
+        // --- Sidebar Logic ---
+        function openSidebar() {
+            els.sidebar.classList.remove('-translate-x-full');
+            els.sidebarOverlay.classList.remove('hidden');
+            setTimeout(() => els.sidebarOverlay.classList.remove('opacity-0'), 10);
+        }
+
+        function closeSidebar() {
+            els.sidebar.classList.add('-translate-x-full');
+            els.sidebarOverlay.classList.add('hidden');
+        }
+
+        // --- Event Listeners ---
+        els.nextBtn.addEventListener('click', nextSlide);
+        els.prevBtn.addEventListener('click', prevSlide);
+        
+        els.hamburgerBtn.addEventListener('click', openSidebar);
+        els.closeSidebarBtn.addEventListener('click', closeSidebar);
+        els.sidebarOverlay.addEventListener('click', closeSidebar);
+
+        // Keyboard Nav
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+
+        // Start
+        init();
+
+    </script>
+</body>
+</html>
