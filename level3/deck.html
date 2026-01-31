@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ruangguru Coding: Python Level 3</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            box-sizing: border-box;
+        }
+        
+        /* Theme Colors: Dark Slate + Cyan/Fuchsia Accents */
+        .header-gradient {
+            background: linear-gradient(135deg, #0e7490 0%, #4f46e5 100%);
+        }
+        
+        .code-bg {
+            background: #0f172a; /* bg-slate-900 */
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .code-bg::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(34, 211, 238, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(232, 121, 249, 0.15) 0%, transparent 50%);
+            pointer-events: none;
+            filter: blur(20px);
+        }
+        
+        .floating-code {
+            position: absolute;
+            font-family: 'JetBrains Mono', monospace;
+            color: rgba(34, 211, 238, 0.1);
+            font-size: 14px;
+            animation: float 25s infinite linear;
+            white-space: nowrap;
+            pointer-events: none;
+        }
+        
+        @keyframes float {
+            0% { transform: translateX(-100px) translateY(0px); }
+            100% { transform: translateX(calc(100vw + 100px)) translateY(-20px); }
+        }
+
+        .main-pattern {
+            background-color: #020617; /* bg-slate-950 */
+            background-image: radial-gradient(#1e293b 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        .code-font {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .slide-transition {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1e293b; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #475569; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #64748b; 
+        }
+
+        /* Syntax Highlighting Mockup */
+        .token-kw { color: #e879f9; font-weight: bold; } /* Fuchsia-400 */
+        .token-class { color: #22d3ee; font-weight: bold; } /* Cyan-400 */
+        .token-func { color: #facc15; } /* Yellow-400 */
+        .token-str { color: #a3e635; } /* Lime-400 */
+        .token-comment { color: #94a3b8; font-style: italic; } /* Slate-400 */
+        .token-num { color: #fb923c; } /* Orange-400 */
+
+        /* Welcome Overlay Styles */
+        #welcomeOverlay {
+            position: fixed;
+            inset: 0;
+            background-color: #020617;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 1s ease-in-out;
+        }
+        .fade-in { animation: fadeIn 1s ease-in forwards; opacity: 0; }
+        @keyframes fadeIn { to { opacity: 1; } }
+        .delay-500ms { animation-delay: 0.5s; }
+        .bounce-slow { animation: bounce 2s infinite; }
+
+        /* --- VISUAL ELEVATION: Realistic Window Mocks --- */
+        .mock-window {
+            background: #e2e8f0; /* bg-slate-200 */
+            border-radius: 8px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            font-family: 'Segoe UI', sans-serif; /* Windows-like font */
+            border: 1px solid #94a3b8;
+        }
+        .mock-window-header {
+            background: #f1f5f9;
+            padding: 8px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #cbd5e1;
+        }
+        .mock-window-title {
+            font-size: 12px;
+            color: #334155;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .mock-window-controls {
+            display: flex;
+            gap: 6px;
+        }
+        .win-btn { width: 10px; height: 10px; border-radius: 50%; }
+        .win-close { background: #ef4444; }
+        .win-min { background: #eab308; }
+        .win-max { background: #22c55e; }
+        
+        .mock-window-content {
+            background: white;
+            padding: 16px;
+            color: #1e293b;
+            min-height: 150px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* --- ANIMATED ROADMAP --- */
+        .roadmap-container {
+            position: relative;
+            padding: 20px;
+        }
+        .roadmap-path {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: #334155;
+            z-index: 0;
+            transform: translateY(-50%);
+        }
+        .roadmap-fill {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            background: linear-gradient(90deg, #22d3ee, #e879f9);
+            width: 0%;
+            transition: width 1.5s ease-out;
+        }
+        .roadmap-step {
+            width: 60px;
+            height: 60px;
+            background: #1e293b;
+            border: 4px solid #334155;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 10;
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            cursor: pointer;
+        }
+        .roadmap-step.active {
+            border-color: #22d3ee;
+            background: #0f172a;
+            transform: scale(1.2);
+            box-shadow: 0 0 20px rgba(34, 211, 238, 0.4);
+        }
+        .roadmap-step.active .step-icon {
+            animation: bounce 1s infinite;
+        }
+        
+        /* Particle Effects for Juice */
+        /* Particle Effects for Juice */
+        .particle {
+            position: absolute;
+            animation: float-idle 4s ease-in-out infinite;
+            pointer-events: none;
+            opacity: 0.9;
+        }
+
+        @keyframes float-idle {
+            0%, 100% { transform: translateY(0) rotate(-5deg); }
+            50% { transform: translateY(-25px) rotate(5deg); }
+        }
+        
+        /* --- ROADMAP V2: Game Level Map --- */
+        .level-container {
+            position: relative;
+            width: 100%;
+            max-width: 850px;
+            height: 400px; /* Taller to prevent crop */
+            background: radial-gradient(circle at center, #1e293b 0%, #020617 70%);
+            border: 2px solid #334155;
+            border-radius: 20px;
+            overflow: visible; /* Allow hover elements to pop out */
+            margin: 20px auto;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
+        }
+        .level-path-svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        .level-node {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            cursor: pointer;
+            z-index: 10;
+        }
+        .level-node:hover {
+            transform: translate(-50%, -50%) scale(1.25);
+            z-index: 50;
+        }
+        .level-marker {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #0f172a;
+            border: 3px solid #475569;
+            color: #94a3b8;
+            font-weight: bold;
+            font-size: 14px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+        .level-node.active .level-marker {
+            background: #0ea5e9; /* cyan-500 */
+            border-color: #bae6fd;
+            color: white;
+            box-shadow: 0 0 20px rgba(14, 165, 233, 0.6);
+            transform: scale(1.1);
+        }
+        .level-node.future .level-marker {
+            border-style: dashed;
+            opacity: 0.7;
+        }
+        .level-node.boss .level-marker {
+            width: 60px;
+            height: 60px;
+            border-color: #e879f9; /* fuchsia-400 */
+        }
+        .level-node.boss.active .level-marker {
+            background: #d946ef;
+            box-shadow: 0 0 25px rgba(217, 70, 239, 0.6);
+        }
+        .level-icon {
+            font-size: 20px;
+        }
+        .level-info {
+            position: absolute;
+            top: 120%;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid #475569;
+            padding: 8px 12px;
+            border-radius: 8px;
+            text-align: center;
+            opacity: 0;
+            transition: all 0.3s;
+            pointer-events: none;
+            width: 140px;
+            backdrop-filter: blur(4px);
+        }
+        .level-node:hover .level-info, .level-node.active .level-info {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+        .level-title {
+            color: #e2e8f0;
+            font-weight: bold;
+            font-size: 12px;
+            margin-bottom: 2px;
+            display: block;
+        }
+        .level-desc {
+            color: #94a3b8;
+            font-size: 10px;
+            display: block;
+        }
+    </style>
+</head>
+<body class="h-screen bg-slate-950 text-white flex flex-col overflow-hidden">
+
+    <!-- Welcome Overlay -->
+    <div id="welcomeOverlay">
+        <div class="text-center space-y-8 p-8">
+            <div class="relative w-48 h-48 mx-auto mb-8 flex items-center justify-center">
+                <div class="absolute inset-0 bg-cyan-500/20 rounded-full blur-xl animate-pulse"></div>
+                <div class="text-[8rem] relative z-10 bounce-slow cursor-default select-none">🧑‍🏫</div>
+            </div>
+
+            <div id="welcomeMessage" class="space-y-4 fade-in delay-500ms">
+                <h1 class="text-4xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-400">Selamat Datang!</h1>
+                <p class="text-xl text-gray-400">di Kelas Python Level 3 (GUI)</p>
+            </div>
+
+            <div id="teacherInputSection" class="hidden fade-in max-w-md mx-auto w-full bg-slate-900/50 p-8 rounded-2xl border border-slate-800 backdrop-blur-sm mt-8">
+                <div class="space-y-4">
+                    <div>
+                        <label for="teacherName" class="block text-sm font-medium text-cyan-400 mb-1 text-left">Nama Panggilan</label>
+                        <input type="text" id="teacherName" class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg focus:ring-2 focus:ring-fuchsia-500 focus:border-transparent text-white placeholder-gray-500 transition-all" placeholder="Contoh: Budi">
+                    </div>
+                    <div>
+                        <label for="teacherHobby" class="block text-sm font-medium text-cyan-400 mb-1 text-left">Hobi</label>
+                        <input type="text" id="teacherHobby" class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg focus:ring-2 focus:ring-fuchsia-500 focus:border-transparent text-white placeholder-gray-500 transition-all" placeholder="Contoh: Ngoding & Gaming 🎮">
+                    </div>
+                    <div>
+                        <label for="teacherFood" class="block text-sm font-medium text-cyan-400 mb-1 text-left">Makanan Favorit</label>
+                        <input type="text" id="teacherFood" class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg focus:ring-2 focus:ring-fuchsia-500 focus:border-transparent text-white placeholder-gray-500 transition-all" placeholder="Contoh: Nasi Goreng 🍛">
+                    </div>
+                </div>
+                <button onclick="startClass()" class="mt-6 w-full bg-gradient-to-r from-cyan-600 to-cyan-800 hover:from-cyan-500 hover:to-cyan-700 text-white font-bold py-3 px-6 rounded-lg transform hover:scale-105 transition-all shadow-lg hover:shadow-cyan-500/25">Mulai Kelas 🚀</button>
+            </div>
+
+            <div id="welcomeBackSection" class="hidden fade-in mt-8">
+                <p class="text-2xl text-white mb-6">Halo, Kak <span id="displayTeacherName" class="text-cyan-400 font-bold"></span>! 👋</p>
+                <button onclick="enterClass()" class="bg-gradient-to-r from-fuchsia-500 to-fuchsia-700 hover:from-fuchsia-400 hover:to-fuchsia-600 text-white font-bold py-3 px-8 rounded-full transform hover:scale-105 transition-all shadow-lg hover:shadow-fuchsia-500/25">Lanjutkan Kelas ➡️</button>
+                <button onclick="resetTeacher()" class="block mx-auto mt-4 text-sm text-gray-500 hover:text-gray-300 underline">Bukan saya? Ganti nama</button>
+            </div>
+
+            <div id="meetingSelectionSection" class="hidden fade-in mt-8 max-w-4xl mx-auto w-full">
+                <h2 class="text-2xl text-white font-bold mb-6">Pilih Pertemuan Hari Ini 📅</h2>
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-h-[50vh] overflow-y-auto p-2" id="meetingGrid">
+                    <!-- Buttons generated by JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="mainContent" class="h-screen flex flex-col opacity-0 transition-opacity duration-1000">
+        <header class="header-gradient px-6 py-4 shadow-lg fixed top-0 left-0 right-0 z-50 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <button id="hamburgerBtn" class="text-white/80 hover:text-white lg:hidden">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                </button>
+                <img src="https://images2.imgbox.com/51/6a/xhLlGQcZ_o.png" alt="Ruangguru Coding" class="h-12 w-auto object-contain">
+            </div>
+            <div class="flex-1 text-center hidden sm:block">
+                <h1 class="text-xl font-bold tracking-wide">🐍 Python Level 3: GUI Programming</h1>
+            </div>
+            <div class="w-[50px]"></div>
+        </header>
+
+        <div class="flex-1 flex pt-20 overflow-hidden relative">
+            <div id="sidebarOverlay" class="fixed inset-0 bg-black/80 z-40 hidden lg:hidden backdrop-blur-sm"></div>
+            <aside id="sidebar" class="fixed lg:relative left-0 top-20 h-[calc(100vh-80px)] w-80 bg-slate-900 border-r border-slate-700/50 shadow-2xl transform -translate-x-full lg:translate-x-0 transition-transform duration-300 z-50 flex flex-col">
+                <div class="p-6 border-b border-slate-800">
+                    <h2 class="text-lg font-bold text-cyan-400 uppercase tracking-wider">Course Modules</h2>
+                </div>
+                <nav class="flex-1 overflow-y-auto p-4 space-y-3" id="meetingList"></nav>
+            </aside>
+
+            <main class="flex-1 main-pattern relative overflow-y-auto flex flex-col items-center justify-center p-4">
+                <div class="floating-code" style="top: 15%; left: 10%; animation-duration: 30s;">root = tk.Tk()</div>
+                <div class="floating-code" style="top: 45%; left: 60%; animation-duration: 25s;">btn.pack(pady=20)</div>
+                <div class="floating-code" style="top: 75%; left: 20%; animation-duration: 35s;">app.mainloop()</div>
+
+                <div class="w-full max-w-6xl relative z-10 mb-24">
+                    <div id="slideContainer" class="code-bg rounded-2xl shadow-2xl border border-slate-700/50 min-h-[600px] flex flex-col transition-all duration-500">
+                        <div class="p-6 border-b border-slate-800/50 relative overflow-hidden flex justify-between items-center bg-slate-900/50">
+                            <div>
+                                <h2 id="meetingTitle" class="text-2xl font-bold text-cyan-400">Meeting 1</h2>
+                                <p id="meetingSubtitle" class="text-slate-400 text-sm">Hello GUI World!</p>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span class="px-3 py-1 bg-fuchsia-900/50 text-fuchsia-300 text-xs font-mono rounded-full border border-fuchsia-700/50" id="meetingTag">INTRO</span>
+                            </div>
+                        </div>
+                        <div id="slideContent" class="flex-1 p-8 sm:p-12 flex flex-col justify-center items-center text-center"></div>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <footer class="fixed bottom-0 left-0 lg:left-80 right-0 bg-slate-900/90 backdrop-blur border-t border-slate-700/50 h-24 z-50 flex items-center px-8 justify-between">
+            <button id="prevBtn" class="flex items-center gap-2 px-6 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 transition-all font-bold disabled:opacity-50 disabled:cursor-not-allowed">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg> PREV
+            </button>
+            <div class="flex flex-col items-center">
+                <span id="slideCounter" class="text-2xl font-black text-white font-mono">01/30</span>
+                <div class="w-32 h-1 bg-slate-700 rounded-full mt-2 overflow-hidden"><div id="progressBar" class="h-full bg-cyan-400 transition-all duration-300" style="width: 10%"></div></div>
+            </div>
+            <button id="nextBtn" class="flex items-center gap-2 px-6 py-3 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white transition-all font-bold shadow-lg shadow-cyan-900/20 disabled:opacity-50 disabled:cursor-not-allowed">
+                NEXT <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </button>
+        </footer>
+    </div>
+
+    <script>
+        // --- Data: Meeting Content (Detailed 30 Slides) ---
+        const meetingContent = {
+            1: [
+                // === SECTION 1: READINESS (Slide 1-1) ===
+                {
+                    title: "Cek Kesiapan Kelas! ✅",
+                    subtitle: "Persiapan Sebelum Mulai",
+                    content: `
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center w-full max-w-5xl">
+                            <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 hover:scale-105 transition-transform"><div class="text-5xl mb-4">🥤</div><h4 class="text-lg font-semibold text-cyan-400">Minum</h4></div>
+                            <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 hover:scale-105 transition-transform delay-75"><div class="text-5xl mb-4">🚽</div><h4 class="text-lg font-semibold text-cyan-400">Toilet</h4></div>
+                            <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 hover:scale-105 transition-transform delay-100"><div class="text-5xl mb-4">💻</div><h4 class="text-lg font-semibold text-cyan-400">Laptop</h4></div>
+                            <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 hover:scale-105 transition-transform delay-150"><div class="text-5xl mb-4">😃</div><h4 class="text-lg font-semibold text-cyan-400">Senyum</h4></div>
+                        </div>`
+                },
+                // === SECTION 2: INTROS (Slides 2-5) ===
+                {
+                    title: "Introduction",
+                    subtitle: "Kenalan yuk!",
+                    content: `
+                        <div class="relative w-full h-full flex flex-col items-center justify-center overflow-hidden">
+                            <div class="relative z-20 flex flex-col items-center">
+                                <div class="text-8xl animate-bounce mb-8 drop-shadow-2xl">👋</div>
+                                <h2 class="text-4xl md:text-5xl font-bold text-white max-w-3xl text-center leading-tight drop-shadow-md">
+                                    Siapa sih yang akan menemani kalian belajar hari ini?
+                                </h2>
+                            </div>
+                            
+                            <!-- Scattered Party Particles (Background) -->
+                            <div class="absolute inset-0 z-0 pointer-events-none">
+                                <div class="particle text-5xl opacity-80" style="top: 15%; left: 10%; animation-delay: 0.1s;">✨</div>
+                                <div class="particle text-6xl opacity-70" style="top: 20%; right: 15%; animation-delay: 0.5s;">🎉</div>
+                                <div class="particle text-7xl opacity-80" style="bottom: 15%; left: 12%; animation-delay: 0.8s;">🚀</div>
+                                <div class="particle text-5xl opacity-70" style="top: 45%; right: 8%; animation-delay: 0.3s;">🐍</div>
+                                <div class="particle text-5xl opacity-80" style="bottom: 25%; right: 20%; animation-delay: 1.2s;">💻</div>
+                                <div class="particle text-6xl opacity-70" style="top: 10%; left: 45%; animation-delay: 1.5s;">⭐</div>
+                                <div class="particle text-5xl opacity-80" style="bottom: 40%; left: 5%; animation-delay: 0.7s;">🎮</div>
+                                <div class="particle text-4xl opacity-60" style="top: 60%; left: 80%; animation-delay: 2.0s;">👾</div>
+                            </div>
+                        </div>`
+                },
+                {
+                    title: "Kak Pengajar 🧑‍🏫",
+                    subtitle: "Profil Singkat",
+                     content: `
+                         <div class="flex flex-col items-center gap-6 max-w-3xl">
+                            <div class="w-40 h-40 bg-gradient-to-br from-cyan-400 to-fuchsia-500 rounded-full flex items-center justify-center text-8xl shadow-2xl relative">
+                                👨‍🏫
+                            </div>
+                            <div class="bg-slate-800/80 p-8 rounded-2xl border border-slate-700 backdrop-blur-sm w-full">
+                                <h3 class="text-3xl font-bold text-white mb-2" id="introTeacherName">Kak Pengajar</h3>
+                                <div class="grid grid-cols-2 gap-4 text-left mt-6">
+                                    <div class="bg-slate-900 p-4 rounded-lg"><span class="text-cyan-400 font-bold">Hobi:</span> <span class="text-white" id="introTeacherHobby">...</span></div>
+                                    <div class="bg-slate-900 p-4 rounded-lg"><span class="text-fuchsia-400 font-bold">Makanan:</span> <span class="text-white" id="introTeacherFood">...</span></div>
+                                </div>
+                            </div>
+                         </div>`
+                },
+                {
+                    title: "Sekarang Giliran Kalian! 🎤",
+                    subtitle: "Ice Breaking",
+                    content: `
+                        <h3 class="text-3xl font-bold text-white leading-relaxed mb-8">Sebutkan 3 Hal Ini:</h3>
+                        <div class="grid grid-cols-3 gap-8">
+                             <div class="bg-slate-800 p-8 rounded-2xl border-2 border-cyan-500/50"><div class="text-4xl mb-4">😎</div><div class="text-xl font-bold">Nama</div></div>
+                             <div class="bg-slate-800 p-8 rounded-2xl border-2 border-fuchsia-500/50"><div class="text-4xl mb-4">🏫</div><div class="text-xl font-bold">Sekolah</div></div>
+                             <div class="bg-slate-800 p-8 rounded-2xl border-2 border-lime-500/50"><div class="text-4xl mb-4">🎮</div><div class="text-xl font-bold">Game Fav</div></div>
+                        </div>`
+                },
+                {
+                    title: "Diskusi Singkat 💬",
+                    subtitle: "Ngobrol Santai",
+                    content: `<h2 class="text-3xl font-bold text-cyan-400 mb-6">"Apa Game Favoritmu?"</h2><p class="text-xl text-slate-300">Apakah game itu punya tombol? Punya gambar? Punya suara?</p><div class="mt-8 text-6xl">🤔</div>`
+                },
+                 // === SECTION 3: RECAP & OVERVIEW (Slides 6-12) ===
+                 {
+                    title: "Flashback! 🔙",
+                    subtitle: "Level 1 & 2 Review",
+                    content: `<div class="p-8 bg-slate-900 rounded-2xl"><h1 class="text-4xl font-bold text-white">Masih ingat Python? 🐍</h1><p class="text-slate-400 mt-4">Di Level 1 & 2 kita sudah belajar banyak hal lho!</p></div>`
+                },
+                {
+                    title: "Level 1: Konsep Dasar 🧱",
+                    subtitle: "Fondasi Coding",
+                    content: `<div class="space-y-4 max-w-2xl"><div class="bg-slate-800 p-4 rounded-xl text-left border-l-4 border-red-500"><b>Variable:</b> Kotak tempat menyimpan sesuatu.</div><div class="bg-slate-800 p-4 rounded-xl text-left border-l-4 border-yellow-500"><b>Loop:</b> Melakukan hal sama berulang kali.</div><div class="bg-slate-800 p-4 rounded-xl text-left border-l-4 border-green-500"><b>If-Else:</b> Jika lapar, maka makan!</div></div>`
+                },
+                {
+                    title: "Level 2: Logika Lanjutan 🧠",
+                    subtitle: "Otak Coding",
+                    content: `<div class="space-y-4 max-w-2xl"><div class="bg-slate-800 p-4 rounded-xl text-left border-l-4 border-cyan-500"><b>Function:</b> Resep masakan (kumpulan kode).</div><div class="bg-slate-800 p-4 rounded-xl text-left border-l-4 border-purple-500"><b>Data Structure:</b> List (Daftar belanjaan) & Dictionary (Kamus).</div></div>`
+                },
+                {
+                    title: "Selamat Datang di Level 3! 🚀",
+                    subtitle: "Dunia Baru",
+                    content: `<h2 class="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-400 mb-8">GUI Programming</h2><p class="text-2xl text-white">Membuat aplikasi yang <b>BISA DILIHAT</b> dan <b>DIKLIK</b>!</p>`
+                },
+                {
+                    title: "Peta Perjalanan: Basic 🚦",
+                    subtitle: "Meeting 1 - 4",
+                    content: `
+                        <div class="level-container">
+                            <h3 class="absolute top-4 left-6 text-cyan-400 font-bold tracking-widest z-20">EPISODE 1: THE FOUNDATION</h3>
+                            <svg class="level-path-svg" viewBox="0 0 850 400">
+                                <path d="M 50,320 C 150,320 150,80 300,80 S 450,320 600,320 S 750,80 850,80" fill="none" stroke="#1e293b" stroke-width="8" stroke-linecap="round"/>
+                                <path d="M 50,320 C 150,320 150,80 300,80" fill="none" stroke="#22d3ee" stroke-width="4" stroke-dasharray="10 6" class="animate-pulse"/>
+                            </svg>
+                            <!-- M1: Start -->
+                            <div class="level-node active" style="left: 6%; top: 80%">
+                                <div class="level-marker"><span class="level-icon">🏠</span></div>
+                                <div class="level-info"><span class="level-title">M1: Window</span><span class="level-desc">Intro & Setup</span></div>
+                            </div>
+                            <!-- M2: Climbing -->
+                            <div class="level-node future" style="left: 18%; top: 50%">
+                                <div class="level-marker">2</div>
+                                <div class="level-info"><span class="level-title">M2: Widgets</span><span class="level-desc">Label & Button</span></div>
+                            </div>
+                            <!-- M3: Peak -->
+                            <div class="level-node future" style="left: 35%; top: 20%">
+                                <div class="level-marker">3</div>
+                                <div class="level-info"><span class="level-title">M3: Input</span><span class="level-desc">Entry & Get</span></div>
+                            </div>
+                            <!-- M4: Descent -->
+                            <div class="level-node future" style="left: 53%; top: 50%">
+                                <div class="level-marker">4</div>
+                                <div class="level-info"><span class="level-title">M4: Layout</span><span class="level-desc">Grid System</span></div>
+                            </div>
+                        </div>
+                        <p class="mt-8 text-xl text-slate-300">Mulai dari <b>Tanah (Window)</b> sampai membangun <b>Struktur (Layout)</b>!</p>`
+                },
+                {
+                    title: "Peta Perjalanan: Logic 🧩",
+                    subtitle: "Meeting 5 - 8",
+                    content: `
+                        <div class="level-container">
+                             <h3 class="absolute top-4 left-6 text-fuchsia-400 font-bold tracking-widest z-20">EPISODE 2: THE BRAIN</h3>
+                            <svg class="level-path-svg" viewBox="0 0 850 400">
+                                <path d="M 50,320 C 150,320 150,80 300,80 S 450,320 600,320 S 750,80 850,80" fill="none" stroke="#1e293b" stroke-width="8" stroke-linecap="round"/>
+                                <path d="M 300,80 S 450,320 600,320" fill="none" stroke="#e879f9" stroke-width="4" stroke-dasharray="10 6" class="animate-pulse"/>
+                            </svg>
+                            
+                            <!-- M5: Valley -->
+                            <div class="level-node active" style="left: 60%; top: 80%">
+                                <div class="level-marker border-fuchsia-500 text-fuchsia-300">5</div>
+                                <div class="level-info"><span class="level-title">M5: Logic</span><span class="level-desc">Functions</span></div>
+                            </div>
+                             <!-- M6: Climbing -->
+                            <div class="level-node future" style="left: 72%; top: 50%">
+                                <div class="level-marker">6</div>
+                                <div class="level-info"><span class="level-title">M6: Errors</span><span class="level-desc">Try-Except</span></div>
+                            </div>
+                             <!-- M7: Peak 2 -->
+                            <div class="level-node future" style="left: 85%; top: 20%">
+                                <div class="level-marker">7</div>
+                                <div class="level-info"><span class="level-title">M7: Assets</span><span class="level-desc">Images & UI</span></div>
+                            </div>
+                            <!-- M8: Mini Boss -->
+                            <div class="level-node boss future" style="left: 92%; top: 50%">
+                                <div class="level-marker">⚔️</div>
+                                <div class="level-info" style="left: auto; right: 0; transform: translateY(10px);"><span class="level-title text-fuchsia-400">Mini Project</span><span class="level-desc">To-Do List</span></div>
+                            </div>
+                        </div>
+                        <p class="mt-8 text-xl text-slate-300">Membuat aplikasi jadi <b>PINTAR</b> (Function) dan <b>KUAT</b> (Anti-Error)!</p>`
+                },
+                {
+                    title: "Peta Perjalanan: Advanced 🏆",
+                    subtitle: "Meeting 9 - 12",
+                    content: `
+                        <div class="level-container">
+                             <h3 class="absolute top-4 left-6 text-lime-400 font-bold tracking-widest z-20">FINAL EPISODE: THE LEGEND</h3>
+                            <svg class="level-path-svg" viewBox="0 0 850 400">
+                                <path d="M 50,320 C 150,320 150,80 300,80 S 450,320 600,320 S 750,80 850,80" fill="none" stroke="#1e293b" stroke-width="8" stroke-linecap="round"/>
+                                <path d="M 600,320 S 750,80 850,80" fill="none" stroke="#a3e635" stroke-width="4" stroke-dasharray="10 6" class="animate-pulse"/>
+                            </svg>
+                            
+                            <!-- M9 -->
+                            <div class="level-node active" style="left: 70%; top: 50%">
+                                <div class="level-marker border-lime-500 text-lime-300">9</div>
+                                <div class="level-info"><span class="level-title">M9: Modern UI</span><span class="level-desc">CustomTkinter</span></div>
+                            </div>
+                             <!-- M10-M11 -->
+                            <div class="level-node future" style="left: 82%; top: 20%">
+                                <div class="level-marker">10+</div>
+                                <div class="level-info"><span class="level-title">Final Project</span><span class="level-desc">Build & Polish</span></div>
+                            </div>
+                            <!-- M12: Final BOSS -->
+                            <div class="level-node boss future" style="left: 94%; top: 20%">
+                                <div class="level-marker text-2xl">🏆</div>
+                                <div class="level-info" style="left: auto; right: 0; transform: translateY(10px);"><span class="level-title text-lime-400">SHOWCASE</span><span class="level-desc">Demo Day</span></div>
+                            </div>
+                        </div>
+                        <p class="mt-8 text-xl text-slate-300">Final Battle: Membuat <b>APLIKASI IMPIAN</b> kalian menjadi nyata!</p>`
+                },
+                {
+                    title: "Showcase: Apa yang Kita Buat? 🛠️",
+                    subtitle: "Sneak Peek",
+                    content: `
+                        <div class="grid grid-cols-2 gap-8 w-full max-w-5xl">
+                            <!-- Calculator Mock -->
+                            <div class="mock-window transform hover:scale-105 transition-transform duration-500">
+                                <div class="mock-window-header"><div class="mock-window-title">🧮 Calculator</div><div class="mock-window-controls"><div class="win-btn win-close"></div></div></div>
+                                <div class="mock-window-content bg-slate-800 p-4 gap-2">
+                                    <div class="bg-slate-900 text-right text-3xl font-mono text-green-400 p-2 rounded w-full mb-2">1,337</div>
+                                    <div class="grid grid-cols-4 gap-2 w-full">
+                                        <div class="bg-slate-700 h-8 rounded"></div><div class="bg-slate-700 h-8 rounded"></div><div class="bg-slate-700 h-8 rounded"></div><div class="bg-orange-500 h-8 rounded"></div>
+                                        <div class="bg-slate-700 h-8 rounded"></div><div class="bg-slate-700 h-8 rounded"></div><div class="bg-slate-700 h-8 rounded"></div><div class="bg-orange-500 h-8 rounded"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- To-Do List Mock -->
+                            <div class="mock-window transform hover:scale-105 transition-transform duration-500 delay-100">
+                                <div class="mock-window-header"><div class="mock-window-title">✅ My Tasks</div><div class="mock-window-controls"><div class="win-btn win-close"></div></div></div>
+                                <div class="mock-window-content bg-white p-4 items-start">
+                                    <div class="flex gap-2 w-full mb-4">
+                                        <input type="text" value="Belajar Python" class="bg-gray-100 border px-2 py-1 w-full text-sm rounded">
+                                        <button class="bg-blue-500 text-white px-3 rounded text-xs">Add</button>
+                                    </div>
+                                    <div class="space-y-2 w-full">
+                                        <div class="flex items-center gap-2 border-b pb-1"><div class="w-4 h-4 border rounded border-gray-400"></div><span class="text-sm text-gray-700">Mengerjakan PR</span></div>
+                                        <div class="flex items-center gap-2 border-b pb-1"><div class="w-4 h-4 bg-green-500 rounded flex items-center justify-center text-white text-[10px]">✓</div><span class="text-sm text-gray-400 line-through">Main Game</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="mt-8 text-xl text-white font-bold animate-pulse">Keren kan? Kita akan buat ini dari NOL!</p>`
+                },
+                // === SECTION 4: CONCEPTS (Slides 13-17) ===
+                {
+                    title: "Sebuah Pertanyaan... 🤔",
+                    subtitle: "Think About It",
+                    content: `<h2 class="text-3xl font-bold text-white mb-6">"Apa itu CLI?"</h2><p class="text-slate-400">Kita sering mendengarnya, tapi apa artinya?</p>`
+                },
+                {
+                    title: "CLI: Command Line Interface",
+                    subtitle: "Definisi",
+                    content: `
+                        <div class="mock-window w-full max-w-3xl shadow-2xl">
+                            <div class="mock-window-header bg-black border-slate-700">
+                                <div class="mock-window-title text-slate-400">Command Prompt</div>
+                                <div class="mock-window-controls"><div class="win-btn win-min"></div><div class="win-btn win-max"></div><div class="win-btn win-close"></div></div>
+                            </div>
+                            <div class="mock-window-content bg-black p-6 font-mono text-left items-start justify-start h-48 overflow-hidden">
+                                <div class="text-green-500">C:\\Users> python game.py</div>
+                                <div class="text-white mt-1">Masukkan nama: <span class="animate-pulse">_</span></div>
+                            </div>
+                        </div>
+                        <p class="mt-6 text-slate-300">Antarmuka berbasis <b>TEKS</b>. Hanya hitam putih. Membosankan?</p>`
+                },
+                {
+                    title: "Lalu, Apa itu GUI? 🤔",
+                    subtitle: "Think About It",
+                    content: `<h2 class="text-3xl font-bold text-white mb-6">"GUI (Graphical User Interface)"</h2><p class="text-slate-400">Apa bedanya dengan CLI?</p>`
+                },
+                {
+                    title: "GUI: Antarmuka Grafis 🎨",
+                    subtitle: "Visual & Interaktif",
+                    content: `
+                        <div class="mock-window w-full max-w-3xl shadow-2xl">
+                            <div class="mock-window-header">
+                                <div class="mock-window-title">✨ Super App</div>
+                                <div class="mock-window-controls"><div class="win-btn win-close"></div><div class="win-btn win-min"></div><div class="win-btn win-max"></div></div>
+                            </div>
+                            <div class="mock-window-content bg-slate-100 gap-6">
+                                <div class="flex gap-4">
+                                    <button class="px-6 py-2 bg-blue-500 text-white rounded-lg shadow-lg hover:scale-105 transition-transform">Klik Aku!</button>
+                                    <input type="text" placeholder="Ketik di sini..." class="bg-white border text-black px-4 py-2 rounded shadow-sm focus:ring-2 ring-blue-400 outline-none">
+                                </div>
+                                <div class="flex gap-4 items-center">
+                                    <img src="https://em-content.zobj.net/source/microsoft-teams/337/thumbs-up_1f44d.png" class="w-16 animate-bounce">
+                                    <div class="p-4 bg-yellow-100 text-yellow-800 rounded-lg border border-yellow-300 shadow-sm">Ada Gambarnya!</div>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="mt-6 text-xl text-white">Punya <b>GAMBAR</b>, <b>IKON</b>, dan bisa di-<b>KLIK</b>!</p>`
+                },
+                {
+                    title: "Kenapa Kita Butuh GUI? 🤷",
+                    subtitle: "Why?",
+                    content: `<ul class="space-y-6 text-left max-w-2xl text-xl list-disc pl-8"><li>Lihat HP kalian (Instagram, TikTok). Apakah isinya teks hitam putih? ❌</li><li>Aplikasi modern harus <b>MUDAH DIPAKAI</b>.</li><li>Orang lebih suka klik tombol daripada ketik perintah.</li></ul>`
+                },
+                // === SECTION 5: TOOLS & TKINTER (Slides 18-20) ===
+                {
+                    title: "Cek Senjata Coding 🛠️",
+                    subtitle: "Tools Check",
+                     content: `
+                        <div class="space-y-6 max-w-3xl">
+                            <div class="flex items-center justify-between bg-slate-800 p-6 rounded-xl border border-slate-700">
+                                <div class="flex items-center gap-4"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/1200px-Python-logo-notext.svg.png" class="w-12 h-12"><div class="text-left"><h4 class="text-xl font-bold text-white">Python Terinstall?</h4></div></div>
+                                <div class="w-8 h-8 rounded-full border-4 border-green-500 bg-green-500 shadow-lg shadow-green-500/50"></div>
+                            </div>
+                            <div class="flex items-center justify-between bg-slate-800 p-6 rounded-xl border border-slate-700">
+                                <div class="flex items-center gap-4"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Visual_Studio_Code_1.35_icon.svg/2048px-Visual_Studio_Code_1.35_icon.svg.png" class="w-12 h-12"><div class="text-left"><h4 class="text-xl font-bold text-white">VS Code Siap?</h4></div></div>
+                                <div class="w-8 h-8 rounded-full border-4 border-green-500 bg-green-500 shadow-lg shadow-green-500/50"></div>
+                            </div>
+                        </div>`
+                },
+                 {
+                    title: "Perkenalkan: Tkinter 🐍",
+                    subtitle: "The Tool",
+                     content: `<h2 class="text-4xl font-bold text-cyan-400 mb-6">TKINTER</h2><p class="text-2xl text-white mb-8">Adalah "Kotak Perkakas" (Library) bawaan Python untuk membuat GUI.</p><div class="bg-slate-800 p-4 rounded text-slate-300 border border-slate-600 inline-block">Tidak perlu download! Sudah ada di dalam Python.</div>`
+                },
+                {
+                    title: "Analogi: Membangun Rumah 🏠",
+                    content: `
+                        <div class="flex gap-8 justify-center items-stretch max-w-5xl">
+                            <div class="flex-1 bg-slate-900/50 p-6 rounded-xl border-2 border-cyan-500 relative group overflow-hidden">
+                                <div class="absolute inset-0 bg-cyan-500/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                <div class="text-6xl mb-4 group-hover:scale-110 transition-transform">🏞️</div>
+                                <h4 class="text-2xl font-bold text-cyan-400 mb-2">ROOT (Tanah)</h4>
+                                <p class="text-slate-300">Jendela utama. Tempat kita menaruh segalanya.</p>
+                            </div>
+                            <div class="flex-1 bg-slate-900/50 p-6 rounded-xl border-2 border-fuchsia-500 relative group overflow-hidden">
+                                <div class="absolute inset-0 bg-fuchsia-500/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                <div class="text-6xl mb-4 group-hover:scale-110 transition-transform">🛋️</div>
+                                <h4 class="text-2xl font-bold text-fuchsia-400 mb-2">WIDGETS (Perabot)</h4>
+                                <p class="text-slate-300">Isi rumah: Tombol, Label, Input, Gambar.</p>
+                            </div>
+                        </div>`
+                },
+                // === SECTION 6: CODING (Slides 21-26) ===
+                {
+                    title: "Coding Step 1: Import 📦",
+                    subtitle: "Mengambil Kotak Perkakas",
+                    content: `<h3 class="text-2xl font-bold text-white mb-6">Baris Pertama Wajib:</h3><div class="bg-slate-900 p-6 rounded-xl font-mono text-xl border border-slate-600">import tkinter as tk</div><p class="mt-6 text-slate-400">Kita memanggil library tkinter dan memberinya nama panggilan <b>'tk'</b> agar singkat.</p>`
+                },
+                // === TEACHER INTERACTIVE DECK (PART 1: INTRO & PREP) ===
+                {
+                    title: "Hello GUI World! 🌍",
+                    subtitle: "From This... To This!",
+                    content: `
+                        <div class="grid grid-cols-2 gap-8 items-center w-full max-w-5xl">
+                            <div class="mock-window opacity-50"><div class="mock-window-header bg-black"><div class="mock-window-title">CMD</div></div><div class="mock-window-content bg-black h-48 flex items-center justify-center font-mono text-green-500">>> Text Only...</div></div>
+                            <div class="mock-window transform scale-110 shadow-[0_0_30px_rgba(34,211,238,0.5)]"><div class="mock-window-header"><div class="mock-window-title">App</div><div class="mock-window-controls"><div class="win-btn win-close"></div></div></div><div class="mock-window-content bg-white h-48 flex items-center justify-center"><button class="bg-blue-500 text-white px-4 py-2 rounded shadow-lg animate-bounce">Click Me!</button></div></div>
+                        </div>
+                        <div class="mt-8 bg-slate-900/80 p-4 rounded-lg border border-cyan-500/30 text-cyan-400">
+                            <strong>🎤 Teacher Mode:</strong> "Siapa yang bosan lihat layar hitam? Hari ini kita 'pindah rumah' ke visual!"
+                        </div>`
+                },
+                {
+                    title: "Analogi: Membangun Rumah 🏠",
+                    subtitle: "Konsep Dasar",
+                    content: `
+                        <div class="grid grid-cols-3 gap-4 text-center">
+                            <div class="bg-slate-800 p-6 rounded-xl border-2 border-slate-600">
+                                <div class="text-6xl mb-4">🏞️</div>
+                                <h3 class="text-xl font-bold text-white">Root / Window</h3>
+                                <p class="text-sm text-slate-400 mt-2">Tanah & Fondasi</p>
+                            </div>
+                            <div class="bg-slate-800 p-6 rounded-xl border-2 border-slate-600">
+                                <div class="text-6xl mb-4">🛋️</div>
+                                <h3 class="text-xl font-bold text-white">Widget</h3>
+                                <p class="text-sm text-slate-400 mt-2">Perabot (Tombol, Label)</p>
+                            </div>
+                            <div class="bg-slate-800 p-6 rounded-xl border-2 border-slate-600">
+                                <div class="text-6xl mb-4">👨🏭</div>
+                                <h3 class="text-xl font-bold text-white">Tkinter</h3>
+                                <p class="text-sm text-slate-400 mt-2">Tukang Bangunan</p>
+                            </div>
+                        </div>
+                        <p class="mt-8 text-xl text-white">Sebelum beli perabot, kita wajib punya <b>RUMAH (Window)</b> dulu!</p>`
+                },
+                {
+                    title: "Misi 1: Cek Tukang 👷",
+                    subtitle: "Verification",
+                    content: `
+                        <div class="bg-slate-900 p-6 rounded-xl font-mono text-left text-lg border-l-4 border-cyan-500 w-full max-w-2xl">
+                            <span class="token-kw">import</span> tkinter<br>
+                            <span class="token-kw">import</span> tkinter.messagebox<br><br>
+                            top = tkinter.<span class="token-class">Tk</span>()<br>
+                            tkinter.messagebox.<span class="token-func">showinfo</span>(<span class="token-str">"Info"</span>, <span class="token-str">"SUKSES"</span>)<br>
+                            top.<span class="token-func">mainloop</span>()
+                        </div>
+                        <div class="mt-6 flex gap-4">
+                            <div class="bg-green-900/30 p-3 rounded border border-green-500/50 text-green-400">✅ Pop-up Muncul</div>
+                            <div class="bg-red-900/30 p-3 rounded border border-red-500/50 text-red-400">❌ Error</div>
+                        </div>`
+                },
+                {
+                    title: "Mini Challenge 1 ⏱️",
+                    subtitle: "Kustomisasi Pesan",
+                    content: `
+                        <div class="flex flex-col items-center gap-6">
+                            <div class="text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-orange-500 animate-pulse" id="timerDisplay">03:00</div>
+                            <div class="bg-slate-800 p-6 rounded-xl text-left w-full max-w-xl">
+                                <h3 class="text-xl font-bold text-white mb-2">Tugas Kalian:</h3>
+                                <ul class="list-disc pl-5 text-slate-300 space-y-2">
+                                    <li>Ubah pesan "SUKSES" menjadi:</li>
+                                    <li><b>"Sistem [Nama Kalian] Siap!"</b></li>
+                                </ul>
+                            </div>
+                            <button onclick="startTimer(3, 'timerDisplay')" class="px-6 py-2 bg-red-600 hover:bg-red-700 text-white rounded-full font-bold transition-all shadow-lg active:scale-95">Mulai Timer ⏳</button>
+                        </div>`
+                },
+                // === TEACHER INTERACTIVE DECK (PART 2: FOUNDATION) ===
+                {
+                    title: "Mantra Wajib 📜",
+                    subtitle: "The Syntax",
+                    content: `
+                        <div class="space-y-6 w-full max-w-3xl">
+                            <div class="bg-slate-900 p-4 rounded-xl border border-cyan-500 flex items-center gap-4">
+                                <code class="text-xl font-mono text-white">root = tk.Tk()</code>
+                                <span class="bg-cyan-900/50 text-cyan-300 px-3 py-1 rounded-full text-sm">Beli Tanah</span>
+                            </div>
+                            <div class="bg-slate-900 p-4 rounded-xl border border-fuchsia-500 flex items-center gap-4">
+                                <code class="text-xl font-mono text-white">root.mainloop()</code>
+                                <span class="bg-fuchsia-900/50 text-fuchsia-300 px-3 py-1 rounded-full text-sm">Satpam (Penahan)</span>
+                            </div>
+                        </div>
+                        <div class="mt-8 bg-slate-800 p-4 rounded-lg text-slate-300 max-w-2xl">
+                             <strong>💡 Guru Note:</strong> "Kenapa butuh Satpam? Karena program Python itu pemalu, maunya langsung pulang (close) kalau tidak ditahan!"
+                        </div>`
+                },
+                {
+                    title: "Live Coding: Jendela Pertama 💻",
+                    subtitle: "File: app_pertama.py",
+                    content: `
+                        <div class="mock-window w-full max-w-2xl">
+                            <div class="mock-window-header"><div class="mock-window-title">Visual Studio Code</div></div>
+                            <div class="mock-window-content bg-[#1e1e1e] p-6 text-left font-mono text-sm leading-relaxed text-[#d4d4d4] h-64">
+                                <span class="token-kw">import</span> tkinter <span class="token-kw">as</span> tk<br><br>
+                                <span class="token-comment"># 1. Beli Tanah</span><br>
+                                root = tk.<span class="token-class">Tk</span>()<br><br>
+                                <span class="token-comment"># 2. Panggil Satpam</span><br>
+                                root.<span class="token-func">mainloop</span>()
+                            </div>
+                        </div>
+                        <p class="mt-4 text-white animate-bounce">Ayo ketik bareng-bareng! ⌨️</p>`
+                },
+                {
+                    title: "What If? 🤔",
+                    subtitle: "Eksperimen Satpam",
+                    content: `
+                        <div class="text-9xl mb-6">❓</div>
+                        <h2 class="text-3xl font-bold text-white mb-4">"Apa yang terjadi jika Satpam (mainloop) sedang tidur?"</h2>
+                        <div class="bg-red-900/30 border border-red-500/50 p-6 rounded-xl max-w-xl">
+                            <h3 class="text-xl font-bold text-red-400 mb-2">Challenge:</h3>
+                            <p class="text-slate-300">Hapus / Comment tanda pagar (#) di depan <code>root.mainloop()</code>, lalu Run!</p>
+                        </div>`
+                },
+                // === TEACHER INTERACTIVE DECK (PART 3: DECORATION) ===
+                {
+                    title: "Interior Design 🎨",
+                    subtitle: "Attributes",
+                    content: `
+                        <div class="relative w-full max-w-xl h-64 border-4 border-dashed border-slate-500 rounded-xl flex items-center justify-center bg-slate-800">
+                            <div class="absolute -top-6 bg-cyan-600 text-white px-3 py-1 rounded text-sm font-mono">.title("Judul")</div>
+                            <div class="absolute -right-12 top-1/2 transform -translate-y-1/2 rotate-90 bg-fuchsia-600 text-white px-3 py-1 rounded text-sm font-mono">.geometry("LxT")</div>
+                            <div class="absolute bottom-4 bg-yellow-600 text-white px-3 py-1 rounded text-sm font-mono">.configure(bg="color")</div>
+                            <span class="text-4xl text-slate-600 font-bold">JENDELA</span>
+                        </div>
+                        <p class="mt-6 text-red-400 font-bold">⚠️ Ingat: Geometry pakai huruf 'x' kecil, bukan bintang '*'!</p>`
+                },
+                 {
+                    title: "Live Coding: Make Over 💅",
+                    subtitle: "Modifikasi app_pertama.py",
+                    content: `
+                        <div class="grid grid-cols-2 gap-8 w-full max-w-4xl">
+                            <div class="opacity-50 blur-[1px]">
+                                <h4 class="text-slate-400 mb-2">Before</h4>
+                                <div class="bg-slate-900 p-4 rounded h-32 border border-slate-700"></div>
+                            </div>
+                            <div>
+                                <h4 class="text-cyan-400 mb-2 font-bold">After</h4>
+                                <div class="bg-cyan-900/20 p-4 rounded h-32 border-2 border-cyan-400 relative overflow-hidden">
+                                    <div class="absolute top-0 left-0 bg-white text-black text-[10px] px-2 w-full">Kasir Coffee Shop</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-6 space-y-2 font-mono text-left bg-slate-900 p-4 rounded border border-slate-600">
+                             root.title(<span class="token-str">"Kasir Coffee Shop"</span>)<br>
+                             root.geometry(<span class="token-str">"400x300"</span>)<br>
+                             root.configure(bg=<span class="token-str">"lightblue"</span>)
+                        </div>`
+                },
+                {
+                    title: "Final Challenge: The Boss Request 👔",
+                    subtitle: "Project Specification",
+                    content: `
+                        <div class="bg-[#fff9c4] text-black p-8 rounded-sm shadow-xl transform rotate-1 max-w-lg relative">
+                            <div class="absolute -top-3 -right-3 text-4xl">📌</div>
+                            <h2 class="text-2xl font-bold font-serif mb-4 underline decoration-red-500">MEMO DARI BOS</h2>
+                            <ul class="list-decimal pl-5 space-y-2 font-serif text-lg">
+                                <li><b>Judul:</b> "Dunia Python [Nama Kamu]"</li>
+                                <li><b>Ukuran:</b> 500x500</li>
+                                <li><b>Warna:</b> Kuning (yellow)</li>
+                                <li class="text-red-600 font-bold">BONUS: Jendela tidak boleh bisa diubah ukurannya!</li>
+                            </ul>
+                            <p class="mt-4 text-xs text-gray-500 font-mono">Hint Bonus: Cari di Google "tkinter disable resize"</p>
+                        </div>
+                        <button onclick="startTimer(10, 'bossTimer')" class="mt-6 px-6 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg transition-all">Timer 10 Menit: <span id="bossTimer">10:00</span></button>`
+                },
+                // === TEACHER INTERACTIVE DECK (PART 4: CLOSING) ===
+                {
+                    title: "Kunci Jawaban 🔑",
+                    subtitle: "Check Your Code",
+                    content: `
+                        <div class="bg-slate-900 p-6 rounded-xl font-mono text-left text-sm md:text-base border border-green-500 shadow-[0_0_20px_rgba(34,197,94,0.2)]">
+                            root = tk.Tk()<br>
+                            root.title(<span class="token-str">"Dunia Python Budi"</span>)<br>
+                            root.geometry(<span class="token-str">"500x500"</span>)<br>
+                            root.configure(bg=<span class="token-str">"yellow"</span>)<br>
+                            <span class="token-comment"># Bonus Answer:</span><br>
+                            root.resizable(<span class="token-kw">False</span>, <span class="token-kw">False</span>)<br>
+                            root.mainloop()
+                        </div>
+                        <p class="mt-6 text-xl text-white">Ada yang jendelanya masih bisa ditarik-tarik? 😉</p>`
+                },
+                 {
+                    title: "Rangkuman Hari Ini 📝",
+                    subtitle: "Apa yang kita pelajari?",
+                    content: `
+                        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 w-full max-w-4xl">
+                            <div class="bg-slate-800 p-4 rounded-xl border-t-4 border-cyan-500">
+                                <div class="text-4xl mb-2">📦</div>
+                                <h4 class="font-bold text-white">Import</h4>
+                                <code class="text-xs text-slate-400">import ... as ...</code>
+                            </div>
+                             <div class="bg-slate-800 p-4 rounded-xl border-t-4 border-fuchsia-500">
+                                <div class="text-4xl mb-2">🏠</div>
+                                <h4 class="font-bold text-white">Rumah</h4>
+                                <code class="text-xs text-slate-400">root = tk.Tk()</code>
+                            </div>
+                             <div class="bg-slate-800 p-4 rounded-xl border-t-4 border-lime-500">
+                                <div class="text-4xl mb-2">🎨</div>
+                                <h4 class="font-bold text-white">Cat</h4>
+                                <code class="text-xs text-slate-400">.title, .geometry</code>
+                            </div>
+                             <div class="bg-slate-800 p-4 rounded-xl border-t-4 border-yellow-500">
+                                <div class="text-4xl mb-2">👮</div>
+                                <h4 class="font-bold text-white">Satpam</h4>
+                                <code class="text-xs text-slate-400">.mainloop()</code>
+                            </div>
+                        </div>
+                        <p class="mt-8 text-xl text-slate-300">Next Meeting: Kita mulai isi rumah kosong ini dengan <b>PERABOT</b>! 🛋️</p>`
+                },
+                 {
+                    title: "Coding Step 2: Membuat Tanah 🏞️",
+                    subtitle: "Inisialisasi Root",
+                    content: `<h3 class="text-2xl font-bold text-white mb-6">Membuat Jendela Kosong:</h3><div class="bg-slate-900 p-6 rounded-xl font-mono text-xl border border-slate-600">root = tk.Tk()</div><p class="mt-6 text-slate-400"><b>root</b> adalah variabel (bisa diganti nama lain), tapi isinya adalah objek jendela dari <b>tk.Tk()</b>.</p>`
+                },
+                 {
+                    title: "Coding Step 3: Mainloop 🔄",
+                    subtitle: "Menahan Jendela",
+                    content: `<h3 class="text-2xl font-bold text-white mb-6">Agar Tidak Langsung Tutup:</h3><div class="bg-slate-900 p-6 rounded-xl font-mono text-xl border border-slate-600">root.mainloop()</div><p class="mt-6 text-slate-400">Perintah ini menyuruh komputer: <i>"Tunggu di sini! Jangan tutup program sampai tombol X ditekan."</i></p>`
+                },
+                {
+                    title: "Mari Kita Gabungkan! 💻",
+                    subtitle: "Live Coding Time",
+                    content: `<div class="bg-slate-900 p-8 rounded-xl font-mono text-left text-lg shadow-2xl border border-slate-600"><span class="token-kw">import</span> tkinter <span class="token-kw">as</span> tk<br><br><span class="token-comment"># 1. Buat Jendela</span><br>root = tk.<span class="token-class">Tk</span>()<br><br><span class="token-comment"># 2. Loop Abadi</span><br>root.<span class="token-func">mainloop</span>()</div>`
+                },
+                {
+                    title: "Hasilnya... ✨",
+                    subtitle: "Output",
+                    content: `<div class="bg-slate-200 w-64 h-48 rounded shadow-xl border-4 border-slate-400 mx-auto relative"><div class="bg-white h-6 border-b border-gray-300 text-xs flex items-center px-2 text-black">tk</div><div class="absolute inset-0 flex items-center justify-center text-slate-400 font-bold opacity-20 text-4xl">JENDELA KOSONG</div></div><p class="mt-6 text-white font-bold">Berhasil muncul jendela kecil?</p>`
+                },
+                {
+                    title: "Apa yang terjadi jika lupa Mainloop? 😱",
+                    subtitle: "Problem Solving",
+                    content: `<h3 class="text-3xl font-bold text-red-500 mb-6">Flash & Gone!</h3><p class="text-xl text-slate-300">Jendela akan muncul setipis kilat ⚡ lalu hilang.</p><p class="text-slate-400 mt-4">Karena tanpa mainloop, Python mengira tugasnya sudah selesai.</p>`
+                },
+                // === SECTION 7: ATTRIBUTES & CHALLENGES (Slides 27-30) ===
+                {
+                    title: "Mengubah Judul 🏷️",
+                    subtitle: "root.title()",
+                    content: `<div class="bg-slate-900 p-6 rounded-xl font-mono text-xl border border-slate-600 mb-6">root.<span class="token-func">title</span>(<span class="token-str">"Aplikasi Pertamaku"</span>)</div><p class="text-slate-300">Tulisan "tk" di pojok kiri atas akan berubah.</p>`
+                },
+                {
+                    title: "Mengubah Ukuran 📐",
+                    subtitle: "root.geometry()",
+                    content: `<div class="bg-slate-900 p-6 rounded-xl font-mono text-xl border border-slate-600 mb-6">root.<span class="token-func">geometry</span>(<span class="token-str">"500x300"</span>)</div><p class="text-slate-300">Format wajib: <b class="text-cyan-400">"Lebar x Tinggi"</b>.</p><p class="text-red-400 text-sm mt-2">Ingat: Pakai huruf 'x' kecil, bukan kali (*)!</p>`
+                },
+                {
+                    title: "Challenge 1: Kreasikan! 🎨",
+                    subtitle: "Misi Mandiri",
+                    content: `<div class="bg-gradient-to-r from-cyan-900 to-blue-900 p-6 rounded-xl border border-cyan-500 text-left"><ol class="list-decimal pl-6 space-y-3 text-lg text-white"><li>Ubah Judul jadi nama kamu.</li><li>Ubah Ukuran jadi <b>400x400</b>.</li><li>Jalankan!</li></ol></div>`
+                },
+                {
+                    title: "Menambahkan Warna 🎨",
+                    subtitle: "Fungsi .config()",
+                    content: `
+                        <div class="space-y-8 max-w-3xl">
+                            <p class="text-xl text-slate-300">
+                                Kita bisa mengubah pengaturan jendela menggunakan perintah <code class="text-cyan-400 font-bold">.config()</code>.
+                            </p>
+                            <div class="bg-slate-900 p-6 rounded-xl border border-slate-600 text-center">
+                                <code class="text-2xl font-mono text-white">
+                                    root.<span class="token-func">config</span>(bg=<span class="token-str">"gold"</span>)
+                                </code>
+                                <p class="mt-4 text-slate-500 text-sm">bg = background</p>
+                            </div>
+                            <div class="flex justify-center gap-4">
+                                <div class="w-12 h-12 rounded-full bg-red-500 cursor-help" title="red"></div>
+                                <div class="w-12 h-12 rounded-full bg-blue-500 cursor-help" title="blue"></div>
+                                <div class="w-12 h-12 rounded-full bg-green-500 cursor-help" title="green"></div>
+                                <div class="w-12 h-12 rounded-full bg-yellow-400 cursor-help" title="gold"></div>
+                                <div class="w-12 h-12 rounded-full bg-purple-500 cursor-help" title="purple"></div>
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Challenge 2: Warnai Hidupmu! 🌈",
+                    subtitle: "Eksperimen Warna",
+                    content: `
+                         <div class="bg-gradient-to-r from-fuchsia-900 to-purple-900 p-8 rounded-2xl border border-fuchsia-500 shadow-xl max-w-3xl">
+                            <h3 class="text-2xl font-bold text-white mb-4">Misi Rahasia:</h3>
+                            <p class="text-lg text-slate-200 mb-6">
+                                Cari warna aneh di internet (Color Name) dan pasang di jendelamu!
+                                <br>Contoh: "salmon", "teal", "chocolate".
+                            </p>
+                            <div class="bg-black/40 p-4 rounded-lg text-center">
+                                <h4 class="font-bold text-fuchsia-300 mb-2">Siapa yang warnanya paling keren?</h4>
+                                <p class="text-sm text-slate-300">Tunjukkan layer ke kamera!</p>
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Summary Hari Ini 📝",
+                    subtitle: "Rangkuman",
+                    content: `<ul class="grid grid-cols-2 gap-4 text-left"><li class="bg-slate-800 p-4 rounded border-l-4 border-fuchsia-500"><b>GUI:</b> Aplikasi Visual.</li><li class="bg-slate-800 p-4 rounded border-l-4 border-cyan-500"><b>Tkinter:</b> Library GUI Python.</li><li class="bg-slate-800 p-4 rounded border-l-4 border-lime-500"><b>Run:</b> Butuh mainloop()!</li><li class="bg-slate-800 p-4 rounded border-l-4 border-yellow-500"><b>Setup:</b> title() & geometry().</li></ul>`
+                }
+            ],
+            // Placeholders
+            2: [{ title: "Labels & Buttons", content: "<p>Soon</p>" }],
+            3: [{ title: "Entry", content: "<p>Soon</p>" }],
+            4: [{ title: "Grid Layout", content: "<p>Soon</p>" }],
+            5: [{ title: "Functions", content: "<p>Soon</p>" }],
+            6: [{ title: "Errors", content: "<p>Soon</p>" }],
+            7: [{ title: "Images", content: "<p>Soon</p>" }],
+            8: [{ title: "Project 1", content: "<p>Soon</p>" }],
+            9: [{ title: "CustomTkinter", content: "<p>Soon</p>" }],
+            10: [{ title: "Project 2 Start", content: "<p>Soon</p>" }],
+            11: [{ title: "Project 2 Polish", content: "<p>Soon</p>" }],
+            12: [{ title: "Showcase", content: "<p>Soon</p>" }]
+        };
+
+        // --- Logic ---
+        let currentMeeting = 1;
+        let currentSlide = 0;
+        
+        const contentDiv = document.getElementById('slideContent');
+        const titleEl = document.getElementById('meetingTitle');
+        const subtitleEl = document.getElementById('meetingSubtitle');
+        const counterEl = document.getElementById('slideCounter');
+        const progressBar = document.getElementById('progressBar');
+        const meetingList = document.getElementById('meetingList');
+        const teacherInputSection = document.getElementById('teacherInputSection');
+        const welcomeBackSection = document.getElementById('welcomeBackSection');
+        const welcomeMessage = document.getElementById('welcomeMessage');
+        const meetingSelectionSection = document.getElementById('meetingSelectionSection');
+        const welcomeOverlay = document.getElementById('welcomeOverlay');
+        const displayTeacherName = document.getElementById('displayTeacherName');
+
+        function initSidebar() {
+            meetingList.innerHTML = '';
+            for (let i = 1; i <= 12; i++) {
+                const btn = document.createElement('button');
+                const isLocked = !meetingContent[i] || (i > 1 && meetingContent[i].length === 1 && meetingContent[i][0].content.includes("Soon"));
+                btn.className = `w-full text-left p-4 rounded-xl transition-all duration-300 flex items-center gap-3 border ${currentMeeting === i ? 'bg-cyan-500/10 border-cyan-500' : 'bg-slate-800/50 border-transparent hover:bg-slate-800'}`;
+                if (isLocked) btn.classList.add('opacity-50', 'cursor-not-allowed');
+                else btn.onclick = () => loadMeeting(i);
+
+                btn.innerHTML = `
+                    <div class="w-8 h-8 rounded-full flex items-center justify-center font-bold ${currentMeeting === i ? 'bg-cyan-500 text-slate-900' : 'bg-slate-700 text-slate-400'}">${i}</div>
+                    <div>
+                        <div class="font-bold ${currentMeeting === i ? 'text-cyan-400' : 'text-slate-300'}">Meeting ${i}</div>
+                        <div class="text-xs text-slate-500">${i === 1 ? 'Intro' : (i === 2 ? 'Labels' : '...')}</div>
+                    </div>
+                `;
+                meetingList.appendChild(btn);
+            }
+        }
+
+        function renderSlide() {
+            const meetingData = meetingContent[currentMeeting];
+            const slideData = meetingData[currentSlide];
+            const container = document.getElementById('slideContainer');
+            
+            container.style.opacity = '0';
+            container.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                titleEl.textContent = slideData.title;
+                subtitleEl.innerHTML = slideData.subtitle || "";
+                contentDiv.innerHTML = slideData.content;
+                counterEl.textContent = `${String(currentSlide + 1).padStart(2, '0')}/${String(meetingData.length).padStart(2, '0')}`;
+                
+                const progress = ((currentSlide + 1) / meetingData.length) * 100;
+                progressBar.style.width = `${progress}%`;
+
+                document.getElementById('prevBtn').disabled = currentSlide === 0;
+                document.getElementById('nextBtn').disabled = currentSlide === meetingData.length - 1;
+
+                container.style.opacity = '1';
+                container.style.transform = 'translateY(0)';
+                
+                // Inject Teacher Name, Hobby, Food into Slide if needed
+                const introName = document.getElementById('introTeacherName');
+                const introHobby = document.getElementById('introTeacherHobby');
+                const introFood = document.getElementById('introTeacherFood');
+                
+                if (introName) {
+                    const savedName = localStorage.getItem("teacherName") || "Pengajar";
+                    introName.textContent = savedName.startsWith("Kak") ? savedName : "Kak " + savedName;
+                }
+                if (introHobby) introHobby.textContent = localStorage.getItem("teacherHobby") || "Ngoding";
+                if (introFood) introFood.textContent = localStorage.getItem("teacherFood") || "Nasi Goreng";
+            }, 300);
+        }
+
+        function loadMeeting(id) {
+            currentMeeting = id;
+            currentSlide = 0;
+            initSidebar();
+            renderSlide();
+            document.getElementById('sidebar').classList.add('-translate-x-full');
+            document.getElementById('sidebarOverlay').classList.add('hidden');
+        }
+
+        function nextSlide() {
+            if (currentSlide < meetingContent[currentMeeting].length - 1) {
+                currentSlide++;
+                renderSlide();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                renderSlide();
+            }
+        }
+
+        function checkTeacherName() {
+            let teacher = localStorage.getItem("teacherName");
+            if (teacher) {
+                teacherInputSection.classList.add('hidden');
+                welcomeBackSection.classList.remove('hidden');
+                displayTeacherName.innerText = teacher;
+            } else {
+                teacherInputSection.classList.remove('hidden');
+                welcomeBackSection.classList.add('hidden');
+            }
+        }
+
+        window.startClass = function() { // Make global
+            const name = document.getElementById('teacherName').value;
+            const hobby = document.getElementById('teacherHobby').value;
+            const food = document.getElementById('teacherFood').value;
+            
+            if (name.trim()) {
+                localStorage.setItem("teacherName", name);
+                localStorage.setItem("teacherHobby", hobby || "Ngoding 💻");
+                localStorage.setItem("teacherFood", food || "Nasi Goreng 🍛");
+                showMeetingSelection();
+            } else {
+                alert("Mohon masukkan nama kakak pengajar dulu ya! 😊");
+            }
+        }
+
+        window.enterClass = function() { showMeetingSelection(); }
+
+        window.resetTeacher = function() {
+            localStorage.removeItem("teacherName");
+            localStorage.removeItem("teacherHobby");
+            localStorage.removeItem("teacherFood");
+            document.getElementById('teacherName').value = "";
+            document.getElementById('teacherHobby').value = "";
+            document.getElementById('teacherFood').value = "";
+            checkTeacherName();
+        }
+
+        function showMeetingSelection() {
+            teacherInputSection.classList.add('hidden');
+            welcomeBackSection.classList.add('hidden');
+            welcomeMessage.classList.add('hidden');
+            meetingSelectionSection.classList.remove('hidden');
+            
+            const grid = document.getElementById('meetingGrid');
+            grid.innerHTML = '';
+            for (let i = 1; i <= 12; i++) {
+                const btn = document.createElement('button');
+                const isLocked = !meetingContent[i] || (i > 1 && meetingContent[i].length === 1 && meetingContent[i][0].content.includes("Soon"));
+                btn.className = `p-4 rounded-xl border transition-all duration-300 flex flex-col items-center justify-center gap-2 ${!isLocked ? 'bg-slate-800 border-slate-700 hover:bg-slate-700 hover:border-cyan-400 hover:scale-105 cursor-pointer' : 'bg-slate-900/50 border-slate-800 opacity-50 cursor-not-allowed'}`;
+                btn.innerHTML = `
+                    <span class="text-2xl font-bold ${!isLocked ? 'text-white' : 'text-gray-600'}">Meeting ${i}</span>
+                    <span class="text-xs text-center ${!isLocked ? 'text-gray-400' : 'text-gray-700'}">${!isLocked ? 'Klik untuk mulai' : 'Belum tersedia'}</span>
+                `;
+                if (!isLocked) btn.onclick = () => selectMeeting(i);
+                grid.appendChild(btn);
+            }
+        }
+
+        function selectMeeting(id) {
+            currentMeeting = id;
+            currentSlide = 0;
+            welcomeOverlay.style.opacity = '0';
+            setTimeout(() => {
+                welcomeOverlay.style.display = 'none';
+                document.getElementById('mainContent').classList.remove('opacity-0');
+                initSidebar();
+                renderSlide();
+            }, 1000);
+        }
+
+        document.getElementById('nextBtn').onclick = nextSlide;
+        document.getElementById('prevBtn').onclick = prevSlide;
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+        document.getElementById('hamburgerBtn').onclick = () => {
+            document.getElementById('sidebar').classList.remove('-translate-x-full');
+            document.getElementById('sidebarOverlay').classList.remove('hidden');
+        };
+        document.getElementById('sidebarOverlay').onclick = () => {
+             document.getElementById('sidebar').classList.add('-translate-x-full');
+            document.getElementById('sidebarOverlay').classList.add('hidden');
+        };
+
+        window.startTimer = function(minutes, displayId) {
+            let seconds = minutes * 60;
+            const display = document.getElementById(displayId);
+            if (!display) return;
+            
+            // Clear existing timer if any (basic implementation)
+            if (display.dataset.timerId) clearInterval(parseInt(display.dataset.timerId));
+            
+            display.classList.remove('text-red-600');
+            
+            const timerId = setInterval(() => {
+                const m = Math.floor(seconds / 60);
+                const s = seconds % 60;
+                display.textContent = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+                
+                if (seconds <= 0) {
+                    clearInterval(timerId);
+                    display.textContent = "WAKTU HABIS!";
+                    display.classList.add('text-red-600', 'animate-pulse');
+                }
+                seconds--;
+            }, 1000);
+            
+            display.dataset.timerId = timerId;
+        }
+
+        checkTeacherName();
+
+    </script>
+</body>
+</html>
