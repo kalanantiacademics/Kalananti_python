@@ -1,0 +1,1729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Programming Course</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            box-sizing: border-box;
+            /* Menggunakan Inter font */
+            font-family: 'Inter', sans-serif;
+        }
+        
+        /* Gradien header baru terinspirasi dari "Francore" (Ungu/Violet) */
+        .header-gradient {
+            background: linear-gradient(135deg, #581c87 0%, #6d28d9 100%);
+        }
+        
+        .slide-transition {
+            transition: all 0.3s ease-in-out;
+        }
+        
+        .meeting-tab {
+            transition: all 0.2s ease;
+        }
+        
+        .meeting-tab:hover {
+            transform: translateY(-2px);
+        }
+        
+        .code-font {
+            font-family: 'Courier New', monospace;
+        }
+        
+        /* Latar belakang slide utama dengan efek 'blob' gradien modern */
+        .code-bg {
+            background: #0f172a; /* bg-slate-900 */
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .code-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                /* Blob Ungu */
+                radial-gradient(circle at 20% 80%, rgba(126, 34, 206, 0.15) 0%, transparent 50%),
+                /* Blob Hijau Limau */
+                radial-gradient(circle at 80% 20%, rgba(163, 230, 53, 0.1) 0%, transparent 50%),
+                /* Blob Violet */
+                radial-gradient(circle at 40% 40%, rgba(109, 40, 217, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            filter: blur(20px);
+        }
+        
+        /* Floating code sekarang menggunakan warna aksen baru */
+        .floating-code {
+            position: absolute;
+            font-family: 'Courier New', monospace;
+            color: rgba(163, 230, 53, 0.1); /* Lime-400 opacity 10% */
+            font-size: 12px;
+            animation: float 20s infinite linear;
+            white-space: nowrap;
+        }
+        
+        @keyframes float {
+            0% { transform: translateX(-100px) translateY(0px); }
+            100% { transform: translateX(calc(100vw + 100px)) translateY(-20px); }
+        }
+
+        /* Pola latar belakang main, dibuat lebih halus */
+        .main-pattern {
+            background-color: #020617; /* bg-slate-950 */
+            background-image: radial-gradient(#1e293b 1px, transparent 1px);
+            background-size: 10px 10px;
+        }
+
+        /* Marker list kustom dengan warna hijau limau baru */
+        .custom-list li {
+            margin-bottom: 0.75rem;
+            padding-left: 0.5rem;
+        }
+        .custom-list li::marker {
+            color: #a3e635; /* Tailwind lime-400 */
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body class="h-full bg-slate-950 text-white">
+    <!-- 
+      Struktur utama diubah menjadi h-screen (100vh)
+      agar child-nya bisa menggunakan flex-1 untuk mengisi ruang 
+    -->
+    <div class="h-screen flex flex-col">
+        <!-- 
+          Header - Menggunakan gradien ungu baru
+          PERUBAHAN: Menambahkan h-20 (5rem / 80px) untuk tinggi eksplisit
+        -->
+        <header class="header-gradient px-4 py-4 shadow-lg fixed top-0 left-0 right-0 z-50 h-20"> <!-- Padding diubah menjadi px-4 py-4 -->
+            <div class="flex items-center justify-between w-full h-full"> <!-- Tambahkan h-full di sini -->
+                <!-- Left Side: Logo & Hamburger -->
+                <div class="flex items-center gap-4">
+                    <button id="hamburgerBtn" class="text-white/80 hover:text-white transition-colors lg:hidden">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                    <img src="https://cdn-web-2.ruangguru.com/landing-pages/assets/hs/Kalananti%20by%20Ruangguru-04.png" alt="Kalananti Logo" class="h-10" onerror="this.src='https://placehold.co/100x40/6d28d9/ffffff?text=Kalananti'; this.alt='Kalananti Logo';">
+                </div>
+                
+                <!-- Center: Title -->
+                <div class="flex-1 text-center">
+                    <h1 class="text-xl font-bold text-white">
+                        🐍 Python Programming Course
+                    </h1>
+                </div>
+                
+                <!-- 
+                  Right Side: Spacer for balance 
+                  PERUBAHAN: Lebar disesuaikan agar konsisten dengan lebar logo/hamburger 
+                -->
+                <div class="flex items-center gap-4 w-auto justify-end" style="min-width: 60px;">
+                    <!-- Spacer -->
+                </div>
+            </div>
+        </header>
+
+        <!-- 
+          Container Utama (Sidebar + Main Content)
+          PERUBAHAN:
+          - flex-1 agar container ini mengisi sisa ruang vertikal
+          - overflow-hidden untuk memastikan container ini tidak scroll
+        -->
+        <div class="flex-1 flex overflow-hidden pt-20">
+            <!-- Sidebar Overlay -->
+            <div id="sidebarOverlay" class="fixed inset-0 bg-black bg-opacity-70 z-40 hidden backdrop-blur-sm lg:hidden"></div>
+
+            <!-- 
+              Sidebar - Menggunakan warna slate gelap dan aksen hijau limau
+              PERUBAHAN: 
+              - Di 'lg', 'lg:h-full' agar mengisi tinggi parent
+              - 'h-full' (untuk mobile) tetap
+              - Struktur internal (flex-col, flex-shrink-0, flex-grow) sudah benar
+                untuk membuat 'nav' bisa di-scroll secara internal.
+            -->
+            <aside id="sidebar" class="fixed lg:relative left-0 top-0 h-full lg:h-full w-80 bg-slate-900 border-r border-slate-700/50 shadow-2xl transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out z-40 flex-shrink-0 flex flex-col">
+            <!-- Header Sidebar (Non-scrollable) -->
+            <div class="p-6 flex-shrink-0">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-xl font-bold text-white">Course Meetings</h2>
+                    <button id="closeSidebarBtn" class="text-gray-400 hover:text-white transition-colors lg:hidden">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+                <!-- 
+                  Meeting Navigation (Scrollable) 
+                  'flex-grow' membuatnya mengisi sisa ruang
+                  'overflow-y-auto' membuatnya bisa di-scroll
+                -->
+                <nav class="space-y-2 overflow-y-auto px-6 pb-6 flex-grow">
+                    <!-- Meeting 1 Tab -->
+                    <button class="meeting-tab w-full text-left p-4 bg-slate-800/60 hover:bg-slate-700/80 rounded-lg transition-colors" data-meeting="1">
+                        <div class="flex items-center">
+                            <span class="w-8 h-8 bg-slate-700 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">1</span>
+                            <div>
+                                <div class="font-medium text-white">Meeting 1</div>
+                                <div class="text-sm text-gray-400">Introduction to Python</div>
+                            </div>
+                        </div>
+                    </button>
+                    
+                    <!-- Meeting 2 Tab - Active -->
+                    <button class="meeting-tab w-full text-left p-4 bg-slate-800/60 hover:bg-slate-700/80 rounded-lg transition-colors" data-meeting="2">
+                        <div class="flex items-center">
+                            <span class="w-8 h-8 bg-slate-700 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">2</span>
+                            <div>
+                                <div class="font-medium text-white">Meeting 2</div>
+                                <div class="text-sm text-gray-400">Variables & Data Types</div>
+                            </div>
+                        </div>
+                    </button>
+
+                    <!-- Locked Meetings -->
+                    <button class="meeting-tab w-full text-left p-4 bg-lime-400 rounded-lg transition-colors active-meeting" data-meeting="3">
+                        <div class="flex items-center">
+                            <span class="w-8 h-8 bg-lime-600 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">3</span>
+                            <div>
+                                <div class="font-medium text-slate-900">Meeting 3</div>
+                                <div class="text-sm text-slate-800">Operators & Input</div>
+                            </div>
+                        </div>
+                    </button>
+                    <!-- (Stubs lainnya tidak diubah untuk keringkasan) -->
+                     <div class="w-full text-left p-4 bg-slate-800/60 rounded-lg opacity-60 cursor-not-allowed">
+                        <div class="flex items-center">
+                            <span class="w-8 h-8 bg-slate-700 text-slate-500 rounded-full flex items-center justify-center text-sm font-bold mr-3">🔒</span>
+                            <div>
+                                <div class="font-medium text-gray-400">Meeting 4</div>
+                                <div class="text-xs text-gray-500">Functions - Available Soon</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full text-left p-4 bg-slate-800/60 rounded-lg opacity-60 cursor-not-allowed">
+                        <div class="flex items-center">
+                            <span class="w-8 h-8 bg-slate-700 text-slate-500 rounded-full flex items-center justify-center text-sm font-bold mr-3">🔒</span>
+                            <div>
+                                <div class="font-medium text-gray-400">Meeting 5</div>
+                                <div class="text-xs text-gray-500">Lists & Tuples - Available Soon</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full text-left p-4 bg-slate-800/60 rounded-lg opacity-60 cursor-not-allowed">
+                        <div class="flex items-center">
+                            <span class="w-8 h-8 bg-slate-700 text-slate-500 rounded-full flex items-center justify-center text-sm font-bold mr-3">🔒</span>
+                            <div>
+                                <div class="font-medium text-gray-400">Meeting 6</div>
+                                <div class="text-xs text-gray-500">Dictionaries - Available Soon</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full text-left p-4 bg-slate-800/60 rounded-lg opacity-60 cursor-not-allowed">
+                        <div class="flex items-center">
+                            <span class="w-8 h-8 bg-slate-700 text-slate-500 rounded-full flex items-center justify-center text-sm font-bold mr-3">🔒</span>
+                            <div>
+                                <div class="font-medium text-gray-400">Meeting 7</div>
+                                <div class="text-xs text-gray-500">File Handling - Available Soon</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full text-left p-4 bg-slate-800/60 rounded-lg opacity-60 cursor-not-allowed">
+                        <div class="flex items-center">
+                            <span class="w-8 h-8 bg-slate-700 text-slate-500 rounded-full flex items-center justify-center text-sm font-bold mr-3">🔒</span>
+                            <div>
+                                <div class="font-medium text-gray-400">Meeting 8</div>
+                                <div class="text-xs text-gray-500">Error Handling - Available Soon</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full text-left p-4 bg-slate-800/60 rounded-lg opacity-60 cursor-not-allowed">
+                        <div class="flex items-center">
+                            <span class="w-8 h-8 bg-slate-700 text-slate-500 rounded-full flex items-center justify-center text-sm font-bold mr-3">🔒</span>
+                            <div>
+                                <div class="font-medium text-gray-400">Meeting 9</div>
+                                <div class="text-xs text-gray-500">Classes & Objects - Available Soon</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full text-left p-4 bg-slate-800/60 rounded-lg opacity-60 cursor-not-allowed">
+                        <div class="flex items-center">
+                            <span class="w-8 h-8 bg-slate-700 text-slate-500 rounded-full flex items-center justify-center text-sm font-bold mr-3">🔒</span>
+                            <div>
+                                <div class="font-medium text-gray-400">Meeting 10</div>
+                                <div class="text-xs text-gray-500">Modules & Packages - Available Soon</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full text-left p-4 bg-slate-800/60 rounded-lg opacity-60 cursor-not-allowed">
+                        <div class="flex items-center">
+                            <span class="w-8 h-8 bg-slate-700 text-slate-500 rounded-full flex items-center justify-center text-sm font-bold mr-3">🔒</span>
+                            <div>
+                                <div class="font-medium text-gray-400">Meeting 11</div>
+                                <div class="text-xs text-gray-500">Libraries & APIs - Available Soon</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full text-left p-4 bg-slate-800/60 rounded-lg opacity-60 cursor-not-allowed">
+                        <div class="flex items-center">
+                            <span class="w-8 h-8 bg-slate-700 text-slate-500 rounded-full flex items-center justify-center text-sm font-bold mr-3">🔒</span>
+                            <div>
+                                <div class="font-medium text-gray-400">Meeting 12</div>
+                                <div class="text-xs text-gray-500">Final Project - Available Soon</div>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+        </aside>
+
+        <!-- 
+          Main Content Area - Latar belakang pola baru
+          'flex-1' membuatnya mengisi sisa lebar
+          'overflow-y-auto' membuat area ini bisa di-scroll secara independen
+        -->
+        <main class="flex-1 flex flex-col p-4 sm:p-8 main-pattern relative overflow-y-auto">
+            <!-- Floating Code Elements -->
+            <div class="floating-code" style="top: 10%; animation-delay: 0s;">def hello_world(): print("Hello Python!")</div>
+            <div class="floating-code" style="top: 30%; animation-delay: 5s;">import numpy as np</div>
+            <div class="floating-code" style="top: 50%; animation-delay: 10s;">for i in range(10): print(i)</div>
+            <div class="floating-code" style="top: 70%; animation-delay: 15s;">class PythonClass: pass</div>
+            <div class="floating-code" style="top: 90%; animation-delay: 3s;">if __name__ == "__main__":</div>
+            
+            <!-- 
+              Slide Box Wrapper
+              PERUBAHAN:
+              - 'my-auto' untuk centering vertikal
+              - 'pb-28' untuk memberi ruang dari footer
+            -->
+            <div class="w-full max-w-4xl mx-auto my-auto pb-28 relative z-10">
+                <!-- 
+                  Slide Container - Warna baru untuk judul dan border
+                  PERUBAHAN: 'overflow-y-auto' dihapus, karena parent-nya (<main>) yang akan scroll.
+                  'min-h-[70vh]' untuk memastikan kartu tidak terlalu kecil.
+                -->
+                <div id="slideContainer" class="code-bg rounded-xl shadow-2xl p-6 sm:p-12 slide-transition border border-purple-800/50 min-h-[70vh]">
+                    <!-- Current Meeting Title -->
+                    <div class="text-center mb-8 relative">
+                        <div class="absolute -top-4 -left-4 text-6xl opacity-10 text-lime-400">🐍</div>
+                        <div class="absolute -top-4 -right-4 text-6xl opacity-10 text-purple-400">📦</div>
+                        <h2 id="meetingTitle" class="text-2xl sm:text-3xl font-bold text-lime-400 mb-2 relative z-10">Meeting 1: Berkenalan dengan Python</h2>
+                        <!-- Garis bawah gradien baru -->
+                        <div class="w-24 h-1 bg-gradient-to-r from-purple-500 to-lime-400 mx-auto rounded"></div>
+                        <div id="meetingSubtitle" class="mt-2 text-sm text-gray-400 code-font"># Konten Slide</div>
+                    </div>
+                    
+                    <!-- Content Area (Scrollable) -->
+                    <div id="slideContent" class="text-center space-y-6 relative z-10">
+                        <!-- Initial Content (Will be overwritten by JS) -->
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div> <!-- Akhir dari container utama (flex-1) -->
+
+    <!-- 
+      Navigation Controls - Tombol dengan warna ungu baru
+      PERUBAHAN: 
+      - Menambahkan h-28 (7rem / 112px) untuk tinggi eksplisit
+      - Menambahkan lg:left-80 untuk memberi ruang bagi sidebar di desktop
+    -->
+    <footer class="fixed bottom-0 left-0 lg:left-80 right-0 bg-slate-900/80 backdrop-blur-sm border-t border-slate-700/50 p-4 z-50 h-28">
+        <div class="w-full max-w-7xl mx-auto px-4 h-full flex flex-col justify-center">
+            <div class="flex justify-between items-center mb-3">
+                <!-- Previous Button --> 
+                <button id="prevBtn" class="flex items-center space-x-2 bg-purple-700 hover:bg-purple-800 px-4 py-2 rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"> 
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                    </svg>
+                    <span>Sebelumnya</span>
+                </button>
+
+                <!-- Slide Counter -->
+                <div class="text-center">
+                    <span id="slideCounter" class="text-gray-400 text-sm font-semibold">Slide 1 dari 10</span>
+                </div>
+
+                <!-- Next Button -->
+                <button id="nextBtn" class="flex items-center space-x-2 bg-purple-700 hover:bg-purple-800 px-4 py-2 rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm">
+                    <span>Selanjutnya</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                </button>
+            </div>
+            
+            <!-- Copyright -->
+            <div class="text-center border-t border-slate-700 pt-2">
+                <p class="text-gray-500 text-xs">© 2025 Kalananti. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let currentMeeting = 3;
+        let currentSlide = 1;
+        const totalMeetings = 12;
+
+        // --- Meeting Content Structure (Updated with new color classes) ---
+        const meetingContent = {
+            1: [
+                // Slide 1.1: Selamat Datang di Dunia Program! 🚀
+                { 
+                    title: "Selamat Datang di Kelas Koding! 🚀", 
+                    subtitle: "Berkenalan dengan Python si Penerjemah Hebat",
+                    emoji: "🚀", 
+                    content: `
+                        <div class="text-center space-y-4">
+                            <div class="text-6xl mb-4">${'🚀'}</div>
+                            <h3 class="text-2xl font-bold text-lime-400">Halo, Teman-teman!</h3>
+                            <p class="text-lg text-gray-300 max-w-2xl mx-auto">
+                                Hari ini kita akan belajar cara "mengobrol" dengan komputer. Komputer itu hebat, tapi dia bodoh. Dia hanya bisa bekerja kalau diberi **instruksi yang sangat jelas**.
+                            </p>
+                            <!-- Kotak analogi dengan warna ungu baru -->
+                            <div class="p-4 bg-purple-900/50 rounded-xl border border-purple-700 max-w-sm mx-auto">
+                                <p class="font-semibold text-purple-300">Analogi:</p>
+                                <p class="text-sm text-gray-300">Bayangkan komputer itu seperti <b class="text-white">robot</b>. Dia siap mengerjakan apa saja, asal kita berikan **perintah yang tepat**, satu per satu.</p>
+                            </div>
+                        </div>
+                    `
+                },
+                // Slide 1.2: Instruksi di Kehidupan Kita 🧑‍🍳
+                { 
+                    title: "Kita Sering Memberi Instruksi! 🧑‍🍳", 
+                    subtitle: "Koding adalah instruksi untuk komputer",
+                    emoji: "🧑‍🍳", 
+                    content: `
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-center">
+                            <!-- Kartu dengan latar belakang slate baru -->
+                            <div class="bg-slate-800/70 p-6 rounded-xl border border-slate-700">
+                                <h4 class="text-xl font-semibold text-lime-400 mb-3">Contoh 1: Membuat Mi Instan 🍜</h4>
+                                <ul class="list-none text-left space-y-2 text-gray-300">
+                                    <li class="flex items-start"><span class="text-purple-400 font-bold mr-2">1.</span> Rebus air.</li>
+                                    <li class="flex items-start"><span class="text-purple-400 font-bold mr-2">2.</span> Buka bungkus mi.</li>
+                                    <li class="flex items-start"><span class="text-purple-400 font-bold mr-2">3.</span> Masukkan mi ke air mendidih.</li>
+                                    <li class="flex items-start"><span class="text-purple-400 font-bold mr-2">4.</span> Tiriskan.</li>
+                                </ul>
+                            </div>
+                            <div class="bg-slate-800/70 p-6 rounded-xl border border-slate-700">
+                                <h4 class="text-xl font-semibold text-lime-400 mb-3">Contoh 2: Pergi ke Sekolah 🎒</h4>
+                                <ul class="list-none text-left space-y-2 text-gray-300">
+                                    <li class="flex items-start"><span class="text-purple-400 font-bold mr-2">1.</span> Bangun pagi.</li>
+                                    <li class="flex items-start"><span class="text-purple-400 font-bold mr-2">2.</span> Mandi.</li>
+                                    <li class="flex items-start"><span class="text-purple-400 font-bold mr-2">3.</span> Pakai seragam.</li>
+                                    <li class="flex items-start"><span class="text-purple-400 font-bold mr-2">4.</span> Sarapan.</li>
+                                </ul>
+                            </div>
+                            <p class="md:col-span-2 text-lg text-purple-300 font-medium mt-4">Koding adalah cara kita menulis instruksi seperti ini, tapi untuk komputer!</p>
+                        </div>
+                    `
+                },
+                // Slide 1.3: Apa itu Python? 🗣️
+                { 
+                    title: "Python: Bahasa Super Komputer 🐍", 
+                    subtitle: "Bahasa pemrograman yang mudah dibaca",
+                    emoji: "🗣️", 
+                    content: `
+                        <div class="text-center space-y-6">
+                            <div class="text-6xl mb-4 text-lime-400">🐍</div>
+                            <p class="text-lg text-gray-300 max-w-2xl mx-auto">
+                                Python adalah bahasa yang kita gunakan untuk menulis instruksi detail langkah demi langkah itu untuk komputer kita.
+                                Python itu **mudah dibaca**, hampir seperti membaca kalimat biasa, jadi sangat cocok untuk pemula!
+                            </p>
+                            <!-- Kotak Fun Fact dengan gradien ungu/indigo -->
+                            <div class="bg-gradient-to-r from-indigo-900 to-purple-900 rounded-xl p-4 border border-indigo-700 max-w-md mx-auto">
+                                <h4 class="text-lime-400 font-bold mb-2">💡 Fun Fact!</h4>
+                                <p class="text-sm text-gray-300">
+                                    Python diciptakan oleh seorang Om bernama Guido van Rossum. Namanya diambil dari acara komedi TV yang lucu, bukan dari ular! 😆
+                                </p>
+                            </div>
+                        </div>
+                    `
+                },
+                // Slide 1.4: Python Bikin Apa Saja? ✨
+                { 
+                    title: "Python Ada di Mana-Mana! ✨", 
+                    subtitle: "Kegunaan Python di dunia nyata",
+                    emoji: "✨", 
+                    content: `
+                        <div class="space-y-4 max-w-2xl mx-auto">
+                            <h3 class="text-2xl font-bold text-purple-300 mb-4">Contoh-Contoh Keren:</h3>
+                            <div class="space-y-4 text-left">
+                                <div class="p-4 bg-slate-800 rounded-lg border border-slate-700 flex items-center">
+                                    <span class="text-3xl mr-4">🌐</span>
+                                    <div>
+                                        <h4 class="font-semibold text-white">YouTube dan Instagram</h4>
+                                        <p class="text-sm text-gray-400">Sebagian besar teknologi yang kamu pakai untuk menonton video dan melihat foto itu dibangun menggunakan Python!</p>
+                                    </div>
+                                </div>
+                                <div class="p-4 bg-slate-800 rounded-lg border border-slate-700 flex items-center">
+                                    <span class="text-3xl mr-4">🎮</span>
+                                    <div>
+                                        <h4 class="font-semibold text-white">Game</h4>
+                                        <p class="text-sm text-gray-400">Python dipakai untuk membuat logika dan aturan-aturan dalam game yang kamu mainkan.</p>
+                                    </div>
+                                </div>
+                                <div class="p-4 bg-slate-800 rounded-lg border border-slate-700 flex items-center">
+                                    <span class="text-3xl mr-4">🧪</span>
+                                    <div>
+                                        <h4 class="font-semibold text-white">Para Ilmuwan (Data Science)</h4>
+                                        <p class="text-sm text-gray-400">Dipakai untuk menganalisis data, misalnya saat menghitung bintang atau mencari obat baru.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `
+                },
+                // Slide 1.5: Ayo Siapkan Alat Kita! 💻
+                { 
+                    title: "Alat Koding Kita Hari Ini 🛠️", 
+                    subtitle: "Dua senjata utama programmer",
+                    emoji: "💻", 
+                    content: `
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-center max-w-3xl mx-auto">
+                            <!-- Kartu dengan border ungu -->
+                            <div class="bg-slate-800 p-6 rounded-xl border-4 border-purple-600/50">
+                                <div class="text-5xl mb-3 text-red-500">❤️</div>
+                                <h4 class="text-xl font-semibold text-purple-300 mb-2">Python (Si Jantung Program)</h4>
+                                <p class="text-sm text-gray-400">
+                                    Ini adalah mesin **penerjemah** utama. Tanpa ini, komputer tidak akan mengerti instruksi kita.
+                                </p>
+                                <p class="text-xs text-lime-400 mt-2"><a href="https://www.python.org/" target="_blank" class="hover:underline">python.org</a></p>
+                            </div>
+                            <!-- Kartu dengan border hijau limau -->
+                            <div class="bg-slate-800 p-6 rounded-xl border-4 border-lime-500/50">
+                                <div class="text-5xl mb-3 text-white">📝</div>
+                                <h4 class="text-xl font-semibold text-lime-300 mb-2">Visual Studio Code (VS Code)</h4>
+                                <p class="text-sm text-gray-400">
+                                    Ini adalah **tempat kita menulis kode** (Buku Tulis Pintar). Memiliki banyak alat bantu canggih.
+                                </p>
+                                <p class="text-xs text-purple-400 mt-2"><a href="https://code.visualstudio.com/" target="_blank" class="hover:underline">code.visualstudio.com</a></p>
+                            </div>
+                        </div>
+                    `
+                },
+                // Slide 1.6: Langkah Kritis 1: Pasang Jantung Python (Instalasi)
+                { 
+                    title: "Pasang Python (Penting!)", 
+                    subtitle: "Jangan lupakan POIN KRITIS",
+                    emoji: "⚠️", 
+                    content: `
+                        <div class="space-y-6 max-w-2xl mx-auto text-left">
+                            <h3 class="text-2xl font-bold text-red-400 mb-4 text-center">⚠️ POIN KRITIS UNTUK DIINGAT! ⚠️</h3>
+                            <ol class="list-decimal list-inside space-y-4 text-lg text-gray-300">
+                                <li>Buka situs <a href="https://www.python.org/downloads/" target="_blank" class="text-purple-400 hover:underline">python.org</a> dan unduh versi terbaru.</li>
+                                <li>Saat muncul kotak instalasi, <b class="text-lime-400">TUNGGU DULU</b>!</li>
+                                <li>Cari dan **WAJIB DICEKLIS** tulisan di bagian bawah kotak:</li>
+                            </ol>
+                            <div class="bg-red-900/50 p-4 rounded-lg border border-red-700 text-center">
+                                <code class="code-font text-xl text-white font-bold">✅ Add Python to PATH</code>
+                            </div>
+                            <p class="text-sm text-gray-400">
+                                **Kenapa?** Ini seperti "mendaftarkan" Python ke seluruh komputer. Kalau tidak dicentang, komputer akan bingung di mana mencari si penerjemah! Setelah dicentang, baru klik "Install Now".
+                            </p>
+                        </div>
+                    `
+                },
+                // Slide 1.7: Langkah Kritis 2: Siapkan Buku Tulis Pintar (VS Code)
+                { 
+                    title: "Siapkan Buku Tulis Pintar (VS Code) 🦸‍♂️", 
+                    subtitle: "Langkah dasar instalasi VS Code",
+                    emoji: "📝", 
+                    content: `
+                        <div class="space-y-8 max-w-3xl mx-auto text-left">
+                            <div class="bg-slate-800/70 p-6 rounded-xl border border-slate-700">
+                                <h4 class="text-xl font-semibold text-lime-400 mb-3">1. Kunjungi Rumah VS Code</h4>
+                                <p class="text-gray-300 mb-4">Buka browser (seperti Google Chrome) dan pergi ke alamat <a href="https://code.visualstudio.com/" target="_blank" class="text-purple-400 hover:underline font-bold">code.visualstudio.com</a>. Lalu, klik tombol biru besar untuk mengunduh.</p>
+                                <img src="https://lh7-rt.googleusercontent.com/docsz/AD_4nXefKtgriRzpbeBdDdwbubm_5Pejzyd8j9wI5wvDtwHF8PfJs7ewV9uBC3xJRYLYjdM3m9bEx4M9X1YGivBqfkQ2ghpPdDkXulY-JZeXKth7xD9rmkBm2ZAcoAFE2f3tQqRAHRW2OubLOTybN2DYVNaJACcDeOHCnYMVGUOJVw_4xui38tTOOng?key=fOQ0ZuTlE6cQ1wVXMqg-Sw" alt="Halaman Download VS Code" class="rounded-lg shadow-lg mx-auto">
+                            </div>
+
+                            <div class="bg-slate-800/70 p-6 rounded-xl border border-slate-700">
+                                <h4 class="text-xl font-semibold text-lime-400 mb-3">2. Buka File yang Sudah Diunduh</h4>
+                                <p class="text-gray-300 mb-4">Setelah selesai, cari file yang baru saja diunduh (biasanya ada di folder "Downloads") lalu klik dua kali untuk membukanya.</p>
+                                <img src="https://lh7-rt.googleusercontent.com/docsz/AD_4nXcf8Np9gOa5tjuLdwYDYuoGBsN09fbQJ9ELcpxQ3v_Dz15mW0dVknOLTHGBe2Wlv0KSFwIvxgCaeDdmKbfwMuBylKu8eAwBF5nHkK7HApMvTAoSVMemFBUxyP6bSPOVQU215D2OI5vR2XHDdJ1FBrLrIhrUqaGCvdP2Cj8_xDSb05I1KaGiEAM?key=fOQ0ZuTlE6cQ1wVXMqg-Sw" alt="File Installer VS Code" class="rounded-lg shadow-lg mx-auto">
+                            </div>
+
+                            <div class="bg-slate-800/70 p-6 rounded-xl border border-slate-700">
+                                <h4 class="text-xl font-semibold text-lime-400 mb-3">3. Setujui Aturan Mainnya</h4>
+                                <p class="text-gray-300 mb-4">Akan muncul kotak perjanjian. Pilih <b class="text-white">"I accept the agreement"</b> (artinya: "Aku setuju dengan aturannya"), lalu klik tombol "Next".</p>
+                                <img src="https://lh7-rt.googleusercontent.com/docsz/AD_4nXfEylolwlvQ17v5daP6zJAWAZrfl0wTVyViI_NSVWuRW9boJK8VIkNK5uywnBajg2Vt9K6Uhq0hyCW5b1p2kDyed6sl-l-Fm8ZqCU130HGswm8HFjr9y1qmT7sDS3J3yxJacC3v_CQGzb8IjLaDaXD9LZtiHA7sSdILkTxAi0W8H3Hn0fpfFQA?key=fOQ0ZuTlE6cQ1wVXMqg-Sw" alt="Persetujuan Lisensi VS Code" class="rounded-lg shadow-lg mx-auto">
+                            </div>
+
+                            <div class="bg-slate-800/70 p-6 rounded-xl border border-slate-700">
+                                <h4 class="text-xl font-semibold text-lime-400 mb-3">4. Pilih Lokasi & Komponen Tambahan</h4>
+                                <p class="text-gray-300 mb-4">Biarkan saja lokasi yang sudah ada, tidak perlu diubah. Langsung klik "Next" saja terus sampai kamu melihat halaman seperti di bawah ini.</p>
+                                <p class="text-gray-300 mb-4">Di sini, pastikan kamu <b class="text-red-400">mencentang semua kotak</b> yang ada ya! Ini penting agar VS Code-nya jadi makin pintar. Setelah itu, klik "Next".</p>
+                                <img src="https://lh7-rt.googleusercontent.com/docsz/AD_4nXcbBYq-xpvskYYvQbCbidWICzFeTPszJ3pADwhvI4KqnIZRQOzfikjMCwFZpauBCHOY2IPbRzCYhUOfqgmnAvLa_dS7wu6sFr37ADIit43C3Zf_mKFSr1yIIEPNwBpzL1bzoV57xLWFoRg8028XW2vePs9cR-_QVDHg4rszGbujB8KglZk4MQ?key=fOQ0ZuTlE6cQ1wVXMqg-Sw" alt="Pilihan Komponen Tambahan VS Code" class="rounded-lg shadow-lg mx-auto">
+                            </div>
+
+                            <div class="bg-slate-800/70 p-6 rounded-xl border border-slate-700">
+                                <h4 class="text-xl font-semibold text-lime-400 mb-3">5. Mulai Instalasi & Selesai!</h4>
+                                <p class="text-gray-300 mb-4">Sekarang, klik tombol <b class="text-white">"Install"</b>.</p>
+                                <img src="https://lh7-rt.googleusercontent.com/docsz/AD_4nXfF7pBQYaBs3B3gM5fsFCMWdOFa0AeRnRuI0VULtnp9yiQ211ZKdWGbX8--cUCJ5hRpx4O3AyHY_7yiFYVwWmLQD-sDvo2olVEIXFbfthKl1GxC6J2eZqK9y-uNFmKhukme91FObSBCJSSba6w7t7JaqmAJVEbRg3VM-Yl9ooT1yg_RxxDR9A?key=fOQ0ZuTlE6cQ1wVXMqg-Sw" alt="Mulai Instalasi VS Code" class="rounded-lg shadow-lg mx-auto mb-4">
+                                <p class="text-gray-300 mb-4">Tunggu sebentar sampai prosesnya selesai, lalu klik <b class="text-white">"Finish"</b>. Hore! Buku tulis pintarmu sudah siap!</p>
+                                <img src="https://lh7-rt.googleusercontent.com/docsz/AD_4nXdIYiT0xmhLfxcVtzA3VhofP2kEvRTOzMLVIgpM68aP38rFf0VKUxpzsWH0u09z1JqUqbXK_ziMk49NZEbao7IIiz1FWk3BYGcoEDEudvb4PgUXeuIfWD18ZJhCv9ACuAyUyMi3qdN-Os4u6nQBdpjRXbigfMmviltHovOugylSVFwP4Spyz5c?key=fOQ0ZuTlE6cQ1wVXMqg-Sw" alt="Instalasi Selesai" class="rounded-lg shadow-lg mx-auto">
+                            </div>
+                        </div>
+                    `
+                },
+                // Slide 1.8: Pasang Kekuatan Super Python (Ekstensi VS Code)
+                { 
+                    title: "Pasang Kekuatan Super Python! (Extensions)", 
+                    subtitle: "Memberi VS Code kacamata ajaib",
+                    emoji: "🧱", 
+                    content: `
+                        <div class="space-y-6 max-w-2xl mx-auto text-left">
+                            <h3 class="text-2xl font-bold text-lime-400 mb-4 text-center">Langkah 2: Pasang Ekstensi Python</h3>
+                            <p class="text-gray-300">
+                                Ekstensi ini membuat VS Code bisa membaca, memahami, dan membantu kita menulis bahasa Python dengan benar!
+                            </p>
+                            <div class="bg-slate-900 p-6 rounded-lg border border-slate-700 space-y-4">
+                                <div class="flex items-center text-lg">
+                                    <span class="text-lime-400 font-bold mr-3">1.</span> Buka VS Code.
+                                </div>
+                                <div class="flex items-center text-lg">
+                                    <span class="text-lime-400 font-bold mr-3">2.</span> Klik ikon <b class="text-purple-400">Extensions (Balok 🧱)</b> di sisi kiri.
+                                </div>
+                                <div class="flex items-center text-lg">
+                                    <span class="text-lime-400 font-bold mr-3">3.</span> Di kolom pencarian, ketik "<b class="text-white">Python</b>".
+                                </div>
+                                <div class="flex items-center text-lg">
+                                    <span class="text-lime-400 font-bold mr-3">4.</span> Cari hasil dari "<b class="text-white">Microsoft</b>" dan klik tombol <b class="text-red-400">Install</b>.
+                                </div>
+                            </div>
+                            <div class="text-sm text-gray-400 italic text-center">
+                                Ini penting agar fitur seperti *syntax highlighting* (kode berwarna) dan *linting* (cek error otomatis) bisa berfungsi.
+                            </div>
+                        </div>
+                    `
+                },
+                // Slide 1.9: Program Pertama Kita! "Halo, Dunia!" 👋
+                { 
+                    title: "Menulis Instruksi Pertama Kita! 👋", 
+                    subtitle: "Membuat file hello_world.py",
+                    emoji: "📝", 
+                    content: `
+                        <div class="space-y-6 max-w-2xl mx-auto text-left">
+                            <h3 class="text-2xl font-bold text-purple-300 mb-4 text-center">Langkah Praktik Dasar:</h3>
+                            <ol class="list-decimal list-inside space-y-4 text-lg text-gray-300">
+                                <li>Buat folder baru di komputer, namanya: <b class="text-white">Belajar Python</b>.</li>
+                                <li>Di VS Code, buat file baru (Ctrl+N).</li>
+                                <li>**SIMPAN FILE** (Ctrl+S) di dalam folder tadi.</li>
+                                <li>Beri nama file: <code class="code-font text-lime-400">hello_world.py</code> (<b class="text-red-400">Ingat!</b> Akhirannya harus <code class="code-font text-lime-400">.py</code>!)</li>
+                            </ol>
+                            
+                            <h4 class="text-xl font-semibold text-lime-400 mt-6">Perintah Kunci: <code class="code-font text-white">print()</code></h4>
+                            <p class="text-gray-300">
+                                Fungsinya: Menyuruh komputer untuk "mengucapkan" atau "menampilkan" sesuatu di layar.
+                            </p>
+                        </div>
+                    `
+                },
+                // Slide 1.9: Rahasia Perintah print() 🗣️
+                {
+                    title: "Cara Memanggil Perintah print()",
+                    subtitle: "Aturan Emas print()",
+                    emoji: "🗣️",
+                    content: `
+                        <div class="space-y-6 max-w-2xl mx-auto text-left">
+                            <h3 class="text-2xl font-bold text-lime-400 mb-4 text-center">Aturan Emas:</h3>
+                            <ul class="list-disc list-inside space-y-2 text-lg text-gray-300">
+                                <li>Perintahnya harus persis: <code class="code-font text-white">print</code></li>
+                                <li>Setelah print, harus ada tanda kurung: <code class="code-font text-white">( )</code></li>
+                                <li>Teks yang ingin diucapkan harus diapit tanda kutip: <code class="code-font text-white">" "</code> (Tanda kutip ini penting agar komputer tahu itu adalah kata-kata biasa, bukan kode perintah!)</li>
+                            </ul>
+                            
+                            <div class="bg-slate-900 rounded-lg p-6 border border-slate-700 text-left">
+                                <code class="code-font text-lime-300 text-sm block">
+                                    <span class="text-gray-500"># Ini adalah instruksi untuk komputer: "Tampilkan teks ini di layar!"</span><br>
+                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"Halo, teman-teman semua!"</span>) 
+                                </code>
+                            </div>
+                        </div>
+                    `
+                },
+                // Slide 1.10: Jalankan Program! ⏯️
+                {
+                    title: "Tekan Tombol Ajaib!",
+                    subtitle: "Menjalankan program pertama kita",
+                    emoji: "⏯️", 
+                    content: `
+                        <div class="space-y-6 max-w-2xl mx-auto text-left">
+                            <h3 class="text-2xl font-bold text-purple-300 mb-4 text-center">Langkah-Langkah:</h3>
+                            <p class="text-lg text-gray-300 text-center">Ketik kode ini di file <code class="code-font text-lime-400">hello_world.py</code>:</p>
+                            <div class="bg-slate-900 rounded-lg p-6 border border-slate-700 text-left">
+                                <code class="code-font text-lime-300 text-sm block">
+                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"Yey! Aku anak Indonesia yang jago koding!"</span>) 
+                                </code>
+                            </div>
+                            
+                            <p class="text-lg text-gray-300 text-center">
+                                Di VS Code, cukup tekan tombol <b class="text-white">Run (ikon Play ▶️)</b> di pojok kanan atas, atau tekan tombol **F5** di keyboard!
+                            </p>
+                        </div>
+                    `
+                },
+            ],
+            // Meetings 2-12 adalah stubs
+            2: [
+                {
+                    title: "Ingat print()? Sekarang Kita Ajarkan Komputer Mengingat!",
+                    subtitle: "Review Cepat & Kotak Ingatan",
+                    emoji: "🧠",
+                    content: `
+                        <div class="text-left space-y-6 max-w-3xl mx-auto">
+                            <div>
+                                <h3 class="text-2xl font-bold text-lime-400 mb-3">Review Cepat ⚡</h3>
+                                <p class="text-lg text-gray-300">
+                                    Di Pertemuan 1, kita belajar menyuruh komputer 'ngomong' pakai perintah: <code class="code-font bg-slate-800 p-1 rounded">print("teks")</code>.
+                                </p>
+                                <p class="text-lg text-gray-300 mt-2">
+                                    Tapi... perintah itu cuma bisa menampilkan, habis itu komputernya langsung <b class="text-red-400">lupa</b>!
+                                </p>
+                            </div>
+                            <div class="p-6 bg-purple-900/50 rounded-xl border border-purple-700">
+                                <h4 class="text-xl font-semibold text-purple-300 mb-2">Apersepsi (Kotak Ingatan)</h4>
+                                <p class="text-lg text-gray-300">Otak kita bisa mengingat banyak hal: nama teman, umur, sudah mandi atau belum.</p>
+                                <p class="text-lg text-gray-300 mt-2">Hari ini, kita akan membuat <b class="text-white">"Kotak-Kotak Ingatan"</b> untuk komputer kita. Kotak ini disebut <b class="text-lime-400">Variabel</b>.</p>
+                            </div>
+                        </div>
+                    `
+                },
+                { 
+                    title: "Variabel: Kotak Penyimpanan Data!", 
+                    subtitle: "Apa itu Variabel?",
+                    emoji: "🏷️", 
+                    content: `
+                        <div class="text-left space-y-6 max-w-3xl mx-auto">
+                            <h3 class="text-2xl font-bold text-lime-400 mb-3">Analogi (Kotak Berlabel)</h3>
+                            <p class="text-lg text-gray-300">
+                                Bayangkan Variabel itu seperti sebuah <b class="text-purple-400">kotak kosong</b> yang bisa kita beri label.
+                            </p>
+                            <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 space-y-4">
+                                <p>1. Kita beri <b class="text-lime-400">label</b> di luar kotak (ini adalah <code class="code-font">Nama Variabel</code>).</p>
+                                <p>2. Kita masukkan sesuatu ke dalamnya (ini adalah <code class="code-font">Nilai / Data</code>).</p>
+                            </div>
+                            <div class="bg-purple-900/50 p-6 rounded-xl border border-purple-700">
+                                <p class="font-semibold text-purple-300 mb-2">Contoh:</p>
+                                <p class="text-gray-300">Kita ambil kotak kosong, kita tempel label: <code class="code-font text-lime-300">nama_hewan</code>, lalu kita masukkan kertas bertuliskan: <code class="code-font text-orange-400">"Kucing"</code>.</p>
+                                <p class="text-gray-300 mt-4">Di dalam Python, kita menulisnya:</p>
+                                <code class="code-font text-white text-lg block bg-slate-900 p-2 rounded mt-2">nama_hewan = "Kucing"</code>
+                            </div>
+                             <div class="bg-red-900/50 p-4 rounded-lg border border-red-700 text-center">
+                                <p class="font-bold text-red-300">Perintah Rahasia (=):</p>
+                                <p class="text-white">Tanda <code class="code-font text-xl">=</code> di Python artinya BUKAN "sama dengan". Tanda <code class="code-font text-xl">=</code> artinya <b class="text-lime-400">"MASUKKAN NILAI INI KE DALAM KOTAK INI"</b>.</p>
+                            </div>
+                        </div>
+                    `
+                },
+                { 
+                    title: "Aturan Penamaan Variabel (Harus Rapi!)", 
+                    subtitle: "Aturan Membuat Nama Kotak (Variabel)",
+                    emoji: "📐", 
+                    content: `
+                        <div class="text-left space-y-6 max-w-3xl mx-auto">
+                            <h3 class="text-2xl font-bold text-lime-400 mb-4">3 Aturan Penting Agar Python Tidak Bingung:</h3>
+                            <div class="bg-slate-800 p-6 rounded-xl border border-slate-700">
+                                <h4 class="text-xl font-semibold text-purple-300 mb-2">1. Harus dimulai dengan HURUF atau Garis Bawah (_).</h4>
+                                <p><code class="code-font text-green-400">✅ Benar: nama_teman, _usia</code></p>
+                                <p><code class="code-font text-red-400">❌ Salah: 1umur, 4kaki</code> (Tidak boleh diawali angka!)</p>
+                            </div>
+                            <div class="bg-slate-800 p-6 rounded-xl border border-slate-700">
+                                <h4 class="text-xl font-semibold text-purple-300 mb-2">2. Tidak boleh ada spasi.</h4>
+                                <p><code class="code-font text-red-400">❌ Salah: nama lengkap</code></p>
+                                <p><code class="code-font text-green-400">✅ Benar: nama_lengkap</code> (Kita sebut ini <b class="text-white">Snake Case</b> 🐍!)</p>
+                            </div>
+                            <div class="bg-slate-800 p-6 rounded-xl border border-slate-700">
+                                <h4 class="text-xl font-semibold text-purple-300 mb-2">3. Huruf besar dan kecil itu berbeda!</h4>
+                                <p><code class="code-font text-white">Umur</code> berbeda dengan <code class="code-font text-white">umur</code>. Hati-hati ya!</p>
+                            </div>
+                        </div>
+                    `
+                },
+                { 
+                    title: "Komentar: Catatan untuk Diri Kita Sendiri", 
+                    subtitle: "Catatan Kecil untuk Manusia (# Komentar)",
+                    emoji: "📝", 
+                    content: `
+                        <div class="text-left space-y-6 max-w-3xl mx-auto">
+                            <h3 class="text-2xl font-bold text-lime-400 mb-3">Kapan kita butuh Komentar?</h3>
+                            <p class="text-lg text-gray-300">
+                                Saat kita ingin memberi tahu orang lain (atau diri kita sendiri di masa depan!) apa maksud dari kode yang kita tulis.
+                            </p>
+                            <div class="bg-slate-800 p-6 rounded-xl border border-slate-700">
+                                <h4 class="text-xl font-semibold text-purple-300 mb-2">Caranya:</h4>
+                                <p class="text-lg">Gunakan tanda pagar <code class="code-font text-lime-400">#</code> di awal baris.</p>
+                                <p class="text-gray-400 mt-2">Apapun yang ada setelah tanda # di baris itu, akan diabaikan oleh Python. Komputer tidak akan membacanya!</p>
+                            </div>
+                            <div class="bg-slate-900 rounded-lg p-6 border border-slate-700 text-left">
+                                <code class="code-font text-lime-300 text-sm block">
+                                    <span class="text-gray-500"># Ini adalah komentar. Komputer tidak peduli</span><br>
+                                    <span class="text-white">nama = </span><span class="text-orange-400">"Jono"</span>  <span class="text-gray-500"># Komentar: Menyimpan nama siswa</span><br>
+                                    <span class="text-white">umur = </span><span class="text-cyan-400">7</span>        <span class="text-gray-500"># Komentar: Menyimpan umur (bilangan bulat)</span>
+                                </code>
+                            </div>
+                        </div>
+                    `
+                },
+                { 
+                    title: "Tipe Data: Isi dari Kotak Ingatan", 
+                    subtitle: "Tipe Data: Isi Kotak Itu Berbeda-beda!",
+                    emoji: "🌈", 
+                    content: `
+                        <div class="text-left space-y-4 max-w-4xl mx-auto">
+                            <p class="text-lg text-gray-300 text-center">Isi kotak ingatan (variabel) kita ada 4 jenis dasar:</p>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-sm text-left text-gray-400">
+                                    <thead class="text-xs text-lime-300 uppercase bg-slate-800">
+                                        <tr>
+                                            <th scope="col" class="px-6 py-3">Nama Tipe (Sebutan Keren)</th>
+                                            <th scope="col" class="px-6 py-3">Untuk Menyimpan Apa?</th>
+                                            <th scope="col" class="px-6 py-3">Aturan Khas</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="bg-slate-800/50 border-b border-slate-700">
+                                            <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">Teks (String)</th>
+                                            <td class="px-6 py-4">Nama, alamat, kalimat. Contoh: "Budi"</td>
+                                            <td class="px-6 py-4">Wajib diapit tanda kutip ("" atau '')</td>
+                                        </tr>
+                                        <tr class="bg-slate-800/50 border-b border-slate-700">
+                                            <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">Bilangan Bulat (Integer)</th>
+                                            <td class="px-6 py-4">Angka tanpa koma. Contoh: Umur (7), Jumlah Kucing (3)</td>
+                                            <td class="px-6 py-4">Tidak perlu tanda kutip.</td>
+                                        </tr>
+                                        <tr class="bg-slate-800/50 border-b border-slate-700">
+                                            <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">Bilangan Koma (Float)</th>
+                                            <td class="px-6 py-4">Angka yang ada komanya. Contoh: Tinggi (120.5)</td>
+                                            <td class="px-6 py-4">Gunakan titik (.) untuk koma.</td>
+                                        </tr>
+                                        <tr class="bg-slate-800/50">
+                                            <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">Ya/Tidak (Boolean)</th>
+                                            <td class="px-6 py-4">Hanya bisa True (Benar) atau False (Salah).</td>
+                                            <td class="px-6 py-4">Diawali huruf besar (T/F).</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    `
+                },
+                { 
+                    title: "Latihan type(): Mengecek Isi Kotak", 
+                    subtitle: "Praktek Tipe Data & Cek Tipe (type())",
+                    emoji: "🧐", 
+                    content: `
+                        <div class="text-left space-y-6 max-w-3xl mx-auto">
+                            <h3 class="text-2xl font-bold text-lime-400 mb-3">Fungsi <code class="code-font">type()</code></h3>
+                            <p class="text-lg text-gray-300">
+                                Jika kamu lupa atau ragu isi kotakmu tipe data apa, kamu bisa tanya Python menggunakan perintah <code class="code-font bg-slate-800 p-1 rounded">type()</code>.
+                            </p>
+                            <div class="bg-slate-900 rounded-lg p-6 border border-slate-700 text-left">
+                                <code class="code-font text-lime-300 text-sm block">
+                                    <span class="text-white">nama = </span><span class="text-orange-400">"Sinta"</span>       <span class="text-gray-500"># &lt;--- Ini String (teks), pakai tanda kutip!</span><br>
+                                    <span class="text-white">usia = </span><span class="text-cyan-400">7</span>             <span class="text-gray-500"># &lt;--- Ini Integer (bilangan bulat)</span><br>
+                                    <span class="text-white">tinggi_meter = </span><span class="text-cyan-400">1.25</span>  <span class="text-gray-500"># &lt;--- Ini Float (bilangan koma/desimal)</span><br>
+                                    <span class="text-white">sudah_pulang = </span><span class="text-purple-400">True</span>  <span class="text-gray-500"># &lt;--- Ini Boolean (Ya/Tidak)</span><br><br>
+                                    <span class="text-purple-400">print</span>(<span class="text-purple-400">type</span>(nama))<br>
+                                    <span class="text-purple-400">print</span>(<span class="text-purple-400">type</span>(tinggi_meter))
+                                </code>
+                            </div>
+                             <div class="bg-purple-900/50 p-4 rounded-lg border border-purple-700 text-left">
+                                <p class="font-semibold text-purple-300">Hasilnya:</p>
+                                <code class="code-font text-white block">&lt;class 'str'&gt;</code>
+                                <code class="code-font text-white block">&lt;class 'float'&gt;</code>
+                            </div>
+                        </div>
+                    `
+                },
+                { 
+                    title: "Ayo Buat Biodata Komputer Kita!", 
+                    subtitle: "Praktik Terbimbing: Biodata Kita!",
+                    emoji: "🙋‍♀️", 
+                    content: `
+                        <div class="text-left space-y-6 max-w-3xl mx-auto">
+                            <p class="text-lg text-gray-300 text-center">File: <code class="code-font bg-slate-800 p-1 rounded">biodata.py</code></p>
+                            <div class="bg-slate-900 rounded-lg p-6 border border-slate-700 text-left">
+                                <code class="code-font text-lime-300 text-sm block">
+                                    <span class="text-gray-500"># Langkah 1: Buat Variabel (Kotak Ingatan)</span><br>
+                                    <span class="text-white">nama = </span><span class="text-orange-400">"Ahmad"</span><br>
+                                    <span class="text-white">umur = </span><span class="text-cyan-400">7</span><br>
+                                    <span class="text-white">tinggi_cm = </span><span class="text-cyan-400">120.5</span><br>
+                                    <span class="text-white">sudah_sarapan = </span><span class="text-purple-400">True</span><br><br>
+                                    
+                                    <span class="text-gray-500"># Langkah 2: Cetak Nilainya</span><br>
+                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"Halo! Nama saya:"</span>, nama)<br>
+                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"Umur saya:"</span>, umur, <span class="text-orange-400">"tahun"</span>)<br><br>
+
+                                    <span class="text-gray-500"># Langkah 3: Cek Tipe Datanya</span><br>
+                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"--- Cek Tipe Data ---"</span>)<br>
+                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"Tipe data nama:"</span>, <span class="text-purple-400">type</span>(nama))<br>
+                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"Tipe data sudah_sarapan:"</span>, <span class="text-purple-400">type</span>(sudah_sarapan))
+                                </code>
+                            </div>
+                        </div>
+                    `
+                },
+                { 
+                    title: "Kartu Pelajar Digital (ASCII Art)", 
+                    subtitle: "Proyek Mini: Kartu Pelajar Keren!",
+                    emoji: "🏆", 
+                    content: `
+                        <div class="text-left space-y-4 max-w-3xl mx-auto">
+                             <p class="text-lg text-gray-300 text-center">Tujuan: Menggabungkan <code class="code-font">print()</code>, Variabel, dan String untuk membuat kartu informasi yang rapi.</p>
+                             <p class="text-lg text-gray-300 text-center">File: <code class="code-font bg-slate-800 p-1 rounded">kartu_pelajar.py</code></p>
+                            <div class="bg-slate-900 rounded-lg p-6 border border-slate-700 text-left">
+                                <code class="code-font text-lime-300 text-sm block whitespace-pre">
+<span class="text-gray-500"># --- Data Siswa ---</span>
+<span class="text-white">nama_siswa = </span><span class="text-orange-400">"Ahmad Zaelani"</span>
+<span class="text-white">nis        = </span><span class="text-orange-400">"102345"</span>
+<span class="text-white">kelas      = </span><span class="text-orange-400">"10 A"</span>
+<span class="text-white">sekolah    = </span><span class="text-orange-400">"SD Coding Hebat"</span>
+
+<span class="text-gray-500"># --- Desain Kartu ---</span>
+<span class="text-purple-400">print</span>(<span class="text-orange-400">"========================================="</span>)
+<span class="text-purple-400">print</span>(<span class="text-orange-400">"          KARTU PELAJAR DIGITAL          "</span>)
+<span class="text-purple-400">print</span>(<span class="text-orange-400">"-----------------------------------------"</span>)
+<span class="text-purple-400">print</span>(<span class="text-orange-400">" Nama    : "</span> + nama_siswa) 
+<span class="text-purple-400">print</span>(<span class="text-orange-400">" NIS     : "</span> + nis)
+<span class="text-purple-400">print</span>(<span class="text-orange-400">" Kelas   : "</span> + kelas)
+<span class="text-purple-400">print</span>(<span class="text-orange-400">" Sekolah : "</span> + sekolah)
+<span class="text-purple-400">print</span>(<span class="text-orange-400">"========================================="</span>)
+                                </code>
+                            </div>
+                        </div>
+                    `
+                },
+                { 
+                    title: "Kita Sudah Jago Menyimpan Ingatan!", 
+                    subtitle: "Rangkuman dan Sampai Jumpa!",
+                    emoji: "👋", 
+                    content: `
+                        <div class="text-left space-y-6 max-w-3xl mx-auto">
+                            <h3 class="text-2xl font-bold text-lime-400 mb-3">Rangkuman Hari Ini:</h3>
+                            <ul class="list-disc list-inside space-y-3 text-lg text-gray-300">
+                                <li><b class="text-white">Variabel</b> adalah "kotak ingatan" yang diberi nama.</li>
+                                <li>Tanda <code class="code-font bg-slate-800 p-1 rounded">=</code> berarti "masukkan ke dalam kotak".</li>
+                                <li>Ada 4 tipe data dasar: <b class="text-orange-400">String</b> (teks), <b class="text-cyan-400">Integer</b> (bilangan bulat), <b class="text-cyan-400">Float</b> (bilangan koma), dan <b class="text-purple-400">Boolean</b> (True/False).</li>
+                                <li>Tanda <code class="code-font bg-slate-800 p-1 rounded">#</code> adalah catatan untuk manusia (Komentar).</li>
+                            </ul>
+                            <div class="bg-purple-900/50 p-6 rounded-xl border border-purple-700">
+                                <h4 class="text-xl font-semibold text-purple-300 mb-2">Materi Minggu Depan:</h4>
+                                <p class="text-lg text-gray-300">Kita akan membuat kotak-kotak ingatan ini jadi lebih pintar! Kita akan belajar bagaimana melakukan perhitungan matematika dengan angka-angka yang sudah kita simpan! (Contoh: Menghitung total harga jajan!)</p>
+                                <p class="text-xl text-white font-bold mt-4">Sampai jumpa! 👋</p>
+                            </div>
+                        </div>
+                    `
+                },
+            ],
+            3: [
+                {
+                    title: "Kotak Ingatan Kita Akan Mulai Berhitung!",
+                    subtitle: "Review Cepat & Kalkulator",
+                    emoji: "🧠",
+                    content: `
+                        <div class="text-left space-y-6 max-w-3xl mx-auto">
+                            <div>
+                                <h3 class="text-2xl font-bold text-lime-400 mb-3">Review Cepat (3 Menit) ⚡</h3>
+                                <ul class="list-disc list-inside space-y-2 text-lg text-gray-300">
+                                    <li><b class="text-white">Variabel</b> adalah kotak ingatan untuk menyimpan data (teks, angka, ya/tidak).</li>
+                                    <li>Contoh: <code class="code-font bg-slate-800 p-1 rounded">umur = 7</code> (Angka Integer)</li>
+                                    <li>Contoh: <code class="code-font bg-slate-800 p-1 rounded">nama = "Rina"</code> (Teks String)</li>
+                                </ul>
+                                <p class="text-lg text-gray-300 mt-4">
+                                    Hari ini, kita akan membuat kotak ingatan ini saling berinteraksi! Kita akan ajarkan komputer cara menghitung dengan cepat dan benar, seperti <b class="text-purple-400">kalkulator ajaib</b>!
+                                </p>
+                            </div>
+                            <div class="p-6 bg-purple-900/50 rounded-xl border border-purple-700">
+                                <h4 class="text-xl font-semibold text-purple-300 mb-2">Apersepsi (Ajak Berpikir)</h4>
+                                <p class="text-lg text-gray-300">Saat kita jajan, kita pasti menghitung total harga. Saat kita mendapat sisa uang kembalian, kita menghitungnya. Semua itu butuh <b class="text-lime-400">Operator Matematika</b>.</p>
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Alat Hitung Dasar (Aritmatika)",
+                    subtitle: "Operator Aritmatika: Alat Hitung Python",
+                    emoji: "➕",
+                    content: `
+                        <div class="text-left space-y-4 max-w-4xl mx-auto">
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-sm text-left text-gray-400">
+                                    <thead class="text-xs text-lime-300 uppercase bg-slate-800">
+                                        <tr>
+                                            <th scope="col" class="px-6 py-3">Operator</th>
+                                            <th scope="col" class="px-6 py-3">Nama</th>
+                                            <th scope="col" class="px-6 py-3">Contoh di Python</th>
+                                            <th scope="col" class="px-6 py-3">Analogi Sehari-hari</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="bg-slate-800/50 border-b border-slate-700">
+                                            <td class="px-6 py-4 font-bold text-xl text-center text-white">+</td>
+                                            <td class="px-6 py-4">Tambah</td>
+                                            <td class="px-6 py-4"><code class="code-font">total = 2 + 3</code></td>
+                                            <td class="px-6 py-4">Menjumlahkan uang jajan hari ini dan kemarin.</td>
+                                        </tr>
+                                        <tr class="bg-slate-800/50 border-b border-slate-700">
+                                            <td class="px-6 py-4 font-bold text-xl text-center text-white">-</td>
+                                            <td class="px-6 py-4">Kurang</td>
+                                            <td class="px-6 py-4"><code class="code-font">sisa = 5 - 2</code></td>
+                                            <td class="px-6 py-4">Menghitung sisa uang setelah membeli jajan.</td>
+                                        </tr>
+                                        <tr class="bg-slate-800/50 border-b border-slate-700">
+                                            <td class="px-6 py-4 font-bold text-xl text-center text-white">*</td>
+                                            <td class="px-6 py-4">Kali</td>
+                                            <td class="px-6 py-4"><code class="code-font">luas = 4 * 5</code></td>
+                                            <td class="px-6 py-4">Membeli 5 pensil dengan harga Rp 2.000 per buah.</td>
+                                        </tr>
+                                        <tr class="bg-slate-800/50">
+                                            <td class="px-6 py-4 font-bold text-xl text-center text-white">/</td>
+                                            <td class="px-6 py-4">Bagi</td>
+                                            <td class="px-6 py-4"><code class="code-font">bagi = 10 / 2</code></td>
+                                            <td class="px-6 py-4">Membagi kue 10 potong untuk 2 teman (hasilnya bisa ada koma).</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Operator Aritmatika yang Paling Keren!",
+                    subtitle: "Operator Aritmatika Khusus!",
+                    emoji: "🍕",
+                    content: `
+                        <div class="text-left space-y-4 max-w-4xl mx-auto">
+                             <div class="overflow-x-auto mb-4">
+                                <table class="w-full text-sm text-left text-gray-400">
+                                    <thead class="text-xs text-lime-300 uppercase bg-slate-800">
+                                        <tr>
+                                            <th scope="col" class="px-6 py-3">Operator</th>
+                                            <th scope="col" class="px-6 py-3">Nama</th>
+                                            <th scope="col" class="px-6 py-3">Analogi Sehari-hari</th>
+                                            <th scope="col" class="px-6 py-3">Contoh & Hasil</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="bg-slate-800/50 border-b border-slate-700">
+                                            <td class="px-6 py-4 font-bold text-xl text-center text-white">**</td>
+                                            <td class="px-6 py-4">Pangkat</td>
+                                            <td class="px-6 py-4">Menghitung luas ruangan berbentuk persegi.</td>
+                                            <td class="px-6 py-4"><code class="code-font">3 ** 2</code> hasilnya <code class="code-font">9</code></td>
+                                        </tr>
+                                        <tr class="bg-slate-800/50 border-b border-slate-700">
+                                            <td class="px-6 py-4 font-bold text-xl text-center text-white">//</td>
+                                            <td class="px-6 py-4">Bagi Bulat</td>
+                                            <td class="px-6 py-4">Punya 10 biskuit dibagi ke 3 teman. Berapa banyak biskuit <b class="text-white">UTUH</b> yang didapat masing-masing?</td>
+                                            <td class="px-6 py-4"><code class="code-font">10 // 3</code> hasilnya <code class="code-font">3</code></td>
+                                        </tr>
+                                        <tr class="bg-slate-800/50">
+                                            <td class="px-6 py-4 font-bold text-xl text-center text-white">%</td>
+                                            <td class="px-6 py-4">Modulo</td>
+                                            <td class="px-6 py-4">Punya 10 biskuit dibagi ke 3 teman. Berapa <b class="text-white">SISA</b> biskuitnya untuk kita?</td>
+                                            <td class="px-6 py-4"><code class="code-font">10 % 3</code> hasilnya <code class="code-font">1</code></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="bg-slate-900 rounded-lg p-4 border border-slate-700 text-left">
+                                <code class="code-font text-lime-300 text-sm block">
+                                    <span class="text-gray-500"># Variabel untuk contoh</span><br>
+                                    <span class="text-white">uang_jajan = </span><span class="text-cyan-400">10000</span><br>
+                                    <span class="text-white">harga_bakso = </span><span class="text-cyan-400">8000</span><br><br>
+                                    <span class="text-gray-500"># Pengurangan: Sisa uang</span><br>
+                                    <span class="text-white">sisa_uang = uang_jajan - harga_bakso</span><br>
+                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"1. Sisa uang setelah beli bakso:"</span>, sisa_uang)<br><br>
+                                    <span class="text-gray-500"># Perkalian: Total harga permen</span><br>
+                                    <span class="text-white">total_harga_permen = </span><span class="text-cyan-400">3</span> * <span class="text-cyan-400">500</span><br>
+                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"2. Total harga 3 permen:"</span>, total_harga_permen)<br><br>
+                                    <span class="text-gray-500"># Pembagian Bulat (//) dan Sisa Bagi (%)</span><br>
+                                    <span class="text-white">jumlah_siswa = </span><span class="text-cyan-400">25</span><br>
+                                    <span class="text-white">satu_baris = </span><span class="text-cyan-400">4</span><br>
+                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"3. Jumlah baris penuh (//):"</span>, jumlah_siswa // satu_baris)<br>
+                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"4. Siswa yang tersisa (%):"</span>, jumlah_siswa % satu_baris)
+                                </code>
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Komputer Bisa Bertanya dengan input()",
+                    subtitle: "input(): Komputer Berbicara dan Bertanya!",
+                    emoji: "🗣️",
+                    content: `
+                        <div class="text-left space-y-6 max-w-3xl mx-auto">
+                            <h3 class="text-2xl font-bold text-lime-400 mb-3">Fungsi input()</h3>
+                            <ul class="list-disc list-inside space-y-2 text-lg text-gray-300">
+                                <li>Perintah ini membuat program kita <b class="text-white">berhenti sebentar</b>.</li>
+                                <li>Menampilkan sebuah pertanyaan yang kita tulis.</li>
+                                <li>Menunggu kamu mengetik sesuatu di keyboard, lalu menekan <b class="text-white">Enter</b>.</li>
+                                <li>Apapun yang kamu ketik, akan <b class="text-purple-400">disimpan ke dalam variabel</b>.</li>
+                            </ul>
+                            <div class="bg-slate-900 rounded-lg p-6 border border-slate-700 text-left">
+                                <code class="code-font text-lime-300 text-sm block">
+                                    <span class="text-gray-500"># Komputer akan bertanya, lalu jawabanmu disimpan di kotak "nama_kita"</span><br>
+                                    <span class="text-white">nama_kita = </span><span class="text-purple-400">input</span>(<span class="text-orange-400">"Siapa nama kamu? "</span>)<br>
+                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"Halo, "</span> + nama_kita + <span class="text-orange-400">"! Senang bertemu denganmu."</span>)
+                                </code>
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Hati-Hati! input() Selalu Berkata Itu Teks!",
+                    subtitle: "Jebakan Terbesar! (String vs Integer)",
+                    emoji: "⚠️",
+                    content: `
+                        <div class="text-left space-y-6 max-w-3xl mx-auto">
+                            <div class="p-6 bg-red-900/50 rounded-xl border border-red-700">
+                                <h4 class="text-xl font-semibold text-red-300 mb-2">Jebakan Tipe Data!</h4>
+                                <p class="text-lg text-gray-200">Semua yang diambil oleh <code class="code-font">input()</code>, <b class="text-white">selalu</b> dianggap sebagai <b class="text-lime-400">Teks (String)</b>, walaupun yang kamu ketik adalah angka!</p>
+                            </div>
+                            <h3 class="text-2xl font-bold text-lime-400 mb-3">Apa yang terjadi jika kita menjumlahkan Teks Angka?</h3>
+                            <div class="bg-slate-900 rounded-lg p-6 border border-slate-700 text-left">
+                                <code class="code-font text-lime-300 text-sm block">
+                                    <span class="text-gray-500"># Pengguna mengetik 5 dan 10</span><br>
+                                    <span class="text-white">angka_1_str = </span><span class="text-purple-400">input</span>(<span class="text-orange-400">"Angka pertama: "</span>) <span class="text-gray-500"># Python anggap ini "5" (teks)</span><br>
+                                    <span class="text-white">angka_2_str = </span><span class="text-purple-400">input</span>(<span class="text-orange-400">"Angka kedua: "</span>)   <span class="text-gray-500"># Python anggap ini "10" (teks)</span><br><br>
+                                    <span class="text-white">hasil_salah = angka_1_str + angka_2_str</span><br>
+                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"Hasil yang SALAH:"</span>, hasil_salah)
+                                </code>
+                            </div>
+                            <div class="bg-purple-900/50 p-4 rounded-lg border border-purple-700 text-left">
+                                <p class="font-semibold text-purple-300">Hasilnya:</p>
+                                <code class="code-font text-white block">Hasil yang SALAH: 510 ❌</code>
+                                <p class="text-sm text-gray-300 mt-2">Ini seperti menggabungkan dua kertas bertuliskan angka, bukan menjumlahkan nilainya!</p>
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Type Casting: Mengubah Teks Menjadi Angka Murni!",
+                    subtitle: "Solusi: Type Casting (Konversi Tipe Data)",
+                    emoji: "🪄",
+                    content: `
+                        <div class="text-left space-y-6 max-w-3xl mx-auto">
+                            <h3 class="text-2xl font-bold text-lime-400 mb-3">Apa itu Type Casting?</h3>
+                            <p class="text-lg text-gray-300">Ini adalah sihir di Python untuk mengubah tipe data satu menjadi tipe data lain.</p>
+                            <div>
+                                <h4 class="text-xl font-semibold text-purple-300 mb-2">2 Mantra Penting:</h4>
+                                <p class="text-lg text-gray-300"><b class="text-white"><code class="code-font">int()</code></b>: Mengubah teks angka menjadi <b class="text-cyan-400">Bilangan Bulat</b> (Integer).</p>
+                                <p class="text-lg text-gray-300"><b class="text-white"><code class="code-font">float()</code></b>: Mengubah teks angka menjadi <b class="text-cyan-400">Bilangan Koma</b> (Float).</p>
+                            </div>
+                            <h3 class="text-2xl font-bold text-lime-400 mb-3">Kode yang BENAR:</h3>
+                            <div class="bg-slate-900 rounded-lg p-6 border border-slate-700 text-left">
+                                <code class="code-font text-lime-300 text-sm block">
+                                    <span class="text-gray-500"># Kita langsung ubah input menjadi angka murni!</span><br>
+                                    <span class="text-white">angka_1 = </span><span class="text-purple-400">int</span>(<span class="text-purple-400">input</span>(<span class="text-orange-400">"Angka pertama: "</span>)) <span class="text-gray-500"># Angka 5 sekarang murni Integer</span><br>
+                                    <span class="text-white">angka_2 = </span><span class="text-purple-400">int</span>(<span class="text-purple-400">input</span>(<span class="text-orange-400">"Angka kedua: "</span>))   <span class="text-gray-500"># Angka 10 sekarang murni Integer</span><br><br>
+                                    <span class="text-white">hasil_benar = angka_1 + angka_2</span><br>
+                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"Hasil yang BENAR:"</span>, hasil_benar)
+                                </code>
+                            </div>
+                             <div class="bg-purple-900/50 p-4 rounded-lg border border-purple-700 text-left">
+                                <p class="font-semibold text-purple-300">Hasilnya:</p>
+                                <code class="code-font text-white block">Hasil yang BENAR: 15 ✅</code>
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Operator Assignment: Perbarui Kotak dengan Cepat!",
+                    subtitle: "Cara Cepat Mengubah Nilai",
+                    emoji: "🔄",
+                    content: `
+                        <div class="text-left space-y-4 max-w-4xl mx-auto">
+                            <p class="text-lg text-gray-300 text-center">Tujuan: Untuk memperbarui nilai sebuah variabel berdasarkan nilai lamanya. (Contoh: Menambahkan skor, atau mengurangi uang).</p>
+                            <div class="overflow-x-auto mb-4">
+                                <table class="w-full text-sm text-left text-gray-400">
+                                    <thead class="text-xs text-lime-300 uppercase bg-slate-800">
+                                        <tr>
+                                            <th scope="col" class="px-6 py-3">Operator</th>
+                                            <th scope="col" class="px-6 py-3">Arti Panjang</th>
+                                            <th scope="col" class="px-6 py-3">Arti Pendek</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="bg-slate-800/50 border-b border-slate-700">
+                                            <td class="px-6 py-4 font-bold text-xl text-center text-white">=</td>
+                                            <td class="px-6 py-4"><code class="code-font">skor = 10</code></td>
+                                            <td class="px-6 py-4">Simpan nilai 10 ke dalam skor.</td>
+                                        </tr>
+                                        <tr class="bg-slate-800/50 border-b border-slate-700">
+                                            <td class="px-6 py-4 font-bold text-xl text-center text-white">+=</td>
+                                            <td class="px-6 py-4"><code class="code-font">skor = skor + 5</code></td>
+                                            <td class="px-6 py-4"><code class="code-font">skor += 5</code> (Tambah Cepat)</td>
+                                        </tr>
+                                        <tr class="bg-slate-800/50">
+                                            <td class="px-6 py-4 font-bold text-xl text-center text-white">-=</td>
+                                            <td class="px-6 py-4"><code class="code-font">uang = uang - 2000</code></td>
+                                            <td class="px-6 py-4"><code class="code-font">uang -= 2000</code> (Kurang Cepat)</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <h3 class="text-2xl font-bold text-lime-400 mb-3 pt-4 text-center">Latihan Uang Saku</h3>
+                             <div class="bg-slate-900 rounded-lg p-6 border border-slate-700 text-left">
+                                <code class="code-font text-lime-300 text-sm block">
+                                    <span class="text-white">uang_saku = </span><span class="text-cyan-400">20000</span><br>
+                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"Uang saku awal:"</span>, uang_saku)<br><br>
+                                    <span class="text-gray-500"># Beli es teh seharga 3000</span><br>
+                                    <span class="text-white">uang_saku -= </span><span class="text-cyan-400">3000</span><br>
+                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"Sisa uang setelah beli es teh:"</span>, uang_saku)<br><br>
+                                     <span class="text-gray-500"># Dapat tambahan uang dari Ibu 5000</span><br>
+                                    <span class="text-white">uang_saku += </span><span class="text-cyan-400">5000</span><br>
+                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"Uang saku sekarang:"</span>, uang_saku)
+                                </code>
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Tantangan Proyek: Kasir Kantin Python!",
+                    subtitle: "Proyek Akhir: Kasir Kantin Interaktif!",
+                    emoji: "🛒",
+                    content: `
+                        <div class="text-left space-y-6 max-w-3xl mx-auto">
+                            <p class="text-lg text-gray-300 text-center">Tujuan: Membuat program yang bisa menghitung total belanjaan dengan pajak!</p>
+                            <p class="text-lg text-gray-300 text-center">File: <code class="code-font bg-slate-800 p-1 rounded">kasir_kantin.py</code></p>
+                            <div>
+                                <h3 class="text-xl font-bold text-lime-400 mb-3">Langkah-Langkah:</h3>
+                                <ol class="list-decimal list-inside space-y-2 text-lg text-gray-300">
+                                    <li><b>Tanya Harga:</b> Gunakan <code class="code-font">input()</code> dan <code class="code-font">float()</code> untuk bertanya 3 harga barang.</li>
+                                    <li><b>Hitung Subtotal:</b> Jumlahkan 3 harga barang.</li>
+                                    <li><b>Hitung Pajak (PPN 11%):</b> <code class="code-font">pajak = subtotal * 11 / 100</code></li>
+                                    <li><b>Hitung Total Akhir:</b> <code class="code-font">total_bayar = subtotal + pajak</code></li>
+                                    <li><b>Cetak Rapi:</b> Tampilkan Subtotal, Pajak, dan Total Bayar!</li>
+                                </ol>
+                                <p class="text-sm text-gray-400 mt-2">Tips: Gunakan <code class="code-font">float()</code> karena harga bisa ada koma (misalnya, 2500.50).</p>
+                            </div>
+                            <div class="bg-slate-900 rounded-lg p-6 border border-slate-700 text-left">
+                                <code class="code-font text-lime-300 text-sm block">
+                                    <span class="text-gray-500"># --- Selamat Datang ---</span><br>
+                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"--- Kasir Kantin Kalananti ---"</span>)<br><br>
+                                    <span class="text-gray-500"># --- Input Harga ---</span><br>
+                                    <span class="text-white">harga1 = </span><span class="text-purple-400">float</span>(<span class="text-purple-400">input</span>(<span class="text-orange-400">"Harga barang 1: Rp "</span>))<br>
+                                    <span class="text-white">harga2 = </span><span class="text-purple-400">float</span>(<span class="text-purple-400">input</span>(<span class="text-orange-400">"Harga barang 2: Rp "</span>))<br>
+                                    <span class="text-white">harga3 = </span><span class="text-purple-400">float</span>(<span class="text-purple-400">input</span>(<span class="text-orange-400">"Harga barang 3: Rp "</span>))<br><br>
+                                    <span class="text-gray-500"># --- Proses Hitung ---</span><br>
+                                    <span class="text-white">subtotal = harga1 + harga2 + harga3</span><br>
+                                    <span class="text-white">pajak = subtotal * </span><span class="text-cyan-400">11</span> / <span class="text-cyan-400">100</span><br>
+                                    <span class="text-white">total_bayar = subtotal + pajak</span><br><br>
+                                    <span class="text-gray-500"># --- Cetak Struk ---</span><br>
+                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"-------------------------"</span>)<br>
+                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"Subtotal   : Rp"</span>, subtotal)<br>
+                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"Pajak 11%  : Rp"</span>, pajak)<br>
+                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"Total Bayar: Rp"</span>, total_bayar)<br>
+                                </code>
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Apa yang Sudah Kita Pelajari Hari Ini?",
+                    subtitle: "Rangkuman Akhir",
+                    emoji: "🏁",
+                    content: `
+                        <div class="text-left space-y-6 max-w-3xl mx-auto">
+                            <h3 class="text-2xl font-bold text-lime-400 mb-3">Rangkuman Hari Ini:</h3>
+                            <ul class="list-disc list-inside space-y-3 text-lg text-gray-300">
+                                <li><b class="text-white">Operator Aritmatika:</b> Kita punya alat hitung canggih (<code class="code-font bg-slate-800 p-1 rounded">+ - * / ** // %</code>).</li>
+                                <li><b class="text-white"><code class="code-font">input()</code>:</b> Perintah untuk membuat program kita bisa <b class="text-purple-400">bertanya</b> kepada pengguna.</li>
+                                <li><b class="text-white">Type Casting (<code class="code-font">int()</code>, <code class="code-font">float()</code>):</b> Sihir untuk mengubah input teks menjadi angka murni agar bisa dihitung.</li>
+                                <li><b class="text-white">Operator Assignment (<code class="code-font">+=</code>, <code class="code-font">-=</code>):</b> Cara super cepat untuk memperbarui nilai variabel.</li>
+                            </ul>
+                            <div class="bg-purple-900/50 p-6 rounded-xl border border-purple-700">
+                                <h4 class="text-xl font-semibold text-purple-300 mb-2">Preview Materi Selanjutnya:</h4>
+                                <p class="text-lg text-gray-300">Minggu depan, kita akan membuat program kita bisa <b class="text-lime-400">membuat keputusan</b>! Contoh: "Jika uangku cukup, maka aku beli bakso. Kalau tidak cukup, beli permen saja." (Ini adalah <b class="text-white">Logika IF-ELSE</b>!)</p>
+                                <p class="text-xl text-white font-bold mt-4">Sampai jumpa minggu depan! 👋</p>
+                            </div>
+                        </div>
+                    `
+                }
+            ],
+            3: [
+                {
+                    title: "Kotak Ingatan Kita Akan Mulai Berhitung!",
+                    subtitle: "Review Cepat & Kalkulator",
+                    emoji: "🧠",
+                    content: `
+                        <div class="text-left space-y-6 max-w-3xl mx-auto">
+                            <div>
+                                <h3 class="text-2xl font-bold text-lime-400 mb-3">Review Cepat (3 Menit) ⚡</h3>
+                                <ul class="list-disc list-inside space-y-2 text-lg text-gray-300">
+                                    <li><b class="text-white">Variabel</b> adalah kotak ingatan untuk menyimpan data (teks, angka, ya/tidak).</li>
+                                    <li>Contoh: <code class="code-font bg-slate-800 p-1 rounded">umur = 7</code> (Angka Integer)</li>
+                                    <li>Contoh: <code class="code-font bg-slate-800 p-1 rounded">nama = "Rina"</code> (Teks String)</li>
+                                </ul>
+                                <p class="text-lg text-gray-300 mt-4">
+                                    Hari ini, kita akan membuat kotak ingatan ini saling berinteraksi! Kita akan ajarkan komputer cara menghitung dengan cepat dan benar, seperti <b class="text-purple-400">kalkulator ajaib</b>!
+                                </p>
+                            </div>
+                            <div class="p-6 bg-purple-900/50 rounded-xl border border-purple-700">
+                                <h4 class="text-xl font-semibold text-purple-300 mb-2">Apersepsi (Ajak Berpikir)</h4>
+                                <p class="text-lg text-gray-300">Saat kita jajan, kita pasti menghitung total harga. Saat kita mendapat sisa uang kembalian, kita menghitungnya. Semua itu butuh <b class="text-lime-400">Operator Matematika</b>.</p>
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Alat Hitung Dasar (Aritmatika)",
+                    subtitle: "Operator Aritmatika: Alat Hitung Python",
+                    emoji: "➕",
+                    content: `
+                        <div class="text-left space-y-4 max-w-4xl mx-auto">
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-sm text-left text-gray-400">
+                                    <thead class="text-xs text-lime-300 uppercase bg-slate-800">
+                                        <tr>
+                                            <th scope="col" class="px-6 py-3">Operator</th>
+                                            <th scope="col" class="px-6 py-3">Nama</th>
+                                            <th scope="col" class="px-6 py-3">Contoh di Python</th>
+                                            <th scope="col" class="px-6 py-3">Analogi Sehari-hari</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="bg-slate-800/50 border-b border-slate-700">
+                                            <td class="px-6 py-4 font-bold text-xl text-center text-white">+</td>
+                                            <td class="px-6 py-4">Tambah</td>
+                                            <td class="px-6 py-4"><code class="code-font">total = 2 + 3</code></td>
+                                            <td class="px-6 py-4">Menjumlahkan uang jajan hari ini dan kemarin.</td>
+                                        </tr>
+                                        <tr class="bg-slate-800/50 border-b border-slate-700">
+                                            <td class="px-6 py-4 font-bold text-xl text-center text-white">-</td>
+                                            <td class="px-6 py-4">Kurang</td>
+                                            <td class="px-6 py-4"><code class="code-font">sisa = 5 - 2</code></td>
+                                            <td class="px-6 py-4">Menghitung sisa uang setelah membeli jajan.</td>
+                                        </tr>
+                                        <tr class="bg-slate-800/50 border-b border-slate-700">
+                                            <td class="px-6 py-4 font-bold text-xl text-center text-white">*</td>
+                                            <td class="px-6 py-4">Kali</td>
+                                            <td class="px-6 py-4"><code class="code-font">luas = 4 * 5</code></td>
+                                            <td class="px-6 py-4">Membeli 5 pensil dengan harga Rp 2.000 per buah.</td>
+                                        </tr>
+                                        <tr class="bg-slate-800/50">
+                                            <td class="px-6 py-4 font-bold text-xl text-center text-white">/</td>
+                                            <td class="px-6 py-4">Bagi</td>
+                                            <td class="px-6 py-4"><code class="code-font">bagi = 10 / 2</code></td>
+                                            <td class="px-6 py-4">Membagi kue 10 potong untuk 2 teman (hasilnya bisa ada koma).</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Operator Aritmatika yang Paling Keren!",
+                    subtitle: "Operator Aritmatika Khusus!",
+                    emoji: "🍕",
+                    content: `
+                        <div class="text-left space-y-4 max-w-4xl mx-auto">
+                             <div class="overflow-x-auto mb-4">
+                                <table class="w-full text-sm text-left text-gray-400">
+                                    <thead class="text-xs text-lime-300 uppercase bg-slate-800">
+                                        <tr>
+                                            <th scope="col" class="px-6 py-3">Operator</th>
+                                            <th scope="col" class="px-6 py-3">Nama</th>
+                                            <th scope="col" class="px-6 py-3">Analogi Sehari-hari</th>
+                                            <th scope="col" class="px-6 py-3">Contoh & Hasil</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="bg-slate-800/50 border-b border-slate-700">
+                                            <td class="px-6 py-4 font-bold text-xl text-center text-white">**</td>
+                                            <td class="px-6 py-4">Pangkat</td>
+                                            <td class="px-6 py-4">Menghitung luas ruangan berbentuk persegi.</td>
+                                            <td class="px-6 py-4"><code class="code-font">3 ** 2</code> hasilnya <code class="code-font">9</code></td>
+                                        </tr>
+                                        <tr class="bg-slate-800/50 border-b border-slate-700">
+                                            <td class="px-6 py-4 font-bold text-xl text-center text-white">//</td>
+                                            <td class="px-6 py-4">Bagi Bulat</td>
+                                            <td class="px-6 py-4">Punya 10 biskuit dibagi ke 3 teman. Berapa banyak biskuit <b class="text-white">UTUH</b> yang didapat masing-masing?</td>
+                                            <td class="px-6 py-4"><code class="code-font">10 // 3</code> hasilnya <code class="code-font">3</code></td>
+                                        </tr>
+                                        <tr class="bg-slate-800/50">
+                                            <td class="px-6 py-4 font-bold text-xl text-center text-white">%</td>
+                                            <td class="px-6 py-4">Modulo</td>
+                                            <td class="px-6 py-4">Punya 10 biskuit dibagi ke 3 teman. Berapa <b class="text-white">SISA</b> biskuitnya untuk kita?</td>
+                                            <td class="px-6 py-4"><code class="code-font">10 % 3</code> hasilnya <code class="code-font">1</code></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="bg-slate-900 rounded-lg p-4 border border-slate-700 text-left">
+                                <code class="code-font text-lime-300 text-sm block">
+                                    <span class="text-gray-500"># Variabel untuk contoh</span><br>
+                                    <span class="text-white">uang_jajan = </span><span class="text-cyan-400">10000</span><br>
+                                    <span class="text-white">harga_bakso = </span><span class="text-cyan-400">8000</span><br><br>
+                                    <span class="text-gray-500"># Pengurangan: Sisa uang</span><br>
+                                    <span class="text-white">sisa_uang = uang_jajan - harga_bakso</span><br>
+                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"1. Sisa uang setelah beli bakso:"</span>, sisa_uang)<br><br>
+                                    <span class="text-gray-500"># Perkalian: Total harga permen</span><br>
+                                    <span class="text-white">total_harga_permen = </span><span class="text-cyan-400">3</span> * <span class="text-cyan-400">500</span><br>
+                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"2. Total harga 3 permen:"</span>, total_harga_permen)<br><br>
+                                    <span class="text-gray-500"># Pembagian Bulat (//) dan Sisa Bagi (%)</span><br>
+                                    <span class="text-white">jumlah_siswa = </span><span class="text-cyan-400">25</span><br>
+                                    <span class="text-white">satu_baris = </span><span class="text-cyan-400">4</span><br>
+                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"3. Jumlah baris penuh (//):"</span>, jumlah_siswa // satu_baris)<br>
+                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"4. Siswa yang tersisa (%):"</span>, jumlah_siswa % satu_baris)
+                                </code>
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Komputer Bisa Bertanya dengan input()",
+                    subtitle: "input(): Komputer Berbicara dan Bertanya!",
+                    emoji: "🗣️",
+                    content: `
+                        <div class="text-left space-y-6 max-w-3xl mx-auto">
+                            <h3 class="text-2xl font-bold text-lime-400 mb-3">Fungsi input()</h3>
+                            <ul class="list-disc list-inside space-y-2 text-lg text-gray-300">
+                                <li>Perintah ini membuat program kita <b class="text-white">berhenti sebentar</b>.</li>
+                                <li>Menampilkan sebuah pertanyaan yang kita tulis.</li>
+                                <li>Menunggu kamu mengetik sesuatu di keyboard, lalu menekan <b class="text-white">Enter</b>.</li>
+                                <li>Apapun yang kamu ketik, akan <b class="text-purple-400">disimpan ke dalam variabel</b>.</li>
+                            </ul>
+                            <div class="bg-slate-900 rounded-lg p-6 border border-slate-700 text-left">
+                                <code class="code-font text-lime-300 text-sm block">
+                                    <span class="text-gray-500"># Komputer akan bertanya, lalu jawabanmu disimpan di kotak "nama_kita"</span><br>
+                                    <span class="text-white">nama_kita = </span><span class="text-purple-400">input</span>(<span class="text-orange-400">"Siapa nama kamu? "</span>)<br>
+                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"Halo, "</span> + nama_kita + <span class="text-orange-400">"! Senang bertemu denganmu."</span>)
+                                </code>
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Hati-Hati! input() Selalu Berkata Itu Teks!",
+                    subtitle: "Jebakan Terbesar! (String vs Integer)",
+                    emoji: "⚠️",
+                    content: `
+                        <div class="text-left space-y-6 max-w-3xl mx-auto">
+                            <div class="p-6 bg-red-900/50 rounded-xl border border-red-700">
+                                <h4 class="text-xl font-semibold text-red-300 mb-2">Jebakan Tipe Data!</h4>
+                                <p class="text-lg text-gray-200">Semua yang diambil oleh <code class="code-font">input()</code>, <b class="text-white">selalu</b> dianggap sebagai <b class="text-lime-400">Teks (String)</b>, walaupun yang kamu ketik adalah angka!</p>
+                            </div>
+                            <h3 class="text-2xl font-bold text-lime-400 mb-3">Apa yang terjadi jika kita menjumlahkan Teks Angka?</h3>
+                            <div class="bg-slate-900 rounded-lg p-6 border border-slate-700 text-left">
+                                <code class="code-font text-lime-300 text-sm block">
+                                    <span class="text-gray-500"># Pengguna mengetik 5 dan 10</span><br>
+                                    <span class="text-white">angka_1_str = </span><span class="text-purple-400">input</span>(<span class="text-orange-400">"Angka pertama: "</span>) <span class="text-gray-500"># Python anggap ini "5" (teks)</span><br>
+                                    <span class="text-white">angka_2_str = </span><span class="text-purple-400">input</span>(<span class="text-orange-400">"Angka kedua: "</span>)   <span class="text-gray-500"># Python anggap ini "10" (teks)</span><br><br>
+                                    <span class="text-white">hasil_salah = angka_1_str + angka_2_str</span><br>
+                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"Hasil yang SALAH:"</span>, hasil_salah)
+                                </code>
+                            </div>
+                            <div class="bg-purple-900/50 p-4 rounded-lg border border-purple-700 text-left">
+                                <p class="font-semibold text-purple-300">Hasilnya:</p>
+                                <code class="code-font text-white block">Hasil yang SALAH: 510 ❌</code>
+                                <p class="text-sm text-gray-300 mt-2">Ini seperti menggabungkan dua kertas bertuliskan angka, bukan menjumlahkan nilainya!</p>
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Type Casting: Mengubah Teks Menjadi Angka Murni!",
+                    subtitle: "Solusi: Type Casting (Konversi Tipe Data)",
+                    emoji: "🪄",
+                    content: `
+                        <div class="text-left space-y-6 max-w-3xl mx-auto">
+                            <h3 class="text-2xl font-bold text-lime-400 mb-3">Apa itu Type Casting?</h3>
+                            <p class="text-lg text-gray-300">Ini adalah sihir di Python untuk mengubah tipe data satu menjadi tipe data lain.</p>
+                            <div>
+                                <h4 class="text-xl font-semibold text-purple-300 mb-2">2 Mantra Penting:</h4>
+                                <p class="text-lg text-gray-300"><b class="text-white"><code class="code-font">int()</code></b>: Mengubah teks angka menjadi <b class="text-cyan-400">Bilangan Bulat</b> (Integer).</p>
+                                <p class="text-lg text-gray-300"><b class="text-white"><code class="code-font">float()</code></b>: Mengubah teks angka menjadi <b class="text-cyan-400">Bilangan Koma</b> (Float).</p>
+                            </div>
+                            <h3 class="text-2xl font-bold text-lime-400 mb-3">Kode yang BENAR:</h3>
+                            <div class="bg-slate-900 rounded-lg p-6 border border-slate-700 text-left">
+                                <code class="code-font text-lime-300 text-sm block">
+                                    <span class="text-gray-500"># Kita langsung ubah input menjadi angka murni!</span><br>
+                                    <span class="text-white">angka_1 = </span><span class="text-purple-400">int</span>(<span class="text-purple-400">input</span>(<span class="text-orange-400">"Angka pertama: "</span>)) <span class="text-gray-500"># Angka 5 sekarang murni Integer</span><br>
+                                    <span class="text-white">angka_2 = </span><span class="text-purple-400">int</span>(<span class="text-purple-400">input</span>(<span class="text-orange-400">"Angka kedua: "</span>))   <span class="text-gray-500"># Angka 10 sekarang murni Integer</span><br><br>
+                                    <span class="text-white">hasil_benar = angka_1 + angka_2</span><br>
+                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"Hasil yang BENAR:"</span>, hasil_benar)
+                                </code>
+                            </div>
+                             <div class="bg-purple-900/50 p-4 rounded-lg border border-purple-700 text-left">
+                                <p class="font-semibold text-purple-300">Hasilnya:</p>
+                                <code class="code-font text-white block">Hasil yang BENAR: 15 ✅</code>
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Operator Assignment: Perbarui Kotak dengan Cepat!",
+                    subtitle: "Cara Cepat Mengubah Nilai",
+                    emoji: "🔄",
+                    content: `
+                        <div class="text-left space-y-4 max-w-4xl mx-auto">
+                            <p class="text-lg text-gray-300 text-center">Tujuan: Untuk memperbarui nilai sebuah variabel berdasarkan nilai lamanya. (Contoh: Menambahkan skor, atau mengurangi uang).</p>
+                            <div class="overflow-x-auto mb-4">
+                                <table class="w-full text-sm text-left text-gray-400">
+                                    <thead class="text-xs text-lime-300 uppercase bg-slate-800">
+                                        <tr>
+                                            <th scope="col" class="px-6 py-3">Operator</th>
+                                            <th scope="col" class="px-6 py-3">Arti Panjang</th>
+                                            <th scope="col" class="px-6 py-3">Arti Pendek</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="bg-slate-800/50 border-b border-slate-700">
+                                            <td class="px-6 py-4 font-bold text-xl text-center text-white">=</td>
+                                            <td class="px-6 py-4"><code class="code-font">skor = 10</code></td>
+                                            <td class="px-6 py-4">Simpan nilai 10 ke dalam skor.</td>
+                                        </tr>
+                                        <tr class="bg-slate-800/50 border-b border-slate-700">
+                                            <td class="px-6 py-4 font-bold text-xl text-center text-white">+=</td>
+                                            <td class="px-6 py-4"><code class="code-font">skor = skor + 5</code></td>
+                                            <td class="px-6 py-4"><code class="code-font">skor += 5</code> (Tambah Cepat)</td>
+                                        </tr>
+                                        <tr class="bg-slate-800/50">
+                                            <td class="px-6 py-4 font-bold text-xl text-center text-white">-=</td>
+                                            <td class="px-6 py-4"><code class="code-font">uang = uang - 2000</code></td>
+                                            <td class="px-6 py-4"><code class="code-font">uang -= 2000</code> (Kurang Cepat)</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <h3 class="text-2xl font-bold text-lime-400 mb-3 pt-4 text-center">Latihan Uang Saku</h3>
+                             <div class="bg-slate-900 rounded-lg p-6 border border-slate-700 text-left">
+                                <code class="code-font text-lime-300 text-sm block">
+                                    <span class="text-white">uang_saku = </span><span class="text-cyan-400">20000</span><br>
+                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"Uang saku awal:"</span>, uang_saku)<br><br>
+                                    <span class="text-gray-500"># Beli es teh seharga 3000</span><br>
+                                    <span class="text-white">uang_saku -= </span><span class="text-cyan-400">3000</span><br>
+                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"Sisa uang setelah beli es teh:"</span>, uang_saku)<br><br>
+                                     <span class="text-gray-500"># Dapat tambahan uang dari Ibu 5000</span><br>
+                                    <span class="text-white">uang_saku += </span><span class="text-cyan-400">5000</span><br>
+                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"Uang saku sekarang:"</span>, uang_saku)
+                                </code>
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Tantangan Proyek: Kasir Kantin Python!",
+                    subtitle: "Proyek Akhir: Kasir Kantin Interaktif!",
+                    emoji: "🛒",
+                    content: `
+                        <div class="text-left space-y-6 max-w-3xl mx-auto">
+                            <p class="text-lg text-gray-300 text-center">Tujuan: Membuat program yang bisa menghitung total belanjaan dengan pajak!</p>
+                            <p class="text-lg text-gray-300 text-center">File: <code class="code-font bg-slate-800 p-1 rounded">kasir_kantin.py</code></p>
+                            <div>
+                                <h3 class="text-xl font-bold text-lime-400 mb-3">Langkah-Langkah:</h3>
+                                <ol class="list-decimal list-inside space-y-2 text-lg text-gray-300">
+                                    <li><b>Tanya Harga:</b> Gunakan <code class="code-font">input()</code> dan <code class="code-font">float()</code> untuk bertanya 3 harga barang.</li>
+                                    <li><b>Hitung Subtotal:</b> Jumlahkan 3 harga barang.</li>
+                                    <li><b>Hitung Pajak (PPN 11%):</b> <code class="code-font">pajak = subtotal * 11 / 100</code></li>
+                                    <li><b>Hitung Total Akhir:</b> <code class="code-font">total_bayar = subtotal + pajak</code></li>
+                                    <li><b>Cetak Rapi:</b> Tampilkan Subtotal, Pajak, dan Total Bayar!</li>
+                                </ol>
+                                <p class="text-sm text-gray-400 mt-2">Tips: Gunakan <code class="code-font">float()</code> karena harga bisa ada koma (misalnya, 2500.50).</p>
+                            </div>
+                            <div class="bg-slate-900 rounded-lg p-6 border border-slate-700 text-left">
+                                <code class="code-font text-lime-300 text-sm block">
+                                    <span class="text-gray-500"># --- Selamat Datang ---</span><br>
+                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"--- Kasir Kantin Kalananti ---"</span>)<br><br>
+                                    <span class="text-gray-500"># --- Input Harga ---</span><br>
+                                    <span class="text-white">harga1 = </span><span class="text-purple-400">float</span>(<span class="text-purple-400">input</span>(<span class="text-orange-400">"Harga barang 1: Rp "</span>))<br>
+                                    <span class="text-white">harga2 = </span><span class="text-purple-400">float</span>(<span class="text-purple-400">input</span>(<span class="text-orange-400">"Harga barang 2: Rp "</span>))<br>
+                                    <span class="text-white">harga3 = </span><span class="text-purple-400">float</span>(<span class="text-purple-400">input</span>(<span class="text-orange-400">"Harga barang 3: Rp "</span>))<br><br>
+                                    <span class="text-gray-500"># --- Proses Hitung ---</span><br>
+                                    <span class="text-white">subtotal = harga1 + harga2 + harga3</span><br>
+                                    <span class="text-white">pajak = subtotal * </span><span class="text-cyan-400">11</span> / <span class="text-cyan-400">100</span><br>
+                                    <span class="text-white">total_bayar = subtotal + pajak</span><br><br>
+                                    <span class="text-gray-500"># --- Cetak Struk ---</span><br>
+                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"-------------------------"</span>)<br>
+                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"Subtotal   : Rp"</span>, subtotal)<br>
+                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"Pajak 11%  : Rp"</span>, pajak)<br>
+                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"Total Bayar: Rp"</span>, total_bayar)<br>
+                                </code>
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    title: "Apa yang Sudah Kita Pelajari Hari Ini?",
+                    subtitle: "Rangkuman Akhir",
+                    emoji: "🏁",
+                    content: `
+                        <div class="text-left space-y-6 max-w-3xl mx-auto">
+                            <h3 class="text-2xl font-bold text-lime-400 mb-3">Rangkuman Hari Ini:</h3>
+                            <ul class="list-disc list-inside space-y-3 text-lg text-gray-300">
+                                <li><b class="text-white">Operator Aritmatika:</b> Kita punya alat hitung canggih (<code class="code-font bg-slate-800 p-1 rounded">+ - * / ** // %</code>).</li>
+                                <li><b class="text-white"><code class="code-font">input()</code>:</b> Perintah untuk membuat program kita bisa <b class="text-purple-400">bertanya</b> kepada pengguna.</li>
+                                <li><b class="text-white">Type Casting (<code class="code-font">int()</code>, <code class="code-font">float()</code>):</b> Sihir untuk mengubah input teks menjadi angka murni agar bisa dihitung.</li>
+                                <li><b class="text-white">Operator Assignment (<code class="code-font">+=</code>, <code class="code-font">-=</code>):</b> Cara super cepat untuk memperbarui nilai variabel.</li>
+                            </ul>
+                            <div class="bg-purple-900/50 p-6 rounded-xl border border-purple-700">
+                                <h4 class="text-xl font-semibold text-purple-300 mb-2">Preview Materi Selanjutnya:</h4>
+                                <p class="text-lg text-gray-300">Minggu depan, kita akan membuat program kita bisa <b class="text-lime-400">membuat keputusan</b>! Contoh: "Jika uangku cukup, maka aku beli bakso. Kalau tidak cukup, beli permen saja." (Ini adalah <b class="text-white">Logika IF-ELSE</b>!)</p>
+                                <p class="text-xl text-white font-bold mt-4">Sampai jumpa minggu depan! 👋</p>
+                            </div>
+                        </div>
+                    `
+                }
+            ],
+        };
+
+        // Fungsi untuk memperbarui konten slide dan elemen UI
+        function updateSlide() {
+            const currentMeetingContent = meetingContent[currentMeeting] || [];
+            const totalSlidesInMeeting = currentMeetingContent.length;
+            const currentData = currentMeetingContent[currentSlide - 1]; // Array 0-indexed
+
+            if (!currentData) {
+                console.error(`Konten tidak ditemukan untuk Meeting ${currentMeeting}, Slide ${currentSlide}`);
+                return;
+            }
+
+            const meetingTitle = document.getElementById('meetingTitle');
+            const meetingSubtitle = document.getElementById('meetingSubtitle');
+            const slideContent = document.getElementById('slideContent');
+            const slideCounter = document.getElementById('slideCounter');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const slideContainer = document.getElementById('slideContainer');
+
+            // Terapkan efek fade-out
+            slideContainer.style.opacity = '0';
+            slideContainer.style.transform = 'scale(0.98)';
+
+            setTimeout(() => {
+                // Perbarui konten
+                if (currentMeeting === 1) {
+                    meetingTitle.textContent = `🚀 Meeting 1: Berkenalan dengan Python`;
+                } else if (currentMeeting === 2) {
+                    meetingTitle.textContent = `📦 Pertemuan 2: Kotak Ingatan Python (Variabel)`;
+                } else if (currentMeeting === 3) {
+                    meetingTitle.textContent = `🧮 Pertemuan 3: Python si Kalkulator Hebat!`;
+                } else {
+                    meetingTitle.textContent = `Meeting ${currentMeeting}: ${currentData.title.split(':')[0]}`;
+                }
+
+                meetingSubtitle.innerHTML = `# ${currentData.subtitle || currentData.title}`;
+                slideContent.innerHTML = currentData.content;
+                
+                // Perbarui penghitung slide
+                slideCounter.textContent = `Slide ${currentSlide} dari ${totalSlidesInMeeting}`;
+
+                // Perbarui tombol navigasi
+                prevBtn.disabled = (currentSlide === 1);
+                nextBtn.disabled = (currentSlide === totalSlidesInMeeting);
+
+                // Terapkan efek fade-in
+                slideContainer.style.opacity = '1';
+                slideContainer.style.transform = 'scale(1)';
+                
+            }, 300); // Tunggu durasi transisi
+            
+            // Perbarui tab sidebar yang aktif
+            document.querySelectorAll('.meeting-tab').forEach(tab => {
+                const meetingNum = parseInt(tab.dataset.meeting);
+                const isActive = meetingNum === currentMeeting;
+                const isClickable = meetingContent.hasOwnProperty(meetingNum);
+
+                tab.classList.toggle('active-meeting', isActive);
+                tab.classList.toggle('bg-lime-400', isActive);
+                tab.classList.toggle('bg-slate-800/60', !isActive && isClickable);
+                tab.classList.toggle('hover:bg-slate-700/80', !isActive && isClickable);
+                
+                const titleDiv = tab.querySelector('div > div:first-child');
+                const subtitleDiv = tab.querySelector('div > div:last-child');
+
+                titleDiv.classList.toggle('text-slate-900', isActive);
+                titleDiv.classList.toggle('text-white', !isActive && isClickable);
+                subtitleDiv.classList.toggle('text-slate-800', isActive);
+                subtitleDiv.classList.toggle('text-gray-400', !isActive && isClickable);
+
+                // Hapus kelas yang mungkin bertentangan
+                if (isActive) {
+                    titleDiv.classList.remove('text-slate-900');
+                    titleDiv.classList.add('text-slate-900');
+                    subtitleDiv.classList.remove('text-slate-800');
+                    subtitleDiv.classList.add('text-slate-800');
+                }
+            });
+        }
+
+        // --- Event Listener Navigasi ---
+        document.getElementById('prevBtn').addEventListener('click', () => {
+            if (currentSlide > 1) {
+                currentSlide--;
+                updateSlide();
+            }
+        });
+
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            const totalSlidesInMeeting = (meetingContent[currentMeeting] || []).length;
+            if (currentSlide < totalSlidesInMeeting) {
+                currentSlide++;
+                updateSlide();
+            }
+        });
+
+        // Fungsionalitas Sidebar
+        const sidebar = document.getElementById('sidebar');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const closeSidebarBtn = document.getElementById('closeSidebarBtn');
+
+        function openSidebar() {
+            sidebar.classList.remove('-translate-x-full'); // Ini akan berlaku di mobile
+            sidebarOverlay.classList.remove('hidden');
+        }
+
+        function closeSidebar() {
+            sidebar.classList.add('-translate-x-full'); // Ini akan berlaku di mobile
+            sidebarOverlay.classList.add('hidden');
+        }
+
+        hamburgerBtn.addEventListener('click', openSidebar);
+        closeSidebarBtn.addEventListener('click', closeSidebar);
+        sidebarOverlay.addEventListener('click', closeSidebar);
+
+        // Event listener tab meeting
+        document.querySelectorAll('.meeting-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                const meetingNum = parseInt(tab.dataset.meeting);
+                if (meetingContent.hasOwnProperty(meetingNum)) { // Cek apakah meeting tersedia
+                    currentMeeting = meetingNum;
+                    currentSlide = 1; // Reset slide ke 1
+                    updateSlide();
+                    closeSidebar(); // Tutup sidebar setelah memilih
+                }
+            });
+        });
+
+        // Navigasi keyboard
+        document.addEventListener('keydown', (e) => {
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+                return; // Jangan navigasi jika sedang mengetik
+            }
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault(); // Mencegah spasi scrolling halaman
+                document.getElementById('nextBtn').click();
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                document.getElementById('prevBtn').click();
+            }
+        });
+
+        // Inisialisasi
+        updateSlide();
+    </script>
+</body>
+</html>

@@ -169,27 +169,29 @@
                   'overflow-y-auto' membuatnya bisa di-scroll
                 -->
                 <nav class="space-y-2 overflow-y-auto px-6 pb-6 flex-grow">
-                    <!-- Meeting 1 Tab - Aksen lime untuk tab aktif -->
-                    <button class="meeting-tab w-full text-left p-4 bg-lime-400 rounded-lg transition-colors active-meeting" data-meeting="1">
+                    <!-- Meeting 1 Tab -->
+                    <button class="meeting-tab w-full text-left p-4 bg-slate-800/60 hover:bg-slate-700/80 rounded-lg transition-colors" data-meeting="1">
                         <div class="flex items-center">
-                            <span class="w-8 h-8 bg-lime-600 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">1</span>
+                            <span class="w-8 h-8 bg-slate-700 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">1</span>
                             <div>
-                                <div class="font-medium text-slate-900">Meeting 1</div>
-                                <div class="text-sm text-slate-800">Introduction to Python (10 Slides)</div>
+                                <div class="font-medium text-white">Meeting 1</div>
+                                <div class="text-sm text-gray-400">Introduction to Python</div>
                             </div>
                         </div>
                     </button>
                     
-                    <!-- Locked Meetings - Desain yang lebih gelap dan non-aktif -->
-                    <div class="w-full text-left p-4 bg-slate-800/60 rounded-lg opacity-60 cursor-not-allowed">
+                    <!-- Meeting 2 Tab - Active -->
+                    <button class="meeting-tab w-full text-left p-4 bg-lime-400 rounded-lg transition-colors active-meeting" data-meeting="2">
                         <div class="flex items-center">
-                            <span class="w-8 h-8 bg-slate-700 text-slate-500 rounded-full flex items-center justify-center text-sm font-bold mr-3">🔒</span>
+                            <span class="w-8 h-8 bg-lime-600 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">2</span>
                             <div>
-                                <div class="font-medium text-gray-400">Meeting 2</div>
-                                <div class="text-xs text-gray-500">Variables & Data Types - Available Soon</div>
+                                <div class="font-medium text-slate-900">Meeting 2</div>
+                                <div class="text-sm text-slate-800">Variables & Data Types (9 Slides)</div>
                             </div>
                         </div>
-                    </div>
+                    </button>
+
+                    <!-- Locked Meetings -->
                     <div class="w-full text-left p-4 bg-slate-800/60 rounded-lg opacity-60 cursor-not-allowed">
                         <div class="flex items-center">
                             <span class="w-8 h-8 bg-slate-700 text-slate-500 rounded-full flex items-center justify-center text-sm font-bold mr-3">🔒</span>
@@ -313,7 +315,7 @@
                     <!-- Current Meeting Title -->
                     <div class="text-center mb-8 relative">
                         <div class="absolute -top-4 -left-4 text-6xl opacity-10 text-lime-400">🐍</div>
-                        <div class="absolute -top-4 -right-4 text-6xl opacity-10 text-purple-400">💻</div>
+                        <div class="absolute -top-4 -right-4 text-6xl opacity-10 text-purple-400">📦</div>
                         <h2 id="meetingTitle" class="text-2xl sm:text-3xl font-bold text-lime-400 mb-2 relative z-10">Meeting 1: Berkenalan dengan Python</h2>
                         <!-- Garis bawah gradien baru -->
                         <div class="w-24 h-1 bg-gradient-to-r from-purple-500 to-lime-400 mx-auto rounded"></div>
@@ -368,7 +370,7 @@
     </footer>
 
     <script>
-        let currentMeeting = 1;
+        let currentMeeting = 2;
         let currentSlide = 1;
         const totalMeetings = 12;
 
@@ -672,14 +674,269 @@
                 },
             ],
             // Meetings 2-12 adalah stubs
-        };
+            2: [
+                {
+                    title: "Ingat print()? Sekarang Kita Ajarkan Komputer Mengingat!",
+                    subtitle: "Review Cepat & Kotak Ingatan",
+                    emoji: "🧠",
+                    content: `
+                        <div class="text-left space-y-6 max-w-3xl mx-auto">
+                            <div>
+                                <h3 class="text-2xl font-bold text-lime-400 mb-3">Review Cepat ⚡</h3>
+                                <p class="text-lg text-gray-300">
+                                    Di Pertemuan 1, kita belajar menyuruh komputer 'ngomong' pakai perintah: <code class="code-font bg-slate-800 p-1 rounded">print("teks")</code>.
+                                </p>
+                                <p class="text-lg text-gray-300 mt-2">
+                                    Tapi... perintah itu cuma bisa menampilkan, habis itu komputernya langsung <b class="text-red-400">lupa</b>!
+                                </p>
+                            </div>
+                            <div class="p-6 bg-purple-900/50 rounded-xl border border-purple-700">
+                                <h4 class="text-xl font-semibold text-purple-300 mb-2">Apersepsi (Kotak Ingatan)</h4>
+                                <p class="text-lg text-gray-300">Otak kita bisa mengingat banyak hal: nama teman, umur, sudah mandi atau belum.</p>
+                                <p class="text-lg text-gray-300 mt-2">Hari ini, kita akan membuat <b class="text-white">"Kotak-Kotak Ingatan"</b> untuk komputer kita. Kotak ini disebut <b class="text-lime-400">Variabel</b>.</p>
+                            </div>
+                        </div>
+                    `
+                },
+                { 
+                    title: "Variabel: Kotak Penyimpanan Data!", 
+                    subtitle: "Apa itu Variabel?",
+                    emoji: "🏷️", 
+                    content: `
+                        <div class="text-left space-y-6 max-w-3xl mx-auto">
+                            <h3 class="text-2xl font-bold text-lime-400 mb-3">Analogi (Kotak Berlabel)</h3>
+                            <p class="text-lg text-gray-300">
+                                Bayangkan Variabel itu seperti sebuah <b class="text-purple-400">kotak kosong</b> yang bisa kita beri label.
+                            </p>
+                            <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 space-y-4">
+                                <p>1. Kita beri <b class="text-lime-400">label</b> di luar kotak (ini adalah <code class="code-font">Nama Variabel</code>).</p>
+                                <p>2. Kita masukkan sesuatu ke dalamnya (ini adalah <code class="code-font">Nilai / Data</code>).</p>
+                            </div>
+                            <div class="bg-purple-900/50 p-6 rounded-xl border border-purple-700">
+                                <p class="font-semibold text-purple-300 mb-2">Contoh:</p>
+                                <p class="text-gray-300">Kita ambil kotak kosong, kita tempel label: <code class="code-font text-lime-300">nama_hewan</code>, lalu kita masukkan kertas bertuliskan: <code class="code-font text-orange-400">"Kucing"</code>.</p>
+                                <p class="text-gray-300 mt-4">Di dalam Python, kita menulisnya:</p>
+                                <code class="code-font text-white text-lg block bg-slate-900 p-2 rounded mt-2">nama_hewan = "Kucing"</code>
+                            </div>
+                             <div class="bg-red-900/50 p-4 rounded-lg border border-red-700 text-center">
+                                <p class="font-bold text-red-300">Perintah Rahasia (=):</p>
+                                <p class="text-white">Tanda <code class="code-font text-xl">=</code> di Python artinya BUKAN "sama dengan". Tanda <code class="code-font text-xl">=</code> artinya <b class="text-lime-400">"MASUKKAN NILAI INI KE DALAM KOTAK INI"</b>.</p>
+                            </div>
+                        </div>
+                    `
+                },
+                { 
+                    title: "Aturan Penamaan Variabel (Harus Rapi!)", 
+                    subtitle: "Aturan Membuat Nama Kotak (Variabel)",
+                    emoji: "📐", 
+                    content: `
+                        <div class="text-left space-y-6 max-w-3xl mx-auto">
+                            <h3 class="text-2xl font-bold text-lime-400 mb-4">3 Aturan Penting Agar Python Tidak Bingung:</h3>
+                            <div class="bg-slate-800 p-6 rounded-xl border border-slate-700">
+                                <h4 class="text-xl font-semibold text-purple-300 mb-2">1. Harus dimulai dengan HURUF atau Garis Bawah (_).</h4>
+                                <p><code class="code-font text-green-400">✅ Benar: nama_teman, _usia</code></p>
+                                <p><code class="code-font text-red-400">❌ Salah: 1umur, 4kaki</code> (Tidak boleh diawali angka!)</p>
+                            </div>
+                            <div class="bg-slate-800 p-6 rounded-xl border border-slate-700">
+                                <h4 class="text-xl font-semibold text-purple-300 mb-2">2. Tidak boleh ada spasi.</h4>
+                                <p><code class="code-font text-red-400">❌ Salah: nama lengkap</code></p>
+                                <p><code class="code-font text-green-400">✅ Benar: nama_lengkap</code> (Kita sebut ini <b class="text-white">Snake Case</b> 🐍!)</p>
+                            </div>
+                            <div class="bg-slate-800 p-6 rounded-xl border border-slate-700">
+                                <h4 class="text-xl font-semibold text-purple-300 mb-2">3. Huruf besar dan kecil itu berbeda!</h4>
+                                <p><code class="code-font text-white">Umur</code> berbeda dengan <code class="code-font text-white">umur</code>. Hati-hati ya!</p>
+                            </div>
+                        </div>
+                    `
+                },
+                { 
+                    title: "Komentar: Catatan untuk Diri Kita Sendiri", 
+                    subtitle: "Catatan Kecil untuk Manusia (# Komentar)",
+                    emoji: "📝", 
+                    content: `
+                        <div class="text-left space-y-6 max-w-3xl mx-auto">
+                            <h3 class="text-2xl font-bold text-lime-400 mb-3">Kapan kita butuh Komentar?</h3>
+                            <p class="text-lg text-gray-300">
+                                Saat kita ingin memberi tahu orang lain (atau diri kita sendiri di masa depan!) apa maksud dari kode yang kita tulis.
+                            </p>
+                            <div class="bg-slate-800 p-6 rounded-xl border border-slate-700">
+                                <h4 class="text-xl font-semibold text-purple-300 mb-2">Caranya:</h4>
+                                <p class="text-lg">Gunakan tanda pagar <code class="code-font text-lime-400">#</code> di awal baris.</p>
+                                <p class="text-gray-400 mt-2">Apapun yang ada setelah tanda # di baris itu, akan diabaikan oleh Python. Komputer tidak akan membacanya!</p>
+                            </div>
+                            <div class="bg-slate-900 rounded-lg p-6 border border-slate-700 text-left">
+                                <code class="code-font text-lime-300 text-sm block">
+                                    <span class="text-gray-500"># Ini adalah komentar. Komputer tidak peduli</span><br>
+                                    <span class="text-white">nama = </span><span class="text-orange-400">"Jono"</span>  <span class="text-gray-500"># Komentar: Menyimpan nama siswa</span><br>
+                                    <span class="text-white">umur = </span><span class="text-cyan-400">7</span>        <span class="text-gray-500"># Komentar: Menyimpan umur (bilangan bulat)</span>
+                                </code>
+                            </div>
+                        </div>
+                    `
+                },
+                { 
+                    title: "Tipe Data: Isi dari Kotak Ingatan", 
+                    subtitle: "Tipe Data: Isi Kotak Itu Berbeda-beda!",
+                    emoji: "🌈", 
+                    content: `
+                        <div class="text-left space-y-4 max-w-4xl mx-auto">
+                            <p class="text-lg text-gray-300 text-center">Isi kotak ingatan (variabel) kita ada 4 jenis dasar:</p>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-sm text-left text-gray-400">
+                                    <thead class="text-xs text-lime-300 uppercase bg-slate-800">
+                                        <tr>
+                                            <th scope="col" class="px-6 py-3">Nama Tipe (Sebutan Keren)</th>
+                                            <th scope="col" class="px-6 py-3">Untuk Menyimpan Apa?</th>
+                                            <th scope="col" class="px-6 py-3">Aturan Khas</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="bg-slate-800/50 border-b border-slate-700">
+                                            <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">Teks (String)</th>
+                                            <td class="px-6 py-4">Nama, alamat, kalimat. Contoh: "Budi"</td>
+                                            <td class="px-6 py-4">Wajib diapit tanda kutip ("" atau '')</td>
+                                        </tr>
+                                        <tr class="bg-slate-800/50 border-b border-slate-700">
+                                            <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">Bilangan Bulat (Integer)</th>
+                                            <td class="px-6 py-4">Angka tanpa koma. Contoh: Umur (7), Jumlah Kucing (3)</td>
+                                            <td class="px-6 py-4">Tidak perlu tanda kutip.</td>
+                                        </tr>
+                                        <tr class="bg-slate-800/50 border-b border-slate-700">
+                                            <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">Bilangan Koma (Float)</th>
+                                            <td class="px-6 py-4">Angka yang ada komanya. Contoh: Tinggi (120.5)</td>
+                                            <td class="px-6 py-4">Gunakan titik (.) untuk koma.</td>
+                                        </tr>
+                                        <tr class="bg-slate-800/50">
+                                            <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">Ya/Tidak (Boolean)</th>
+                                            <td class="px-6 py-4">Hanya bisa True (Benar) atau False (Salah).</td>
+                                            <td class="px-6 py-4">Diawali huruf besar (T/F).</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    `
+                },
+                { 
+                    title: "Latihan type(): Mengecek Isi Kotak", 
+                    subtitle: "Praktek Tipe Data & Cek Tipe (type())",
+                    emoji: "🧐", 
+                    content: `
+                        <div class="text-left space-y-6 max-w-3xl mx-auto">
+                            <h3 class="text-2xl font-bold text-lime-400 mb-3">Fungsi <code class="code-font">type()</code></h3>
+                            <p class="text-lg text-gray-300">
+                                Jika kamu lupa atau ragu isi kotakmu tipe data apa, kamu bisa tanya Python menggunakan perintah <code class="code-font bg-slate-800 p-1 rounded">type()</code>.
+                            </p>
+                            <div class="bg-slate-900 rounded-lg p-6 border border-slate-700 text-left">
+                                <code class="code-font text-lime-300 text-sm block">
+                                    <span class="text-white">nama = </span><span class="text-orange-400">"Sinta"</span>       <span class="text-gray-500"># &lt;--- Ini String (teks), pakai tanda kutip!</span><br>
+                                    <span class="text-white">usia = </span><span class="text-cyan-400">7</span>             <span class="text-gray-500"># &lt;--- Ini Integer (bilangan bulat)</span><br>
+                                    <span class="text-white">tinggi_meter = </span><span class="text-cyan-400">1.25</span>  <span class="text-gray-500"># &lt;--- Ini Float (bilangan koma/desimal)</span><br>
+                                    <span class="text-white">sudah_pulang = </span><span class="text-purple-400">True</span>  <span class="text-gray-500"># &lt;--- Ini Boolean (Ya/Tidak)</span><br><br>
+                                    <span class="text-purple-400">print</span>(<span class="text-purple-400">type</span>(nama))<br>
+                                    <span class="text-purple-400">print</span>(<span class="text-purple-400">type</span>(tinggi_meter))
+                                </code>
+                            </div>
+                             <div class="bg-purple-900/50 p-4 rounded-lg border border-purple-700 text-left">
+                                <p class="font-semibold text-purple-300">Hasilnya:</p>
+                                <code class="code-font text-white block">&lt;class 'str'&gt;</code>
+                                <code class="code-font text-white block">&lt;class 'float'&gt;</code>
+                            </div>
+                        </div>
+                    `
+                },
+                { 
+                    title: "Ayo Buat Biodata Komputer Kita!", 
+                    subtitle: "Praktik Terbimbing: Biodata Kita!",
+                    emoji: "🙋‍♀️", 
+                    content: `
+                        <div class="text-left space-y-6 max-w-3xl mx-auto">
+                            <p class="text-lg text-gray-300 text-center">File: <code class="code-font bg-slate-800 p-1 rounded">biodata.py</code></p>
+                            <div class="bg-slate-900 rounded-lg p-6 border border-slate-700 text-left">
+                                <code class="code-font text-lime-300 text-sm block">
+                                    <span class="text-gray-500"># Langkah 1: Buat Variabel (Kotak Ingatan)</span><br>
+                                    <span class="text-white">nama = </span><span class="text-orange-400">"Ahmad"</span><br>
+                                    <span class="text-white">umur = </span><span class="text-cyan-400">7</span><br>
+                                    <span class="text-white">tinggi_cm = </span><span class="text-cyan-400">120.5</span><br>
+                                    <span class="text-white">sudah_sarapan = </span><span class="text-purple-400">True</span><br><br>
+                                    
+                                    <span class="text-gray-500"># Langkah 2: Cetak Nilainya</span><br>
+                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"Halo! Nama saya:"</span>, nama)<br>
+                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"Umur saya:"</span>, umur, <span class="text-orange-400">"tahun"</span>)<br><br>
 
-        const totalSlides = meetingContent[1].length;
+                                    <span class="text-gray-500"># Langkah 3: Cek Tipe Datanya</span><br>
+                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"--- Cek Tipe Data ---"</span>)<br>
+                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"Tipe data nama:"</span>, <span class="text-purple-400">type</span>(nama))<br>
+                                    <span class="text-purple-400">print</span>(<span class="text-orange-400">"Tipe data sudah_sarapan:"</span>, <span class="text-purple-400">type</span>(sudah_sarapan))
+                                </code>
+                            </div>
+                        </div>
+                    `
+                },
+                { 
+                    title: "Kartu Pelajar Digital (ASCII Art)", 
+                    subtitle: "Proyek Mini: Kartu Pelajar Keren!",
+                    emoji: "🏆", 
+                    content: `
+                        <div class="text-left space-y-4 max-w-3xl mx-auto">
+                             <p class="text-lg text-gray-300 text-center">Tujuan: Menggabungkan <code class="code-font">print()</code>, Variabel, dan String untuk membuat kartu informasi yang rapi.</p>
+                             <p class="text-lg text-gray-300 text-center">File: <code class="code-font bg-slate-800 p-1 rounded">kartu_pelajar.py</code></p>
+                            <div class="bg-slate-900 rounded-lg p-6 border border-slate-700 text-left">
+                                <code class="code-font text-lime-300 text-sm block whitespace-pre">
+<span class="text-gray-500"># --- Data Siswa ---</span>
+<span class="text-white">nama_siswa = </span><span class="text-orange-400">"Ahmad Zaelani"</span>
+<span class="text-white">nis        = </span><span class="text-orange-400">"102345"</span>
+<span class="text-white">kelas      = </span><span class="text-orange-400">"10 A"</span>
+<span class="text-white">sekolah    = </span><span class="text-orange-400">"SD Coding Hebat"</span>
+
+<span class="text-gray-500"># --- Desain Kartu ---</span>
+<span class="text-purple-400">print</span>(<span class="text-orange-400">"========================================="</span>)
+<span class="text-purple-400">print</span>(<span class="text-orange-400">"          KARTU PELAJAR DIGITAL          "</span>)
+<span class="text-purple-400">print</span>(<span class="text-orange-400">"-----------------------------------------"</span>)
+<span class="text-purple-400">print</span>(<span class="text-orange-400">" Nama    : "</span> + nama_siswa) 
+<span class="text-purple-400">print</span>(<span class="text-orange-400">" NIS     : "</span> + nis)
+<span class="text-purple-400">print</span>(<span class="text-orange-400">" Kelas   : "</span> + kelas)
+<span class="text-purple-400">print</span>(<span class="text-orange-400">" Sekolah : "</span> + sekolah)
+<span class="text-purple-400">print</span>(<span class="text-orange-400">"========================================="</span>)
+                                </code>
+                            </div>
+                        </div>
+                    `
+                },
+                { 
+                    title: "Kita Sudah Jago Menyimpan Ingatan!", 
+                    subtitle: "Rangkuman dan Sampai Jumpa!",
+                    emoji: "👋", 
+                    content: `
+                        <div class="text-left space-y-6 max-w-3xl mx-auto">
+                            <h3 class="text-2xl font-bold text-lime-400 mb-3">Rangkuman Hari Ini:</h3>
+                            <ul class="list-disc list-inside space-y-3 text-lg text-gray-300">
+                                <li><b class="text-white">Variabel</b> adalah "kotak ingatan" yang diberi nama.</li>
+                                <li>Tanda <code class="code-font bg-slate-800 p-1 rounded">=</code> berarti "masukkan ke dalam kotak".</li>
+                                <li>Ada 4 tipe data dasar: <b class="text-orange-400">String</b> (teks), <b class="text-cyan-400">Integer</b> (bilangan bulat), <b class="text-cyan-400">Float</b> (bilangan koma), dan <b class="text-purple-400">Boolean</b> (True/False).</li>
+                                <li>Tanda <code class="code-font bg-slate-800 p-1 rounded">#</code> adalah catatan untuk manusia (Komentar).</li>
+                            </ul>
+                            <div class="bg-purple-900/50 p-6 rounded-xl border border-purple-700">
+                                <h4 class="text-xl font-semibold text-purple-300 mb-2">Materi Minggu Depan:</h4>
+                                <p class="text-lg text-gray-300">Kita akan membuat kotak-kotak ingatan ini jadi lebih pintar! Kita akan belajar bagaimana melakukan perhitungan matematika dengan angka-angka yang sudah kita simpan! (Contoh: Menghitung total harga jajan!)</p>
+                                <p class="text-xl text-white font-bold mt-4">Sampai jumpa! 👋</p>
+                            </div>
+                        </div>
+                    `
+                },
+            ]
+        };
 
         // Fungsi untuk memperbarui konten slide dan elemen UI
         function updateSlide() {
-            // Dapatkan data untuk slide saat ini
-            const currentData = meetingContent[currentMeeting][currentSlide - 1]; // Array 0-indexed
+            const currentMeetingContent = meetingContent[currentMeeting] || [];
+            const totalSlidesInMeeting = currentMeetingContent.length;
+            const currentData = currentMeetingContent[currentSlide - 1]; // Array 0-indexed
+
+            if (!currentData) {
+                console.error(`Konten tidak ditemukan untuk Meeting ${currentMeeting}, Slide ${currentSlide}`);
+                return;
+            }
 
             const meetingTitle = document.getElementById('meetingTitle');
             const meetingSubtitle = document.getElementById('meetingSubtitle');
@@ -695,52 +952,55 @@
 
             setTimeout(() => {
                 // Perbarui konten
-                meetingTitle.textContent = `Meeting ${currentMeeting}: ${currentData.title.split(':')[0]}`;
+                if (currentMeeting === 1) {
+                    meetingTitle.textContent = `🚀 Meeting 1: Berkenalan dengan Python`;
+                } else if (currentMeeting === 2) {
+                    meetingTitle.textContent = `📦 Pertemuan 2: Kotak Ingatan Python (Variabel)`;
+                } else {
+                    meetingTitle.textContent = `Meeting ${currentMeeting}: ${currentData.title.split(':')[0]}`;
+                }
+
                 meetingSubtitle.innerHTML = `# ${currentData.subtitle || currentData.title}`;
                 slideContent.innerHTML = currentData.content;
                 
                 // Perbarui penghitung slide
-                if (currentMeeting === 1) {
-                    slideCounter.textContent = `Slide ${currentSlide} dari ${totalSlides}`;
-                } else {
-                    slideCounter.textContent = `Meeting ${currentMeeting} of ${totalMeetings}`;
-                }
+                slideCounter.textContent = `Slide ${currentSlide} dari ${totalSlidesInMeeting}`;
 
                 // Perbarui tombol navigasi
-                prevBtn.disabled = (currentMeeting === 1 && currentSlide === 1);
-                
-                // Nonaktifkan tombol Next di slide terakhir dari meeting 1
-                nextBtn.disabled = (currentMeeting === 1 && currentSlide === totalSlides);
+                prevBtn.disabled = (currentSlide === 1);
+                nextBtn.disabled = (currentSlide === totalSlidesInMeeting);
 
                 // Terapkan efek fade-in
                 slideContainer.style.opacity = '1';
                 slideContainer.style.transform = 'scale(1)';
                 
-                // Selalu scroll ke atas slide container saat berganti slide
-                slideContainer.scrollTop = 0;
-
             }, 300); // Tunggu durasi transisi
             
             // Perbarui tab sidebar yang aktif
             document.querySelectorAll('.meeting-tab').forEach(tab => {
-                if (parseInt(tab.dataset.meeting) === currentMeeting) {
-                    // Atur gaya aktif (lime)
-                    tab.classList.add('bg-lime-400');
-                    tab.querySelector('div > div:first-child').classList.add('text-slate-900');
-                    tab.querySelector('div > div:last-child').classList.add('text-slate-800');
-                    // Hapus gaya non-aktif (jika ada)
-                    tab.classList.remove('bg-slate-800/60', 'hover:bg-slate-700/80');
-                    if(tab.querySelector('div > div:first-child').classList.contains('text-white')) {
-                        tab.querySelector('div > div:first-child').classList.remove('text-white');
-                    }
-                } else {
-                    // Atur gaya non-aktif (slate)
-                    tab.classList.remove('bg-lime-400');
-                    tab.querySelector('div > div:first-child').classList.remove('text-slate-900');
-                    tab.querySelector('div > div:last-child').classList.remove('text-slate-800');
-                    // Tambahkan gaya non-aktif
-                    tab.classList.add('bg-slate-800/60', 'hover:bg-slate-700/80');
-                    tab.querySelector('div > div:first-child').classList.add('text-white');
+                const meetingNum = parseInt(tab.dataset.meeting);
+                const isActive = meetingNum === currentMeeting;
+                const isClickable = meetingContent.hasOwnProperty(meetingNum);
+
+                tab.classList.toggle('active-meeting', isActive);
+                tab.classList.toggle('bg-lime-400', isActive);
+                tab.classList.toggle('bg-slate-800/60', !isActive && isClickable);
+                tab.classList.toggle('hover:bg-slate-700/80', !isActive && isClickable);
+                
+                const titleDiv = tab.querySelector('div > div:first-child');
+                const subtitleDiv = tab.querySelector('div > div:last-child');
+
+                titleDiv.classList.toggle('text-slate-900', isActive);
+                titleDiv.classList.toggle('text-white', !isActive && isClickable);
+                subtitleDiv.classList.toggle('text-slate-800', isActive);
+                subtitleDiv.classList.toggle('text-gray-400', !isActive && isClickable);
+
+                // Hapus kelas yang mungkin bertentangan
+                if (isActive) {
+                    titleDiv.classList.remove('text-slate-900');
+                    titleDiv.classList.add('text-slate-900');
+                    subtitleDiv.classList.remove('text-slate-800');
+                    subtitleDiv.classList.add('text-slate-800');
                 }
             });
         }
@@ -754,7 +1014,8 @@
         });
 
         document.getElementById('nextBtn').addEventListener('click', () => {
-            if (currentMeeting === 1 && currentSlide < totalSlides) {
+            const totalSlidesInMeeting = (meetingContent[currentMeeting] || []).length;
+            if (currentSlide < totalSlidesInMeeting) {
                 currentSlide++;
                 updateSlide();
             }
@@ -784,7 +1045,7 @@
         document.querySelectorAll('.meeting-tab').forEach(tab => {
             tab.addEventListener('click', () => {
                 const meetingNum = parseInt(tab.dataset.meeting);
-                if (meetingNum === 1) { // Hanya Meeting 1 yang tersedia
+                if (meetingContent.hasOwnProperty(meetingNum)) { // Cek apakah meeting tersedia
                     currentMeeting = meetingNum;
                     currentSlide = 1; // Reset slide ke 1
                     updateSlide();

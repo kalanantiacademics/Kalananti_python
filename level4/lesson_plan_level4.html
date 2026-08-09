@@ -1,0 +1,1343 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Lesson Plan Kalananti B2C Python Level 4 — Planet Visionara, OOP in Python">
+    <title>Lesson Plan Python Level 4 — Planet Visionara</title>
+    <style>
+        :root {
+            --blue: #265e9b;
+            --blue-dark: #173f70;
+            --blue-pale: #f0f6fc;
+            --blue-light: #e2eef9;
+            --yellow: #f9c013;
+            --yellow-pale: #fffde6;
+            --teal: #339d9d;
+            --teal-pale: #e6f5f5;
+            --ink: #1e293b;
+            --muted: #64748b;
+            --line: #cbd5e1;
+            --paper: #ffffff;
+            --screen: #e2e8f0;
+        }
+
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            margin: 0;
+            background: var(--screen);
+            color: var(--ink);
+            font-family: "Avenir Next", Avenir, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-size: 9pt;
+            line-height: 1.4;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        #document {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10mm;
+            padding: 10mm 0 20mm;
+        }
+
+        /* Flexbox Page layout with dynamic height to prevent ANY text clipping or footer overlap */
+        .page {
+            position: relative;
+            width: 210mm;
+            min-height: 297mm;
+            height: auto;
+            padding: 20mm 16mm 14mm;
+            background: var(--paper);
+            border: 1px solid rgba(38, 94, 155, .15);
+            box-shadow: 0 8px 25px rgba(15, 23, 42, .12);
+            break-after: page;
+            page-break-after: always;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .page:last-child {
+            break-after: auto;
+            page-break-after: auto;
+        }
+
+        .page-body {
+            flex: 1 0 auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header & Ribbons */
+        .page-header {
+            position: absolute;
+            top: 5mm;
+            left: 14mm;
+            right: 14mm;
+            height: 12mm;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 2px solid var(--blue-pale);
+            padding-bottom: 1.5mm;
+        }
+
+        .page-header img {
+            height: 9.5mm;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .brand-ribbons {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 1mm;
+        }
+
+        .brand-ribbons .top-stripe {
+            width: 60mm;
+            height: 3mm;
+            background: var(--blue);
+            border-radius: 3px 0 0 3px;
+            position: relative;
+        }
+
+        .brand-ribbons .top-stripe::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -8mm;
+            width: 8mm;
+            height: 3mm;
+            background: var(--yellow);
+            clip-path: polygon(100% 0, 0 50%, 100% 100%);
+        }
+
+        .brand-ribbons .dots {
+            width: 50mm;
+            height: 2mm;
+            background-image: radial-gradient(circle, var(--yellow) 1mm, transparent 1.1mm);
+            background-size: 4.5mm 2mm;
+            background-repeat: repeat-x;
+        }
+
+        /* Footer sitting cleanly below page content */
+        .page-footer {
+            margin-top: 5mm;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .footer-meta {
+            display: flex;
+            justify-content: space-between;
+            color: var(--muted);
+            font-size: 7.5pt;
+            font-weight: 600;
+            padding-bottom: 1mm;
+        }
+
+        .footer-stripe {
+            height: 3mm;
+            background: var(--blue);
+            border-radius: 2px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer-stripe::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(circle, var(--yellow) 1mm, transparent 1.1mm);
+            background-size: 7mm 3mm;
+            background-repeat: repeat-x;
+        }
+
+        /* Yellow Highlight Section Badges */
+        .badge-highlight {
+            display: inline-block;
+            background: var(--yellow);
+            color: #172033;
+            font-weight: 800;
+            font-size: 9pt;
+            padding: 1.5px 10px;
+            border-radius: 3px;
+            margin-bottom: 2.5mm;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .badge-teal {
+            display: inline-block;
+            background: var(--teal);
+            color: #ffffff;
+            font-weight: 800;
+            font-size: 9pt;
+            padding: 1.5px 10px;
+            border-radius: 3px;
+            margin-bottom: 2.5mm;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        .badge-blue {
+            display: inline-block;
+            background: var(--blue);
+            color: #ffffff;
+            font-weight: 800;
+            font-size: 9pt;
+            padding: 1.5px 10px;
+            border-radius: 3px;
+            margin-bottom: 2.5mm;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        /* Headings & Typography */
+        h1, h2, h3, h4, p { margin-top: 0; }
+        h1 { color: var(--blue-dark); font-size: 18pt; font-weight: 800; line-height: 1.2; margin-bottom: 2mm; }
+        h2 { color: var(--blue-dark); font-size: 12pt; font-weight: 700; margin-bottom: 2mm; }
+        h3 { color: var(--blue-dark); font-size: 10pt; font-weight: 700; margin-bottom: 1.5mm; }
+        h4 { color: var(--blue); font-size: 8.8pt; font-weight: 700; margin-bottom: 1mm; }
+        p { margin-bottom: 1.8mm; }
+
+        ul, ol { margin: 0.8mm 0 2mm; padding-left: 4.5mm; }
+        li { margin-bottom: 0.8mm; }
+
+        code {
+            padding: 1px 4px;
+            border-radius: 3px;
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            color: #0f172a;
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+            font-size: 8pt;
+        }
+
+        /* Callouts & Cards */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 3mm; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3mm; }
+
+        .doc-card {
+            padding: 2.5mm 3mm;
+            border: 1px solid var(--line);
+            border-radius: 2.5mm;
+            background: #ffffff;
+        }
+
+        .doc-card.yellow-border { border-top: 2mm solid var(--yellow); }
+        .doc-card.blue-border { border-top: 2mm solid var(--blue); }
+        .doc-card.teal-border { border-top: 2mm solid var(--teal); }
+
+        .callout {
+            padding: 2.5mm 3.5mm;
+            border-radius: 2.5mm;
+            border: 1px solid var(--line);
+            background: #f8fafc;
+            margin-bottom: 2.5mm;
+        }
+
+        .callout.yellow { border-left: 2.5mm solid var(--yellow); background: var(--yellow-pale); }
+        .callout.teal { border-left: 2.5mm solid var(--teal); background: var(--teal-pale); }
+        .callout.blue { border-left: 2.5mm solid var(--blue); background: var(--blue-pale); }
+
+        /* Compact Tables */
+        table.doc-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5mm;
+            margin-bottom: 2.5mm;
+            font-size: 8.2pt;
+        }
+
+        table.doc-table th, table.doc-table td {
+            padding: 1.8mm 2.2mm;
+            border: 1px solid var(--line);
+            vertical-align: top;
+        }
+
+        table.doc-table th {
+            background: var(--blue);
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 7.8pt;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            text-align: left;
+        }
+
+        table.doc-table tr:nth-child(even) td {
+            background: #f8fafc;
+        }
+
+        /* Timeline Table Columns */
+        table.doc-table .time-col { width: 15mm; font-weight: 800; color: var(--blue-dark); text-align: center; }
+        table.doc-table .activity-col { width: 38mm; }
+
+        /* Code Panel */
+        .code-box {
+            margin: 2mm 0;
+            border: 1px solid var(--line);
+            border-radius: 2mm;
+            background: #f8fafc;
+            overflow: hidden;
+        }
+
+        .code-box .code-header {
+            padding: 1mm 2.5mm;
+            background: var(--blue-pale);
+            border-bottom: 1px solid var(--line);
+            color: var(--blue-dark);
+            font-size: 7.5pt;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .code-box pre {
+            margin: 0;
+            padding: 2mm 2.5mm;
+            font-family: "SFMono-Regular", Consolas, monospace;
+            font-size: 7.8pt;
+            line-height: 1.35;
+            color: #0f172a;
+            white-space: pre-wrap;
+        }
+
+        /* Vocabulary Grid */
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: 28mm 1fr;
+            gap: 1mm;
+            margin-top: 1.5mm;
+            font-size: 8pt;
+        }
+
+        .vocab-grid dt {
+            font-weight: 800;
+            color: var(--blue-dark);
+            background: var(--blue-pale);
+            padding: 1mm 1.5mm;
+            border-radius: 1.5mm 0 0 1.5mm;
+            border-left: 1.5mm solid var(--blue);
+        }
+
+        .vocab-grid dd {
+            margin: 0;
+            padding: 1mm 2mm;
+            background: #ffffff;
+            border: 1px solid var(--line);
+            border-left: none;
+            border-radius: 0 1.5mm 1.5mm 0;
+        }
+
+        .lesson-learned {
+            margin-top: 2mm;
+            padding: 2mm 2.5mm;
+            border-radius: 2mm;
+            background: #f1f5f9;
+            border-left: 2mm solid var(--blue);
+        }
+
+        .lesson-learned h4 { margin-bottom: 0.8mm; color: var(--blue-dark); }
+        .lesson-learned ul { margin-bottom: 0; }
+
+        .checklist { list-style: none; padding-left: 0; }
+        .checklist li { position: relative; padding-left: 4.5mm; }
+        .checklist li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--blue);
+            font-weight: 900;
+        }
+
+        /* Cover Page Specifics */
+        .cover-page {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 24mm 18mm 16mm;
+            background: linear-gradient(180deg, #ffffff 0%, #f4f8fc 100%);
+        }
+
+        .cover-page::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 9mm;
+            background: var(--blue);
+            border-bottom: 2.5mm solid var(--yellow);
+        }
+
+        .cover-logo {
+            width: 70mm;
+            height: auto;
+            margin-bottom: 20mm;
+        }
+
+        .cover-title-group h1 {
+            font-size: 28pt;
+            color: var(--blue-dark);
+            margin-bottom: 2.5mm;
+            letter-spacing: -0.02em;
+        }
+
+        .cover-kicker {
+            color: var(--teal);
+            font-size: 10.5pt;
+            font-weight: 800;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+
+        .cover-planet {
+            font-size: 14pt;
+            color: var(--blue);
+            font-weight: 700;
+            margin-bottom: 10mm;
+        }
+
+        .cover-meta-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3.5mm;
+            max-width: 160mm;
+        }
+
+        .cover-meta-card {
+            padding: 3mm;
+            border: 1px solid var(--line);
+            border-top: 1.8mm solid var(--yellow);
+            border-radius: 2mm;
+            background: #ffffff;
+        }
+
+        .cover-meta-card span {
+            display: block;
+            font-size: 7.5pt;
+            font-weight: 800;
+            color: var(--blue);
+            text-transform: uppercase;
+            margin-bottom: 0.8mm;
+        }
+
+        @page { size: A4 portrait; margin: 0; }
+
+        @media print {
+            html, body { width: 210mm; background: #fff; }
+            #document { padding: 0; gap: 0; }
+            .page { border: none; box-shadow: none; min-height: 297mm; height: auto; }
+        }
+    </style>
+</head>
+<body>
+    <main id="document">
+        <!-- Cover Page -->
+        <section class="page cover-page" id="cover">
+            <div class="page-body">
+                <img class="cover-logo" src="../marketing/kalananti_logo.png" alt="Kalananti Logo">
+                <div class="cover-title-group">
+                    <p class="cover-kicker">B2C PYTHON PROGRAM</p>
+                    <h1>Lesson Plan<br>Python Level 4</h1>
+                    <p class="cover-planet">Planet Visionara · Object-Oriented Programming in Python</p>
+                </div>
+                <div class="cover-meta-grid">
+                    <div class="cover-meta-card"><span>Program</span>12 Pertemuan Total</div>
+                    <div class="cover-meta-card"><span>Durasi</span>90 Menit per Pertemuan</div>
+                    <div class="cover-meta-card"><span>Teknologi</span>Python 3 · CustomTkinter · VS Code</div>
+                    <div class="cover-meta-card"><span>Target Akhir</span>Aplikasi Desktop Berbasis OOP</div>
+                </div>
+            </div>
+            <div style="border-top: 1px solid var(--line); padding-top: 3mm; color: var(--muted); font-size: 8pt;">
+                <strong>Kalananti Curriculum Team · 2026</strong> — Dokumen Panduan Fasilitasi Pengajar
+            </div>
+        </section>
+
+        <!-- Program Overview -->
+        <section class="page" id="overview">
+            <div class="page-body">
+                <div class="page-header" aria-hidden="true">
+                    <img src="../marketing/kalananti_logo.png" alt="">
+                    <div class="brand-ribbons"><span class="top-stripe"></span><span class="dots"></span></div>
+                </div>
+                <span class="badge-highlight">Gambaran Program untuk Pengajar</span>
+                <h1>Python Level 4 — Planet Visionara</h1>
+                <div class="callout yellow">
+                    <h3>Arah &amp; Core Concept Pembelajaran</h3>
+                    <p>Siswa beralih dari aplikasi GUI prosedural menuju aplikasi desktop yang terstruktur dengan <strong>Object-Oriented Programming (OOP)</strong>. Mereka memodelkan data menggunakan class dan object, membangun GUI berbasis class, mengatur navigasi multi-window, serta memecah program menjadi tiga modul Python (models, views, main).</p>
+                    <p><strong>Pertanyaan Utama Kelas:</strong> “Bagaimana kita merancang aplikasi manajemen yang rapi, mudah diuji, dan modular menggunakan object?”</p>
+                </div>
+                <div class="grid-2">
+                    <div class="doc-card yellow-border">
+                        <h4>Capaian Akhir Siswa</h4>
+                        <p>Siswa mampu merancang, membangun, menguji, dan mempresentasikan aplikasi manajemen berbasis OOP dengan struktur class yang terjelaskan secara utuh.</p>
+                    </div>
+                    <div class="doc-card blue-border">
+                        <h4>Produk Akhir Proyek</h4>
+                        <p>Aplikasi Banking, Library, Inventory, POS, atau solusi manajemen lain dengan tiga fitur MVP, GUI CustomTkinter, dan pemisahan model–view.</p>
+                    </div>
+                    <div class="doc-card teal-border">
+                        <h4>Bekal Prasyarat Level 3</h4>
+                        <p>Python dasar, list, function, condition, loop, CustomTkinter window/widgets, Entry, layout <code>pack/grid</code>, event <code>command</code>, dan traceback dasar.</p>
+                    </div>
+                    <div class="doc-card blue-border">
+                        <h4>Bukti Hasil Belajar</h4>
+                        <p>Prediksi kode, Bug Hunt, latihan terbimbing, mini-project, source code modular 3 file, hasil QA checklist, project blueprint, pitch, dan demo final.</p>
+                    </div>
+                </div>
+                <h2 style="margin-top:3.5mm">Kesiapan Sebelum Level Dimulai</h2>
+                <div class="grid-2">
+                    <div class="doc-card">
+                        <h4>Siswa Sudah Mampu</h4>
+                        <ul class="checklist">
+                            <li>Membuat dan menjalankan file <code>.py</code> di VS Code.</li>
+                            <li>Menggunakan variable, list, condition, loop, dan function.</li>
+                            <li>Membuat window, Label, Button, dan Entry di CustomTkinter.</li>
+                            <li>Menggunakan <code>pack()</code>/<code>grid()</code> dan event <code>command</code>.</li>
+                            <li>Membaca baris terakhir traceback error dasar.</li>
+                        </ul>
+                    </div>
+                    <div class="doc-card">
+                        <h4>Pengajar Sudah Menyiapkan</h4>
+                        <ul class="checklist">
+                            <li>Python, VS Code, dan CustomTkinter teruji di laptop demo.</li>
+                            <li>Deck dibuka pada Meeting dan section yang tepat.</li>
+                            <li>File demo sebelum/sesudah perbaikan bug tersedia.</li>
+                            <li>Screenshot expected output GUI tersedia.</li>
+                            <li>Alternatif pair programming untuk perangkat terbatas.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="page-footer" aria-hidden="true"><div class="footer-meta"><span>Lesson Plan Python Level 4 · Planet Visionara</span><span data-page-number></span></div><div class="footer-stripe"></div></div>
+        </section>
+
+        <!-- Learning Journey M1-8 -->
+        <section class="page" id="journey">
+            <div class="page-body">
+                <div class="page-header" aria-hidden="true">
+                    <img src="../marketing/kalananti_logo.png" alt="">
+                    <div class="brand-ribbons"><span class="top-stripe"></span><span class="dots"></span></div>
+                </div>
+                <span class="badge-highlight">Perjalanan Belajar</span>
+                <h1>Perjalanan Belajar · Meeting 1–8</h1>
+                <p>Delapan pertemuan pertama membangun fondasi teknis wajib yang menjadi syarat minimal untuk proyek akhir.</p>
+                <table class="doc-table">
+                    <thead><tr><th style="width:12mm">#</th><th style="width:42mm">Topik &amp; Fokus</th><th>Capaian Utama</th><th>Bukti / Produk</th></tr></thead>
+                    <tbody>
+                        <tr><td><strong>1</strong></td><td><strong>Class &amp; Object</strong><br><small>OOP Foundations</small></td><td>Membedakan blueprint dan instance serta membuat beberapa object dari satu class.</td><td>Class <code>Hewan</code>/<code>Kandang</code> dan empat object terpisah.</td></tr>
+                        <tr><td><strong>2</strong></td><td><strong>Attributes &amp; Methods</strong></td><td>Menyimpan state object dan menjalankan aksi melalui method serta dot notation.</td><td>Hero, Tamagotchi, kalkulator, kasir.</td></tr>
+                        <tr><td><strong>3</strong></td><td><strong>Constructor <code>__init__</code></strong></td><td>Menginisialisasi data awal secara konsisten saat object dibuat.</td><td>List of objects dan sistem bank sederhana.</td></tr>
+                        <tr><td><strong>4</strong></td><td><strong>OOP in GUI</strong></td><td>Mewarisi <code>ctk.CTk</code>, menyimpan widget di <code>self</code>, dan menghubungkan event ke method.</td><td>Counter, login, To-Do List berbasis class.</td></tr>
+                        <tr><td><strong>5</strong></td><td><strong>Inheritance</strong></td><td>Membangun parent/child class, memakai <code>super()</code>, dan melakukan override.</td><td>Hierarki character/menu/alat musik.</td></tr>
+                        <tr><td><strong>6</strong></td><td><strong>Multi-Window Logic</strong></td><td>Menerapkan satu root, Frame switching, dan <code>CTkToplevel</code>.</td><td>Login–dashboard dan dialog konfirmasi.</td></tr>
+                        <tr><td><strong>7</strong></td><td><strong>Class Interaction</strong></td><td>Menghubungkan object data dengan GUI melalui composition/model–view.</td><td>ATM, voting, battery app.</td></tr>
+                        <tr><td><strong>8</strong></td><td><strong>Modular Coding</strong></td><td>Memecah model, view, dan main ke file berbeda serta menghindari circular import.</td><td>Arsitektur proyek tiga file.</td></tr>
+                    </tbody>
+                </table>
+                <div class="callout teal">
+                    <h3>Siklus Pembelajaran Standard (Student-Centered)</h3>
+                    <p><strong>Active recall → tujuan terukur → model formal &amp; analogi → predict before running → guided coding → Bug Hunt → independent challenge → integrated mini-project → reflection.</strong></p>
+                    <p><small>Core coding dijalankan di VS Code. Deck berfungsi sebagai panduan visual, prediksi, dan reveal jawaban.</small></p>
+                </div>
+            </div>
+            <div class="page-footer" aria-hidden="true"><div class="footer-meta"><span>Perjalanan Belajar · Pertemuan Konsep (M1–M8)</span><span data-page-number></span></div><div class="footer-stripe"></div></div>
+        </section>
+
+        <!-- Final Project Journey M9-12 -->
+        <section class="page" id="project-journey">
+            <div class="page-body">
+                <div class="page-header" aria-hidden="true">
+                    <img src="../marketing/kalananti_logo.png" alt="">
+                    <div class="brand-ribbons"><span class="top-stripe"></span><span class="dots"></span></div>
+                </div>
+                <span class="badge-highlight">Proyek Akhir</span>
+                <h1>Proyek Akhir · Pertemuan 9–12</h1>
+                <div class="grid-2">
+                    <div class="doc-card yellow-border"><h3>Meeting 9 · Plan</h3><p>Menemukan masalah pengguna, memilih ide, membatasi 3 fitur MVP, membuat class diagram, dan menyusun milestone.</p><p><strong>Deliverable:</strong> Project Blueprint disetujui.</p></div>
+                    <div class="doc-card blue-border"><h3>Meeting 10 · Build</h3><p>Membangun window, widget, object data, dan alur GUI–model secara bertahap dengan checkpoint.</p><p><strong>Deliverable:</strong> MVP/core mechanic berfungsi + pitch draft.</p></div>
+                    <div class="doc-card teal-border"><h3>Meeting 11 · Test</h3><p>Menghubungkan UI–backend, menjalankan test cases, memperbaiki bug, memoles UI, dan menyiapkan bukti demo.</p><p><strong>Deliverable:</strong> Aplikasi presentation-ready + PPT 5–7 slide.</p></div>
+                    <div class="doc-card blue-border"><h3>Meeting 12 · Showcase</h3><p>Menjelaskan problem, target user, class model, atribut/method penting, object interaction, serta mendemonstrasikan fitur.</p><p><strong>Deliverable:</strong> Presentasi, live demo/backup, Q&amp;A, dan refleksi.</p></div>
+                </div>
+                <h2 style="margin-top:3.5mm">Batas Proyek Akhir yang Wajib Dijaga</h2>
+                <table class="doc-table">
+                    <thead><tr><th>Yang Wajib Ada</th><th>Materi Terkait</th><th>Bukti Berhasil</th></tr></thead>
+                    <tbody>
+                        <tr><td>Minimal satu class model &amp; object aktif</td><td>M1–M3: class, object, attribute, method, constructor</td><td>Object dibuat dengan data awal dan method mengubah state.</td></tr>
+                        <tr><td>GUI berbasis class</td><td>M4: <code>class App(ctk.CTk)</code>, widget di self, event method</td><td>Window terbuka dan tombol menjalankan method tanpa global.</td></tr>
+                        <tr><td>Navigasi / dialog relevan</td><td>M5–M6: inheritance, Frame, Toplevel, 1 root</td><td>Perpindahan halaman/pop-up tidak membuat root kedua.</td></tr>
+                        <tr><td>UI berkomunikasi dengan model</td><td>M7: composition &amp; model–view</td><td>Aksi user mengubah object data dan hasil muncul di UI.</td></tr>
+                        <tr><td>Struktur file terorganisir</td><td>M8: import &amp; modular coding</td><td><code>model.py</code>, <code>views.py</code>, <code>main.py</code> dapat dijalankan dari folder sama.</td></tr>
+                    </tbody>
+                </table>
+                <div class="callout yellow"><strong>Arahan Pengajar:</strong> Fitur tambahan seperti dark mode, pencarian, atau export hanya dikerjakan setelah 3 fitur utama stabil. API, cloud database, dan AI tidak diwajibkan pada Level 4.</div>
+            </div>
+            <div class="page-footer" aria-hidden="true"><div class="footer-meta"><span>Proyek Akhir · Pertemuan 9–12</span><span data-page-number></span></div><div class="footer-stripe"></div></div>
+        </section>
+
+        <!-- Dynamic Meeting Pages Container -->
+        <div id="meetingPages"></div>
+    </main>
+
+    <script>
+const meetingData = [
+            {
+                id: 1,
+                unit: "Unit 1 · OOP Foundations",
+                title: "Introduction to Class & Object",
+                focus: "Logic · OOP Concept (Class/Object)",
+                prior: "Level 3 GUI: window, button, Entry, layout, dan event command.",
+                product: "Kerangka Kebun Binatang: class Hewan/Kandang dan empat object terpisah.",
+                objectives: [
+                    "Menjelaskan perbedaan class sebagai blueprint dan object sebagai instance dengan contoh yang tepat.",
+                    "Mendefinisikan class berformat PascalCase tanpa SyntaxError.",
+                    "Membuat dan mencetak minimal dua object dari class yang sama."
+                ],
+                materials: ["VS Code + Python", "Deck M1", "Kartu A/B/C", "Coding journal"],
+                preparation: ["Siapkan demo class Kucing kosong.", "Uji output alamat object.", "Siapkan diagnostic Level 3."],
+                studentPrep: ["Dapat membuat dan menjalankan file Python.", "Ingat function, variable, dan GUI dasar Level 3.", "Membawa folder latihan baru yang kosong."],
+                vocab: [["Class", "Tipe/cetakan yang mendeskripsikan data dan behavior object."], ["Object / Instance", "Nilai konkret yang dibuat dari sebuah class."], ["Instantiation", "Proses meminta Python membuat instance dengan memanggil nama class."], ["pass", "Statement yang tidak melakukan apa-apa; dipakai sebagai placeholder blok."], ["PascalCase", "Konvensi nama class: setiap kata diawali huruf besar tanpa spasi."]],
+                technical: ["Saat nama class dipanggil dengan tanda kurung, Python membuat instance baru lalu menyiapkannya. Pada Meeting 1 isi class masih kosong.", "<code>pass</code> bukan isi wajib class; ia hanya menjaga blok kosong tetap valid secara sintaks.", "Hasil <code>print(object)</code> adalah representasi default. Teks mirip alamat memori tidak perlu dihafalkan dan formatnya dapat berbeda.", "Satu class dapat menghasilkan banyak instance. Masing-masing adalah object terpisah walaupun berasal dari definisi yang sama."],
+                code: ["class Kucing:", "    pass", "", "kucing_oren = Kucing()", "kucing_hitam = Kucing()", "", "print(kucing_oren)", "print(kucing_hitam)"].join("\n"),
+                expected: "Program selesai tanpa error dan mencetak dua representasi object yang berbeda. Jangan menjanjikan angka/alamat output tertentu.",
+                deckNotes: ["Opening: hubungkan masalah kode GUI Level 3 yang mulai panjang dengan kebutuhan struktur OOP.", "Review: minta jawaban sebelum klik opsi; cek window, command, Entry.get(), pack/grid, lalu satu quick challenge.", "Concept: berikan definisi formal class/object terlebih dahulu; analogi cetakan kue hanya membantu visualisasi.", "Prediction: pada <code>mobil_bapak = mobil()</code>, penyebab NameError adalah ejaan/case nama class tidak sama.", "Practice: solusi guided exercise tetap tertutup sampai siswa mencoba di VS Code.", "Closing: gunakan pertanyaan rasa kue untuk membuka kebutuhan attribute pada Meeting 2."],
+                misconceptions: ["Class bukan object yang belum jadi; class adalah definisi/type, sedangkan object adalah instance.", "Menulis <code>mobil = Mobil</code> menyimpan class itu sendiri, bukan membuat instance. Gunakan <code>Mobil()</code>.", "PascalCase adalah konvensi kuat, bukan penyebab runtime error selama nama dipanggil konsisten."],
+                part1: [
+                    ["10 min", "Warm Up · Active Recall", "Lakukan lima cek cepat Level 3: membuat window, fungsi command, mengambil Entry dengan .get(), memilih pack/grid, dan quick challenge membuat Label + Button. Siswa jawab dengan kartu/hand signal sebelum jawaban dibahas.", "Catat siswa yang perlu refresh GUI; tekankan bahwa OOP akan merapikan aplikasi besar."],
+                    ["12 min", "Formal Concept", "Definisikan OOP, class, object, dan instance. Bandingkan program prosedural dengan pemodelan benda. Gunakan visual blueprint → build/instantiation → object di memori.", "Minta siswa melengkapi kalimat: class adalah …; object adalah …."],
+                    ["13 min", "Analogy & Minimal Code", "Gunakan analogi cetakan kue, lalu ketik <code>class Kucing: pass</code>. Buat <code>kucing_oren = Kucing()</code> dan <code>kucing_hitam = Kucing()</code>. Prediksi output sebelum run.", "Jelaskan alamat memori berbeda menandakan dua instance terpisah, bukan error."]
+                ],
+                part2: [
+                    ["25 min", "Guided Coding", "Kerjakan tepat tiga latihan: (1) class Robot kosong; (2) object robot1 dan robot2; (3) print keduanya dan bandingkan. Reveal solusi hanya setelah siswa mencoba.", "Periksa PascalCase, titik dua, indentasi <code>pass</code>, dan tanda kurung instansiasi."],
+                    ["10 min", "Bug Hunt", "Bedah <code>class buku</code>, <code>pass</code> yang salah indentasi, dan <code>buku_saya = Buku</code> tanpa kurung. Siswa menyebutkan tiga perbaikan sebelum mengetik.", "Gunakan routine: baca error → baris → ejaan/indentasi → perbaiki satu sebab → run."],
+                    ["13 min", "Integrated Practice", "Bangun tiga contoh singkat bersama (Barang, AkunBank, MenuCafe), lalu siswa mengerjakan independent mini-project Kebun Binatang tanpa source code final.", "Acceptance: dua class, empat object, semua berhasil dicetak."],
+                    ["7 min", "Wrap Up", "Ringkas class/object/PascalCase/instantiation. Exit ticket: bisakah cetakan sama membuat object dengan sifat berbeda? Preview attributes & methods.", "Kumpulkan satu kalimat penjelasan siswa dan file <code>meeting1.py</code>."]
+                ],
+                learned: ["Class adalah blueprint; object adalah instance.", "PascalCase, titik dua, indentasi, dan tanda kurung menentukan kode dapat dijalankan.", "Satu class dapat menghasilkan banyak object yang independen."],
+                assess: "Observasi prediksi, keberhasilan membuat dua object, dan kemampuan menjelaskan perbedaan class/object tanpa analogi saja.",
+                differentiation: "Minimum: satu class + dua object. Support: starter code dengan blanks. Bonus: buat tiga jenis class dan jelaskan hubungan yang mungkin.",
+                home: "Rapikan <code>meeting1.py</code> dan tulis dua contoh class/object dari kehidupan sehari-hari."
+            },
+            {
+                id: 2,
+                unit: "Unit 1 · OOP Foundations",
+                title: "Attributes & Methods",
+                focus: "Logic · OOP Structure",
+                prior: "Class, object, PascalCase, instantiation, dan object terpisah di memori.",
+                product: "Tamagotchi sederhana dengan attribute nama/lapar dan method makan().",
+                objectives: [
+                    "Menambahkan dan membaca attribute object menggunakan dot notation.",
+                    "Mendefinisikan method dengan parameter pertama <code>self</code>.",
+                    "Memanggil method untuk membaca atau mengubah state object."
+                ],
+                materials: ["VS Code + Python", "Deck M2", "Bug cards", "Coding journal"],
+                preparation: ["Siapkan class Kucing dan Hero.", "Uji TypeError tanpa self.", "Siapkan output followers."],
+                studentPrep: ["Mampu membedakan class dan object.", "Mampu membuat object memakai tanda kurung.", "Ingat variable dan function sederhana."],
+                vocab: [["Attribute", "Data/state yang disimpan pada sebuah object."], ["Method", "Function yang didefinisikan di dalam class."], ["self", "Referensi ke instance yang sedang menerima pemanggilan method."], ["Dot notation", "Sintaks titik untuk mengakses attribute atau method."], ["State", "Kondisi/data object pada suatu saat."]],
+                technical: ["Python mengikat instance ke parameter pertama method saat dipanggil melalui <code>object.method()</code>. Nama konvensional parameter itu adalah <code>self</code>.", "Menambah attribute setelah object dibuat seperti <code>kucing.nama = 'Milo'</code> valid di Python, tetapi Meeting 3 akan menunjukkan cara lebih konsisten melalui constructor.", "Mengakses attribute yang belum pernah dibuat menghasilkan <code>AttributeError</code>.", "Menulis <code>object.method</code> hanya mengambil referensi method; tanda kurung diperlukan untuk menjalankannya."],
+                code: ["class Kucing:", "    def mengeong(self):", "        print(f\"{self.nama}: Meow!\")", "", "milo = Kucing()", "milo.nama = \"Milo\"", "milo.mengeong()"].join("\n"),
+                expected: "Terminal menampilkan <code>Milo: Meow!</code>. Attribute nama dibaca dari instance milo yang otomatis diterima sebagai self.",
+                deckNotes: ["Review: pastikan siswa masih dapat membuat class dan instance tanpa melihat catatan.", "Attributes: tunjuk object → titik → attribute → value pada papan.", "Methods: bandingkan function biasa dengan method, lalu jelaskan instance dikirim otomatis ke self.", "Prediction: <code>robot_canggih.sapa</code> tidak mencetak apa pun karena method belum dipanggil.", "Bug Hunt: jalankan klakson tanpa self agar siswa membaca TypeError sebelum memperbaiki.", "Mini-project: fokuskan Tamagotchi pada perubahan state lapar, bukan tampilan GUI."],
+                misconceptions: ["self bukan keyword khusus; nama lain mungkin berjalan, tetapi self adalah konvensi Python yang wajib dipakai dalam materi.", "self tidak perlu dikirim manual saat memanggil instance method.", "Method bukan attribute yang berbeda dunia; method juga diakses lewat dot notation, tetapi bersifat callable."],
+                part1: [
+                    ["10 min", "Warm Up · Review M1", "Lima active-recall: arti blueprint, PascalCase, class kosong, cara membuat Mobil(), dan perbedaan alamat dua object.", "Minta alasan, bukan hanya pilihan jawaban."],
+                    ["12 min", "Attributes", "Definisikan attribute sebagai data/variabel yang menempel pada object. Demonstrasikan <code>kucing1.nama</code> dan <code>kucing1.warna</code> dengan dot notation.", "Trace: object → titik → nama attribute → nilai."],
+                    ["13 min", "Methods & self", "Definisikan method sebagai fungsi di dalam class. Ketik <code>def mengeong(self)</code>, lalu panggil <code>kucing1.mengeong()</code>. Gunakan model Hero: status sebagai attribute, skill sebagai method.", "Predict: apa yang terjadi jika method dipanggil tanpa <code>()</code>?" ]
+                ],
+                part2: [
+                    ["25 min", "Guided Coding", "Tiga latihan: (1) Player dengan username/level; (2) Burung.terbang(); (3) Anjing.menggonggong() membaca <code>self.nama</code>.", "Reveal solusi per latihan setelah diskusi dan percobaan."],
+                    ["10 min", "Bug Hunt", "Jalankan method <code>klakson()</code> tanpa parameter self. Baca TypeError dan perbaiki definisinya.", "Hubungkan pesan '1 was given' dengan Python yang otomatis mengirim object."],
+                    ["13 min", "Integrated Practice", "Bangun Kalkulator, Kasir, dan Akun followers bersama. Independent: Tamagotchi dengan lapar=10; makan() mengurangi 2 dan menampilkan status.", "Acceptance: state berubah dua kali dan siswa dapat menunjuk baris perubahan state."],
+                    ["7 min", "Wrap Up", "Bandingkan attribute versus method. Exit ticket: mengapa <code>self</code> dibutuhkan ketika ada banyak object? Preview constructor.", "Simpan file dan minta satu siswa menjelaskan dot notation." ]
+                ],
+                learned: ["Attribute menyimpan state object.", "Method merepresentasikan aksi object.", "self merujuk pada instance yang sedang menggunakan method."],
+                assess: "Cek penggunaan dot notation, parameter self, pemanggilan dengan kurung, dan perubahan attribute setelah method dijalankan.",
+                differentiation: "Minimum: satu attribute + satu method. Support: diagram object.attribute. Bonus: method menerima parameter tambahan.",
+                home: "Tambahkan method tidur() pada Tamagotchi yang mengubah satu attribute lain."
+            },
+            {
+                id: 3,
+                unit: "Unit 1 · OOP Foundations",
+                title: "Constructor (__init__)",
+                focus: "Logic · Object Initialization",
+                prior: "Attribute, method, dot notation, dan self.",
+                product: "Sistem Bank sederhana dengan data awal dan method setor().",
+                objectives: [
+                    "Menjelaskan kapan constructor <code>__init__</code> dijalankan.",
+                    "Menginisialisasi attribute dari argumen dan default value.",
+                    "Membuat beberapa object dengan data awal berbeda serta menyimpannya dalam list."
+                ],
+                materials: ["VS Code + Python", "Deck M3", "Factory diagram", "Coding journal"],
+                preparation: ["Siapkan contoh _init_ salah.", "Uji missing argument TypeError.", "Siapkan list of objects."],
+                studentPrep: ["Paham attribute, method, self, dan dot notation.", "Mampu membaca TypeError sederhana.", "Ingat cara membuat list dan melakukan loop."],
+                vocab: [["Constructor", "Istilah umum untuk proses persiapan object; di Python materi ini berfokus pada __init__."], ["__init__", "Initializer yang dipanggil otomatis setelah instance dibuat."], ["Parameter", "Nama input pada definisi function/method."], ["Argument", "Nilai nyata yang dikirim saat pemanggilan."], ["Default value", "Nilai parameter/attribute yang dipakai bila tidak diganti."]],
+                technical: ["Secara teknis <code>__init__</code> menginisialisasi instance yang sudah dibuat oleh Python; hindari mengatakan bahwa __init__ sendirian 'menciptakan' object.", "<code>self.nama = nama</code> memindahkan nilai argument ke attribute milik instance.", "__init__ seharusnya tidak mengembalikan nilai selain <code>None</code>.", "List kosong untuk setiap object sebaiknya dibuat di dalam __init__ agar instance tidak berbagi state secara tidak sengaja."],
+                code: ["class Kucing:", "    def __init__(self, nama, warna):", "        self.nama = nama", "        self.warna = warna", "", "milo = Kucing(\"Milo\", \"Oren\")", "luna = Kucing(\"Luna\", \"Hitam\")", "print(milo.nama, luna.nama)"].join("\n"),
+                expected: "Terminal menampilkan <code>Milo Luna</code>. Kedua object langsung memiliki attribute nama dan warna sejak selesai diinisialisasi.",
+                deckNotes: ["Review: ulang dot notation dan peran self sebelum memperkenalkan dunder init.", "Visual pabrik: jelaskan urutan call class → instance dibuat → __init__ mengisi state.", "Code: beri warna berbeda pada dua object untuk menonjolkan state independen.", "Prediction: Sepeda() tanpa argument merk menghasilkan TypeError missing required positional argument.", "Bug Hunt: _init_ satu underscore hanyalah method biasa dan tidak dipanggil otomatis.", "Mini-project: pada list-of-objects, minta siswa menunjuk object mana yang sedang diproses loop."],
+                misconceptions: ["Dunder berarti double underscore di kedua sisi, bukan satu underscore.", "Parameter self tidak dihitung sebagai argument yang diketik siswa saat instantiation.", "Default attribute seperti hp=100 boleh dibuat tanpa menjadi parameter jika semua object memulai dari nilai sama."],
+                part1: [
+                    ["10 min", "Warm Up · Review M2", "Lima recall: attribute sebagai data, dot notation, self, pemanggilan method, dan self otomatis saat object.method().", "Gunakan predict-before-run, bukan ringkasan pasif."],
+                    ["12 min", "Constructor Model", "Definisikan constructor sebagai method spesial yang berjalan otomatis saat object dibuat. Visualkan class Mobil → <code>__init__</code> → object siap dengan data awal.", "Tekankan dua underscore sebelum dan sesudah: dunder init."],
+                    ["13 min", "Minimal Code & Prediction", "Ketik class Kucing dengan parameter nama dan warna. Buat Milo dan Luna. Prediksi error saat <code>Sepeda()</code> tidak mengirim argumen merk.", "Tunjukkan perbedaan parameter, argumen, dan default value." ]
+                ],
+                part2: [
+                    ["25 min", "Guided Coding", "Tiga latihan: (1) Player(nama); (2) Monster dengan hp=100 default; (3) Monster.info() membaca attribute hasil constructor.", "Periksa assignment <code>self.nama = nama</code> satu per satu."],
+                    ["10 min", "Bug Hunt", "Perbaiki <code>def _init_</code> menjadi <code>def __init__</code>. Hubungkan TypeError 'takes no arguments' dengan constructor yang tidak dikenali.", "Minta siswa menandai empat underscore secara visual."],
+                    ["13 min", "Integrated Practice", "Bangun User dengan keranjang list, method tambah_barang, dan database Siswa list-of-objects. Independent: AkunBank(nama, saldo_awal) + setor().", "Acceptance: minimal dua object memiliki state awal berbeda dan satu method mengubah saldo."],
+                    ["7 min", "Wrap Up", "Ringkas constructor, argumen, default, list-of-objects. Exit ticket: bagaimana constructor mencegah attribute belum ada? Preview OOP GUI.", "Simpan evidence berupa output sebelum/sesudah method." ]
+                ],
+                learned: ["__init__ menyiapkan state awal secara otomatis.", "Argumen wajib harus diberikan saat instantiation.", "List dapat menyimpan banyak object sebagai database sederhana."],
+                assess: "Uji dua object dengan input berbeda, cek tidak ada missing argument, dan minta siswa menjelaskan asal nilai setiap attribute.",
+                differentiation: "Minimum: constructor satu parameter. Support: template parameter-to-attribute. Bonus: validasi saldo awal tidak negatif.",
+                home: "Tambahkan method info() pada AkunBank untuk mengembalikan ringkasan pemilik dan saldo."
+            },
+            {
+                id: 4,
+                unit: "Unit 1 · OOP Foundations",
+                title: "OOP in GUI",
+                focus: "Visual · GUI with OOP",
+                prior: "CustomTkinter Level 3 + class/object/constructor dari Meeting 1–3.",
+                product: "To-Do List atau Counter berbasis class CustomTkinter.",
+                objectives: [
+                    "Membuat GUI dengan <code>class App(ctk.CTk)</code> dan <code>super().__init__()</code>.",
+                    "Menyimpan widget sebagai attribute <code>self</code> dan mengatur layout di dalam class.",
+                    "Menghubungkan <code>command</code> tombol ke method tanpa memanggilnya langsung."
+                ],
+                materials: ["VS Code", "Python + customtkinter", "Deck M4", "Expected-output screenshot"],
+                preparation: ["Uji instalasi customtkinter.", "Siapkan procedural vs OOP comparison.", "Uji command tanpa self."],
+                studentPrep: ["Menguasai __init__, self, attribute, dan method.", "Dapat membuat Label, Entry, Button, dan layout CustomTkinter.", "CustomTkinter sudah terpasang pada perangkat."],
+                vocab: [["GUI class", "Class yang membungkus window, widget, dan event behavior."], ["Inheritance", "Membuat class baru berdasarkan kemampuan class lain; dibahas penuh pada M5."], ["super()", "Cara mengakses implementasi berikutnya pada method resolution order."], ["Callback", "Function/method yang disimpan untuk dijalankan ketika event terjadi."], ["mainloop", "Event loop yang menunggu dan memproses interaksi GUI."]],
+                technical: ["<code>class App(ctk.CTk)</code> membuat subclass dari CTk. <code>super().__init__()</code> harus berjalan sebelum memakai kemampuan window.", "Di dalam App, <code>self</code> adalah object window utama. Widget disimpan sebagai attribute bila akan digunakan method lain.", "<code>command=self.sapa</code> menyimpan referensi callback. <code>command=self.sapa()</code> menjalankannya saat setup dan biasanya menyimpan hasil <code>None</code>.", "Guard <code>if __name__ == '__main__'</code> mencegah aplikasi otomatis berjalan ketika file di-import."],
+                code: ["import customtkinter as ctk", "", "class App(ctk.CTk):", "    def __init__(self):", "        super().__init__()", "        self.label = ctk.CTkLabel(self, text=\"Siap\")", "        self.label.pack(pady=16)", "        ctk.CTkButton(self, text=\"Ubah\",", "                      command=self.ubah).pack()", "", "    def ubah(self):", "        self.label.configure(text=\"Berhasil\")"].join("\n"),
+                expected: "Window terbuka dengan Label 'Siap'. Setelah tombol diklik, teks berubah menjadi 'Berhasil'; method tidak berjalan sebelum klik.",
+                deckNotes: ["Review: pastikan constructor kuat karena seluruh setup GUI berada di __init__.", "Architecture: tunjukkan procedural vs OOP tanpa menyebut kode prosedural selalu buruk; fokus pada maintainability aplikasi besar.", "Minimal code: run setelah window, lalu setelah Label, lalu setelah Button.", "Prediction: command tanpa self menghasilkan NameError saat setup.", "Bug Hunt: widget lokal di __init__ tidak tersedia pada method lain; ubah menjadi self.widget.", "Independent project: nilai Counter dari event flow, bukan hanya tampilan yang bagus."],
+                misconceptions: ["OOP bukan otomatis membuat kode lebih cepat; manfaat utama di sini adalah organisasi dan reuse.", "Tidak semua widget harus menjadi self; hanya widget/state yang perlu diakses lintas method.", "super() bukan object parent; ia membantu meneruskan pemanggilan sesuai hierarki class."],
+                part1: [
+                    ["10 min", "Warm Up · Constructor", "Lima recall: kapan __init__ berjalan, jumlah underscore, fungsi self, membuat A('Budi'), dan missing argument TypeError.", "Pastikan siswa siap membaca class bertingkat dengan indentasi."],
+                    ["12 min", "Architecture", "Bandingkan GUI prosedural dengan OOP. Modelkan App sebagai object, widgets sebagai attributes, dan click handlers sebagai methods.", "Gunakan analogi rumah: semua komponen disimpan terstruktur, bukan variabel berserakan."],
+                    ["13 min", "Minimal GUI", "Live-code <code>class AplikasiSaya(ctk.CTk)</code>, <code>super().__init__()</code>, title, geometry, label, dan mainloop guard.", "Predict: <code>command=ubah_teks</code> tanpa self menghasilkan NameError." ]
+                ],
+                part2: [
+                    ["25 min", "Guided Coding", "Tiga latihan berantai: kerangka KalanantiApp, tambah Label/Entry, lalu method sapa_user dan Button dengan <code>command=self.sapa_user</code>.", "Run setelah setiap checkpoint; jangan menunggu aplikasi lengkap."],
+                    ["10 min", "Bug Hunt", "Perbaiki Label lokal <code>teks_judul</code> yang tidak dapat diakses method ganti. Ubah kedua referensi menjadi <code>self.teks_judul</code>.", "Bedakan NameError dan AttributeError dari pesan aktual."],
+                    ["13 min", "Integrated Practice", "Bangun kerangka Login, method buat_widget, dan object Akun di dalam GUI. Independent: Counter atau To-Do List OOP.", "Acceptance: satu window, widget sebagai self, command method, dan UI berubah setelah klik."],
+                    ["7 min", "Wrap Up", "Exit ticket: mengapa OOP membantu saat aplikasi punya ratusan widget? Preview inheritance.", "Screenshot aplikasi dan tunjuk satu event flow: click → method → state → UI." ]
+                ],
+                learned: ["GUI dapat direpresentasikan sebagai object App.", "Widget yang dipakai lintas method harus menjadi attribute self.", "command menerima referensi method tanpa tanda kurung."],
+                assess: "Aplikasi terbuka tanpa root ganda, tombol bekerja saat diklik, dan siswa dapat menjelaskan fungsi super().__init__().",
+                differentiation: "Minimum: Counter. Support: starter architecture. Bonus: pisahkan <code>buat_widget()</code> dari constructor.",
+                home: "Tambahkan tombol Reset pada Counter atau fitur hapus semua pada To-Do List."
+            },
+            {
+                id: 5,
+                unit: "Unit 2 · Advanced Logic",
+                title: "Inheritance (Pewarisan)",
+                focus: "Logic · Inheritance & Efficiency",
+                prior: "Class App mewarisi ctk.CTk, constructor, method, dan attribute.",
+                product: "Hierarki AlatMusik/Menu dengan parent, child, super(), dan override.",
+                objectives: [
+                    "Menjelaskan parent class, child class, dan prinsip DRY.",
+                    "Mewarisi attribute/method dan memanggil constructor parent dengan <code>super()</code>.",
+                    "Melakukan method override sederhana dan memprediksi method yang dijalankan."
+                ],
+                materials: ["VS Code + Python", "Deck M5", "Hierarchy cards", "Source example Cafe"],
+                preparation: ["Siapkan family-tree diagram.", "Uji bug super() hilang.", "Siapkan contoh Menu–Minuman."],
+                studentPrep: ["Paham class, constructor, attribute, dan method.", "Pernah melihat App mewarisi ctk.CTk.", "Mampu membaca hierarki sederhana."],
+                vocab: [["Inheritance", "Mekanisme subclass memperoleh behavior/data dari base class."], ["Parent/Base class", "Class yang menyediakan behavior umum."], ["Child/Subclass", "Class yang memperluas atau mengkhususkan base class."], ["Override", "Subclass mendefinisikan method bernama sama untuk behavior khusus."], ["DRY", "Prinsip menghindari duplikasi pengetahuan/kode yang tidak perlu."]],
+                technical: ["Gunakan inheritance untuk hubungan <em>is-a</em>: Minuman adalah Menu. Jika hubungan hanya <em>has-a</em>, composition biasanya lebih tepat.", "Subclass mewarisi method lewat method resolution order. <code>super()</code> meneruskan pemanggilan ke implementasi berikutnya dalam urutan tersebut.", "Jika child mendefinisikan __init__ sendiri, constructor parent tidak otomatis dipanggil; panggil <code>super().__init__(...)</code> bila state parent diperlukan.", "Override mengubah behavior untuk child tanpa mengubah base class."],
+                code: ["class Menu:", "    def __init__(self, nama, harga):", "        self.nama = nama", "        self.harga = harga", "", "class Minuman(Menu):", "    def __init__(self, nama, harga, ukuran):", "        super().__init__(nama, harga)", "        self.ukuran = ukuran", "", "kopi = Minuman(\"Kopi\", 25000, \"Large\")"].join("\n"),
+                expected: "Object kopi memiliki attribute nama dan harga dari setup parent serta ukuran dari child. Tanpa super().__init__, nama/harga belum terbentuk.",
+                deckNotes: ["Review: tunjuk kembali App(ctk.CTk) sebagai contoh inheritance yang sudah digunakan.", "Hierarchy: minta siswa membedakan data umum dan data khusus sebelum menulis class.", "Code: jalankan contoh child tanpa method sendiri untuk membuktikan method parent diwarisi.", "super(): trace argument nama dari child menuju parent constructor.", "Bug Hunt: AttributeError nama adalah akibat setup parent tidak dijalankan.", "Mini-project Cafe: fokus pada alasan memilih parent/child, bukan sekadar menyalin struktur."],
+                misconceptions: ["Inheritance bukan copy-paste literal; method dicari melalui hierarki saat runtime.", "Tidak semua class mirip harus diwariskan. Uji hubungan is-a terlebih dahulu.", "Override tidak menghapus method parent; behavior parent tetap tersedia pada class parent dan dapat dipanggil secara tepat bila diperlukan."],
+                part1: [
+                    ["10 min", "Warm Up · OOP GUI", "Lima review: parent ctk.CTk, alasan self pada widget, super().__init__, command yang benar, dan akses self.label.", "Hubungkan review langsung ke inheritance yang sebenarnya sudah digunakan."],
+                    ["12 min", "Formal Concept", "Definisikan inheritance, parent/child, dan DRY. Gunakan hierarchy Kendaraan → Mobil/Pesawat serta Menu → Minuman/Makanan.", "Minta siswa mengelompokkan attribute umum versus khusus."],
+                    ["13 min", "Syntax, super & Override", "Live-code Hewan → Kucing, lalu Karyawan → Programmer dengan super().__init__(nama). Demonstrasikan override suara().", "Predict: child pass tetap dapat memanggil method parent." ]
+                ],
+                part2: [
+                    ["25 min", "Guided Coding", "Tiga latihan: Burung→Elang, Kendaraan→SepedaMotor dengan super, dan Hewan→Kucing dengan method override.", "Gunakan diagram panah sebelum mengetik setiap class."],
+                    ["10 min", "Bug Hunt", "MakananPedas membuat constructor sendiri tetapi lupa <code>super().__init__(nama)</code>; perbaiki AttributeError nama.", "Trace urutan constructor parent lalu child."],
+                    ["13 min", "Integrated Practice", "Bangun AkunPremium, custom TombolBahaya, dan Menu Cafe. Independent: AlatMusik→Gitar/Drum.", "Acceptance: child menjalankan kemampuan warisan dan kemampuan khusus."],
+                    ["7 min", "Wrap Up", "Ringkas parent, child, DRY, super, override. Exit ticket: tunjukkan inheritance tersembunyi pada App(ctk.CTk). Preview navigation.", "Minta siswa menggambar satu hierarchy dari proyek potensial." ]
+                ],
+                learned: ["Inheritance mengurangi duplikasi secara terarah.", "super() menginisialisasi bagian parent.", "Child dapat memperluas atau menimpa behavior parent."],
+                assess: "Object child memiliki attribute parent, method warisan dapat dipanggil, dan override menghasilkan output yang diprediksi.",
+                differentiation: "Minimum: parent + satu child. Support: diagram inheritance. Bonus: dua child dengan override berbeda.",
+                home: "Rancang hierarchy kecil untuk Banking, Library, atau Inventory dan beri label parent/child."
+            },
+            {
+                id: 6,
+                unit: "Unit 2 · Advanced Logic",
+                title: "Multi-Window Logic",
+                focus: "Logic · Navigation Logic",
+                prior: "Inheritance, super(), GUI berbasis class, CTkFrame dan widget layout.",
+                product: "Simulasi Login–Dashboard dengan Frame switching dan dialog Toplevel.",
+                objectives: [
+                    "Menjelaskan aturan satu root dan risiko beberapa <code>ctk.CTk()</code>/<code>mainloop()</code>.",
+                    "Mengganti halaman menggunakan class <code>CTkFrame</code>.",
+                    "Membuka satu dialog <code>CTkToplevel</code> dan mencegah duplikasi pop-up."
+                ],
+                materials: ["VS Code + CustomTkinter", "Deck M6", "Navigation diagram", "Bug cards"],
+                preparation: ["Siapkan demo root ganda (jangan dijalankan lama).", "Uji Toplevel guard.", "Siapkan dua Frame."],
+                studentPrep: ["Mampu membuat GUI class dengan satu CTk root.", "Paham inheritance dan super().__init__().", "Mampu memakai pack() dan pack_forget()."],
+                vocab: [["Root window", "Window utama yang memiliki interpreter/event loop Tk."], ["CTkFrame", "Container widget yang dapat diperlakukan sebagai halaman."], ["CTkToplevel", "Window tambahan yang terkait dengan root utama."], ["Frame switching", "Menyembunyikan satu Frame dan menampilkan Frame lain."], ["winfo_exists()", "Pengecekan apakah widget/window Tk masih ada."]],
+                technical: ["Secara arsitektur satu aplikasi Tk/CustomTkinter menggunakan satu root dan satu mainloop. Beberapa root mungkin dapat dibuat, tetapi mudah menimbulkan lifecycle/event yang tidak konsisten dan tidak digunakan untuk halaman biasa.", "Frame switching tidak membuat window baru; hanya mengganti container yang terlihat di root yang sama.", "CTkToplevel cocok untuk dialog/pengaturan. Berikan root sebagai master dan simpan referensinya agar dapat dicek atau difokuskan kembali.", "<code>pack_forget()</code> menyembunyikan widget tanpa menghancurkannya; state object masih tersimpan."],
+                code: ["def buka_popup(self):", "    if self.popup is None or not self.popup.winfo_exists():", "        self.popup = InfoPopup(self)", "    else:", "        self.popup.focus()", "", "def ke_dashboard(self):", "    self.login.pack_forget()", "    self.dashboard.pack(fill=\"both\", expand=True)"].join("\n"),
+                expected: "Klik pop-up berkali-kali tetap menghasilkan satu Toplevel aktif. Frame Login menghilang dan Dashboard tampil tanpa membuat root/mainloop baru.",
+                deckNotes: ["Review: gunakan inheritance terminology saat membahas CTkFrame dan CTkToplevel.", "Aturan satu root: jelaskan sebagai best practice arsitektur, bukan sekadar larangan tanpa alasan.", "Frame vs Toplevel: beri dua skenario dan minta siswa memilih komponen yang sesuai.", "Prediction: jangan sengaja membiarkan dua mainloop berjalan; cukup trace kode berbahaya.", "Bug Hunt: Pop harus mewarisi CTkToplevel dan menerima master root.", "Independent Login: pastikan tombol Logout membuktikan navigasi dua arah."],
+                misconceptions: ["Toplevel bukan root kedua dan tidak membutuhkan mainloop sendiri.", "pack_forget tidak menghapus data; destroy() yang menghancurkan widget.", "Frame switching bukan membuka tab browser; ini perubahan widget di dalam event loop yang sama."],
+                part1: [
+                    ["10 min", "Warm Up · Inheritance", "Lima review: parent pada B(A), warisan otomatis, arti DRY, super().__init__, dan method override.", "Gunakan jawaban serentak lalu alasan bergantian."],
+                    ["12 min", "One-Root Architecture", "Tegaskan satu aplikasi = satu <code>ctk.CTk</code> dan satu mainloop. Bedakan Frame switching untuk halaman dan CTkToplevel untuk dialog.", "Model buku (ganti halaman) versus sticky note (pop-up)."],
+                    ["13 min", "Minimal Navigation Code", "Live-code class JendelaPopup(ctk.CTkToplevel), panggil dari App, simpan state <code>self.popup</code>, dan cek <code>winfo_exists()</code>.", "Predict dampak dua root dan dua mainloop." ]
+                ],
+                part2: [
+                    ["25 min", "Guided Coding", "Tiga latihan: InfoApp Toplevel, trigger show_info(), dan frame_A → frame_B memakai <code>pack_forget()</code>.", "Run dan klik berulang untuk mengamati state window."],
+                    ["10 min", "Bug Hunt", "Ubah class Pop yang salah mewarisi ctk.CTk menjadi ctk.CTkToplevel. Jelaskan mengapa root kedua tidak aman.", "Cek class parent dan jumlah mainloop."],
+                    ["13 min", "Integrated Practice", "Bangun HalamanHome, hubungkan ke App, lalu sidebar navigation. Independent: Login ↔ Dashboard dengan Logout.", "Acceptance: perpindahan dua arah, satu root, dan tidak ada frame bertumpuk."],
+                    ["7 min", "Wrap Up", "Exit ticket: kapan memilih Frame dan kapan Toplevel? Preview object interaction.", "Ambil screenshot dua state halaman sebagai evidence." ]
+                ],
+                learned: ["Satu root menjaga event loop stabil.", "Frame switching mengganti konten dalam window yang sama.", "Toplevel cocok untuk dialog dan perlu guard agar tidak duplikat."],
+                assess: "Navigasi berfungsi dua arah, jumlah root satu, dan tombol pop-up tidak menciptakan dialog tak terbatas.",
+                differentiation: "Minimum: satu Toplevel. Support: dua Frame starter. Bonus: kirim nama user dari Login ke Dashboard.",
+                home: "Tambahkan dialog konfirmasi sebelum Logout atau Hapus Data."
+            },
+            {
+                id: 7,
+                unit: "Unit 2 · Advanced Logic",
+                title: "Class Interaction",
+                focus: "Logic · Object Interaction",
+                prior: "GUI OOP, constructor, object, Frame/Toplevel, dan navigasi.",
+                product: "Sistem Voting atau ATM dengan model data terpisah dari GUI.",
+                objectives: [
+                    "Menjelaskan composition: object dapat menjadi attribute object lain.",
+                    "Memisahkan class data/model dari class GUI/view.",
+                    "Mengubah state model melalui event GUI dan memperbarui tampilan."
+                ],
+                materials: ["VS Code + CustomTkinter", "Deck M7", "Model–View diagram", "ATM starter"],
+                preparation: ["Siapkan UserData + GameApp.", "Uji class vs instance bug.", "Siapkan flow click→model→view."],
+                studentPrep: ["Paham object, attribute, method, dan constructor.", "Mampu membuat event GUI yang mengubah Label.", "Mampu membaca notasi bertingkat seperti self.data.skor."],
+                vocab: [["Composition", "Hubungan has-a: satu object menyimpan object lain."], ["Model", "Bagian yang menyimpan data dan aturan bisnis."], ["View", "Bagian yang menampilkan data dan menerima interaksi user."], ["Object interaction", "Satu object memanggil method atau membaca hasil dari object lain."], ["State ownership", "Penentuan object mana yang bertanggung jawab menyimpan suatu data."]],
+                technical: ["Composition terjadi saat GUI menyimpan <code>self.akun = AkunBank()</code>. App memiliki akun; App bukan jenis AkunBank.", "Aturan saldo sebaiknya berada pada model sehingga dapat diuji tanpa membuka GUI.", "Event flow yang diajarkan: user click → callback GUI membaca input → method model memvalidasi/mengubah state → GUI membaca hasil → widget diperbarui.", "Jangan menggandakan state yang sama pada model dan GUI; satu sumber data mengurangi ketidaksinkronan."],
+                code: ["class AkunBank:", "    def __init__(self):", "        self.saldo = 0", "    def setor(self, jumlah):", "        if jumlah > 0:", "            self.saldo += jumlah", "", "# di dalam class ATMApp", "self.akun = AkunBank()", "", "def lakukan_setor(self):", "    self.akun.setor(int(self.entry.get()))", "    self.label.configure(text=str(self.akun.saldo))"].join("\n"),
+                expected: "Setelah input nominal valid dan tombol diklik, saldo pada object akun berubah lalu Label menampilkan nilai terbaru. State utama tidak disimpan dua kali.",
+                deckNotes: ["Review: trace self.data.skor untuk memastikan dot notation bertingkat dipahami.", "Visual model: beri panah dua arah interaction, tetapi jelaskan ownership tetap pada model.", "Code: uji method model di terminal sebelum menghubungkannya ke Button.", "Prediction: self.uang di App gagal bila attribute sebenarnya berada pada self.dompetku.uang.", "Bug Hunt: SistemBuku tanpa tanda kurung adalah class, bukan instance.", "ATM/Voting: minta siswa menjelaskan event flow dalam empat langkah."],
+                misconceptions: ["Model bukan file database; model adalah tanggung jawab data/aturan, dapat disimpan dalam file apa pun.", "Composition berbeda dari inheritance: App memiliki Akun, bukan App adalah Akun.", "GUI tidak boleh menjadi satu-satunya tempat validasi data penting jika model akan dipakai ulang."],
+                part1: [
+                    ["10 min", "Warm Up · Navigation", "Lima review: risiko root ganda, Toplevel, pack_forget, parent CTkFrame, dan winfo_exists.", "Minta siswa menggambar satu root dengan dua halaman."],
+                    ["12 min", "Composition & Model–View", "Definisikan object di dalam object. Pisahkan UserData/Akun dari GameApp/ATMApp. Gunakan analogi mobil sebagai GUI dan mesin sebagai model.", "Tekankan model menyimpan aturan/data; view menerima input dan menampilkan hasil."],
+                    ["13 min", "Interaction Flow", "Live-code <code>self.player_aktif = UserData()</code>, click event, <code>tambah_skor()</code>, lalu update output. Trace setiap titik pada <code>self.player_aktif.skor</code>.", "Predict bug saat menulis <code>self.skor</code> di GUI." ]
+                ],
+                part2: [
+                    ["25 min", "Guided Coding", "Tiga latihan berantai: class Inventory, instansiasi <code>self.tas = Inventory()</code> di GUI, dan method ambil() yang mengubah/menampilkan list.", "Periksa siswa membuat instance dengan tanda kurung."],
+                    ["10 min", "Bug Hunt", "Perbaiki <code>self.sistem = SistemBuku</code> menjadi <code>SistemBuku()</code>. Bedakan menyimpan blueprint versus object.", "Gunakan print(type(...)) bila perlu untuk verifikasi."],
+                    ["13 min", "Integrated Practice", "Bangun AkunBank, ATMApp, dan lakukan_setor(). Independent: Voting dengan dua kandidat dan dua tombol.", "Acceptance: event GUI memanggil method model lalu Label menampilkan state terbaru."],
+                    ["7 min", "Wrap Up", "Exit ticket: apa keuntungan model terpisah jika GUI diganti? Preview modular coding.", "Siswa menjelaskan flow satu tombol tanpa membaca setiap baris." ]
+                ],
+                learned: ["Composition menyimpan object sebagai attribute.", "Model dan GUI memiliki tanggung jawab berbeda.", "Event flow yang jelas memudahkan testing dan reuse."],
+                assess: "State model berubah hanya melalui method yang tepat dan UI selalu disinkronkan setelah perubahan.",
+                differentiation: "Minimum: satu model + satu tombol. Support: flow arrows. Bonus: validasi saldo/suara dan message error.",
+                home: "Tambahkan satu aturan validasi pada ATM/Voting dan jelaskan class mana yang seharusnya menyimpannya."
+            },
+            {
+                id: 8,
+                unit: "Unit 2 · Advanced Logic",
+                title: "Modular Coding",
+                focus: "Logic · Code Organization (Modularity)",
+                prior: "Model–View, composition, GUI OOP, import dasar, dan folder kerja VS Code.",
+                product: "Aplikasi tiga file: model/data, view/UI, dan main.",
+                objectives: [
+                    "Menjelaskan modul sebagai file <code>.py</code> dengan tanggung jawab khusus.",
+                    "Mengimpor class/function dari file sejajar tanpa menulis ekstensi <code>.py</code>.",
+                    "Menyusun dependensi satu arah untuk menghindari circular import."
+                ],
+                materials: ["VS Code + Python", "Deck M8", "Folder tree cards", "CustomTkinter"],
+                preparation: ["Siapkan folder demo 3 file.", "Uji ModuleNotFoundError.", "Siapkan circular import diagram."],
+                studentPrep: ["Paham pemisahan model dan GUI.", "Mampu membuat folder dan beberapa file di VS Code.", "Mampu menjalankan main.py dari folder project."],
+                vocab: [["Module", "Satu file Python yang dapat di-import."], ["import", "Statement untuk memuat module atau nama dari module."], ["Dependency", "Module/nama yang dibutuhkan bagian lain agar bekerja."], ["Circular import", "Dua module saling meng-import saat belum selesai diinisialisasi."], ["Entry point", "File/bagian yang menjadi titik awal menjalankan aplikasi."]],
+                technical: ["Saat module pertama kali di-import, Python mengeksekusi top-level code-nya lalu menyimpan module di cache proses.", "<code>from data import User</code> membawa nama User langsung; <code>import data</code> memerlukan <code>data.User</code>.", "Nama file pada import tidak memakai .py. Case sensitivity dapat berbeda antar sistem, jadi gunakan ejaan persis.", "Circular import dapat membuat module hanya terisi sebagian. Jaga arah dependency: model → tidak tahu view; view dapat memakai model; main menyatukan keduanya."],
+                code: ["# model.py", "class User:", "    def __init__(self, nama):", "        self.nama = nama", "", "# view.py", "import customtkinter as ctk", "class Layar(ctk.CTkFrame):", "    pass", "", "# main.py", "from model import User", "from view import Layar"].join("\n"),
+                expected: "Menjalankan main.py berhasil menemukan model.py dan view.py dari folder yang sama. Tidak ada module yang meng-import main.py kembali.",
+                deckNotes: ["Review: mulai dari Model–View agar alasan pemisahan file terasa alami.", "Folder visual: minta siswa membuat struktur terlebih dahulu sebelum copy code.", "Import demo: tunjuk dua gaya import dan cara pemanggilannya.", "Prediction: helper.sapa() tanpa import menghasilkan NameError.", "Bug Hunt: bedakan kesalahan nama module dan kesalahan cara mengakses class.", "Mini-project 3 file: jalankan hanya main.py sebagai entry point."],
+                misconceptions: ["Memecah file tidak otomatis memperbaiki arsitektur; tanggung jawab dan arah dependency tetap harus jelas.", "ModuleNotFoundError tidak selalu berarti package belum di-install; bisa karena nama/lokasi file salah.", "Import bukan copy-paste teks; module dieksekusi dan object module digunakan oleh Python."],
+                part1: [
+                    ["10 min", "Warm Up · Class Interaction", "Lima review: object sebagai attribute, manfaat model–view, akses self.data.skor, membuat Bank(), dan istilah Model–View.", "Gunakan trace notasi titik pada papan."],
+                    ["12 min", "Modularity Model", "Bandingkan app.py 800 baris dengan data.py/ui.py/main.py. Definisikan module, import, responsibility, dan dependency direction.", "Gunakan analogi PC modular tanpa menggantikan definisi teknis."],
+                    ["13 min", "Two-File Demo", "Buat <code>mesin_data.py</code> berisi DataGame dan <code>main.py</code> dengan <code>from mesin_data import DataGame</code>. Run dari folder yang sama.", "Predict NameError bila helper belum di-import." ]
+                ],
+                part2: [
+                    ["25 min", "Guided Coding", "Tiga latihan: tampilan.py dengan JendelaBaru, main.py yang mengimpor dan membuka Toplevel, lalu diagram aturan anti circular import.", "Cek filename case-sensitive, folder aktif, dan arah import."],
+                    ["10 min", "Bug Hunt", "Perbaiki <code>import Kalkulator</code> untuk file kalkulator.py dan panggil class melalui module atau from-import.", "Baca ModuleNotFoundError sebelum mengubah kode."],
+                    ["13 min", "Integrated Practice", "Bangun data.py(User), ui.py(LayarLogin), main.py(App). Independent: menu.py berisi list of Menu objects yang ditampilkan GUI.", "Acceptance: main.py berjalan dari folder project tanpa circular import."],
+                    ["7 min", "Wrap Up", "Ringkas module/import/folder/dependency. Exit ticket: mengapa tim 10 orang terbantu modular coding? Preview final project.", "Zip/copy folder sebagai evidence sebelum workshop berikutnya." ]
+                ],
+                learned: ["Satu module sebaiknya punya tanggung jawab yang jelas.", "Import tidak memakai .py dan bergantung pada lokasi/nama file.", "Dependency satu arah menghindari circular import."],
+                assess: "Proyek tiga file dapat dijalankan melalui main.py dan siswa mampu menunjukkan dari file mana setiap class berasal.",
+                differentiation: "Minimum: dua file. Support: folder starter. Bonus: tambah utils.py tanpa membuat circular dependency.",
+                home: "Buat folder kosong proyek akhir dengan main.py, model.py, dan view.py; jangan isi fitur final dulu."
+            },
+            {
+                id: 9,
+                unit: "Unit 3 · Final Project Level 4",
+                title: "Flashback & Brainstorming",
+                focus: "Idea · System Planning",
+                prior: "Seluruh toolkit Meeting 1–8.",
+                product: "Project Blueprint lengkap, feasible, dan disetujui pengajar.",
+                objectives: [
+                    "Mengidentifikasi masalah dan target user yang spesifik.",
+                    "Memilih tiga fitur MVP yang dapat ditelusuri ke Meeting 1–8.",
+                    "Membuat class diagram, flow aplikasi, dependency check, dan milestone M9–M11."
+                ],
+                materials: ["Deck M9", "Google Docs/kertas", "Source gallery", "VS Code"],
+                preparation: ["Siapkan contoh Bank/Library/Inventory.", "Siapkan template blueprint.", "Tentukan approval criteria."],
+                studentPrep: ["Membawa rangkuman/hasil latihan Meeting 1–8.", "Mampu menjelaskan minimal satu class GUI dan satu class data.", "Siap memilih masalah yang dekat dengan kehidupan sehari-hari."],
+                vocab: [["Problem statement", "Kalimat spesifik tentang masalah, siapa yang mengalaminya, dan dampaknya."], ["Target user", "Kelompok pengguna utama yang kebutuhannya dilayani."], ["MVP", "Versi minimum yang sudah memberi fungsi utama dan dapat diuji."], ["Class diagram", "Gambaran class, attribute, method, dan hubungan antarkomponen."], ["Definition of done", "Kondisi terukur yang menandakan proyek dianggap selesai."]],
+                technical: ["MVP bukan produk asal-asalan; tiga fitur inti harus menghasilkan alur penggunaan yang utuh.", "Class diagram Level 4 cukup memakai kotak nama class, daftar attribute, daftar method, serta panah inheritance/composition sederhana.", "Fitur wajib harus dapat ditelusuri ke Meeting 1–8. Jangan menyetujui dependency baru yang memakan sebagian besar waktu build.", "Database pada syllabus Level 4 dapat berupa list of objects/data dummy dalam memori; penyimpanan cloud bukan syarat."],
+                code: ["PROJECT BLUEPRINT", "Problem: ...", "Target user: ...", "3 MVP: ...", "", "class Item:", "    attributes: nama, harga", "    methods: info()", "", "class Keranjang:", "    attributes: items", "    methods: tambah(), total()", "", "class App(ctk.CTk):", "    has-a Keranjang"].join("\n"),
+                expected: "Siswa meninggalkan kelas dengan problem/user jelas, tiga fitur utama, diagram class, alur input-event-model-output, risiko, dan milestone yang disetujui.",
+                deckNotes: ["Flashback: minta siswa memasangkan toolkit M1–M8 dengan fitur, bukan mengulang definisi panjang.", "Problem discovery: ubah ide 'mau buat kasir' menjadi masalah dan target user yang nyata.", "MVP: tunjuk perbandingan kasir fokus versus ide dengan AI scanner/cloud yang terlalu besar.", "Blueprint: periksa seluruh kolom; jangan menerima kata 'OOP' tanpa class/fitur spesifik.", "Class diagram: cek is-a versus has-a dan letak state utama.", "Exit: approval harus tertulis bersama satu risiko dan satu tindakan pencegahan."],
+                misconceptions: ["MVP bukan daftar tiga tombol; ketiganya harus membentuk solusi yang dapat digunakan.", "Tema menarik tidak menggantikan problem statement.", "Lebih banyak class tidak selalu lebih OOP; setiap class perlu tanggung jawab yang masuk akal."],
+                part1: [
+                    ["12 min", "Flashback Toolkit", "Active recall lintas M1–M8: class/object, constructor, GUI OOP, inheritance/navigation, interaction, dan modular coding. Siswa memasangkan skill dengan fitur aplikasi.", "Hindari mengajarkan konsep baru; identifikasi gap yang harus direview."],
+                    ["13 min", "Problem & Target User", "Observasi contoh: kasir salah hitung, siswa lupa PR, absensi kertas hilang. Siswa menulis problem statement dan siapa yang mengalami masalah.", "Tolak ide yang hanya menyebut teknologi tanpa problem/user."],
+                    ["15 min", "Idea Selection & MVP", "Bandingkan ide Banking, Library, Inventory, Smart Cafe, atau sistem lain. Pilih tiga fitur minimum; pisahkan Silver/Gold bonus.", "Feasibility: dapat dikerjakan dalam M10–M11, tanpa API/cloud/AI wajib." ]
+                ],
+                part2: [
+                    ["20 min", "Blueprint & Traceability", "Isi nama proyek, problem, target user, solution, 3 MVP, bonus, konsep M1–M8, assets/data, risks, milestones, dan definition of done.", "Setiap MVP harus memiliki sumber konsep dan acceptance evidence."],
+                    ["15 min", "Class Diagram & Flow", "Gambar class model, attribute, method, class GUI/Frame, serta panah object interaction. Tambahkan flow input → event → model method → updated UI.", "Periksa ownership data dan arah dependency."],
+                    ["10 min", "Feasibility Conference", "Siswa mempresentasikan proposal 60 detik. Pengajar menyetujui, meminta scope diperkecil, atau memberi syarat starter support.", "Jangan memberi approval pada proyek tanpa OOP atau terlalu besar."],
+                    ["5 min", "Wrap Up", "Buat folder proyek dan file kosong main.py/model.py/view.py. Exit ticket: tunjukkan tiga MVP yang telah disetujui.", "Simpan blueprint di folder project atau tautan yang mudah ditemukan." ]
+                ],
+                learned: ["Proyek kuat dimulai dari problem dan target user.", "MVP memprioritaskan fitur inti yang bekerja.", "Class diagram dan traceability mengurangi risiko build."],
+                assess: "Blueprint lengkap, tiga MVP realistis, class diagram dapat dibaca, dan setiap fitur ditelusuri ke konsep M1–M8.",
+                differentiation: "Support: pilih salah satu template Banking/Library/Inventory. Bonus: inheritance hanya bila benar-benar mengurangi duplikasi.",
+                home: "Lengkapi assets/data dummy dan pastikan seluruh folder proyek dibackup sebelum Meeting 10."
+            },
+            {
+                id: 10,
+                unit: "Unit 3 · Final Project Level 4",
+                title: "Core Build & Pitch Draft",
+                focus: "Logic · System Implementation",
+                prior: "Project Blueprint, class diagram, tiga MVP, dan folder modular.",
+                product: "Working MVP/core mechanic + build evidence + pitch draft 45–60 detik.",
+                objectives: [
+                    "Membangun struktur class utama dan data dummy/database sederhana.",
+                    "Menghubungkan minimal satu event GUI dengan method model melalui checkpoint kecil.",
+                    "Mendokumentasikan progress dan menulis draft elevator pitch."
+                ],
+                materials: ["VS Code + CustomTkinter", "Deck M10", "Blueprint", "Screenshot tool"],
+                preparation: ["Review proposal setiap siswa.", "Siapkan checkpoint board.", "Siapkan debugging clinic."],
+                studentPrep: ["Blueprint dan class diagram sudah disetujui.", "Folder main.py/model.py/view.py tersedia.", "Tiga fitur MVP dan urutan build sudah dipilih."],
+                vocab: [["Core mechanic", "Alur teknis utama yang membuat solusi bekerja."], ["Checkpoint", "Keadaan kecil yang dapat dijalankan dan diverifikasi."], ["Data dummy", "Data contoh lokal untuk menguji aplikasi tanpa database eksternal."], ["Build journal", "Catatan milestone, bug, fix, dan next step."], ["Elevator pitch", "Penjelasan singkat tentang problem, user, solution, dan value."]],
+                technical: ["Bangun vertical slice: satu alur lengkap dari UI ke model dan kembali ke UI sebelum menambah semua layar.", "Simulasi database sederhana berarti list/dictionary/list-of-objects dalam memori. Data hilang saat program ditutup kecuali file handling ditambahkan; jangan menyebutnya database permanen.", "main.py menjadi entry point dan merakit object. model.py menyimpan state/rules; view.py menyimpan Frame/Toplevel bila arsitektur siswa membutuhkannya.", "Run setelah setiap checkpoint. Bug lebih mudah dilokalisasi ketika perubahan kecil."],
+                code: ["# main.py", "from model import Keranjang", "from view import App", "", "if __name__ == \"__main__\":", "    model = Keranjang()", "    app = App(model)", "    app.mainloop()", "", "# satu vertical slice", "klik tombol -> model.tambah(item)", "             -> refresh tampilan"].join("\n"),
+                expected: "Minimal satu fitur berjalan end-to-end. Window terbuka, input/click diproses model, state berubah, dan hasil terbaru terlihat pada GUI.",
+                deckNotes: ["Status Check: lihat file nyata, bukan hanya jawaban verbal.", "Build Plan: siswa menandai satu checkpoint aktif dan tidak melompat ke warna/bonus.", "Starter Architecture: jelaskan fungsi tiap file tanpa memberikan final answer proyek.", "Debugging Clinic: kelompokkan error self/import/argument/root sebelum membantu.", "Hands-on: minta bukti run pada setiap checkpoint.", "Pitch: hubungkan masalah dengan fungsi yang benar-benar sudah bekerja hari itu."],
+                misconceptions: ["UI yang lengkap tetapi belum terhubung model bukan working MVP.", "Data dummy bukan data palsu yang boleh diabaikan; ia harus mewakili test case masuk akal.", "Jangan memperbaiki semua error sekaligus atau mengganti arsitektur siswa tanpa menjelaskan penyebab."],
+                part1: [
+                    ["10 min", "Project Status Check", "Verifikasi folder, blueprint, tiga MVP, file main/model/view, dan package. Siswa menyebutkan fitur pertama yang akan dibuat.", "Jika belum siap, gunakan template minimal tanpa mengubah ide inti."],
+                    ["10 min", "Build Plan", "Urutkan checkpoint: window terbuka → widgets tampil → model berjalan di terminal → GUI memanggil model → hasil kembali ke UI.", "Siswa menandai satu checkpoint aktif; hanya satu pada satu waktu."],
+                    ["25 min", "Checkpoint 1–2", "Bangun main window dan layout MVP tanpa dekorasi. Run setelah perubahan kecil. Pastikan hanya satu ctk.CTk dan widget penting disimpan sebagai self.", "Evidence: screenshot window dan commit/copy milestone." ]
+                ],
+                part2: [
+                    ["25 min", "Checkpoint 3–4", "Bangun class model, data dummy/list-of-objects, dan method inti. Hubungkan tombol/input GUI ke model lalu perbarui Label/Textbox.", "Uji success path terlebih dahulu, lalu satu invalid input."],
+                    ["8 min", "Debugging Clinic", "Triage NameError/AttributeError (self/import), TypeError (self/argumen), ModuleNotFoundError (file/folder), GUI hang (root ganda).", "Perbaiki satu error, run, dan catat actual vs expected."],
+                    ["7 min", "Progress Evidence", "Ambil screenshot, isi build journal: checkpoint selesai, bug penting, perbaikan, checkpoint berikutnya.", "MVP boleh belum cantik tetapi alur utama harus terlihat."],
+                    ["5 min", "Pitch Draft & Exit", "Tulis 45–60 detik: hook masalah, target user, nama aplikasi, fungsi utama, dan satu bukti OOP. Demo singkat ke pengajar.", "Tunjukkan MVP/core mechanic sebelum pulang." ]
+                ],
+                learned: ["Build kecil dan sering run mempercepat debugging.", "Model harus dapat diuji sebelum/dengan GUI.", "Pitch menghubungkan problem, solution, dan bukti teknis."],
+                assess: "Minimum satu end-to-end flow bekerja: input/click → method model → state berubah → UI terbarui.",
+                differentiation: "Minimum: satu flow stabil. Support: starter architecture/pseudocode. Bonus: fitur MVP kedua/ketiga setelah flow pertama lulus test.",
+                home: "Backup folder, selesaikan checkpoint yang disepakati, dan bawa pitch draft Meeting 11."
+            },
+            {
+                id: 11,
+                unit: "Unit 3 · Final Project Level 4",
+                title: "Integration, Testing & Presentation Prep",
+                focus: "Evaluating · Integration & Debugging",
+                prior: "MVP/core mechanic, class model, GUI, dan pitch draft.",
+                product: "Presentation-ready app, QA evidence, backup demo, README, dan PPT 5–7 slide.",
+                objectives: [
+                    "Menyelesaikan tiga fitur MVP dan menguji interaksi antar object.",
+                    "Menjalankan test cases, memperbaiki bug, dan memoles UI/output.",
+                    "Menyiapkan presentasi, user guide, backup evidence, serta rehearsal."
+                ],
+                materials: ["VS Code", "Deck M11", "QA checklist", "PPT tool", "Screen recorder"],
+                preparation: ["Siapkan test matrix.", "Siapkan contoh backup demo.", "Siapkan peer-feedback prompts."],
+                studentPrep: ["Minimal satu core flow sudah bekerja.", "Tiga fitur MVP memiliki status jelas.", "Membawa pitch draft dan folder project terbaru."],
+                vocab: [["QA", "Proses sistematis memeriksa kualitas dan perilaku produk."], ["Test case", "Input/kondisi, langkah, expected result, dan actual result."], ["Positive test", "Pengujian input/alur valid."], ["Negative test", "Pengujian input salah, kosong, atau kondisi batas."], ["Regression", "Fitur lama rusak setelah perubahan baru."]],
+                technical: ["Test case harus menyatakan expected result sebelum dijalankan agar siswa tidak menyesuaikan harapan dengan bug.", "Prioritas fix: crash/data salah → fitur wajib tidak bekerja → feedback/error message → layout/warna → bonus.", "Setelah model berubah, UI perlu refresh eksplisit; banyak bug Level 4 berasal dari state benar tetapi widget belum diperbarui.", "Backup demo adalah evidence, bukan pengganti aplikasi yang belum pernah berjalan."],
+                code: ["TEST CASE", "Input/Kondisi: Entry nominal kosong", "Langkah: klik tombol Setor", "Expected: pesan 'Masukkan angka'", "Actual: ...", "Status: PASS / FAIL", "Fix: ...", "", "REGRESSION", "Jalankan ulang alur setor valid setelah fix"].join("\n"),
+                expected: "Tiga MVP lulus positive dan negative test utama, tidak ada crash umum, state tetap benar setelah navigasi, dan siswa memiliki screenshot/video serta presentasi 5–7 slide.",
+                deckNotes: ["Opening: jika MVP belum bekerja, kembali ke build; jangan langsung polishing.", "UI Polish: izinkan setelah required features lulus smoke test.", "QA: siswa menulis expected sebelum mencoba input kosong/klik berulang/navigation.", "Presentation: slide code harus menjelaskan satu class atau interaction, bukan screenshot ratusan baris.", "Backup Plan: rekam satu alur lengkap saat aplikasi stabil.", "Exit: beri status Ready, Ready with backup, atau Needs one fix dengan alasan konkret."],
+                misconceptions: ["Tidak crash belum tentu benar; hasil/state juga harus dibandingkan dengan expected.", "Polishing bukan menambah banyak warna; keterbacaan, feedback, spacing, dan konsistensi lebih penting.", "Satu screenshot layar awal tidak cukup sebagai backup demo; butuh bukti alur fitur."],
+                part1: [
+                    ["10 min", "Readiness Check", "Demo cepat current build. Tandai status masing-masing MVP: works / partial / blocked. Prioritaskan required feature sebelum bonus.", "Jika core flow belum jalan, hentikan polishing dan kembali ke checkpoint M10."],
+                    ["15 min", "UI–Backend Integration", "Pastikan setiap tombol memanggil method tepat, state object tidak hilang saat berpindah Frame, dan display disegarkan setelah perubahan.", "Trace object ownership untuk bug state yang salah lokasi."],
+                    ["20 min", "QA Test Cases", "Uji input kosong, tipe data salah, klik berulang, data batas, navigasi pergi–kembali, dan startup dari main.py. Catat expected, actual, status, fix.", "Minimal satu negative test untuk setiap fitur MVP." ]
+                ],
+                part2: [
+                    ["15 min", "Debug & Polish", "Perbaiki bug prioritas tinggi. Setelah stabil, rapikan fg_color/text_color/corner_radius/padx/pady dan keterbacaan pesan.", "Jangan menambah bonus sebelum semua test MVP lulus."],
+                    ["10 min", "Demo Evidence & README", "Ambil screenshot dan video pendek alur utama. Tulis README: nama, problem/user, fitur, requirements, cara run, struktur class, known limitation.", "Pastikan file dapat dibuka tanpa internet dan tidak memuat data pribadi/secret."],
+                    ["12 min", "Presentation & Pitch", "Buat 5–7 slide: title, problem/user, solution, demo flow, class model & interaction, challenge/fix, reflection. Perbaiki pitch 45–60 detik.", "Pilih satu potongan kode untuk dijelaskan secara konseptual, bukan dibaca baris per baris."],
+                    ["8 min", "Rehearsal & Exit", "Latihan berpasangan; feedback: satu kekuatan, satu pertanyaan, satu saran spesifik. Jalankan final checklist dan backup.", "Status akhir: Ready / Ready with backup / Needs one fix." ]
+                ],
+                learned: ["QA membandingkan expected dan actual secara sistematis.", "Polish dilakukan setelah core features stabil.", "Backup demo dan README adalah bagian dari kesiapan profesional."],
+                assess: "Tiga MVP berfungsi, test evidence tersedia, tidak ada crash umum, presentation outline dan backup demo siap.",
+                differentiation: "Support: test template dan PPT outline. Bonus: accessibility polish, search/filter, atau inheritance relevan setelah MVP lulus.",
+                home: "Jangan menambah fitur baru. Backup final version dan latihan presentasi sekali lagi."
+            },
+            {
+                id: 12,
+                unit: "Unit 3 · Final Project Level 4",
+                title: "Showcase & Presentation",
+                focus: "Presentation · Technical Explanation",
+                prior: "Aplikasi presentation-ready, PPT, pitch, README, dan backup demo.",
+                product: "Presentasi final, live demo, Q&A, peer feedback, dan refleksi Level 4.",
+                objectives: [
+                    "Mempresentasikan problem, target user, solution, dan fitur utama dengan jelas.",
+                    "Menjelaskan class model, attribute/method penting, dan object interaction tanpa membaca kode baris demi baris.",
+                    "Menjalankan demo/backup, menjawab pertanyaan dengan jujur, dan memberi feedback membangun."
+                ],
+                materials: ["Laptop + charger", "VS Code + project", "PPT", "Backup screenshot/video", "Peer cards"],
+                preparation: ["Susun urutan presenter.", "Uji projector/audio.", "Siapkan folder backup lokal.", "Tampilkan criteria."],
+                studentPrep: ["Aplikasi final dan backup berada di folder yang mudah ditemukan.", "PPT dan pitch telah dilatih.", "Mampu menunjukkan class model, GUI class, dan satu object interaction."],
+                vocab: [["Technical explanation", "Penjelasan tanggung jawab dan hubungan komponen, bukan membaca syntax."], ["Demo scenario", "Cerita langkah penggunaan yang memperlihatkan fitur utama."], ["Fallback", "Rencana cadangan ketika live demo tidak dapat berjalan."], ["Limitation", "Batasan fitur/perilaku yang diketahui."], ["Peer feedback", "Apresiasi dan saran spesifik yang dapat ditindaklanjuti."]],
+                technical: ["Presentasi OOP Level 4 harus menunjukkan class model, attribute/method penting, object yang dibuat, dan bagaimana event GUI memanggil model.", "Presenter tidak perlu membaca setiap baris. Gunakan alur: user action → callback → model method → state change → UI refresh.", "Jika demo gagal, siswa boleh berpindah ke video/screenshot, lalu menjelaskan penyebab atau limitation dengan jujur.", "Pertanyaan yang belum diketahui dijawab dengan batas pengetahuan dan rencana mengecek, bukan menebak."],
+                code: ["NARASI TEKNIS", "1. App menyimpan object Keranjang.", "2. Tombol Tambah memanggil callback.", "3. Callback menjalankan keranjang.tambah(item).", "4. Model mengubah list items.", "5. App membaca total dan memperbarui Label.", "", "Jangan baca: def, kurung, titik dua, baris demi baris."].join("\n"),
+                expected: "Siswa menyampaikan problem/user/solution, mendemonstrasikan tiga fitur, menjelaskan class dan interaction, menjawab minimal satu pertanyaan, serta merefleksikan bug dan pengembangan berikutnya.",
+                deckNotes: ["Final Check: jangan menambah fitur; hanya pastikan file, interpreter, PPT, dan backup siap.", "Cara Menjelaskan Kode: modelkan satu narasi interaction lalu minta siswa meniru dengan proyek sendiri.", "Live Demo: gunakan scenario user, bukan klik acak semua tombol.", "Q&A: latih kalimat jujur ketika belum tahu.", "Audience Etiquette: feedback harus spesifik pada behavior/readability/idea.", "Celebration: apresiasi proses dan pemahaman; hindari klaim semua siswa sudah seperti senior programmer."],
+                misconceptions: ["Demo bagus bukan demo tercepat; audiens harus memahami problem dan perubahan state.", "Menyebut banyak istilah OOP tidak cukup tanpa menunjukkan hubungan pada proyek.", "Limitation yang dijelaskan jujur bukan kegagalan presentasi."],
+                part1: [
+                    ["10 min", "Final Technical Check", "Buka project, jalankan main.py, tes satu alur utama, buka PPT, cek backup video, matikan notifikasi, dan pastikan file mudah ditemukan.", "Tidak ada coding fitur baru; hanya recovery untuk blocker presentasi."],
+                    ["8 min", "Presentation Briefing", "Struktur: hook → problem/user → solution → class model → live demo → challenge/fix → closing. Ingatkan time management dan transisi ke backup.", "Model kalimat jujur: 'Saya belum mengimplementasikan itu; langkah berikutnya adalah…'."],
+                    ["7 min", "Audience Practice", "Latih feedback: satu hal yang bekerja baik, satu pertanyaan teknis, satu saran spesifik. Tegaskan etika mendengar dan tidak menjatuhkan.", "Gunakan isi, bukan warna saja, untuk menyampaikan penilaian." ]
+                ],
+                part2: [
+                    ["50 min", "Student Showcase", "Setiap siswa: opening singkat, problem & target user, class diagram/struktur, demo tiga MVP, satu potongan logic, challenge yang diselesaikan, dan Q&A. Gunakan backup bila live demo gagal.", "Kriteria terlihat siswa: clarity, OOP explanation, working features, demo flow, debugging story, honest response."],
+                    ["8 min", "Peer Feedback", "Audiens mengisi satu apresiasi, satu pertanyaan, dan satu ide pengembangan. Presenter memilih satu feedback paling berguna.", "Dorong komentar yang dapat ditindaklanjuti."],
+                    ["5 min", "Reflection & Celebration", "Refleksi tertulis: object/class yang paling dipahami, bug tersulit, kebiasaan debugging baru, dan satu target Level 5.", "Rayakan proses, keberanian mencoba, dan kemampuan menjelaskan karya."],
+                    ["2 min", "Closing", "Tutup dengan quote Harold Abelson: program ditulis agar dapat dibaca manusia dan kemudian dijalankan mesin.", "Pastikan semua file dan feedback dibawa pulang/dibackup." ]
+                ],
+                learned: ["Presentasi teknis menjelaskan keputusan dan hubungan antar object.", "Demo profesional memiliki skenario dan backup plan.", "Mengakui limitation dengan jujur menunjukkan pemahaman dan growth mindset."],
+                assess: "Gunakan criteria student-visible: problem/user, solution, class model, attributes/methods, object interaction, tiga fitur, demo/backup, Q&A, dan refleksi.",
+                differentiation: "Siswa boleh memakai cue cards, rekaman demo, atau co-pilot untuk navigasi file; standar pemahaman konsep tetap sama.",
+                home: "Simpan proyek, README, screenshot, dan feedback sebagai portfolio Level 4."
+            }
+        ];
+
+        const teacherSupport = {
+            1: {
+                questions: [
+                    "Apa yang sudah dimiliki Python setelah definisi class dijalankan, dan apa yang belum ada?",
+                    "Bagaimana membuktikan dua instance berasal dari blueprint yang sama tetapi tetap merupakan object berbeda?"
+                ],
+                demo: [
+                    "Bandingkan <code>print(Kucing)</code> dengan <code>print(Kucing())</code>.",
+                    "Buat dua instance dan tunjukkan representasinya tidak identik.",
+                    "Sengaja ubah kapitalisasi nama class untuk memunculkan <code>NameError</code>."
+                ],
+                review: "Jawaban inti review Level 3: root dibuat dengan <code>ctk.CTk()</code>; <code>command</code> menerima referensi function tanpa kurung; nilai Entry dibaca memakai <code>.get()</code>; pilih satu geometry manager pada parent yang sama; Label dan Button baru terlihat setelah dibuat dan ditata."
+            },
+            2: {
+                questions: [
+                    "Mengapa dua object dari class yang sama dapat memiliki nilai attribute berbeda?",
+                    "Apa yang sebenarnya dikirim Python ke parameter <code>self</code> ketika method dipanggil?"
+                ],
+                demo: [
+                    "Ubah attribute hanya pada satu object lalu bandingkan keduanya.",
+                    "Tampilkan perbedaan <code>object.method</code> dan <code>object.method()</code>.",
+                    "Hapus <code>self</code> dari definisi method dan baca <code>TypeError</code> bersama."
+                ],
+                review: "Kunci M1: class adalah definisi/type; object dibuat dengan <code>NamaClass()</code>; PascalCase adalah konvensi penamaan; <code>pass</code> hanya placeholder; dua pemanggilan class menghasilkan dua instance terpisah."
+            },
+            3: {
+                questions: [
+                    "Pada urutan instantiation, kapan instance sudah ada dan kapan attribute mulai diisi?",
+                    "Mengapa <code>self.nama = nama</code> membutuhkan sisi kiri dan kanan yang berbeda perannya?"
+                ],
+                demo: [
+                    "Buat dua object dengan argument berbeda dan cetak state keduanya.",
+                    "Panggil class tanpa argument wajib untuk membaca pesan <code>TypeError</code>.",
+                    "Ganti <code>__init__</code> menjadi <code>_init_</code> dan tunjukkan akibatnya."
+                ],
+                review: "Kunci M2: attribute menyimpan state; method adalah function di dalam class; <code>self</code> merujuk instance penerima; method dijalankan dengan kurung; attribute yang belum dibuat menimbulkan <code>AttributeError</code>."
+            },
+            4: {
+                questions: [
+                    "Mengapa <code>super().__init__()</code> harus selesai sebelum widget memakai window sebagai parent?",
+                    "Widget mana yang perlu disimpan sebagai <code>self.widget</code>, dan mana yang cukup menjadi variable lokal?"
+                ],
+                demo: [
+                    "Run satu <code>App(ctk.CTk)</code> dengan satu <code>mainloop()</code>.",
+                    "Klik tombol dan trace callback sampai Label berubah.",
+                    "Sengaja tulis <code>command=self.ubah()</code> lalu jelaskan mengapa berjalan terlalu awal."
+                ],
+                review: "Kunci M3: instance dibuat lalu <code>__init__</code> menginisialisasi state; <code>self</code> tidak dikirim manual; argument mengisi parameter; default dipakai ketika argument opsional tidak diberikan; list dapat menyimpan banyak object."
+            },
+            5: {
+                questions: [
+                    "Apakah child benar-benar memiliki hubungan is-a dengan parent, atau seharusnya memakai composition?",
+                    "Behavior mana yang diwarisi, ditambah, atau dioverride oleh child?"
+                ],
+                demo: [
+                    "Panggil method warisan dari object child tanpa menyalin kodenya.",
+                    "Gunakan <code>super().__init__()</code> lalu cetak attribute parent dan child.",
+                    "Override satu method dan bandingkan output parent versus child."
+                ],
+                review: "Kunci M4: class App mewarisi CTk; inisialisasi parent dilakukan lebih dahulu; widget/state lintas method disimpan di <code>self</code>; <code>command=self.method</code> menyimpan callback; aplikasi memakai satu <code>mainloop()</code>."
+            },
+            6: {
+                questions: [
+                    "Kapan pergantian Frame lebih tepat daripada membuka Toplevel?",
+                    "Siapa yang memiliki window tambahan dan bagaimana lifecycle-nya ditutup?"
+                ],
+                demo: [
+                    "Tunjukkan satu root yang mengganti dua Frame.",
+                    "Buka satu <code>CTkToplevel</code> dengan root sebagai master.",
+                    "Cegah dialog duplikat dengan mengecek <code>winfo_exists()</code>."
+                ],
+                review: "Kunci M5: child adalah jenis khusus parent; inheritance memakai hubungan is-a; <code>super()</code> mengikuti method resolution order; override mengganti behavior pada child; fitur khusus child tidak otomatis ada pada parent."
+            },
+            7: {
+                questions: [
+                    "Object mana yang menjadi sumber kebenaran state, dan siapa yang hanya menampilkannya?",
+                    "Setelah model berubah, bagian UI apa yang harus di-refresh secara eksplisit?"
+                ],
+                demo: [
+                    "Trace alur klik → callback → method model → state → Label.",
+                    "Uji model di terminal sebelum menghubungkannya ke GUI.",
+                    "Tunjukkan bug ketika UI menyimpan salinan saldo yang berbeda dari model."
+                ],
+                review: "Kunci M6: satu aplikasi memakai satu root dan satu event loop; Frame cocok untuk halaman dalam root; Toplevel cocok untuk dialog/window tambahan; master menjaga ownership; root kedua bukan solusi navigasi."
+            },
+            8: {
+                questions: [
+                    "File mana yang boleh mengetahui file lain agar arah dependency tetap sederhana?",
+                    "Apa yang terjadi saat Python pertama kali mengimpor sebuah module?"
+                ],
+                demo: [
+                    "Jalankan <code>main.py</code> dari folder yang berisi ketiga file.",
+                    "Bandingkan <code>import model</code> dan <code>from model import User</code>.",
+                    "Gambar circular import sebelum menunjukkan error yang dihasilkannya."
+                ],
+                review: "Kunci M7: composition adalah hubungan has-a; model memiliki state dan aturan; view menampilkan state; callback meminta model berubah lalu me-refresh UI; hindari dua sumber kebenaran untuk data yang sama."
+            },
+            9: {
+                questions: [
+                    "Dapatkah tiga fitur MVP selesai dan diuji dalam dua pertemuan build?",
+                    "Konsep Meeting 1–8 mana yang menjadi bukti untuk setiap fitur wajib?"
+                ],
+                demo: [
+                    "Modelkan cara mengecilkan ide login online menjadi akun dummy lokal.",
+                    "Trace satu fitur dari user action sampai perubahan state.",
+                    "Tunjukkan contoh class diagram yang terlalu besar lalu pangkas ke MVP."
+                ],
+                review: "Proposal layak harus memiliki problem dan target user yang jelas, tepat tiga fitur MVP, minimal satu class model, GUI berbasis class, interaksi UI–model, struktur modular, serta definition of done yang dapat diamati. API/cloud/AI bukan syarat Level 4."
+            },
+            10: {
+                questions: [
+                    "Apa vertical slice terkecil yang membuktikan aplikasi bekerja end-to-end?",
+                    "Di checkpoint mana bug pertama kali muncul setelah run terakhir yang berhasil?"
+                ],
+                demo: [
+                    "Run model sendiri di terminal sebelum GUI dihubungkan.",
+                    "Buktikan satu callback mengubah model dan me-refresh tampilan.",
+                    "Simpan screenshot dan catatan setelah setiap checkpoint stabil."
+                ],
+                review: "Kesiapan build dibuktikan dengan folder nyata, blueprint disetujui, tiga MVP jelas, dan urutan checkpoint. Jika salah satu belum ada, bantu siswa membuat versi minimum sebelum menambah layar, styling, atau bonus."
+            },
+            11: {
+                questions: [
+                    "Apa expected result sebelum test dijalankan, dan apa actual result-nya?",
+                    "Apakah perbaikan bug ini merusak fitur lama sehingga perlu regression test?"
+                ],
+                demo: [
+                    "Jalankan satu positive test dan satu negative test per fitur.",
+                    "Uji navigasi pergi–kembali untuk memastikan state tidak hilang.",
+                    "Rekam satu demo backup setelah semua MVP stabil."
+                ],
+                review: "Urutan keputusan: jika core flow belum bekerja, kembali ke build; jika bekerja, selesaikan tiga MVP; setelah test lulus, baru polish. Status Ready harus disertai test evidence, README, PPT, dan backup demo."
+            },
+            12: {
+                questions: [
+                    "Dapatkah audiens mengikuti alur user action sampai UI terbarui?",
+                    "Jika demo gagal, bukti cadangan mana yang langsung ditampilkan tanpa panik?"
+                ],
+                demo: [
+                    "Latih transisi live demo ke video/screenshot dalam satu kalimat.",
+                    "Modelkan penjelasan satu class tanpa membaca syntax baris demi baris.",
+                    "Uji projector, audio, file, interpreter, dan notifikasi sebelum presenter pertama."
+                ],
+                review: "Presentasi lengkap memuat hook, problem/user, solution, class model, tiga fitur, satu object interaction, debugging story, limitation, dan Q&A. Jawaban yang belum diketahui disampaikan jujur bersama rencana mencari tahu."
+            }
+        };
+
+
+        function headerMarkup() {
+            return `<div class="page-header" aria-hidden="true">
+                <img src="../marketing/kalananti_logo.png" alt="Kalananti Logo">
+                <div class="brand-ribbons"><span class="top-stripe"></span><span class="dots"></span></div>
+            </div>`;
+        }
+
+        function footerMarkup(label) {
+            return `<div class="page-footer" aria-hidden="true"><div class="footer-meta"><span>${label}</span><span data-page-number></span></div><div class="footer-stripe"></div></div>`;
+        }
+
+        function sessionHeading(m, partLabel) {
+            return `<div style="margin-bottom:3mm">
+                <p style="color:var(--teal); font-weight:800; font-size:8.5pt; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:1mm">${m.unit} · ${partLabel}</p>
+                <h1>Pertemuan ${m.id} · ${m.title}</h1>
+                <p style="color:var(--muted); font-size:9pt; font-weight:600">${m.focus} · Durasi: 90 Menit</p>
+            </div>`;
+        }
+
+        function escapeText(val) {
+            return String(val)
+                .replaceAll("&", "&amp;")
+                .replaceAll("<", "&lt;")
+                .replaceAll(">", "&gt;")
+                .replaceAll('"', "&quot;");
+        }
+
+        function timelineMarkup(rows) {
+            return `<table class="doc-table">
+                <thead><tr><th class="time-col">Durasi</th><th class="activity-col">Tahap</th><th>Aktivitas Pengajar &amp; Siswa</th><th>Checkpoint Pengajar</th></tr></thead>
+                <tbody>${rows.map(row => `<tr><td class="time-col">${row[0]}</td><td><strong>${row[1]}</strong></td><td>${row[2]}</td><td>${row[3]}</td></tr>`).join("")}</tbody>
+            </table>`;
+        }
+
+        function meetingPages(m) {
+            const support = teacherSupport[m.id] || { questions: [], demo: [], review: "" };
+            const objectives = m.objectives.map(x => `<li>${x}</li>`).join("");
+            const prep = m.preparation.map(x => `<li>${x}</li>`).join("");
+            const studentPrep = m.studentPrep.map(x => `<li>${x}</li>`).join("");
+            const technical = m.technical.map(x => `<li>${x}</li>`).join("");
+            const vocab = m.vocab.map(x => `<dt>${x[0]}</dt><dd>${x[1]}</dd>`).join("");
+            const misconceptions = m.misconceptions.map(x => `<li>${x}</li>`).join("");
+            const learned = m.learned.map(x => `<li>${x}</li>`).join("");
+
+            return `
+                <!-- Meeting ${m.id} Page 1: Overview & Technical Notes -->
+                <section class="page" id="meeting-${m.id}-p1">
+                    ${headerMarkup()}
+                    ${sessionHeading(m, "Persiapan & Catatan Teknis")}
+                    
+                    <span class="badge-highlight">Objektif Pembelajaran</span>
+                    <div style="background:var(--yellow-pale); border-left:3mm solid var(--yellow); padding:2.5mm 3.5mm; border-radius:2mm; margin-bottom:3mm">
+                        <ol style="margin:0; padding-left:4mm">${objectives}</ol>
+                    </div>
+
+                    <div class="grid-2">
+                        <div class="doc-card yellow-border">
+                            <h4>Bekal Prasyarat Siswa</h4>
+                            <p><strong>Sebelumnya:</strong> ${m.prior}</p>
+                            <ul class="checklist">${studentPrep}</ul>
+                        </div>
+                        <div class="doc-card blue-border">
+                            <h4>Target Hasil Pertemuan</h4>
+                            <p>${m.product}</p>
+                            <p><strong>Bukti:</strong> File berjalan, siswa paham konsep, &amp; checkpoint terpenuhi.</p>
+                        </div>
+                    </div>
+
+                    <div style="margin-top:3mm" class="grid-2">
+                        <div class="doc-card teal-border">
+                            <h4>Persiapan Pengajar</h4>
+                            <ul class="checklist">${prep}</ul>
+                        </div>
+                        <div class="doc-card blue-border">
+                            <h4>Perlengkapan &amp; File</h4>
+                            <ul class="checklist">
+                                ${m.materials.map(x => `<li>${escapeText(x)}</li>`).join("")}
+                                <li>File demo sebelum/sesudah perbaikan bug.</li>
+                                <li>Screenshot expected result.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <span style="margin-top:3.5mm" class="badge-highlight">Catatan Teknis &amp; Konsep Utama</span>
+                    <div class="doc-card">
+                        <ul style="margin:0; padding-left:4.5mm">${technical}</ul>
+                    </div>
+
+                    <div class="code-box">
+                        <div class="code-header">Pola Kode Penjelasan / Referensi Pengajar</div>
+                        <pre>${escapeText(m.code)}</pre>
+                    </div>
+
+                    <div class="callout teal" style="margin-bottom:0">
+                        <strong>Expected Behavior / Output:</strong> ${m.expected}
+                    </div>
+                    ${footerMarkup(`Pertemuan ${m.id} · Persiapan &amp; Catatan Teknis`)}
+                </section>
+
+                <!-- Meeting ${m.id} Page 2: Teaching Flow & Assessment -->
+                <section class="page" id="meeting-${m.id}-p2">
+                    ${headerMarkup()}
+                    ${sessionHeading(m, "Alur Mengajar 90 Menit &amp; Asesmen")}
+
+                    <span class="badge-highlight">Main Activity · Pemanasan &amp; Konsep (40 Menit)</span>
+                    ${timelineMarkup(m.part1)}
+
+                    <span class="badge-highlight">Main Activity · Latihan &amp; Praktek (50 Menit)</span>
+                    ${timelineMarkup(m.part2)}
+
+                    <div class="grid-2" style="margin-top:2mm">
+                        <div class="doc-card yellow-border">
+                            <h4>Istilah Kunci (Glossary)</h4>
+                            <dl class="vocab-grid">${vocab}</dl>
+                        </div>
+                        <div class="doc-card blue-border">
+                            <h4>Miskonsepsi &amp; Diagnosis Bug</h4>
+                            <ul style="margin:0; padding-left:4mm">${misconceptions}</ul>
+                        </div>
+                    </div>
+
+                    <div class="lesson-learned" style="margin-top:2.5mm">
+                        <h4>Poin Kunci Pembelajaran (Lesson Learned)</h4>
+                        <ul style="margin:0; padding-left:4mm">${learned}</ul>
+                    </div>
+
+                    <div class="grid-2" style="margin-top:2.5mm">
+                        <div class="doc-card">
+                            <h4>Bukti Asesmen &amp; Diferensiasi</h4>
+                            <p><strong>Bukti:</strong> ${m.assess}</p>
+                            <p><strong>Diferensiasi:</strong> ${m.differentiation}</p>
+                        </div>
+                        <div class="doc-card">
+                            <h4>Aktivitas &amp; Penutup</h4>
+                            <p><strong>Kunci Review:</strong> ${support.review || "Evaluasi dengan active recall."}</p>
+                            <p><strong>Tindak Lanjut:</strong> ${m.home}</p>
+                        </div>
+                    </div>
+
+                    ${footerMarkup(`Pertemuan ${m.id} · Alur Mengajar &amp; Asesmen`)}
+                </section>
+            `;
+        }
+
+        const meetingPagesHost = document.getElementById("meetingPages");
+        meetingPagesHost.innerHTML = meetingData.map(meetingPages).join("");
+
+        document.querySelectorAll(".page").forEach((page, index) => {
+            page.querySelectorAll("[data-page-number]").forEach(node => {
+                node.textContent = String(index + 1);
+            });
+        });
+    </script>
+</body>
+</html>
