@@ -1,0 +1,16 @@
+# Kalananti B2C Python Program Git Ignore
+
+# System & Cache
+.DS_Store
+__pycache__/
+*.pyc
+
+# Local scratch / developer utility files
+level/
+parse_syllabus.py
+port_level3_ui.py
+
+# Generator & scratch helper scripts inside level folders
+level*/*.py
+level*/*.txt
+level*/*.merged
