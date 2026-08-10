@@ -342,8 +342,8 @@
       background: rgba(249,192,19,0.2); color: #92600A;
       display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: 800;
     }
-    .kids-card-title { font-weight: 800; font-size: 0.92rem; color: var(--k-blue-d); }
-    .kids-card-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.45; font-weight: 600; }
+    .kids-card-title { font-weight: 800; font-size: 1.05rem; color: var(--k-blue-d); }
+    .kids-card-desc { font-size: 0.95rem; color: var(--muted); line-height: 1.45; font-weight: 600; }
 
     /* Parents Do/Don't Grid */
     .parents-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
@@ -389,10 +389,10 @@
     }
     .consent-item:hover { border-color: var(--k-blue); background: #fff; }
     .consent-item input[type=checkbox] {
-      width: 20px; height: 20px; margin-top: 2px; cursor: pointer;
+      width: 24px; height: 24px; margin-top: 2px; cursor: pointer;
       accent-color: var(--k-blue); flex-shrink: 0;
     }
-    .consent-label { font-size: 0.84rem; font-weight: 700; color: var(--k-blue-d); line-height: 1.45; }
+    .consent-label { font-size: 0.95rem; font-weight: 700; color: var(--k-blue-d); line-height: 1.45; }
 
     /* Actions */
     .step2-actions { display: flex; gap: 12px; width: 100%; margin-top: 10px; }
@@ -647,6 +647,43 @@
       color: var(--muted);
       font-weight: 600;
     }
+    .reading-check-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 10050;
+      display: none;
+      place-items: center;
+      padding: 20px;
+      background: rgba(9, 30, 66, 0.66);
+      backdrop-filter: blur(8px);
+    }
+    .reading-check-overlay.visible { display: grid; }
+    .reading-check-card {
+      width: min(520px, 100%);
+      padding: 28px;
+      border: 2px solid rgba(255,255,255,0.78);
+      border-radius: 24px;
+      background: #ffffff;
+      color: var(--k-blue-d);
+      box-shadow: 0 28px 70px rgba(9, 30, 66, 0.34);
+      text-align: center;
+    }
+    .reading-check-icon { font-size: 3rem; line-height: 1; margin-bottom: 12px; }
+    .reading-check-card h2 { margin: 0 0 10px; font-family: 'Orbitron', sans-serif; font-size: 1.35rem; }
+    .reading-check-card p { margin: 0; color: var(--muted); font-weight: 650; line-height: 1.55; }
+    .reading-check-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 24px; }
+    .reading-check-actions button {
+      min-height: 54px;
+      border: 0;
+      border-radius: 15px;
+      padding: 12px 14px;
+      cursor: pointer;
+      font: inherit;
+      font-weight: 850;
+    }
+    .reading-check-yes { background: var(--k-blue); color: #fff; }
+    .reading-check-no { background: #fff4bd; color: #704f00; }
+    @media (max-width: 520px) { .reading-check-actions { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
@@ -711,8 +748,8 @@
 
       <form id="regForm" class="form-grid" onsubmit="goToStep2(event)">
         <div class="field">
-          <label for="nameInput"><i class="fa-solid fa-user"></i> Nama Panggilan Siswa</label>
-          <input type="text" id="nameInput" placeholder="Contoh: Nara" required />
+          <label for="nameInput"><i class="fa-solid fa-user"></i> Nama Lengkap Siswa</label>
+          <input type="text" id="nameInput" placeholder="Sesuai data pendaftaran (contoh: Nara Putri Ramadhani)" autocomplete="name" minlength="3" maxlength="100" required />
         </div>
 
         <div class="field">
@@ -725,59 +762,39 @@
           <input type="email" id="emailInput" placeholder="orangtua@example.com" required />
         </div>
 
-        <!-- Mode Cabang / Selection (Commented out per updated RD)
         <div class="field">
-          <label><i class="fa-solid fa-location-dot"></i> Jenis Pelaksanaan / Mode Cabang</label>
-          <div class="mode-grid">
-            <div class="mode-card" id="modeOnlineBtn" onclick="selectCabangMode('online')">
-              <i class="fa-solid fa-globe"></i>
-              <div class="mode-title">Kelas Online</div>
-              <div class="mode-sub">Pembelajaran Online</div>
+          <label><i class="fa-solid fa-city"></i> Pilih Kota Cabang</label>
+          <div class="custom-select-container" id="citySelectContainer">
+            <div class="custom-select-trigger is-placeholder" id="citySelectTrigger" onclick="toggleCustomSelect('citySelectContainer')">
+              <span id="citySelectLabel">🔍 Cari & pilih kota...</span>
+              <i class="fa-solid fa-chevron-down chevron"></i>
             </div>
-            <div class="mode-card" id="modeOfflineBtn" onclick="selectCabangMode('offline')">
-              <i class="fa-solid fa-building-user"></i>
-              <div class="mode-title">Cabang Offline</div>
-              <div class="mode-sub">Tatap Muka di Cabang</div>
+            <div class="custom-select-dropdown">
+              <div class="custom-select-search-box">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="citySearchInput" placeholder="Ketik nama kota (contoh: Bandung, Jakarta, Surabaya)..." oninput="filterCityOptions()" onclick="event.stopPropagation()" />
+              </div>
+              <div class="custom-select-options-list" id="cityOptionsList"></div>
             </div>
           </div>
         </div>
 
-        <div class="offline-fields-container" id="offlineFields">
-          <div class="field">
-            <label><i class="fa-solid fa-city"></i> Pilih Kota Cabang</label>
-            <div class="custom-select-container" id="citySelectContainer">
-              <div class="custom-select-trigger is-placeholder" id="citySelectTrigger" onclick="toggleCustomSelect('citySelectContainer')">
-                <span id="citySelectLabel">🔍 Cari & pilih kota...</span>
-                <i class="fa-solid fa-chevron-down chevron"></i>
-              </div>
-              <div class="custom-select-dropdown">
-                <div class="custom-select-search-box">
-                  <i class="fa-solid fa-magnifying-glass"></i>
-                  <input type="text" id="citySearchInput" placeholder="Ketik nama kota (contoh: Bandung, Jakarta, Surabaya)..." oninput="filterCityOptions()" onclick="event.stopPropagation()" />
-                </div>
-                <div class="custom-select-options-list" id="cityOptionsList"></div>
-              </div>
+        <div class="field">
+          <label><i class="fa-solid fa-store"></i> Pilih Cabang Offline di Kota Tersebut</label>
+          <div class="custom-select-container" id="branchSelectContainer">
+            <div class="custom-select-trigger disabled is-placeholder" id="branchSelectTrigger" onclick="toggleCustomSelect('branchSelectContainer')">
+              <span id="branchSelectLabel">Pilih kota terlebih dahulu...</span>
+              <i class="fa-solid fa-chevron-down chevron"></i>
             </div>
-          </div>
-
-          <div class="field">
-            <label><i class="fa-solid fa-store"></i> Pilih Cabang Offline di Kota Tersebut</label>
-            <div class="custom-select-container" id="branchSelectContainer">
-              <div class="custom-select-trigger disabled is-placeholder" id="branchSelectTrigger" onclick="toggleCustomSelect('branchSelectContainer')">
-                <span id="branchSelectLabel">Pilih kota terlebih dahulu...</span>
-                <i class="fa-solid fa-chevron-down chevron"></i>
+            <div class="custom-select-dropdown">
+              <div class="custom-select-search-box">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="branchSearchInput" placeholder="Cari lokasi cabang..." oninput="filterBranchOptions()" onclick="event.stopPropagation()" />
               </div>
-              <div class="custom-select-dropdown">
-                <div class="custom-select-search-box">
-                  <i class="fa-solid fa-magnifying-glass"></i>
-                  <input type="text" id="branchSearchInput" placeholder="Cari lokasi cabang..." oninput="filterBranchOptions()" onclick="event.stopPropagation()" />
-                </div>
-                <div class="custom-select-options-list" id="branchOptionsList"></div>
-              </div>
+              <div class="custom-select-options-list" id="branchOptionsList"></div>
             </div>
           </div>
         </div>
-        -->
 
         <button type="submit" class="btn-submit">
           Lanjut ke Petunjuk <i class="fa-solid fa-arrow-right"></i>
@@ -790,7 +807,7 @@
       <div class="hero" style="margin-bottom:18px;">
         <img src="https://cdn-web-2.ruangguru.com/landing-pages/assets/545c0426-169c-406f-8775-93afcacef50a.png" alt="Kalananti Logo" class="main-logo-img" style="height:48px;">
         <div class="subtitle-title" style="font-size:1.25rem;">PERSIAPAN MISI</div>
-        <div class="eyebrow" id="studentSummaryBadge"><i class="fa-solid fa-rocket"></i> Peserta: <span id="summaryName">Siswa</span> (<span id="summaryAge">8</span> Th)</div>
+        <div class="eyebrow" id="studentSummaryBadge"><i class="fa-solid fa-rocket"></i> Peserta: <span id="summaryName">Siswa</span> (<span id="summaryAge">8</span> Th) — Cabang: <span id="summaryBranch">-</span></div>
       </div>
 
       <!-- Segmented Tabs -->
@@ -808,6 +825,12 @@
 
       <!-- Tab 1: Kids -->
       <div id="kidsTab" class="tnc-panel active">
+        <div class="device-alert" style="background: #fffbeb; border-color: #fde047; color: #b45309; font-size: 0.95rem;">
+          <i class="fa-solid fa-bell" style="font-size: 1.4rem;"></i>
+          <div>
+            <b>Hai Adik-adik!</b> Tolong baca info di bawah ini dulu ya sebelum mulai petualangannya! 👀
+          </div>
+        </div>
         <div class="kids-grid">
           <div class="kids-card">
             <div class="kids-card-icon"><i class="fa-solid fa-puzzle-piece"></i></div>
@@ -918,6 +941,18 @@
     </div>
   </main>
 
+  <div class="reading-check-overlay" id="readingCheckModal" role="dialog" aria-modal="true" aria-labelledby="readingCheckTitle">
+    <div class="reading-check-card">
+      <div class="reading-check-icon" aria-hidden="true">📖</div>
+      <h2 id="readingCheckTitle">Apakah anak sudah bisa membaca?</h2>
+      <p>Pilih sesuai kemampuan anak membaca instruksi secara mandiri. Jawaban ini hanya menentukan bentuk soal yang paling sesuai.</p>
+      <div class="reading-check-actions">
+        <button type="button" class="reading-check-yes" onclick="confirmAgeSevenReading(true)">Sudah bisa membaca</button>
+        <button type="button" class="reading-check-no" onclick="confirmAgeSevenReading(false)">Belum bisa membaca</button>
+      </div>
+    </div>
+  </div>
+
   <script src="placement-session.js"></script>
   <script src="placement-sync.js"></script>
   <script>
@@ -940,6 +975,13 @@
       if (!registration || registration.isCompleted) return;
 
       const student = registration.student || registration;
+      const exactAge = Number(student.exactAge);
+      const validAgeSevenDecision = typeof student.canReadIndependently === 'boolean'
+        && ['age_7_can_read_kids', 'age_7_cannot_read_junior'].includes(student.routingReason);
+      if (exactAge === 7 && !validAgeSevenDecision) {
+        window.PlacementSession?.destroyCurrent?.();
+        return;
+      }
       const audience = String(student.audienceGroup || '').toLowerCase();
       const target = audience === 'junior'
         ? 'junior-final-placement-test.html'
@@ -1312,6 +1354,7 @@
     }
 
     let draftData = null;
+    let pendingAgeSevenData = null;
 
     function switchTncTab(tabId, btn) {
       document.querySelectorAll('.tnc-tab-btn').forEach(b => b.classList.remove('active'));
@@ -1347,18 +1390,15 @@
     function initBranchData() {
       buildCityMap(embeddedBranches);
 
-      // Fetch live updates from Google Sheet DROPDOWNS tab
-      fetch('https://docs.google.com/spreadsheets/d/1aTftCK6eF_gLPYueH-TH7nt4Pc0Ew247xfF49a91eK4/gviz/tq?tqx=out:csv&sheet=DROPDOWNS')
-        .then(res => res.text())
-        .then(csvText => {
-          const lines = csvText.split('\n');
-          const fetchedBranches = [];
-          lines.forEach(line => {
-            let val = line.replace(/^"|"$/g, '').trim();
-            if (val && val !== 'BAC/EAC Branch Name') {
-              fetchedBranches.push(val);
-            }
-          });
+      // Fetch the backend's offline-only, cleaned and deduplicated branch list.
+      const branchEndpoint = window.PLACEMENT_WEB_APP_URL
+        || 'https://script.google.com/macros/s/AKfycbxYga6HmAaTkAjVnwMX-AVJ7shYdg8JWeiLfcExhV0Lv1y6lxL0qr0oQIvYQkaLRznh/exec';
+      fetch(`${branchEndpoint}?action=get_offline_branches`)
+        .then(res => res.json())
+        .then(data => {
+          const fetchedBranches = Array.isArray(data?.branches)
+            ? data.branches.filter(val => val && String(val).trim().toLowerCase() !== 'online')
+            : [];
           if (fetchedBranches.length > 0) {
             embeddedBranches = fetchedBranches;
             buildCityMap(embeddedBranches);
@@ -1367,46 +1407,29 @@
             }
           }
         })
-        .catch(err => console.warn('Using embedded branch list', err));
+        .catch(err => console.warn('Daftar cabang live gagal dimuat; menggunakan fallback offline.', err));
     }
 
     function buildCityMap(branchList) {
       cityMap = {};
       branchList.forEach(rawBranch => {
+        const trimmed = String(rawBranch || '').trim();
+        if (!trimmed || trimmed === 'BAC/EAC Branch Name' || trimmed.toLowerCase() === 'online') {
+          return;
+        }
         let city, branchName;
-        if (rawBranch.includes(' - ')) {
-          const parts = rawBranch.split(' - ');
+        if (trimmed.includes(' - ')) {
+          const parts = trimmed.split(' - ');
           city = parts[0].trim();
           branchName = parts.slice(1).join(' - ').trim();
         } else {
-          city = rawBranch.trim();
-          branchName = rawBranch.trim();
+          city = trimmed;
+          branchName = trimmed;
         }
         if (!cityMap[city]) cityMap[city] = [];
-        cityMap[city].push({ fullName: rawBranch, branchName: branchName });
+        cityMap[city].push({ fullName: trimmed, branchName: branchName });
       });
       renderCityOptions();
-    }
-
-    function selectCabangMode(mode) {
-      selectedMode = mode;
-      const onlineBtn = document.getElementById('modeOnlineBtn');
-      const offlineBtn = document.getElementById('modeOfflineBtn');
-      const offlineFields = document.getElementById('offlineFields');
-
-      if (mode === 'online') {
-        onlineBtn.classList.add('active');
-        offlineBtn.classList.remove('active');
-        offlineFields.classList.remove('active');
-        selectedCity = null;
-        selectedBranch = null;
-        resetCitySelect();
-        resetBranchSelect();
-      } else if (mode === 'offline') {
-        offlineBtn.classList.add('active');
-        onlineBtn.classList.remove('active');
-        offlineFields.classList.add('active');
-      }
     }
 
     function toggleCustomSelect(containerId) {
@@ -1559,7 +1582,7 @@
 
     function goToStep2(event) {
       event.preventDefault();
-      const name = document.getElementById('nameInput').value.trim();
+      const name = document.getElementById('nameInput').value.trim().replace(/\s+/g, ' ');
       const ageVal = document.getElementById('ageInput').value.trim();
       const email = document.getElementById('emailInput').value.trim();
       const errorMsg = document.getElementById('errorMsg');
@@ -1571,7 +1594,19 @@
         return;
       }
 
-      let cabang = '-';
+      if (name.length < 3 || name.length > 100 || !/\p{L}/u.test(name)) {
+        errorText.textContent = 'Mohon masukkan nama lengkap siswa sesuai data pendaftaran.';
+        errorMsg.classList.add('visible');
+        return;
+      }
+
+      if (!selectedCity || !selectedBranch) {
+        errorText.textContent = 'Mohon pilih kota dan cabang offline lokasi tes terlebih dahulu.';
+        errorMsg.classList.add('visible');
+        return;
+      }
+
+      const cabang = selectedBranch;
 
       const exactAge = parseInt(ageVal);
       if (isNaN(exactAge) || exactAge < 5 || exactAge > 18) {
@@ -1589,14 +1624,45 @@
 
       errorMsg.classList.remove('visible');
 
+      const registrationDraft = { name, exactAge, email, cabang };
+      if (exactAge === 7) {
+        pendingAgeSevenData = registrationDraft;
+        document.getElementById('readingCheckModal')?.classList.add('visible');
+        return;
+      }
+      finishRegistrationRouting(registrationDraft, null);
+    }
+
+    function confirmAgeSevenReading(canReadIndependently) {
+      if (!pendingAgeSevenData || pendingAgeSevenData.exactAge !== 7) return;
+      const registrationDraft = pendingAgeSevenData;
+      pendingAgeSevenData = null;
+      document.getElementById('readingCheckModal')?.classList.remove('visible');
+      finishRegistrationRouting(registrationDraft, canReadIndependently === true);
+    }
+
+    function finishRegistrationRouting(registrationDraft, canReadIndependently) {
+      const { name, exactAge, email, cabang } = registrationDraft;
       let audienceGroup = 'Kids';
       let ageRange = '8–11';
       let targetFile = 'kids-final-placement-test.html';
+      let routingReason = 'age_8_11_kids';
 
-      if (exactAge <= 7) {
+      if (exactAge <= 6) {
         audienceGroup = 'Junior';
-        ageRange = '5–7';
+        ageRange = '5–6';
         targetFile = 'junior-final-placement-test.html';
+        routingReason = 'age_5_6_junior';
+      } else if (exactAge === 7 && canReadIndependently === true) {
+        audienceGroup = 'Kids';
+        ageRange = '7';
+        targetFile = 'kids-final-placement-test.html';
+        routingReason = 'age_7_can_read_kids';
+      } else if (exactAge === 7) {
+        audienceGroup = 'Junior';
+        ageRange = '7';
+        targetFile = 'junior-final-placement-test.html';
+        routingReason = 'age_7_cannot_read_junior';
       } else if (exactAge <= 11) {
         audienceGroup = 'Kids';
         ageRange = '8–11';
@@ -1605,18 +1671,24 @@
         audienceGroup = 'Kids';
         ageRange = '12–15';
         targetFile = 'kids-final-placement-test.html';
+        routingReason = 'age_12_15_kids_application';
       } else {
         audienceGroup = 'Teens';
         ageRange = '16–18';
         targetFile = 'teens.html';
+        routingReason = 'age_16_18_teens';
       }
 
       draftData = {
-        name, exactAge, ageRange, audienceGroup, email, cabang, targetFile
+        name, exactAge, ageRange, audienceGroup, email, cabang, targetFile,
+        canReadIndependently: exactAge === 7 ? canReadIndependently === true : null,
+        routingReason
       };
 
       document.getElementById('summaryName').textContent = name;
       document.getElementById('summaryAge').textContent = exactAge;
+      const summaryBranchEl = document.getElementById('summaryBranch');
+      if (summaryBranchEl) summaryBranchEl.textContent = cabang;
 
       document.getElementById('step1Container').classList.remove('active');
       document.getElementById('step2Container').classList.add('active');
@@ -1642,7 +1714,9 @@
           ageRange: draftData.ageRange,
           audienceGroup: draftData.audienceGroup,
           parentEmail: draftData.email,
-          branch: draftData.cabang
+          branch: draftData.cabang,
+          canReadIndependently: draftData.canReadIndependently,
+          routingReason: draftData.routingReason
         },
         consent: {
           childConfirmed: true,
@@ -1650,6 +1724,7 @@
           acceptedAt: new Date().toISOString(),
           termsVersion: 'placement-tnc-v1'
         },
+        assessmentVersion: 'placement-v1',
         registeredAt: new Date().toISOString(),
         timestamp: Date.now(),
         isCompleted: false,
@@ -1671,4 +1746,3 @@
   </script>
 </body>
 </html>
-

@@ -1,16 +1,23 @@
-# Kalananti B2C Python Program Git Ignore
+# Ignore everything by default
+*
 
-# System & Cache
-.DS_Store
-__pycache__/
-*.pyc
+# Allow .gitignore
+!.gitignore
 
-# Local scratch / developer utility files
-level/
-parse_syllabus.py
-port_level3_ui.py
+# Allow ONLY level1, level2, level3, level4 folders
+!level1/
+!level1/**
+!level2/
+!level2/**
+!level3/
+!level3/**
+!level4/
+!level4/**
 
-# Generator & scratch helper scripts inside level folders
+# Exclude generator scripts & temp files inside level folders
 level*/*.py
 level*/*.txt
 level*/*.merged
+.DS_Store
+__pycache__/
+*.pyc

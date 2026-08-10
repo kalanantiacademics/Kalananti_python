@@ -6,21 +6,60 @@
 (function (global) {
   'use strict';
 
+  const OFFLINE_START_URL = 'https://www.kalananti.id/placement-test';
+  const ONLINE_START_URL = 'https://www.kalananti.id/placement-test/online';
+
+  function getPlacementRegistration(registrationInput) {
+    if (registrationInput && typeof registrationInput === 'object') return registrationInput;
+    try {
+      const raw = typeof registrationInput === 'string'
+        ? registrationInput
+        : global.localStorage.getItem('pt_student_registration')
+          || global.localStorage.getItem('pt_student_profile');
+      return raw ? JSON.parse(raw) : null;
+    } catch (error) {
+      return null;
+    }
+  }
+
+  function getPlacementStartUrl(registrationInput) {
+    const registration = getPlacementRegistration(registrationInput);
+    const student = registration?.student || registration || {};
+    const online = String(student.branch || '').trim().toLowerCase() === 'online';
+    const localPreview = global.location.protocol === 'file:'
+      || ['localhost', '127.0.0.1'].includes(global.location.hostname);
+    if (localPreview) return online ? 'index-online.html' : 'index.html';
+    return online ? ONLINE_START_URL : OFFLINE_START_URL;
+  }
+
   function detectDevice() {
     const ua = navigator.userAgent || navigator.vendor || global.opera || '';
     const width = global.innerWidth || document.documentElement.clientWidth || screen.width;
     const height = global.innerHeight || document.documentElement.clientHeight || screen.height;
     const minDim = Math.min(width, height);
-    const maxDim = Math.max(width, height);
+    const physicalWidth = Number(global.screen?.width) || width;
+    const physicalHeight = Number(global.screen?.height) || height;
+    const physicalMinDim = Math.min(physicalWidth, physicalHeight);
     const isPortrait = height > width;
     const hasTouch = ('ontouchstart' in global) || (navigator.maxTouchPoints > 0);
 
-    // Mobile Phone UA Check (iPhone, iPod, Android Mobile, IEMobile, Windows Phone, etc.)
-    const isMobileUA = /Android.*Mobile|iPhone|iPod|BlackBerry|IEMobile|Opera Mini|Mobile/i.test(ua);
+    // iPad user agents also contain the word "Mobile", so recognize tablets
+    // first to keep real tablets usable in landscape orientation.
+    const isTabletUA = /iPad|Tablet|PlayBook|Silk/i.test(ua)
+      || (/Android/i.test(ua) && !/Mobile/i.test(ua))
+      || (/Macintosh/i.test(ua) && hasTouch && navigator.maxTouchPoints > 1 && physicalMinDim >= 600);
+    // Mobile Phone UA Check (iPhone, iPod, Android Mobile, IEMobile, etc.)
+    const isMobileUA = !isTabletUA
+      && /Android.*Mobile|iPhone|iPod|BlackBerry|IEMobile|Opera Mini|Mobile/i.test(ua);
+    const isMobileClientHint = navigator.userAgentData?.mobile === true;
     
     // Smartphone physical / viewport characteristics:
-    // Smartphone landscape height is rarely above 500px, min dimension rarely above 550px.
-    const isMobilePhone = isMobileUA || (hasTouch && minDim < 600) || (height < 520 && width < 960);
+    // `screen` remains phone-sized even when "Request Desktop Site" makes the
+    // viewport and user-agent look like a desktop browser.
+    const isMobilePhone = isMobileUA
+      || isMobileClientHint
+      || (hasTouch && (minDim < 600 || physicalMinDim < 600))
+      || (height < 520 && width < 960);
 
     if (isMobilePhone) {
       return {
@@ -232,6 +271,7 @@
     const overlay = document.getElementById('kalanantiDeviceGuard');
 
     if (!res.allowed) {
+      document.documentElement.classList.add('kg-blocked-preload');
       if (!overlay) injectGuardOverlay();
       const el = document.getElementById('kalanantiDeviceGuard');
       if (el) {
@@ -243,6 +283,7 @@
         if (document.body) document.body.style.overflow = 'hidden';
       }
     } else {
+      document.documentElement.classList.remove('kg-blocked-preload');
       if (overlay) {
         overlay.classList.remove('kg-active');
         overlay.setAttribute('aria-hidden', 'true');
@@ -252,6 +293,21 @@
   }
 
   function init() {
+    // Hide the assessment immediately for blocked devices. Without this
+    // preload gate, slow CDN scripts can leave the form briefly usable before
+    // DOMContentLoaded creates the full guard overlay.
+    const preloadStyle = document.createElement('style');
+    preloadStyle.id = 'kalanantiDeviceGuardPreload';
+    preloadStyle.textContent = `
+      html.kg-blocked-preload body > :not(#kalanantiDeviceGuard) {
+        visibility: hidden !important;
+        pointer-events: none !important;
+      }
+      html.kg-blocked-preload body { overflow: hidden !important; }
+    `;
+    (document.head || document.documentElement).appendChild(preloadStyle);
+    if (!detectDevice().allowed) document.documentElement.classList.add('kg-blocked-preload');
+
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', () => {
         injectGuardOverlay();
@@ -270,4 +326,9 @@
 
   init();
   global.KalanantiDeviceGuard = { detectDevice, updateGuard };
+  global.KalanantiPlacementRoutes = {
+    offline: OFFLINE_START_URL,
+    online: ONLINE_START_URL,
+    startUrl: getPlacementStartUrl
+  };
 })(typeof window !== 'undefined' ? window : this);
