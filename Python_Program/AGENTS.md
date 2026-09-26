@@ -193,27 +193,27 @@ Before completion:
 - verify all local logos/assets load and browser console has no unexplained errors;
 - inspect representative pages visually, including the cover, overview, one concept meeting, one workshop meeting, and showcase.
 
-## 5. Slide Count and Content Density
+## 5. Slide Depth, Completeness, and Classroom Pacing
 
-The goal of every deck is pedagogical effectiveness and maximizing hands-on coding time—NOT hitting an artificial slide quota. Never pad decks with repetitive analogies, multi-slide passive flashbacks, or empty placeholder slides.
+The primary goal of every deck is **conceptual clarity, completeness, and self-explanatory learning**. Material must be explained thoroughly and step-by-step so that any student (even those studying asynchronously) and any teacher can follow without gaps. 
 
-### A. Pedagogical Time-Budget Allocation (Strict Standard)
-Every meeting must allocate classroom time according to the 30 / 60 / 10 rule:
-- **Maximum 30% Class Time (Concept & Introduction):** Brief, visual mental model, syntax anatomy, and Active-Recall Speed Review.
-- **Minimum 60% Class Time (Hands-on Practice):** Students actively typing code in their IDE through Guided Coding, Bug Hunt diagnostics, Independent Exercises, and tiered Challenge Mode (Bronze, Silver, Gold).
+**Never artificially cut down or delete explanatory slides.** A comprehensive deck often requires 30–45 slides per meeting to accommodate visual analogies, micro-stepping code walkthroughs, live-coding prompts, diagnostic bug hunts, and multi-tiered challenges.
+
+### A. Pedagogical Time-Budget & Pacing Allocation (30 / 60 / 10 Rule)
+Time management in a 60–90 minute classroom is governed by **teacher pacing**, not by stripping slides:
+- **Maximum 30% Class Time (Concept & Introduction):** Brief visual walkthrough of mental models, syntax anatomy, and fast-paced active recall. Teachers should move briskly through flashback and transitional slides (1–2 minutes) rather than re-lecturing old material.
+- **Minimum 60% Class Time (Hands-on Practice):** Students actively coding in their IDE through Guided Coding, Bug Hunt diagnostics, Independent Exercises, and tiered Challenge Mode (Bronze, Silver, Gold).
 - **Approximately 10% Class Time (Reflection & Closing):** Synthesis, Cheat Sheet review, and celebration/preview.
 
-### B. Effective Slide Guidelines
-- **Concept Meetings (Meetings 1–8):** Target **18–28 purposeful slides per meeting**. Every slide must earn its place by teaching a distinct idea, prompting active recall, demonstrating live code, or posing a coding challenge.
-- **Project Workshops (Meetings 9–11):** Target **12–25 milestone slides per meeting**. Focus on clear milestones, architectural diagrams, wireframes, and debugging checkpoints to leave maximum time for students to build their projects.
-- **Showcase & Graduation (Meeting 12):** Target **15–22 slides**. Prioritize actual student live demos, pitching, peer feedback, and graduation ceremony over teacher slide presentation.
+### B. Complete Slide Structure (No Artificial Slashing)
+- **Concept Meetings (Meetings 1–8):** Decks are typically **30–45 slides**. Each slide serves a distinct step in the scaffolding ladder (Flashback -> Real-world Analogy -> Code Anatomy -> Guided Step -> Bug Hunt -> Independent Coding -> Challenge Mode 1/2/3 -> Summary).
+- **Project Workshops (Meetings 9–11):** Focused on clear milestone checkpoints, architectural diagrams, wireframes, and live debugging triage.
+- **Showcase & Graduation (Meeting 12):** Dedicated to student live demos, pitching, peer feedback, and graduation rubrics.
 
-### C. Slide-Density Rules
-- One main teaching idea per slide.
-- Split long explanations across slides; never use a wall of text.
-- Code must be high-contrast and readable from a classroom projector.
-- Alternate explanation, visualization, prediction, guided coding, debugging, and independent practice.
-- Never duplicate analogies or repeat summaries without introducing new student activities.
+### C. Differentiation & Teacher Pacing Guide
+- **Core Slides (Must-Do):** Core concept, syntax demonstration, guided exercise, and Challenge 1.
+- **Adaptive / Fast-Finisher Slides:** Extra analogies, Challenge 2 & 3, and bonus extensions serve as ready-made differentiation for students who finish early, avoiding idle time in class.
+- **Self-Paced / Asynchronous Value:** Complete slide decks ensure students who missed class or need review have all necessary explanations without missing intermediate steps.
 
 ## 6. Global Navigation and Objective Jump Menu
 
