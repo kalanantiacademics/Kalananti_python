@@ -195,19 +195,25 @@ Before completion:
 
 ## 5. Slide Count and Content Density
 
-The normal target is a dense, informative, and student-friendly deck—not a padded deck.
+The goal of every deck is pedagogical effectiveness and maximizing hands-on coding time—NOT hitting an artificial slide quota. Never pad decks with repetitive analogies, multi-slide passive flashbacks, or empty placeholder slides.
 
-- Meetings 1–8: target 45 slides per meeting. A range of 42–48 is acceptable only when objective count or topic complexity genuinely requires it.
-- Meetings 9–11: target approximately 45 workshop slides per meeting. Use checkpoints, planning frameworks, examples, build milestones, debugging clinics, testing, pitch preparation, and reflection—not filler.
-- Meeting 12: prioritize actual student presentation time. Use approximately 20–30 fixed instructional/showcase slides. It may approach 45 only when the extra slides have a real function such as presenter cards, timers, rubric reminders, transitions, peer feedback, or reflection.
+### A. Pedagogical Time-Budget Allocation (Strict Standard)
+Every meeting must allocate classroom time according to the 30 / 60 / 10 rule:
+- **Maximum 30% Class Time (Concept & Introduction):** Brief, visual mental model, syntax anatomy, and Active-Recall Speed Review.
+- **Minimum 60% Class Time (Hands-on Practice):** Students actively typing code in their IDE through Guided Coding, Bug Hunt diagnostics, Independent Exercises, and tiered Challenge Mode (Bronze, Silver, Gold).
+- **Approximately 10% Class Time (Reflection & Closing):** Synthesis, Cheat Sheet review, and celebration/preview.
 
-Slide-density rules:
+### B. Effective Slide Guidelines
+- **Concept Meetings (Meetings 1–8):** Target **18–28 purposeful slides per meeting**. Every slide must earn its place by teaching a distinct idea, prompting active recall, demonstrating live code, or posing a coding challenge.
+- **Project Workshops (Meetings 9–11):** Target **12–25 milestone slides per meeting**. Focus on clear milestones, architectural diagrams, wireframes, and debugging checkpoints to leave maximum time for students to build their projects.
+- **Showcase & Graduation (Meeting 12):** Target **15–22 slides**. Prioritize actual student live demos, pitching, peer feedback, and graduation ceremony over teacher slide presentation.
 
+### C. Slide-Density Rules
 - One main teaching idea per slide.
-- Split long explanations across slides; never use a wall of text to reach a slide target.
-- Code must be readable from a classroom projector.
-- Alternate explanation, visualization, prediction, interaction, coding, debugging, and reflection.
-- A slide must earn its place by teaching, prompting thought, supporting practice, or guiding project work.
+- Split long explanations across slides; never use a wall of text.
+- Code must be high-contrast and readable from a classroom projector.
+- Alternate explanation, visualization, prediction, guided coding, debugging, and independent practice.
+- Never duplicate analogies or repeat summaries without introducing new student activities.
 
 ## 6. Global Navigation and Objective Jump Menu
 

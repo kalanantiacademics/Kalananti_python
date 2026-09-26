@@ -1,0 +1,393 @@
+import re
+
+with open('level1/main_deck.html', 'r') as f:
+    html = f.read()
+
+# We completely replace the content with the new template that matches level4 but has level1 ids
+new_html = """<!DOCTYPE html>
+<html lang="id" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Level 1 - Planet Novara | Kalananti</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        window.tailwind = window.tailwind || {};
+        tailwind.config = {
+            darkMode: ['class', '[data-theme="dark"]'],
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Space Grotesk', 'sans-serif'], display: ['Orbitron', 'sans-serif'] },
+                    colors: {
+                        'k-blue': '#38bdf8',
+                        'k-blue-d': '#0ea5e9',
+                        'k-yellow': '#facc15',
+                        'k-yellow-d': '#eab308',
+                        'k-green': '#34d399',
+                        'k-navy': '#07152f',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* CSS Variables mimicking Level 4 but with Level 1 colors (Dark Theme only) */
+        :root, html[data-theme="dark"] {
+            --bg: #07152f;
+            --bg2: #0c2147;
+            --sky: #102b55;
+            --nebula1: rgba(56,189,248,0.18);
+            --nebula2: rgba(250,204,21,0.15);
+            --card: rgba(16,43,85,0.82);
+            --card-b: rgba(56,189,248,0.22);
+            --nav: rgba(7,21,47,0.90);
+            --nav-b: rgba(56,189,248,0.22);
+            --text: #f8fafc;
+            --muted: #cbd5e1;
+            --chip: rgba(255,255,255,0.12);
+            --chip-b: rgba(56,189,248,0.28);
+            --chip-t: #bae6fd;
+            --stars: 0.45;
+            --slide-accent: #38bdf8;
+            --line: rgba(148,163,184,.28);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background:
+                radial-gradient(circle at 10% 10%, var(--nebula1), transparent 36%),
+                radial-gradient(circle at 88% 12%, var(--nebula2), transparent 32%),
+                radial-gradient(circle at 50% 105%, rgba(52,211,153,0.14), transparent 34%),
+                linear-gradient(160deg, var(--bg) 0%, var(--bg2) 50%, var(--sky) 100%);
+            background-attachment: fixed;
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: fixed; inset: 0;
+            pointer-events: none; z-index: -20;
+            opacity: var(--stars);
+            background-image:
+                radial-gradient(circle at 14% 24%, rgba(255,255,255,0.9) 0 1px, transparent 1.6px),
+                radial-gradient(circle at 78% 68%, rgba(255,255,255,0.75) 0 1px, transparent 1.5px),
+                radial-gradient(circle at 56% 38%, rgba(255,255,255,0.60) 0 1px, transparent 1.4px),
+                radial-gradient(circle at 30% 82%, rgba(255,255,255,0.50) 0 1px, transparent 1.3px);
+            background-size: 250px 250px, 320px 320px, 210px 210px, 280px 280px;
+        }
+
+        .topnav {
+            background: var(--nav);
+            backdrop-filter: blur(18px);
+            border-bottom: 1px solid var(--nav-b);
+        }
+        
+        .planet-card { 
+            background: var(--card); 
+            border: 1.5px solid var(--card-b); 
+            backdrop-filter: blur(12px); 
+            box-shadow: 0 20px 40px -20px rgba(2,8,26,0.85);
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.3); }
+
+        .btn-3d { 
+            position: relative; transition: all 0.2s;
+            box-shadow: 0 6px 0 #0ea5e9, 0 15px 30px -5px rgba(56, 189, 248, 0.4); border: none; cursor: pointer;
+        }
+        .btn-3d:hover { transform: translateY(-2px); box-shadow: 0 8px 0 #0ea5e9, 0 20px 40px -10px rgba(56, 189, 248, 0.5); }
+        .btn-3d:active { transform: translateY(4px); box-shadow: 0 2px 0 #0ea5e9, 0 5px 10px -2px rgba(56, 189, 248, 0.3); }
+
+        .section-jump {
+            display: grid;
+            grid-template-columns: auto minmax(0, 1fr);
+            align-items: center;
+            gap: .75rem;
+            padding: .45rem .55rem .45rem .9rem;
+            border: 1px solid var(--card-b);
+            border-radius: 1rem;
+            background: color-mix(in srgb, var(--card) 82%, transparent);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,.16);
+        }
+        .section-jump label {
+            font-size: .61rem;
+            line-height: 1;
+            font-weight: 900;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+            color: var(--muted);
+            white-space: nowrap;
+        }
+
+        #sectionSelector {
+            width: 100%;
+            min-width: 0;
+            border: 0;
+            border-radius: .7rem;
+            padding: .65rem .8rem;
+            background: var(--bg2);
+            color: var(--text);
+            font-weight: 800;
+            outline: none;
+        }
+
+        #sectionSelector:focus-visible {
+            outline: 3px solid color-mix(in srgb, var(--k-yellow) 70%, white);
+            outline-offset: 3px;
+        }
+
+        #slideCard {
+            --slide-accent: var(--k-blue);
+            isolation: isolate;
+            border-color: color-mix(in srgb, var(--slide-accent) 42%, var(--card-b));
+            background:
+                linear-gradient(145deg, color-mix(in srgb, var(--card) 96%, var(--slide-accent) 4%), var(--card));
+            box-shadow:
+                0 30px 70px -38px rgba(4, 16, 42, .8),
+                inset 0 1px 0 rgba(255,255,255,.18);
+        }
+
+        #slideCard::before {
+            content: "";
+            position: absolute;
+            inset: 0 0 auto;
+            height: .38rem;
+            z-index: 3;
+            background: linear-gradient(90deg, var(--slide-accent), var(--k-green), var(--k-yellow));
+        }
+
+        .slide-stage {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            margin-block: auto;
+            padding-block: 1rem;
+            max-width: 1120px;
+            margin: 0 auto;
+        }
+        
+        .meta { display: flex; align-items: center; justify-content: center; gap: .55rem; flex-wrap: wrap; margin-bottom: 1rem; }
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: .35rem;
+            padding: .48rem .8rem;
+            border-radius: 999px;
+            border: 1px solid color-mix(in srgb, var(--slide-accent) 36%, var(--card-b));
+            background: color-mix(in srgb, var(--slide-accent) 10%, transparent);
+            color: var(--text);
+            font-size: .62rem;
+            font-weight: 900;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+        }
+
+        .meeting-tab { width:100%; display:grid; grid-template-columns:40px 1fr; gap:11px; align-items:center; padding:10px; color:var(--text); text-align:left; border:1px solid transparent; border-radius:15px; background:transparent; cursor:pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .meeting-tab:hover { background: rgba(255,255,255,0.05); border-color: var(--card-b); transform: translateX(4px); }
+        .meeting-tab[aria-current="true"] { background: linear-gradient(90deg, rgba(56,189,248,0.2), transparent); border-left: 3px solid var(--chip-t); border-radius: 0 15px 15px 0; }
+        .meeting-num { width:40px; height:40px; display:grid; place-items:center; border-radius:12px; color:var(--k-navy); background:var(--k-yellow); font-weight:950; }
+        .meeting-tab:not([aria-current="true"]) .meeting-num { color:var(--text); background:rgba(255,255,255,0.1); }
+        .meeting-copy strong { display:block; font-size:.83rem; font-family: 'Space Grotesk', sans-serif; font-weight: bold; }
+        .meeting-copy small { margin-top:3px; color:var(--muted); font-size:.69rem; line-height:1.25; }
+
+        /* Map level 1 generated classes to level 4 styles */
+        .panel { 
+            position: relative; border: 1px solid var(--card-b); border-radius: 1.25rem; 
+            padding: 1.15rem; background: color-mix(in srgb, var(--card) 86%, transparent); 
+            box-shadow: 0 16px 30px -25px rgba(5, 20, 50, .72);
+        }
+        .panel h3, .panel h4 { font-size: 1rem; font-weight: 900; color: var(--slide-accent); margin-bottom: .45rem; }
+        .panel.yellow h3 { color: var(--k-yellow); }
+        .panel.green h3 { color: var(--k-green); }
+        .panel.red h3 { color: #fb7185; }
+        .panel p, .panel li { color: var(--muted); font-size: .9rem; line-height: 1.55; }
+
+        .hero { 
+            position: relative; overflow: hidden; border: 1px solid color-mix(in srgb, var(--slide-accent) 38%, var(--card-b)); 
+            border-radius: 1.6rem; padding: 1.5rem; 
+            background: radial-gradient(circle at 90% 10%, color-mix(in srgb, var(--slide-accent) 28%, transparent), transparent 35%),
+                        linear-gradient(135deg, color-mix(in srgb, var(--bg2) 88%, transparent), color-mix(in srgb, var(--card) 88%, transparent));
+            display: grid; grid-template-columns: 1.35fr .65fr; gap: 24px; align-items: center; min-height: 240px;
+        }
+        .hero-mark {
+            font-size: clamp(4rem, 10vw, 7rem); display: grid; place-items: center;
+        }
+        .eyebrow { color: var(--k-yellow); font-size: .78rem; font-weight: 950; letter-spacing: .14em; text-transform: uppercase; }
+
+        .flow { display: flex; align-items: stretch; gap: .65rem; flex-wrap: wrap; }
+        .flow > div { flex: 1 1 150px; display: flex; flex-direction: column; justify-content: center; min-height: 7rem; border: 1px solid var(--card-b); border-radius: 1.15rem; padding: 1rem; background: color-mix(in srgb, var(--bg2) 82%, transparent); text-align: center; }
+        .flow strong { color: var(--k-yellow); display: block; margin-bottom: 5px; font-weight: 900; }
+
+        .callout { display: flex; flex-direction: column; gap: .5rem; border-left: .32rem solid var(--k-yellow); border-radius: .3rem 1rem 1rem .3rem; padding: 1rem 1.1rem; background: color-mix(in srgb, var(--k-yellow) 9%, var(--bg2)); color: var(--text); }
+        .callout strong { color: var(--text); }
+        .mode-note { display: flex; gap: 10px; align-items: flex-start; padding: 13px 15px; border: 1px dashed rgba(56,189,248,.52); border-radius: 14px; color: #dbeafe; background: rgba(56,189,248,.07); margin-top: 1rem; }
+
+        details.reveal { margin-top: 1.5rem; border: 1px solid var(--card-b); border-radius: 0.75rem; overflow: hidden; background: rgba(0,0,0,0.2); }
+        details.reveal summary { width: 100%; padding: 1rem; background: rgba(255,255,255,0.05); color: var(--k-yellow); border: none; text-align: left; font-weight: bold; cursor: pointer; display: flex; justify-content: space-between; align-items: center; list-style: none; }
+        details.reveal summary::-webkit-details-marker { display: none; }
+        details.reveal summary::after { content: "＋"; float: right; color: var(--text); }
+        details.reveal[open] summary::after { content: "−"; }
+        .reveal-body { padding: 1.5rem; border-top: 1px solid var(--card-b); }
+
+        .choices { display: grid; gap: 10px; margin-top: 16px; }
+        .choice { display: block; width: 100%; padding: 1rem; margin-bottom: 0.5rem; background: rgba(255,255,255,0.05); border: 1px solid var(--card-b); border-radius: 0.5rem; color: var(--text); cursor: pointer; text-align: left; transition: all 0.2s; font-weight: bold; }
+        .choice:hover { background: rgba(255,255,255,0.1); }
+        .choice.correct { border-color: #22c55e; background: rgba(34, 197, 94, 0.4); }
+        .choice.wrong { border-color: #ef4444; background: rgba(239, 68, 68, 0.4); }
+        .feedback { min-height: 1.6em; margin-top: 10px; color: var(--muted); font-weight: 800; display: none; }
+        
+        pre.code { position: relative; overflow: auto; margin: 16px 0; padding: 20px; border: 1px solid #2d466d; border-radius: 16px; color: #d9e8ff; background: linear-gradient(145deg, #07111f, #101c32); font: 500 .98rem/1.55 "SFMono-Regular",Consolas,"Liberation Mono",monospace; white-space: pre-wrap; tab-size: 4; box-shadow: 0 18px 40px -30px #000; }
+        code { padding:.12em .32em; border-radius:6px; color:#fde68a; background:rgba(0,0,0,.25); font-family:"SFMono-Regular",Consolas,"Liberation Mono",monospace; }
+        .output { padding: 14px 17px; border-left: 4px solid var(--k-green); border-radius: 10px; color: #79f2b1; background: #07111f; font-family: "SFMono-Regular",Consolas,monospace; white-space: pre-wrap; margin-top: 0.5rem; }
+
+        .grid-2, .grid-3 { display: grid; gap: 16px; }
+        .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        
+        .quote { min-height: 300px; display: grid; place-items: center; text-align: center; }
+        .quote blockquote { max-width: 780px; margin: 0; color: #fef3c7; font-size: clamp(1.65rem, 4vw, 3rem); font-weight: 850; line-height: 1.28; }
+        .quote cite { display: block; margin-top: 22px; color: var(--k-blue); font-size: 1rem; font-style: normal; }
+
+        ul, ol { padding-left: 1.35em; list-style-position: inside; }
+        ul { list-style-type: disc; }
+        ol { list-style-type: decimal; }
+        li { margin: .42em 0; }
+        
+        #slideTitle { margin-bottom: 10px; font-size: clamp(1.8rem, 4vw, 3.15rem); line-height: 1.07; letter-spacing: -.025em; font-family: 'Orbitron', sans-serif; font-weight: 900; }
+        #slideSubtitle { margin: 0; color: var(--muted); font-size: clamp(1rem, 2vw, 1.25rem); line-height: 1.5; font-weight: bold; }
+        #slideContent { font-size: clamp(1rem, 1.65vw, 1.15rem); line-height: 1.65; font-weight: 500; }
+        #slideContent p { margin-bottom: 1rem; }
+
+        @media (max-width: 900px) {
+            .hero { grid-template-columns: 1fr; }
+            .grid-2, .grid-3 { grid-template-columns: 1fr; }
+            .flow { flex-direction: column; }
+        }
+    </style>
+</head>
+<body class="h-screen flex flex-col font-sans relative">
+    
+    <div id="global-deco" style="position: fixed; inset: 0; pointer-events: none; z-index: -10; overflow: hidden;">
+        <img src="https://cdn-web-2.ruangguru.com/landing-pages/assets/e77f536b-e591-4ba8-b5b8-f5b2a3d3b33b.png" style="position: absolute; left: 0; top: 12%; width: min(25vw, 180px); opacity: 0.6; transform-origin: left center;" alt="">
+        <img src="https://cdn-web-2.ruangguru.com/landing-pages/assets/c08a7aed-567f-4e37-988c-1423a5b92643.png" style="position: absolute; left: 0; top: 72%; width: min(30vw, 240px); opacity: 0.6; transform-origin: left center; transform: translateX(-34%);" alt="">
+        <img src="https://cdn-web-2.ruangguru.com/landing-pages/assets/5f93f855-0466-47b3-ba85-bbaabbad7a2e.png" style="position: absolute; right: 0; top: 28%; width: min(30vw, 240px); opacity: 0.6; transform-origin: right center; transform: translateX(34%);" alt="">
+    </div>
+
+    <div class="h-screen flex flex-col relative w-full">
+        <nav class="topnav w-full px-6 py-4 flex justify-between items-center z-50">
+            <div class="flex items-center gap-4">
+                <button id="menuBtn" class="text-[var(--text)] hover:opacity-70 transition-colors lg:hidden p-2">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                </button>
+                <img src="https://cdn-web-2.ruangguru.com/landing-pages/assets/828072b7-9198-4367-bce2-134b9fc8b486.png" alt="Kalananti by Ruangguru" class="h-8 md:h-10 drop-shadow-sm">
+                <div class="h-6 w-[1.5px] bg-[var(--card-b)] hidden md:block mx-2"></div>
+                <div class="hidden md:flex flex-col">
+                    <p class="text-[9px] font-black text-muted uppercase tracking-[0.2em] mb-0.5">Planet Novara</p>
+                    <h2 class="font-black text-k-blue text-sm">Python L1 <span class="text-muted/40 mx-2">/</span> Basic Python</h2>
+                </div>
+            </div>
+            
+            <div class="section-jump" role="navigation" aria-label="Navigasi bagian meeting">
+                <label for="sectionSelector">Loncat ke materi</label>
+                <select id="sectionSelector" aria-label="Pilih bagian materi"></select>
+            </div>
+        </nav>
+
+        <div class="flex-1 flex overflow-hidden p-4 sm:p-6 md:p-8 gap-6 md:gap-8 max-w-[1600px] mx-auto w-full">
+            <div id="sidebarOverlay" class="fixed inset-0 bg-black/60 z-40 hidden backdrop-blur-sm lg:hidden transition-opacity"></div>
+            
+            <aside id="sidebar" class="fixed lg:relative left-0 top-0 h-full w-80 lg:w-72 planet-card rounded-[2.5rem] flex-shrink-0 flex flex-col transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-out z-50 lg:z-auto shadow-2xl">
+                <div class="p-6 border-b border-[var(--card-b)] flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-white/5 rounded-xl flex items-center justify-center text-xl shadow-inner border border-white/10">🚀</div>
+                        <div>
+                            <h2 class="text-sm font-display font-black text-[var(--text)] uppercase">Jalur Misi Novara</h2>
+                            <p class="text-[9px] text-k-blue font-bold uppercase tracking-widest mt-0.5">12 meeting journey</p>
+                        </div>
+                    </div>
+                </div>
+                <nav class="flex-1 overflow-y-auto p-4 space-y-2 custom-scrollbar" id="meetingNav"></nav>
+            </aside>
+
+            <main id="mainContent" class="flex-1 flex flex-col gap-6 relative min-w-0">
+                <article id="slideCard" class="planet-card flex-1 rounded-[3rem] p-8 sm:p-14 shadow-2xl flex flex-col relative overflow-hidden overflow-y-auto custom-scrollbar" aria-live="polite">
+                    <div class="slide-stage">
+                        <header class="text-center mb-8 border-b border-[var(--card-b)] pb-7 shrink-0 relative z-[1]">
+                            <div class="meta">
+                                <span class="pill font-bold" id="meetingPill" style="background: var(--k-blue); color: #07152f; border-color: var(--k-blue);">Meeting 1</span>
+                                <span class="pill" id="sectionPill">Opening</span>
+                                <span class="pill" id="objectivePill" hidden></span>
+                            </div>
+                            <h1 id="slideTitle" class="text-3xl sm:text-5xl font-display font-black text-[var(--text)] mb-3 tracking-tight"></h1>
+                            <p id="slideSubtitle" class="text-xl text-muted font-bold"></p>
+                        </header>
+                        <section id="slideContent" class="text-[var(--text)] space-y-6 text-lg leading-relaxed font-medium">
+                        </section>
+                    </div>
+                </article>
+
+                <footer class="controls planet-card rounded-[2rem] p-5 flex items-center justify-between shrink-0 shadow-lg border border-[var(--card-b)]" aria-label="Kontrol slide">
+                    <button id="prevBtn" class="flex items-center gap-2 px-5 py-3 rounded-2xl font-bold text-muted hover:text-[var(--text)] hover:bg-white/5 disabled:opacity-30 disabled:hover:bg-transparent transition-all group" type="button">
+                        <svg class="w-5 h-5 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                        <span class="hidden sm:inline uppercase tracking-widest text-[10px] font-black">Sebelumnya</span>
+                    </button>
+                    
+                    <div class="flex flex-col items-center">
+                        <div class="bg-black/20 border border-[var(--card-b)] rounded-full h-2 w-32 sm:w-48 mb-2 overflow-hidden shadow-inner" role="progressbar" aria-label="Kemajuan meeting">
+                            <div id="progressBar" class="h-full bg-gradient-to-r from-k-blue to-k-green w-0 transition-all duration-300 rounded-full"></div>
+                        </div>
+                        <span id="slideCounter" class="text-[10px] font-black text-muted uppercase tracking-widest">Slide 1 / 46</span>
+                    </div>
+                    
+                    <button id="nextBtn" class="flex items-center gap-2 px-6 py-3 rounded-2xl font-black text-white bg-gradient-to-b from-k-blue to-k-blue-d disabled:opacity-30 shadow-lg shadow-k-blue/40 transition-all group btn-3d" type="button">
+                        <span class="hidden sm:inline uppercase tracking-widest text-[10px]">Selanjutnya</span>
+                        <svg class="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </button>
+                </footer>
+            </main>
+        </div>
+    </div>
+    
+    <noscript><div class="m-6 p-5 border-2 border-k-yellow bg-k-navy text-white">Deck ini membutuhkan JavaScript lokal untuk navigasi. Aktifkan JavaScript lalu buka ulang file.</div></noscript>
+    <script src="main_deck.js"></script>
+    <script>
+        // Hamburger Menu Logic (since level1 main_deck.js doesn't have Tailwind sidebar toggle logic built in for the classes we added)
+        const menuBtn = document.getElementById('menuBtn');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebarOverlay');
+
+        function toggleSidebar() {
+            const isOpen = !sidebar.classList.contains('-translate-x-full');
+            if (isOpen) {
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+                menuBtn.setAttribute('aria-expanded', 'false');
+            } else {
+                sidebar.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden');
+                menuBtn.setAttribute('aria-expanded', 'true');
+            }
+        }
+
+        if(menuBtn && sidebar && overlay) {
+            menuBtn.addEventListener('click', toggleSidebar);
+            overlay.addEventListener('click', toggleSidebar);
+        }
+    </script>
+</body>
+</html>
+"""
+
+with open('level1/main_deck.html', 'w') as f:
+    f.write(new_html)
+

@@ -1,10 +1,16 @@
 # Ignore everything by default
 *
 
-# Allow .gitignore
+# Allow .gitignore and documentation
 !.gitignore
+!AGENTS.md
+!implementation_plan_feedback_guru.md
+!syllabus_python_kalananti.md
+!template_lesson_plan_python.html
+!index.md
+!*.py
 
-# Allow ONLY level1, level2, level3, level4 folders
+# Allow level folders
 !level1/
 !level1/**
 !level2/
@@ -13,11 +19,12 @@
 !level3/**
 !level4/
 !level4/**
+!marketing/
+!marketing/**
 
-# Exclude generator scripts & temp files inside level folders
-level*/*.py
-level*/*.txt
+# Exclude temp files inside level folders
 level*/*.merged
+level*/*.pyc
 .DS_Store
 __pycache__/
 *.pyc
